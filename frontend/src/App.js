@@ -5,6 +5,7 @@ import "./styles/App.scss";
 // Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -12,8 +13,7 @@ function App() {
       <Router>
         <Route exact path="/" component={Home} />
         <Route exact path="/staff/login" component={Login} />
-        {/* <Route component={NotFound} /> */}
-        
+        <Route exact path="/staff/dashboard" component={Dashboard} />
       </Router>
     </div>
   );

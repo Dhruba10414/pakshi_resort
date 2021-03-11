@@ -1,0 +1,87 @@
+.staffArea{
+    width: 100%;
+    min-height: 100vh;
+
+    .sideNav{
+        width: calc(20vw - 10px);
+        height: calc(92vh - 25px);
+        position: fixed;
+        top: calc(8vh + 10px);
+        left: 10px;
+        background-color: #fff;
+        border-radius: 8px;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        a{
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: #444;
+            margin-bottom: 20px;
+            padding: 0 40px;
+            font-family: var(--secondary-font);
+            font-size: 18px;
+            svg{margin-right: 5px; height: 16px;}
+        }
+        a.active-link{ 
+            color: var(--primary-color); 
+            font-weight: bold;
+            border-left: 4px solid var(--primary-color);
+        }
+        .basics{
+            padding: 40px 0;
+        }
+    }
+
+    .contentBox{
+        width: 100%;
+        min-height: 100vh;
+
+        .nav{
+            width: 100%;
+            height: 8vh;
+            margin-bottom: 10px;
+            padding: 0 100px;
+            position: sticky;
+            top: 0px;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            z-index: 6;
+            
+            .staff{
+                display: flex;
+                align-items: center;
+                .name{
+                    margin-right: 10px;
+                    font-family: var(--secondary-font);
+                    font-size: 14px;
+                    text-transform: uppercase;
+                }
+                .avatar{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: var(--primary-color-light);
+                    img{width: 20px;}
+                }
+            }
+        }
+
+        .container{
+            width: calc(80vw - 20px);
+            height: calc(92vh - 25px);
+            margin-left: auto;
+            margin-right: 10px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    }
+}
