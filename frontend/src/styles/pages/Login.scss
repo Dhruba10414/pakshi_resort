@@ -1,0 +1,177 @@
+.login{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+        -45deg,
+        rgba(37, 78, 88, 0.8),
+        rgba(17, 45, 50, 0.9)
+      ), url('../../assets/images/Login/background.png') no-repeat center center / cover;
+    position: relative;
+    overflow: hidden;
+
+    .container{
+        width: 50%;
+        height: 100vh;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: var( --body-background-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        @include media("<=phone") {
+            width: 100%;
+            height: 70vh;
+        }
+
+        .content{
+            width: 80%;
+            height: 60vh;
+            margin: auto;
+            padding: 0 40px;
+            @include media("<=phone") {
+                width: 100%;
+                padding: 0 20px;
+                height: 50vh;
+            }
+            h1{
+                font-family: var(--primary-font);
+                font-size: 4rem;
+                color: var(--primary-color);
+                margin-bottom: 20px;
+                @include media("<=phone") {
+                    font-size: 2rem;
+                    margin-bottom: 10px;
+                }
+            }
+            form{
+                width: 100%;
+                .input_field{
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 25px;
+                    position: relative;
+                    @include media("<=phone") {
+                        margin-top: 12px;
+                    }
+                    label{
+                        font-size: 14px;
+                        color: #888;
+                        margin-bottom: 10px;
+                        font-family: var(--secondary-font);
+                        @include media("<=phone") {
+                            margin-bottom: 5px;
+                        }
+                    }
+                    input{
+                        padding: 20px;
+                        background: #f7f7f7;
+                        border: 1.6px solid var(--primary-color);
+                        border-radius: 5px;
+                        font-size: 18px;
+                        font-family: var(--secondary-font);
+                        @include media("<=phone") {
+                            padding: 10px;
+                            font-size: 16px;
+                        }
+                    }
+                    svg{
+                        position: absolute;
+                        bottom: 15px;
+                        right: 15px;
+                        width: 16px;
+                        height: 16px;
+                        cursor: pointer;
+                    }
+                }
+                button{
+                    display: block;
+                    width: 100%;
+                    margin-top: 25px;
+                    padding: 20px;
+                    background: var(--primary-color);
+                    color: #fff;
+                    font-size: 18px;
+                    font-family: var(--secondary-font);
+                    border-radius: 5px;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    @include media("<=phone") {
+                        padding: 12px 10px;
+                        font-size: 16px;
+                        margin-top: 20px;
+                    }
+                }
+                a{
+                    display: block;
+                    width: 100%;
+                    margin-top: 10px;
+                    text-decoration: none;
+                    font-size: 16px;
+                    color: #888;
+                    text-align: right;
+                    transition: 0.4s;
+                    &:hover{
+                        color: var(--primary-color);
+                    }
+                }
+            }
+        }
+    }
+
+    .staffs{
+        width: 50%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include media("<=phone") {
+            width: 100%;
+            height: 30vh;
+        }
+        .images{
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            @include media("<=phone") {
+                height: 30vh;
+            }
+            img{ border-radius: 50%;}
+            .img1{ width: 200px; height: 200px; position: absolute; top: 20%; left: 40%;  @include media("<=phone") { display: none; }}
+            .img2{ width: 200px; height: 200px; position: absolute; top: 40%; left: 5%; @include media("<=phone") { display: none; }}
+            .img3{ width: 180px; height: 180px; position: absolute; top: 50%; left: 55%; @include media("<=phone") { display: none; }}
+            .img4{ 
+                width: 90px; height: 90px; position: absolute; top: 5%; left: 75%; 
+                @include media("<=phone") { left: 50%; transform: translateX(-50%); top: calc(30vh - 45px); z-index: 1;}
+            }
+            .img5{ width: 130px; height: 130px; position: absolute; top: 5%; left: 5%; @include media("<=phone") { display: none; }}
+            .desc{
+                width: 80%;
+                min-height: 10vh;
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: #fff;
+                @include media("<=phone") {
+                    bottom: 45px;
+                }
+                h3{
+                    font-size: 1.5rem;
+                    font-family: var(--primary-font);
+                }
+                p{
+                    font-family: var(--secondary-font);
+                    font-size: 16px;
+                    @include media("<=phone") {
+                        font-size: 14px;
+                    }
+                }
+                
+            }
+
+        }
+    }
+}

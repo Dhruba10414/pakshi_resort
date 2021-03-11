@@ -4,15 +4,16 @@ import "./styles/App.scss";
 
 // Pages
 import Home from "./pages/Home";
-import Navigation from "./pages/Navigation";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Route exact path="/" component={Home} />
+        <Route exact path="/staff/login" component={Login} />
         {/* <Route component={NotFound} /> */}
-        <Navigation />
+        
       </Router>
     </div>
   );

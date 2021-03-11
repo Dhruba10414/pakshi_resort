@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { openMenu, closeMenu } from "../animations/NavAnim";
-import TopNav from "../components/Navigation/TopNav";
+import { openMenu, closeMenu } from "../../animations/NavAnim";
+import TopNav from "./TopNav";
 
 function Navigation() {
   const [menuState, setMenuState] = useState(false);
-  const location = useLocation();
 
   const navigationManager = () => {
     setMenuState(!menuState);
@@ -114,7 +113,7 @@ function Navigation() {
           className={menuState ? "Diam" : ""}
           onClick={navigationManager}
         >
-          {location.pathname === "/" && menuState === false ? (
+          {menuState === false ? (
             <>
               <span style={{ background: "var(--primary-color-dark)" }}></span>{" "}
               <span style={{ background: "var(--primary-color-dark)" }}></span>
