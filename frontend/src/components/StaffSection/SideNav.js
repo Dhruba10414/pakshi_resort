@@ -5,7 +5,7 @@ function SideNav() {
   return (
     <div className="sideNav">
       <div className="basics">
-        <NavLink to="/staff/dashboard"  exact activeClassName="active-link">
+        <NavLink to="/staff/dashboard" exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -25,7 +25,7 @@ function SideNav() {
           </svg>
           Dashboard
         </NavLink>
-        <NavLink to="/"  exact activeClassName="active-link">
+        <NavLink to="/staff/guests" exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -45,7 +45,7 @@ function SideNav() {
           </svg>
           Guests
         </NavLink>
-        <NavLink to="/"  exact activeClassName="active-link">
+        <NavLink to="/staff/foodorders"  exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -63,9 +63,27 @@ function SideNav() {
           </svg>
           Food Orders
         </NavLink>
+        <NavLink to="/staff/park"  exact activeClassName="active-link">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-pie-chart"
+          >
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+          </svg>
+          Park Visitors
+        </NavLink>
       </div>
       <div className="additional">
-        <NavLink to="/"  exact activeClassName="active-link">
+        <NavLink to="/staff/guests"  exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -84,7 +102,7 @@ function SideNav() {
           </svg>
           Logout
         </NavLink>
-        <NavLink to="/"  exact activeClassName="active-link">
+        <NavLink to="/staff/guests"  exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -102,7 +120,7 @@ function SideNav() {
           </svg>
           Settings
         </NavLink>
-        <NavLink to="/"  exact activeClassName="active-link">
+        <NavLink to="/staff/guests"  exact activeClassName="active-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

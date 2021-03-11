@@ -18,7 +18,7 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            color: #444;
+            color: var(--primary-color);
             margin-bottom: 20px;
             padding: 0 40px;
             font-family: var(--secondary-font);
@@ -26,9 +26,8 @@
             svg{margin-right: 5px; height: 16px;}
         }
         a.active-link{ 
-            color: var(--primary-color); 
-            font-weight: bold;
-            border-left: 4px solid var(--primary-color);
+            color: var(--primary-color-light); 
+            border-left: 2px solid var(--primary-color-light);
         }
         .basics{
             padding: 40px 0;
