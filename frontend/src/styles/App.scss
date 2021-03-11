@@ -1,0 +1,26 @@
+// FONTS
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700&display=swap');
+
+@import "./breakpoints.scss";
+@import "./variable.scss";
+
+@import "./pages/Home.scss";
+@import "./pages/PageNotfound.scss";
+@import "./pages/Navigation.scss";
+
+@import "./components/Rooms.scss";
+@import "./components/Features.scss";
+@import "./components/Navigation/TopNav.scss";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+  background: #FAF7F2;
+}
