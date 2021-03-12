@@ -1,6 +1,6 @@
 // FONTS
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700&display=swap');
 
 // BREAKPONT & VARIABLES
@@ -13,6 +13,7 @@
 @import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
+@import "./pages/Guests.scss";
 
 // SCSS FOR COMPONENTS
 @import "./components/Home/Rooms.scss";

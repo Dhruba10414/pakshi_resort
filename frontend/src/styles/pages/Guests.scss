@@ -1,0 +1,126 @@
+.guests {
+  width: 100%;
+  min-height: 100vh;
+
+  .heading {
+    width: calc(100% - 10px);
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #fff;
+    h1 {
+      font-family: var(--primary-font);
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      display: inline-block;
+    }
+    .search-area {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      .field {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        width: 60%;
+        input {
+          width: 100%;
+          margin-left: 10px;
+          padding: 10px;
+          font-size: 16px;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid var(--primary-color);
+          background: transparent;
+        }
+      }
+      select {
+        width: 40%;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-family: var(--secondary-font);
+        font-size: 18px;
+        background: var(--blue);
+        color: var(--blue-dark);
+        border: none;
+        border-radius: 5px;
+        &:focus,
+        &:hover {
+          outline: none;
+        }
+        option {
+          background: #fff;
+          color: #444;
+        }
+      }
+    }
+  }
+
+  .content{
+    display: flex;
+    width: calc(100% - 10px);
+    margin-top: 10px;
+
+    .guest-table {
+      width: 80%;
+      height: 150vh;
+      margin-right: 10px;
+      background: #fff;
+      border-radius: 8px;
+      
+      .table-heading, .guest {
+        display: flex;
+        border-bottom: 2px solid var(--body-background-color);
+        div {
+          height: 6vh;
+          display: flex;
+          align-items: center;
+          padding: 0 20px;
+          font-family: var(--secondary-font);
+          font-size: 12px;
+          svg{
+            width: 12px;
+            transform: rotate(-45deg);
+            margin-left: 10px;
+          }
+        }
+      }
+      .table-heading{ div {font-weight: bold; font-size: 17px; color: #444;}}
+  
+      .name {
+        width: 25%;
+      }
+      .phone {
+        width: 25%;
+      }
+      .checkin {
+        width: 15%;
+      }
+      .checkout {
+        width: 15%;
+      }
+      .status {
+        width: 10%;
+      }
+      .room {
+        width: 10%;
+      }
+      .status.paid{
+        color: green;
+      }
+      .status.due{
+        color: red;
+      }
+    }
+    .right-nav{
+      width: 20%;
+      min-height: 90vh;
+      background: #fff;
+      border-radius: 8px;
+      position: sticky;
+      top: calc(8vh + 10px);
+    }
+  }
+}
