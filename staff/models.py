@@ -1,8 +1,9 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
-class StaffManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         if email is None:
             raise ValueError('Provide an Email for creating an staff')
@@ -24,17 +25,25 @@ class StaffManager(BaseUserManager):
 
         return self.create_user(email, password, **kwargs)
 
-class Staff(AbstractBaseUser):
-    email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
-    role = models.CharField(max_length=64)
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
 
+class User(AbstractBaseUser):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True
+        )
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    role = models.CharField(max_length=64)
     USERNAME_FIELD = 'email'
-    objects = StaffManager()
+    REQUIRED_FIELDS = []
+    objects = UserManager()
 
     def __str__(self):
         return self.email
 
-    
+    class Meta:
+        db_table = "login"
