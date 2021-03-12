@@ -114,7 +114,7 @@
           align-items: center;
           padding: 0 20px;
           font-family: var(--secondary-font);
-          font-size: 12px;
+          font-size: 14px;
         }
         .name {
           width: 25%;
@@ -130,15 +130,17 @@
         }
         .status {
           width: 10%;
+          svg{height: 14px; margin-right: 5px;}
+          font-weight: bold;
         }
         .room {
           width: 10%;
         }
         .status.paid {
-          color: green;
+          color: var(--green-dark);
         }
         .status.due {
-          color: red;
+          color: var(--red-dark);
         }
       }
       .table-heading {
