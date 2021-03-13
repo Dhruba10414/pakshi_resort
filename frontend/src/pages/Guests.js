@@ -33,7 +33,7 @@ function Guests() {
       <div className="guests">
         {/* HEADING */}
         <div className="heading">
-          <h1>Booking</h1>
+          <h1>Guests</h1>
           <form className="search-area">
             <div className="field">
               <svg

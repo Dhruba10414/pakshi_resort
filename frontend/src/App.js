@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Guests from "./pages/Guests";
 import FoodOrders from "./pages/FoodOrders";
 import ParkVisitors from "./pages/ParkVisitors";
+import Book from "./pages/Book";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/staff/guests" component={Guests} />
         <Route exact path="/staff/foodorders" component={FoodOrders} />
         <Route exact path="/staff/park" component={ParkVisitors} />
+        <Route exact path="/staff/book" component={Book} />
       </Router>
     </div>
   );

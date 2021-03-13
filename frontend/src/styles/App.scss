@@ -14,14 +14,14 @@
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
 @import "./pages/Guests.scss";
+@import "./pages/Book.scss";
 
 // SCSS FOR COMPONENTS
 @import "./components/Home/Rooms.scss";
 @import "./components/Home/Features.scss";
 @import "./components/Navigation/TopNav.scss";
 @import "./components/StaffsSection/ContentBox.scss";
-@import "./components/Dashboard/Book.scss";
-@import "./components/Dashboard/RoomInfo.scss";
+@import "./components/Booking/RoomInfo.scss";
 
 // FOR ALL COMPONENTS
 *{
