@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SceduleSetup from "./SceduleSetup";
+import RoomInfo from "./RoomInfo";
 
 function Book() {
   const [ schedule, setSchedule ] = useState(null);
@@ -15,13 +16,14 @@ function Book() {
 
   return (
     <div className="bookBox">
-      <form>
+      <div className="schedule-info">
         <div className="input-head">
           <h2>BOOKING</h2>
           <p>information</p>
         </div>
         <SceduleSetup updateSchedule={updateSchedule} />
-      </form>
+      </div>
+      <RoomInfo />
     </div>
   );
 }

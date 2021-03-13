@@ -6,14 +6,14 @@ import "react-dates/lib/css/_datepicker.css";
 function SceduleSetup({updateSchedule}) {
   const [dateRange, setdateRange] = useState({ startDate: null, endDate: null});
   const [focus, setFocus] = useState("startDate");
-  const [isSelect, setIsSelect] = useState(false);
 
   const { startDate, endDate } = dateRange;
   const handleOnDateChange = (startDate, endDate) => setdateRange(startDate, endDate);
 
   const updateScheduleInfo = () => {
-    updateSchedule(dateRange.startDate._d, dateRange.endDate._d);
-    setIsSelect(true);
+    if(dateRange.startDate && dateRange.endDate){
+      updateSchedule(dateRange.startDate._d, dateRange.endDate._d);
+    }
   }
 
   return (
@@ -36,12 +36,7 @@ function SceduleSetup({updateSchedule}) {
         showClearDates
         block
       />
-      {
-        !isSelect
-        ? <div className="apply" onClick={updateScheduleInfo}>Available rooms</div>
-        : <div className="back">Clear</div>
-      }
-        
+      <div className="apply" onClick={updateScheduleInfo}>Available rooms</div>    
     </div>
   );
 }
