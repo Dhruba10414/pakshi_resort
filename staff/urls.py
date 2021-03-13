@@ -8,5 +8,4 @@ from staff.views import UserLoginView
 urlpatterns = [
      url(r'^signup', UserRegistrationView.as_view()),
      url(r'^signin', UserLoginView.as_view()),
-     path('', include('staff.profile.urls')),
     ]
