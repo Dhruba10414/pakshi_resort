@@ -2,7 +2,6 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-
   .heading {
     width: calc(100% - 10px);
     height: 10vh;
@@ -21,84 +20,53 @@
       display: inline-block;
     }
   }
-
   .dashboard-container {
     width: calc(100% - 10px);
-    height: calc(90vh - 20px);
+    height: calc(90vh - 10px);
     display: flex;
-
     .content {
-      width: calc(70% - 10px);
-      height: calc(90vh - 20px);
-      display: flex;
-
-      .important-links {
-        width: 100%;
-        height: 20vh;
-        display: flex;
-        justify-content: space-between;
-
-        .link {
-          width: 32%;
-          height: 20vh;
-          padding: 20px;
-          background: #fff;
-          border-radius: 8px;
-          text-align: center;
-          text-decoration: none;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          overflow: hidden;
-
-          h3 {
-            display: block;
-            color: var(--primary-color);
-            font-family: var(--secondary-font);
-            font-weight: normal;
-            font-size: 16px;
-          }
-          .logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s;
-
-            img {
-              width: 30px;
-            }
-          }
-          .book {
-            background: var(--red);
-            color: var(--red-dark);
-          }
-          .food {
-            background: var(--blue);
-            color: var(--blue-dark);
-          }
-          .park {
-            background: var(--green);
-            color: var(--green-dark);
-          }
-          &:hover .logo {
-            transform: scale(1.2);
-          }
-        }
-      }
+      width: calc(75% - 10px);
+      height: calc(90vh - 10px);
     }
 
+    // ------------------ Right nav ------------------
     .right-nav {
-      width: 30%;
+      width: 25%;
       height: calc(90vh - 20px);
       margin-left: 10px;
       background: #fff;
       border-radius: 8px;
-      padding: 5px 25px;
+      padding: 25px;
+
+      .options {
+        .option {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          cursor: pointer;
+          .option-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            svg,
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          .booking{ background: var(--red); color: var(--red-dark); }
+          .foodOrder{ background: var(--blue); color: var(--blue-dark); }
+          .park{ background: var(--green); color: var(--green-dark); }
+          .option-name {
+            font-family: var(--secondary-font);
+            font-size: 16px;
+          }
+        }
+      }
     }
   }
 }
