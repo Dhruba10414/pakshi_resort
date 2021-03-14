@@ -2,71 +2,91 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  .heading {
-    width: calc(100% - 10px);
-    height: 10vh;
-    padding-left: 20px;
-    background: var(--body-background-color);
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    h1 {
-      font-family: var(--primary-font);
-      color: var(--primary-color);
-      font-size: 2.5rem;
-      display: inline-block;
-    }
-  }
+  
   .dashboard-container {
     width: calc(100% - 10px);
-    height: calc(90vh - 10px);
+    height: calc(90vh - 20px);
+    margin-top: 10px;
     display: flex;
-    .content {
-      width: calc(75% - 10px);
-      height: calc(90vh - 10px);
-    }
+    position: relative;
+    border-radius: 8px;
 
-    // ------------------ Right nav ------------------
-    .right-nav {
-      width: 25%;
-      height: calc(90vh - 20px);
-      margin-left: 10px;
+    .room-table {
+      width: 100%;
       background: #fff;
       border-radius: 8px;
-      padding: 25px;
+      padding: 10px;
+      overflow-y: scroll;
 
-      .options {
-        .option {
+      &::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar {
+        width: 6px;
+        padding: 0 5px;
+        background-color: #f5f5f5;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #fff;
+        background-image: -webkit-gradient(
+          linear,
+          40% 0%,
+          75% 84%,
+          from(var(--primary-color-light)),
+          to(var(--primary-color-light)),
+          color-stop(0.6, var(--primary-color))
+        );
+      }
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+
+      .table-heading,
+      .aroom {
+        display: flex;
+        border-bottom: 2px solid var(--body-background-color);
+        div {
+          height: 6vh;
           display: flex;
           align-items: center;
-          margin-bottom: 20px;
-          cursor: pointer;
-          .option-logo {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            svg,
-            img {
-              width: 20px;
-              height: 20px;
-            }
-          }
-          .booking{ background: var(--red); color: var(--red-dark); }
-          .foodOrder{ background: var(--blue); color: var(--blue-dark); }
-          .park{ background: var(--green); color: var(--green-dark); }
-          .option-name {
-            font-family: var(--secondary-font);
-            font-size: 16px;
-          }
+          padding: 0 20px;
+          font-family: var(--secondary-font);
+          font-size: 14px;
+        }
+        .no, .guest, .status, .paymentStatus{width: 12%; }
+        .guest-name{width: 30%;} 
+        .food-order, .checkout{width: 12%;}
+        .paymentStatus{
+          display: flex;
+          svg{height: 14px; margin-right: 5px;}
+          font-weight: bold;
+        }
+        .paymentStatus.paid{ color: var(--green-dark); }
+        .status.free p{ padding: 5px 10px; border-radius: 5px; background: var(--green); color: var(--green-dark); }
+        .status.lock p{ padding: 5px 10px; border-radius: 5px; background: var(--red); color: var(--red-dark); }
+      }
+
+      .table-heading {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        border-radius: 8px 8px 0 0;
+        svg {
+          width: 12px;
+          transform: rotate(-45deg);
+          margin-left: 10px;
+        }
+        div {
+          font-weight: bold;
+          font-size: 15px;
+          color: #444;
         }
       }
+      .roomEntries{
+        height: 200vh;
+      }
     }
+    
   }
 }
