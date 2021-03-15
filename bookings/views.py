@@ -153,3 +153,50 @@ class NewBooking(generics.GenericAPIView):
         booking = self.get_serializer(new_bookings)
 
         return Response(data=booking.data, status=status.HTTP_200_OK)
+
+class CheckIn(generics.GenericAPIView):
+
+    def post(self, request, *args, **kwargs):
+        booking_id = request.data.get('booking', None)
+
+        try:
+            booking = Bookings.objects.get(id=booking_id)
+            if booking.check_in < date.today():
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            
+            room = booking.room
+            room.active_booking = booking
+            room.save()
+
+            guest = booking.guest
+            guest.is_staying = True
+            guest.save()
+
+            return Response(status=status.HTTP_200_OK)
+        
+        except Bookings.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class CheckOut(generics.GenericAPIView):
+
+    def post(self, request, *args, **kwargs):
+        booking_id = request.data.get('booking', None)
+
+        try:
+            booking = Bookings.objects.get(id=booking_id)
+        
+            room = booking.room
+            room.active_booking = None
+            room.save()
+
+            guest = booking.guest
+            guest.is_staying = False
+            guest.save()
+            #This endpoint will return the invoice 
+            booking.is_complete = True
+            booking.save()
+            return Response(status=status.HTTP_200_OK)
+        
+        except Bookings.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
