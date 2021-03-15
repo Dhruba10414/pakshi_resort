@@ -1,6 +1,27 @@
 .staffArea {
   width: 100%;
   min-height: 100vh;
+  position: relative;
+
+  .staffIdentity{
+    position: absolute;
+    top: 3vh;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+    &__name{
+      margin-right: 10px;
+      font-family: var(--secondary-font);
+      font-size: 16px;
+    }
+    &__image{
+      .img{
+        width: 40px; height: 40px; border-radius: 50%;
+        background-color: #ccc;
+      }
+    }
+  }
 
   .sideNav {
     width: 20%;
