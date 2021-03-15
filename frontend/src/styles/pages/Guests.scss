@@ -8,7 +8,6 @@
     height: 10vh;
     padding-left: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background: var(--body-background-color);
     position: sticky;
@@ -23,6 +22,7 @@
     }
     .search-area {
       width: 20%;
+      margin-left: 20%;
       border-bottom: 2px solid var(--primary-color-light);
       display: flex;
       align-items: center;

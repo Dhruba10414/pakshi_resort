@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentBox from "../components/StaffSection/ContentBox";
 import { roomList } from "../assets/DummyRoomData";
 import Room from "../components/Dashboard/Room";
+import StaffHeading from "../components/StaffSection/StaffHeading";
 
 // COMMON SVG FOR TABLE HEADING
 const rsvg = (
@@ -36,11 +37,10 @@ function Dashboard() {
     const sroom = roomList.find((el) => el.room_num === parseInt(room));
     if (sroom) {
       setDesiredRoom(sroom);
-      setRoom("");
     } else {
       setError("Room not found");
     }
-
+    
   };
 
   return (
@@ -48,6 +48,7 @@ function Dashboard() {
       <div className="dashboard">
         <div className="heading">
           <h1>Dashboard</h1>
+          {/* <StaffHeading /> */}
           <form onSubmit={searchRoom}>
             <button onClick={searchRoom}>
               <svg
