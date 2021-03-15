@@ -8,4 +8,5 @@ urlpatterns = [
     path('guests/', GuestDetail.as_view(), name='guest_info'),
     path('guests/bookings/', GuestBookings.as_view(), name='guest_bookings'),
     path('rooms/available/', RoomSearch.as_view(), name='available_rooms'),
+    path('new_booking/', NewBooking.as_view(), name='new_booking'),
 ]

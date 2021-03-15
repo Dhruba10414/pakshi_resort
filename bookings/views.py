@@ -58,6 +58,14 @@ class GuestDetail(generics.GenericAPIView):
         except Guests.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+    def post(self, request, *args, **kwargs):
+        new_guest = self.get_serializer(data=request.data)
+        new_guest.is_valid(raise_exception=True)
+        new_guest.save()
+
+        return Response(new_guest.data, status=status.HTTP_201_CREATED)
+
+
 class GuestBookings(generics.GenericAPIView):
     serializer_class = BookingSerializer
 
@@ -89,6 +97,12 @@ class RoomSearch(generics.GenericAPIView):
         else:
             check_out_date = date.today() + timedelta(days=1)
 
+        if check_in_date < date.today() or check_in_date >= check_out_date:
+            msg = {
+                'message': 'You can\'t travel time, Sorry! Enter valid check in and\\or check out dates.'
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
         existing_bookings = Bookings.objects.filter(
                 (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
                 (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
@@ -100,3 +114,42 @@ class RoomSearch(generics.GenericAPIView):
         rooms_count = self.get_serializer(type_group, many=True)
 
         return Response(rooms_count.data, status=status.HTTP_200_OK)
+
+
+class NewBooking(generics.GenericAPIView):
+    serializer_class = BookingSerializer
+
+    def post(self, request, *args, **kwargs):
+        room_type = request.data.get('room_type', None)
+        guest_id = request.data.get('guest_id', None)
+        check_in = request.data.get('check_in', None)
+        check_out = request.data.get('check_out', None)
+        
+        if check_in is None or check_out is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        check_in_date = datetime.strptime(check_in, "%d-%m-%Y").date()
+        check_out_date = datetime.strptime(check_out, "%d-%m-%Y").date()
+
+        if check_in_date < date.today() or check_in_date >= check_out_date:
+            msg = {
+                'message': 'You can\'t travel time, Sorry! Enter valid check in and\\or check out dates.'
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        existing_bookings = Bookings.objects.filter(
+                (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
+                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
+            )
+        
+        room_to_book = Rooms.objects.filter(room_type__id=room_type).exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True))).first()
+
+        if not room_to_book:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        new_bookings = Bookings(room=room_to_book, guest_id=guest_id, check_in=check_in_date, check_out=check_out_date)
+        #new_bookings.by_staff = request.user.id
+        new_bookings.save()
+        booking = self.get_serializer(new_bookings)
+
+        return Response(data=booking.data, status=status.HTTP_200_OK)
