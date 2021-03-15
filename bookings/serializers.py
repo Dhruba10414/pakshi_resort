@@ -1,9 +1,13 @@
 from rest_framework import serializers
 from .models import Rooms, RoomType, Bookings, Guests
 
+class GuestIdNameSerailizer(serializers.ModelSerializer):
+    class Meta:
+        model = Guests
+        fields = ['id', 'name']
 
 class BookingEmbededSerializer(serializers.ModelSerializer):
-    guest = serializers.SlugRelatedField(slug_field='id', read_only=True, allow_null=True)
+    guest = GuestIdNameSerailizer(read_only=True, allow_null=True)
     check_in = serializers.DateField(format="%d-%m-%Y", read_only=True)
     check_out = serializers.DateField(format="%d-%m-%Y", read_only=True)
 
