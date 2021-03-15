@@ -2,7 +2,6 @@ import React from "react";
 import ContentBox from "../components/StaffSection/ContentBox";
 import { roomList } from "../assets/DummyRoomData";
 import Room from "../components/Dashboard/Room";
-import StaffHeading from "../components/StaffSection/StaffHeading";
 
 // COMMON SVG FOR TABLE HEADING
 const rsvg = (
@@ -29,7 +28,9 @@ function Dashboard() {
   return (
     <ContentBox>
       <div className="dashboard">
-        <StaffHeading headingName="Dashboard"/>
+        <div className="heading">
+          <h1>Dashboard</h1>
+        </div>
 
         <div className="dashboard-container">
           {/* TABLE */}
