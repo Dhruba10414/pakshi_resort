@@ -3,7 +3,8 @@ from .models import RoomType, Rooms, Guests, Bookings
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import *
-from datetime import date
+from datetime import date, datetime, timedelta
+from django.db.models import Q, Subquery, Count, F
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
@@ -70,3 +71,32 @@ class GuestBookings(generics.GenericAPIView):
             return Response(bookings_serialized.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class RoomSearch(generics.GenericAPIView):
+    serializer_class = AvailableRoomCountSerializer
+
+    def get(self, request, *args, **kwargs):
+        check_in = request.query_params.get('check_in', None)
+        check_out = request.query_params.get('check_out', None)
+
+        if check_in is not None:
+            check_in_date = datetime.strptime(check_in, "%d-%m-%Y").date()
+        else:
+            check_in_date = date.today()
+
+        if check_out is not None:
+            check_out_date = datetime.strptime(check_out, "%d-%m-%Y").date()
+        else:
+            check_out_date = date.today() + timedelta(days=1)
+
+        existing_bookings = Bookings.objects.filter(
+                (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
+                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
+            )
+        
+        available_rooms = Rooms.objects.exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True)))
+        type_group = available_rooms.values('room_type').annotate(type_=F('room_type__room_type'), available=Count('room_type'))
+    
+        rooms_count = self.get_serializer(type_group, many=True)
+
+        return Response(rooms_count.data, status=status.HTTP_200_OK)

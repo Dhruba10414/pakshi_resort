@@ -46,3 +46,11 @@ class GuestSerializer(serializers.ModelSerializer):
 
 class BookingGuestDetailSerializer(BookingSerializer):
     guest = GuestSerializer()
+
+
+class AvailableRoomCountSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+        return {
+            'type': instance['type_'],
+            'available': instance['available']
+        }

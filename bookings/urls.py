@@ -7,4 +7,5 @@ urlpatterns = [
     path('bookings/guests/', GuestRoomBookView.as_view(), name='bookings_guests'),
     path('guests/', GuestDetail.as_view(), name='guest_info'),
     path('guests/bookings/', GuestBookings.as_view(), name='guest_bookings'),
+    path('rooms/available/', RoomSearch.as_view(), name='available_rooms'),
 ]
