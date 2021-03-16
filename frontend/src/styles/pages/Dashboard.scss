@@ -1,105 +1,79 @@
 .dashboard {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   overflow: hidden;
-  .heading {
-    width: calc(100% - 10px);
-    height: calc(10vh - 10px);
-    margin-top: 10px;
-    padding-left: 20px;
-    background: #fff;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    right: 0;
-    z-index: 10;
-    h1 {
-      display: block;
-      font-family: var(--primary-font);
-      color: var(--primary-color);
-      font-size: 2.5rem;
-      display: inline-block;
-      text-transform: uppercase;
-    }
-    form {
-      height: 40px;
-      display: flex;
-      align-items: center;
-      margin-left: 20%;
-      border: 1px solid gray;
-      border-right: none;
-      border-radius: 8px;
-      padding: 0;
-      width: 30%;
-      input {
-        width: 80%;
-        padding: 5px;
-        font-size: 16px;
-        outline: none;
-        border: none;
-      }
-      .icon {
-        height: 40px;
-        width: 10%;
-        padding: 5px 10px;
-        background: transparent;
-        svg {
-          width: 16px;
-          color: gray;
-        }
-      }
-      button {
-        width: 20%;
-        height: 40px;
-        padding: 8px;
-        border: none;
-        border-radius: 0 8px 8px 0;
-        font-size: 16px;
-        outline: none;
-        background: var(--primary-color);
-        color: #fff;
-        cursor: pointer;
-      }
-    }
-  }
   .dashboard-container {
-    width: calc(100% - 10px);
-    height: calc(90vh - 20px);
+    width: 100%;
+    height: 90vh;
     margin-top: 10px;
     display: flex;
     position: relative;
     border-radius: 8px;
 
-    // ============================ ROOM TABLE ONTAINER ======================
+    /* ============================ ROOM TABLE ONTAINER ====================== */
     .room-table-container {
       width: 100%;
       overflow-y: scroll;
-      &::-webkit-scrollbar-track {
-        background-color: transparent;
-        border-radius: 10px;
-      }
-      &::-webkit-scrollbar {
-        width: 6px;
-        padding: 0 5px;
-        background-color: #f5f5f5;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background-color: #fff;
-        background-image: -webkit-gradient(
-          linear,
-          40% 0%,
-          75% 84%,
-          from(var(--primary-color-light)),
-          to(var(--primary-color-light)),
-          color-stop(0.6, var(--primary-color))
-        );
-      }
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
+      overflow-x: hidden;
 
+      // scrollbar configuration
+      // &::-webkit-scrollbar-track {
+      //   background-color: transparent;
+      //   border-radius: 10px;
+      // }
+      // &::-webkit-scrollbar {
+      //   width: 6px;
+      //   padding: 0 5px;
+      //   background-color: #f5f5f5;
+      // }
+      // &::-webkit-scrollbar-thumb {
+      //   border-radius: 10px;
+      //   background-color: #fff;
+      //   background-image: -webkit-gradient(
+      //     linear,
+      //     40% 0%,
+      //     75% 84%,
+      //     from(var(--primary-color-light)),
+      //     to(var(--primary-color-light)),
+      //     color-stop(0.6, var(--primary-color))
+      //   );
+      // }
+      &::-webkit-scrollbar { display: none; }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      // search field
+      .search-field {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        form {
+          width: 100%;
+          margin: 0 10px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          input {
+            width: 80%;
+            padding: 5px;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            background: transparent;
+          }
+          .icon {
+            height: 40px;
+            padding: 5px 10px;
+            background: transparent;
+            svg {
+              width: 18px;
+              color: gray;
+            }
+          }
+        }
+      }
+
+      // orginal tables
       .room-table {
         width: 100%;
         background: #fff;
@@ -110,7 +84,7 @@
         .aroom {
           display: flex;
           background: #fff;
-          border-bottom: 3px solid #F4F4F4;
+          border-bottom: 3px solid #f4f4f4;
           div {
             height: 8vh;
             display: flex;
@@ -119,33 +93,28 @@
             font-family: var(--secondary-font);
             font-size: 16px;
           }
-          .no {
-            width: 15%;
-          }
-          .guest-name {
-            width: 30%;
-          }
-          .status {
-            width: 15%;
-          }
-          .checkin,
-          .checkout {
-            width: 20%;
-          }
-          .food-order {
-            width: 20%;
-          }
-          .status p{
+          .no {width: 15%;}
+          .guest-name {width: 30%;}
+          .status {width: 15%;}
+          .checkin, .checkout {width: 20%;}
+          .food-order {width: 20%;}
+          .status p {
             font-size: 14px;
             font-family: var(--secondary-font);
             width: 100%;
             text-align: center;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 5px;
             // color: #fff;
           }
-          .status.free p { background: var(--green); color: var(--green-dark);}
-          .status.lock p { background: var(--red); color: var(--red-dark);}
+          .status.free p {
+            background: var(--green);
+            color: var(--green-dark);
+          }
+          .status.lock p {
+            background: var(--red);
+            color: var(--red-dark);
+          }
         }
 
         // Table Heading
@@ -170,7 +139,7 @@
           .food-order button {
             width: 90%;
             margin: auto;
-            padding: 15px;
+            padding: 12px;
             outline: none;
             border: none;
             border-radius: 5px;
@@ -179,45 +148,45 @@
             background: var(--primary-color);
             color: #fff;
             font-size: 16px;
-            &:hover{
+            &:hover {
               box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
             }
           }
         }
-        .dim{ 
-          background: #F7F7F8; 
-          border-left: 4px solid #DFDFE1;
+        .dim {
+          background: #f7f7f8;
+          border-left: 4px solid #dfdfe1;
           border-bottom: 3px solid #fff;
           cursor: pointer;
-          &:hover{
-            background: #DFDFE1;
+          &:hover {
+            background: #dfdfe1;
           }
         }
       }
     }
 
     // ============================ FOOD ORDER CONTAINER ======================
-    .food-order-container{
+    .food-order-container {
       width: 100%;
       // overflow-y: scroll;
-      .foodOrdering{
+      .foodOrdering {
         width: 75%;
         background: #fff;
         border-radius: 8px;
         padding: 20px;
-        .heading{
+        .heading {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          .heading-content{
-            h2{
+          .heading-content {
+            h2 {
               font-family: var(--secondary-font);
               font-size: 1.5rem;
               line-height: 1rem;
               letter-spacing: -1px;
               color: var(--primary-color);
             }
-            p{
+            p {
               font-family: WRITTEN;
               color: var(--primary-color-light);
               font-size: 4rem;
@@ -225,7 +194,7 @@
               margin-left: 4rem;
             }
           }
-          .heading-button{
+          .heading-button {
             display: flex;
             align-items: center;
             padding: 5px 10px;
@@ -237,37 +206,46 @@
             border-radius: 4px;
             cursor: pointer;
             transition: 0.4s;
-            &:hover{ color: var(--primary-color-light); }
-            &:hover svg{ color: var(--primary-color-light); }
-            svg{height: 18px; color: #fff; margin-left: 5px; transition: 0.4s;}
+            &:hover {
+              color: var(--primary-color-light);
+            }
+            &:hover svg {
+              color: var(--primary-color-light);
+            }
+            svg {
+              height: 18px;
+              color: #fff;
+              margin-left: 5px;
+              transition: 0.4s;
+            }
           }
         }
-        form{
+        form {
           margin-top: 40px;
           width: 100%;
-          h3{
+          h3 {
             font-family: var(--secondary-font);
             color: gray;
             font-size: 14px;
             font-weight: normal;
           }
-          .input-container{
+          .input-container {
             width: 100%;
             margin-top: 10px;
             display: flex;
             justify-content: space-between;
-            .input{
+            .input {
               padding: 10px 20px;
-              border: 2px solid #DFDFE1;
+              border: 2px solid #dfdfe1;
               border-radius: 5px;
             }
-            .disabled{
-              background: #F7F7F8;
+            .disabled {
+              background: #f7f7f8;
             }
-            .row-30{
+            .row-30 {
               width: 30%;
             }
-            .label{
+            .label {
               color: gray;
               font-family: var(--secondary-font);
               font-size: 12px;

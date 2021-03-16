@@ -49,13 +49,13 @@ function Dashboard() {
   // OPEN FOOD ORDER MODAL
   const openDetailsModal = (id, name, room_no) => {
     setOpenRoomDetails(true);
-    setDetails({id, name, room_no})
-  }
+    setDetails({ id, name, room_no });
+  };
   // CLOSE MODAL
   const closeModal = () => {
     setOpenOrder(false);
     setOpenRoomDetails(false);
-  }
+  };
   // SEARCH A SPECIFIC ROOM
   const searchRoom = (event) => {
     event.preventDefault();
@@ -70,40 +70,37 @@ function Dashboard() {
   return (
     <ContentBox heading="Dashboard">
       <div className="dashboard">
-        {/* <div className="heading">
-          <h1>Dashboard</h1>
-          <form onSubmit={searchRoom}>
-            <div className="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-search"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </div>
-            <input
-              type="text"
-              placeholder="Search.."
-              value={room}
-              onChange={(e) => setRoom(e.target.value)}
-            />
-            <button onClick={searchRoom}>Search</button>
-          </form>
-        </div> */}
-
         <div className="dashboard-container">
           {/* ============== ROOMS TABLE ============== */}
           {!openOrder && !openRoomDetails ? (
             <div className="room-table-container">
+              <div className="search-field">
+                <form onSubmit={searchRoom}>
+                  <div className="icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="feather feather-search"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search by #room number"
+                    value={room}
+                    onChange={(e) => setRoom(e.target.value)}
+                  />
+                </form>
+              </div>
               <div className="room-table">
                 {/* table heading */}
                 <div className="table-heading">
@@ -129,10 +126,20 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-          ) : openOrder
-              ? <FoodOrder id={orderFor.id} name={orderFor.name} room={orderFor.room_no} closeModal={closeModal}/>
-              : <RoomDetails id={details.id} name={details.name} details={details.room_no} />
-          }
+          ) : openOrder ? (
+            <FoodOrder
+              id={orderFor.id}
+              name={orderFor.name}
+              room={orderFor.room_no}
+              closeModal={closeModal}
+            />
+          ) : (
+            <RoomDetails
+              id={details.id}
+              name={details.name}
+              details={details.room_no}
+            />
+          )}
 
           {/* RIGHT NAV */}
           {/* <div className="right-nav"></div> */}
