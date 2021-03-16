@@ -16,7 +16,7 @@ function Book() {
   }, [schedule]);
 
   return (
-    <ContentBox>
+    <ContentBox heading="Booking">
       <div className="bookBox">
         <div className="schedule-info">
           <div className="input-head">

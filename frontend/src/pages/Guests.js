@@ -29,7 +29,7 @@ const rsvg = (
 // MAIN FUNCTION
 function Guests() {
   return (
-    <ContentBox>
+    <ContentBox heading="Guests">
       <div className="guests">
         {/* HEADING */}
         <div className="heading">

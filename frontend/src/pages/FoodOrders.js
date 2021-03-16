@@ -3,8 +3,8 @@ import ContentBox from "../components/StaffSection/ContentBox";
 
 function FoodOrders() {
     return (
-        <ContentBox>
-      <div className="foodOrders">Food Orders</div>
+        <ContentBox heading="Food Orders">
+      <div className="foodOrders"></div>
     </ContentBox>
     )
 }

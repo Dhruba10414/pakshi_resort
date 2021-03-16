@@ -3,7 +3,7 @@ import ContentBox from "../components/StaffSection/ContentBox";
 
 function ParkVisitors() {
   return (
-    <ContentBox>
+    <ContentBox heading="Park Visitors">
       <div className="parkvisitors">Park visitors</div>
     </ContentBox>
   );

@@ -4,6 +4,7 @@ import { roomList } from "../assets/DummyRoomData";
 // compoents
 import Room from "../components/Dashboard/Room";
 import FoodOrder from "../components/Dashboard/FoodOrder";
+import RoomDetails from "../components/Dashboard/RoomDetails";
 
 // COMMON SVG FOR TABLE HEADING
 const rsvg = (
@@ -34,18 +35,27 @@ function Dashboard() {
   const [error, setError] = useState("");
   // foor food Order
   const [openOrder, setOpenOrder] = useState(false);
-  const [orderFor, setOrderFor] = useState({ id: "", name: "", room_no: "" });
+  const [orderFor, setOrderFor] = useState({});
   // for view room details
   const [openRoomDetails, setOpenRoomDetails] = useState(false);
+  const [details, setDetails] = useState({});
 
   /* ----------------- F U N C T I O N S ----------------------- */
   // OPEN FOOD ORDER MODAL
   const openFoodOrderModal = (id, name, room_no) => {
-    console.log("---RUNNING---");
-    console.log(id, name, room_no);
     setOpenOrder(true);
     setOrderFor({ id: id, name: name, room_no: room_no });
   };
+  // OPEN FOOD ORDER MODAL
+  const openDetailsModal = (id, name, room_no) => {
+    setOpenRoomDetails(true);
+    setDetails({id, name, room_no})
+  }
+  // CLOSE MODAL
+  const closeModal = () => {
+    setOpenOrder(false);
+    setOpenRoomDetails(false);
+  }
   // SEARCH A SPECIFIC ROOM
   const searchRoom = (event) => {
     event.preventDefault();
@@ -58,11 +68,10 @@ function Dashboard() {
   };
 
   return (
-    <ContentBox>
+    <ContentBox heading="Dashboard">
       <div className="dashboard">
-        <div className="heading">
+        {/* <div className="heading">
           <h1>Dashboard</h1>
-          {/* <StaffHeading /> */}
           <form onSubmit={searchRoom}>
             <div className="icon">
               <svg
@@ -89,11 +98,11 @@ function Dashboard() {
             />
             <button onClick={searchRoom}>Search</button>
           </form>
-        </div>
+        </div> */}
 
         <div className="dashboard-container">
           {/* ============== ROOMS TABLE ============== */}
-          {!openOrder ? (
+          {!openOrder && !openRoomDetails ? (
             <div className="room-table-container">
               <div className="room-table">
                 {/* table heading */}
@@ -114,14 +123,16 @@ function Dashboard() {
                       status={room.is_occupied}
                       active_booking={room.active_booking}
                       openFoodOrderModal={openFoodOrderModal}
+                      openDetailsModal={openDetailsModal}
                     />
                   ))}
                 </div>
               </div>
             </div>
-          ) : (
-            <FoodOrder id={orderFor} name={orderFor.name} room={orderFor.room_no} />
-          )}
+          ) : openOrder
+              ? <FoodOrder id={orderFor.id} name={orderFor.name} room={orderFor.room_no} closeModal={closeModal}/>
+              : <RoomDetails id={details.id} name={details.name} details={details.room_no} />
+          }
 
           {/* RIGHT NAV */}
           {/* <div className="right-nav"></div> */}
