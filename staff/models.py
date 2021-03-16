@@ -8,6 +8,12 @@ class UserManager(BaseUserManager):
         if email is None:
             raise ValueError('Provide an Email for creating an staff')
 
+        if kwargs.get('role') =='A':
+            kwargs.setdefault('is_admin', True)
+            kwargs.setdefault('is_active', True)
+            kwargs.setdefault('is_staff', True)
+          
+
         user = self.model(email=self.normalize_email(email), **kwargs)
         user.set_password(password)
         user.save()
@@ -17,6 +23,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **kwargs):
         kwargs.setdefault('is_admin', True)
         kwargs.setdefault('is_active', True)
+        kwargs.setdefault('is_staff', True)
         
         if kwargs.get('is_admin') is not True:
             raise ValueError('Admin permission not given')
@@ -33,13 +40,26 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True
         )
+    user_name = models.CharField(max_length=150)
+    ROLE_CHOICES = (
+        ('A', 'Admin'),
+        ('S', 'Staff'),
+    )
+    role = models.CharField(max_length=1, choices=ROLE_CHOICES)
+
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    contact = models.CharField(max_length=15)
+    start_date = models.DateTimeField(auto_now_add=True)
+   
     is_active = models.BooleanField(default=True)
     is_staff =  models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-
-    role = models.CharField(max_length=64)
+    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['user_name']
     objects = UserManager()
 
     def __str__(self):

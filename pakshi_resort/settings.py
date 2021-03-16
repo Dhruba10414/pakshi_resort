@@ -1,9 +1,10 @@
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'staff',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -65,22 +67,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pakshi_resort.wsgi.application'
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pakshiDB',
+        'USER': 'pakshi',
+        'PASSWORD': 'pu7890',
+        'HOST': '127.0.0.1',
+        'PORT': '33060',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLE'"
+        }
     }
 }
-
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated',
-         'rest_framework.permissions.IsAdminUser',
+         'rest_framework.permissions.IsAuthenticated'
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+     'rest_framework_simplejwt.authentication.JWTAuthentication',
      )
 }
 # Password validation
@@ -120,34 +126,36 @@ STATIC_URL = '/static/'
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-JWT_AUTH = {
-  'JWT_ENCODE_HANDLER':
-  'rest_framework_jwt.utils.jwt_encode_handler',
-  'JWT_DECODE_HANDLER':
-  'rest_framework_jwt.utils.jwt_decode_handler',
-  'JWT_PAYLOAD_HANDLER':
-  'rest_framework_jwt.utils.jwt_payload_handler',
-  'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-  'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-  'JWT_RESPONSE_PAYLOAD_HANDLER':
-  'rest_framework_jwt.utils.jwt_response_payload_handler',
- 
-  'JWT_SECRET_KEY': 'SECRET_KEY',
-  'JWT_GET_USER_SECRET_KEY': None,
-  'JWT_PUBLIC_KEY': None,
-  'JWT_PRIVATE_KEY': None,
-  'JWT_ALGORITHM': 'HS256',
-  'JWT_VERIFY': True,
-  'JWT_VERIFY_EXPIRATION': True,
-  'JWT_LEEWAY': 0,
-  'JWT_EXPIRATION_DELTA': timedelta(days=30),
-  'JWT_AUDIENCE': None,
-  'JWT_ISSUER': None,
-  'JWT_ALLOW_REFRESH': False,
-  'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=30),
-  'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-  'JWT_AUTH_COOKIE': None,
-}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pakshiresortruet@gmail.com'
+EMAIL_HOST_PASSWORD = 'ruet1603'
