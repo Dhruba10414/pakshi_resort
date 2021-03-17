@@ -1,0 +1,37 @@
+// FONTS
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@200;300;400;600;700&display=swap');
+
+// BREAKPONT & VARIABLES
+@import "./breakpoints.scss";
+@import "./variable.scss";
+
+// SCSS FOR PAGES
+@import "./pages/Home.scss";
+@import "./pages/PageNotfound.scss";
+@import "./pages/Navigation.scss";
+@import "./pages/Login.scss";
+@import "./pages/Dashboard.scss";
+@import "./pages/Guests.scss";
+@import "./pages/Book.scss";
+
+// SCSS FOR COMPONENTS
+@import "./components/Home/Rooms.scss";
+@import "./components/Home/Features.scss";
+@import "./components/Navigation/TopNav.scss";
+@import "./components/StaffsSection/ContentBox.scss";
+@import "./components/Booking/RoomInfo.scss";
+
+// FOR ALL COMPONENTS
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// SETUP WEBSITE BACKGROUND COLOR
+body,
+html {
+  background: #FAF7F2;
+}

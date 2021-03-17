@@ -1,0 +1,52 @@
+.staffArea {
+  width: 100%;
+  min-height: 100vh;
+
+  .sideNav {
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 5;
+    a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: var(--primary-color-light);
+      margin-bottom: 20px;
+      padding: 0 40px;
+      font-family: var(--secondary-font);
+      font-size: 18px;
+      svg {
+        margin-right: 5px;
+        height: 16px;
+      }
+    }
+    a.active-link {
+      color: #fff;
+      border-left: 2px solid #fff;
+    }
+    .basics {
+      padding: 40px 0;
+    }
+  }
+
+  .contentBox {
+    width: 80%;
+    margin-left: auto;
+    min-height: 100vh;
+
+    .container {
+      width: calc(80vw - 20px);
+      height: calc(100vh - 10px);
+      margin-left: auto;
+      margin-right: 10px;
+      overflow: hidden;
+    }
+  }
+}

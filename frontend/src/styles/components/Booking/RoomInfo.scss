@@ -1,0 +1,28 @@
+.roomInfo{
+    margin-top: 20px;
+    padding: 10px 0;
+    width: 100%;
+    height: 52vh;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    .beforeSearch, .afterSerch, .serchFailed{
+        width: 100%;
+        height: 52vh;
+    }
+
+    .beforeSearch{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div{
+            width: 30%;
+            margin-top: -50px;
+            font-size: 14px;
+            font-family: var(--secondary-font);
+            text-align: center;
+            img{
+                width: 100%;
+            }
+        }
+    }
+}
