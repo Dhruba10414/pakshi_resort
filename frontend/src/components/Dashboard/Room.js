@@ -1,6 +1,48 @@
 import React from "react";
 
-function Room({ no, status, active_booking, openFoodOrderModal, openDetailsModal }) {
+const checkedSvg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-check-circle"
+  >
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+  </svg>
+);
+const xSvg = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-x-circle"
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="15" y1="9" x2="9" y2="15"></line>
+    <line x1="9" y1="9" x2="15" y2="15"></line>
+  </svg>
+);
+
+function Room({
+  no,
+  status,
+  active_booking,
+  openFoodOrderModal,
+  openDetailsModal,
+}) {
   return (
     <div
       className={status ? "aroom dim" : "aroom"}
@@ -17,7 +59,7 @@ function Room({ no, status, active_booking, openFoodOrderModal, openDetailsModal
     >
       <div className="no">#{no}</div>
       <div className={status ? "status lock" : "status free"}>
-        {status ? <p>Booked</p> : <p>Free</p>}
+        {status ? <p>{xSvg} Booked</p> : <p>{checkedSvg}Free</p>}
       </div>
       <div className="guest-name">
         {active_booking ? active_booking.guest.name : "---"}

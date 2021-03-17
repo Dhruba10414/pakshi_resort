@@ -137,7 +137,7 @@ function Dashboard() {
             <RoomDetails
               id={details.id}
               name={details.name}
-              details={details.room_no}
+              room_no={details.room_no}
             />
           )}
 
