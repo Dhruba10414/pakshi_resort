@@ -1,8 +1,11 @@
+// @font-face {
+//     font-family: WRITTEN;
+//     src: url("../assets/fonts/BeatneyRegular-qZmWr.ttf");
+// }
 @font-face {
     font-family: WRITTEN;
-    src: url("../assets/fonts/BeatneyRegular-qZmWr.ttf");
+    src: url("../assets/fonts/Signature.ttf");
 }
-
 :root {
     --body-background-color: #FAF7F2;
     --primary-color-dark: #112D32;
@@ -12,7 +15,15 @@
     --secondary-color-dark: #4F4A41;
     --text-color-light: #FEFFFF;
 
-    --open-font: 'Open Sans', sans-serif;
-    --quicksan-font: 'Quicksand', sans-serif;
+    --green: #D4EFDB;
+    --green-dark: #1DD67D;
+    --blue: #E7F2FA;
+    --blue-dark: #00A5F6;
+    --red: #FDE0ED;
+    --red-dark: #F26464;
+
+    
+    --quicksand-font: 'Quicksand', sans-serif;
     --primary-font: 'Source Serif Pro', serif;
+    --secondary-font: 'Noto Sans JP', sans-serif;
 }

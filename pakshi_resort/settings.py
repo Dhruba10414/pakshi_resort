@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'staff',
     'rest_framework_simplejwt.token_blacklist',
+    'bookings',
 ]
 
 MIDDLEWARE = [
