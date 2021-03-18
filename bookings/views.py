@@ -5,9 +5,11 @@ from rest_framework.response import Response
 from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
+from rest_framework.permissions import IsAuthenticated
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         rooms = Rooms.objects.all()
@@ -18,6 +20,7 @@ class RoomListView(generics.GenericAPIView):
 
 class Room_BookingsListView(generics.GenericAPIView):
     serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated, ]
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
@@ -31,6 +34,7 @@ class Room_BookingsListView(generics.GenericAPIView):
 
 class GuestRoomBookView(generics.GenericAPIView):
     serializer_class = BookingGuestDetailSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -46,6 +50,7 @@ class GuestRoomBookView(generics.GenericAPIView):
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -68,6 +73,7 @@ class GuestDetail(generics.GenericAPIView):
 
 class GuestBookings(generics.GenericAPIView):
     serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -82,6 +88,7 @@ class GuestBookings(generics.GenericAPIView):
 
 class RoomSearch(generics.GenericAPIView):
     serializer_class = AvailableRoomCountSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         check_in = request.query_params.get('check_in', None)
@@ -118,6 +125,7 @@ class RoomSearch(generics.GenericAPIView):
 
 class NewBooking(generics.GenericAPIView):
     serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         room_type = request.data.get('room_type', None)
@@ -148,13 +156,14 @@ class NewBooking(generics.GenericAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         new_bookings = Bookings(room=room_to_book, guest_id=guest_id, check_in=check_in_date, check_out=check_out_date)
-        #new_bookings.by_staff = request.user.id
+        new_bookings.by_staff = request.user
         new_bookings.save()
         booking = self.get_serializer(new_bookings)
 
         return Response(data=booking.data, status=status.HTTP_200_OK)
 
 class CheckIn(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -179,6 +188,7 @@ class CheckIn(generics.GenericAPIView):
 
 
 class CheckOut(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
