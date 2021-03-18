@@ -163,3 +163,13 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
+
+class UserView(generics.GenericAPIView):
+    authentication_classes=[JWTAuthentication]
+    permission_classes=(IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def get(self, req, *args, **kwargs):
+        staff = req.user
+        staff_data = self.get_serializer(staff)
+        return Response(staff_data.data, status= status.HTTP_200_OK)

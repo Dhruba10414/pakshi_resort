@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginAnim } from "../animations/LoginAnim";
+import axios from "axios";
 
 // Assets
 import staff1 from "../assets/images/Login/staff1.jpg";
@@ -13,19 +14,44 @@ function Login() {
   const [state, setState] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     LoginAnim();
   }, []);
 
-  const LoginFunctionality = (e) => {
-    e.prevet.default();
-    // Function Logic
-    console.log(email, password);
+  // Validation logic
+  const validationCheck = () => {
+    if (email && password) { return true; } 
+    else { setError("All fields required."); return false;
+    }
+  };
 
-    // Clear Fields
-    setEmail("");
-    setPassword("");
+  // Function Logic
+  const LoginFunctionality = (event) => {
+    event.preventDefault();
+
+    if (validationCheck()) {
+      axios
+        .post("http://127.0.0.1:8000/api/token/", { email, password,})
+        .then((token) => {
+          // config
+          const yourConfig = { headers: { Authorization: "Bearer " + token.data.access } }
+          // get user
+          axios.get("http://127.0.0.1:8000/api/user/", yourConfig)
+          .then(user => {
+            localStorage.setItem('user', JSON.stringify(user.data));
+            localStorage.setItem('refresh_token', token.data.refresh);
+            console.log("OK: ", localStorage['user']);
+          })
+          .catch(() => {
+            setError("Login failed. Try again!");
+          })
+        })
+        .catch(() => {
+          setError("Email and password doesn't match.");
+        });
+    }
   };
 
   return (
@@ -48,7 +74,7 @@ function Login() {
       <div className="container">
         <div className="content">
           <h1>Log in</h1>
-          <form>
+          <form onSubmit={LoginFunctionality}>
             <div className="input_field">
               <label>Email</label>
               <input
@@ -100,6 +126,7 @@ function Login() {
                 </svg>
               )}
             </div>
+            <small>{error}</small>
             <button type="button" onClick={LoginFunctionality}>
               Login
             </button>

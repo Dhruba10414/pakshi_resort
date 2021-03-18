@@ -89,7 +89,7 @@ function FoodOrder({ id, name, room, closeModal }) {
         </div>
         {/* availabel */}
         <div className="availabel-table">
-
+            
         </div>
       </div>
     </div>
