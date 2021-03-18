@@ -1,21 +1,24 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import ContentBox from "../components/StaffSection/ContentBox";
 
 function Admin() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
-  const [role, setRole] = useState("");
+  const [gender, setGender] = useState("M");
+  const [role, setRole] = useState("S");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordType, setPasswordType] = useState(false);
   const [confirmPasswordType, setConfirmPasswordType] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState("");
+  const [success, setSuccess] = useState(false);
 
   // ALL FIELDS REQUIRED
   const requiredFildCheck = () => {
-    if (name && email && phone && phone && gender && role && password && confirmPassword) {
+    if (name && email && phone && gender && role && password && confirmPassword) {
       return true;
     } else {
       setError("All fields required.");
@@ -23,7 +26,7 @@ function Admin() {
     }
   }
 
-  // Phone number validation check
+  // PHONE NUMBER VALIDATION
   const phoneNumberCheck = () => {
     if (phone.length === 11 && phone[0] === "0" && phone[1] === "1") {
       return true;
@@ -32,12 +35,49 @@ function Admin() {
       return false;
     }
   };
+
+  // PASSWORD CHECK VALIDATION
+  const passwordValidation = () => {
+    if(password === confirmPassword){
+      return true;
+    } else{
+      setError("Password should be matched.");
+    }
+  }
   
+  // CLEAR ALL FIELDS
+  const clearFields = () => {
+    setError("");
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setPhone("");
+    setGender("M");
+    setRole("S");
+  }
+
+  // REGISTRATION FUNCTION
   const registerStaff = (event) => {
     event.preventDefault();
 
-    if (requiredFildCheck() && phoneNumberCheck()) {
-      console.log(name, email, phone, gender, role, password, confirmPassword);
+    if ( requiredFildCheck() && phoneNumberCheck() && passwordValidation()) {
+      setLoading(true);
+      axios.post("http://127.0.0.1:8000/api/signup/", {
+        email: email,
+        password: password,
+        user_name: name,
+        contact: phone,
+        gender: gender,
+        role: role
+      }).then(() => {
+        clearFields();
+        setLoading(false);
+        setSuccess(true);
+      }).catch(err => {
+        console.log(err.message);
+        setLoading(false);
+      })
     }
   };
 
@@ -88,8 +128,8 @@ function Admin() {
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                   >
-                    <option value="male ">Male</option>
-                    <option value="female">Female</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
                   </select>
                 </div>
               </div>
@@ -105,9 +145,8 @@ function Admin() {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                   >
-                    <option value="receptionist ">Receptionist </option>
-                    <option value="resturentStaff">Resturent Staff</option>
-                    <option value="admin">Admin</option>
+                    <option value="S">Staff</option>
+                    <option value="A">Admin</option>
                   </select>
                 </div>
               </div>
@@ -204,7 +243,11 @@ function Admin() {
               </div>
             </div>
             {error ? <small>{error}</small> : null} <br/>
-            <button onClick={registerStaff}>Register</button>
+            {
+              !loading
+              ? <button onClick={registerStaff}>Register</button>
+              : <button style={{background: "gray", color: "#000"}}>Processing...</button>
+            }
           </form>
         </div>
       </div>
