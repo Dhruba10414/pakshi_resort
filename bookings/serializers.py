@@ -22,7 +22,7 @@ class BookingSerializer(serializers.ModelSerializer):
     booked_on = serializers.DateField(format="%d-%m-%Y")
     check_in = serializers.DateField(format="%d-%m-%Y")
     check_out = serializers.DateField(format="%d-%m-%Y")
-    by_staff = serializers.SlugRelatedField(slug_field='name', read_only=True, allow_null=True)
+    by_staff = serializers.SlugRelatedField(slug_field='user_name', read_only=True, allow_null=True)
 
     class Meta:
         model = Bookings

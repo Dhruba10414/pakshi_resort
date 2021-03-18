@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.admin' ,
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
@@ -47,7 +46,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pakshi_resort.urls'
-AUTH_USER_MODEL = 'staff.Staff'
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
@@ -75,10 +74,8 @@ DATABASES = {
         'USER': 'pakshi',
         'PASSWORD': 'pu7890',
         'HOST': '127.0.0.1',
-        'PORT': '33060',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLE'"
-        }
+        'PORT': '3306',
+
     }
 }
 AUTH_USER_MODEL = 'staff.User'
@@ -128,7 +125,7 @@ STATIC_URL = '/static/'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
