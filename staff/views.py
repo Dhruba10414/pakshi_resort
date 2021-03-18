@@ -26,7 +26,7 @@ class UserRegistrationView(CreateAPIView):
 
     serializer_class = UserRegistrationSerializer
     authentication_classes=[JWTAuthentication]
-    permission_classes = [IsAdminUser,] ##IsAdminUser
+    permission_classes = [AllowAny,] ##IsAdminUser
 
     def post(self, request,*args,**kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -59,7 +59,7 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 class UserList(generics.ListCreateAPIView):
     authentication_classes=[JWTAuthentication]
-    permission_classes = [IsAdminUser,] ###IsAdminUser
+    permission_classes = [AllowAny,] ###IsAdminUser
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

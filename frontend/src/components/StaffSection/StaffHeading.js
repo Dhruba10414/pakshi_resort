@@ -1,6 +1,6 @@
 import React from "react";
 
-function StaffHeading({ heading }) {
+function StaffHeading({ heading, user_name }) {
   return (
     <div className="staffHeading">
       <div className="staffHeading__heading">
@@ -23,7 +23,7 @@ function StaffHeading({ heading }) {
         <h2>{heading}</h2>
       </div>
       <div className="staffHeading__staff">
-        <div className="staff-name">Ashiqur Rahman</div>
+        <div className="staff-name">{user_name}</div>
         <div className="staff-image">
           <div className="img"></div>
         </div>

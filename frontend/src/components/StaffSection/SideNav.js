@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { boxes, calender, cloud, help, logout, pie, settings, user, users } from '../../assets/images/SVG';
 
-function SideNav() {
+function SideNav({role}) {
   return (
     <div className="sideNav">
       <div className="basics">
@@ -12,7 +12,12 @@ function SideNav() {
         <NavLink to="/staff/guests" exact activeClassName="active-link"> {users} Guests </NavLink>
         <NavLink to="/staff/foodorders" exact activeClassName="active-link"> {pie} Food Orders </NavLink>
         <NavLink to="/staff/park" exact activeClassName="active-link"> {cloud} Park Visitors </NavLink>
-        <NavLink to="/staff/admin" exact activeClassName="active-link"> {user} Staff Management </NavLink>
+        {
+          role === 'A'
+          ? (<NavLink to="/staff/admin" exact activeClassName="active-link"> {user} Staff Management </NavLink>)
+          : null
+        }
+        
       </div>
       <div className="additional">
         <NavLink to="/" exact activeClassName="active-link"> {logout} Logout </NavLink>

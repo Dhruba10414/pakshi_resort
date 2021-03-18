@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import { LoginAnim } from "../animations/LoginAnim";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ import staff4 from "../assets/images/Login/staff4.jpg";
 import staff5 from "../assets/images/Login/staff5.jpg";
 
 function Login() {
+  const history = useHistory();
   const [state, setState] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +43,7 @@ function Login() {
           .then(user => {
             localStorage.setItem('user', JSON.stringify(user.data));
             localStorage.setItem('refresh_token', token.data.refresh);
-            console.log("OK: ", localStorage['user']);
+            history.push("/staff/dashboard")
           })
           .catch(() => {
             setError("Login failed. Try again!");
