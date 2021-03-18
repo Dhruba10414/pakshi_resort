@@ -4,14 +4,15 @@ import React from "react";
 import guest from "../../assets/images/StaffSection/guest.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
 import card from "../../assets/images/StaffSection/card.svg";
-import { warning} from "../../assets/images/SVG";
+import { warning, x } from "../../assets/images/SVG";
 
-function RoomDetails({ id, name, room_no }) {
+function RoomDetails({ id, name, room_no, closeModal }) {
   return (
     <div className="roomDetails">
       <div className="roomDetails__guest">
         <div className="image-container">
           <img src={leaf} className="leaf-image" alt="" />
+          <div className="back-btn" onClick={closeModal}>{x}</div>
           <div className="image">
             <img src={guest} alt="" />
           </div>

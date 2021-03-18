@@ -1,31 +1,13 @@
 import React, { useState } from "react";
 import ContentBox from "../components/StaffSection/ContentBox";
 import { roomList } from "../assets/DummyRoomData";
+import {rsvg} from '../assets/images/SVG';
+
 // compoents
 import Room from "../components/Dashboard/Room";
 import FoodOrder from "../components/Dashboard/FoodOrder";
 import RoomDetails from "../components/Dashboard/RoomDetails";
 
-// COMMON SVG FOR TABLE HEADING
-const rsvg = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="feather feather-maximize-2"
-  >
-    <polyline points="15 3 21 3 21 9"></polyline>
-    <polyline points="9 21 3 21 3 15"></polyline>
-    <line x1="21" y1="3" x2="14" y2="10"></line>
-    <line x1="3" y1="21" x2="10" y2="14"></line>
-  </svg>
-);
 
 function Dashboard() {
   /* ----------------- V A R I A B L E S ----------------------- */
@@ -138,6 +120,7 @@ function Dashboard() {
               id={details.id}
               name={details.name}
               room_no={details.room_no}
+              closeModal={closeModal}
             />
           )}
 

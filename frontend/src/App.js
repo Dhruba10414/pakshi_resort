@@ -10,6 +10,7 @@ import Guests from "./pages/Guests";
 import FoodOrders from "./pages/FoodOrders";
 import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/staff/foodorders" component={FoodOrders} />
         <Route exact path="/staff/park" component={ParkVisitors} />
         <Route exact path="/staff/book" component={Book} />
+        <Route exact path="/staff/admin" component={Admin} />
       </Router>
     </div>
   );

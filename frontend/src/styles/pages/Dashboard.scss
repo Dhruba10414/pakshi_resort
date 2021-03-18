@@ -264,9 +264,9 @@
     .roomDetails{
       width: 100%;
       display: flex;
-
+      // guest section
       &__guest{
-        width: 50%;
+        width: 60%;
         padding: 0;
         background: #fff;
         border-radius: 8px;
@@ -281,7 +281,23 @@
             top: -50px;
             left: -30px;
             opacity: 0.3;
-            // transform: rotate(80deg);
+          }
+          .back-btn{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--primary-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            svg{color: #fff; height: 20px; transition: 0.4s;}
+            &:hover svg{transform: scale(1.5);}
           }
           .image{
             width: 200px;
@@ -358,9 +374,9 @@
           }
         }
       }
-
+      // payments & room info section
       &__others{
-        width: calc(50% - 20px);
+        width: calc(40% - 20px);
         margin-left: 15px;
 
         .room-info{
@@ -396,9 +412,12 @@
               text-align: center;
             }
             p{
-              font-family: var(--quicksand-font);
+              font-family: var(--secondary-font);
               color: var(--primary-color);
               font-weight: bold;
+              text-align: center;
+              font-size: 2rem;
+              letter-spacing: -1px;
             }
           }
         }
@@ -470,13 +489,13 @@
                 border: none;
                 cursor: pointer;
                 border-radius: 5px;
-                background-color: var(--primary-color);
-                color: #fff;
+                background-color: var(--primary-color-light);
+                color: var(--primary-color);
                 font-family: var(--quicksand-font);
                 font-size: 16px;
-                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+                font-weight: bold;
                 &:hover{
-                  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+                  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
                 }
               }
             }
