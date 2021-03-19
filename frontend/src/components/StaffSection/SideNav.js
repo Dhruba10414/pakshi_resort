@@ -1,37 +1,29 @@
-import axios from "axios";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import axios from "axios";
+
+// Assets
 import { boxes, calender, cloud, help, logout, pie, settings, user, users } from '../../assets/images/SVG';
 
 function SideNav({role, clearUser}) {
-
+  const history = useHistory();
+  
   const LogoutFunctionality = () => {
     const refresh_token = localStorage.getItem('refresh_token');
-    //get access token
+    // get users access token
     axios.post("http://127.0.0.1:8000/api/token/refresh/", { "refresh": refresh_token })
     .then(token => {
-      const Config = {
-        headers: { Authorization: "Bearer " + token.data.access },
-        body: { refresh: refresh_token }
-      }
-      axios.post("http://127.0.0.1:8000/api/logout/", Config)
-      .then(res => {
-        console.log(res.message);
-      })
-      .catch(err => {
-        console.log("error: " + err.message);
+      const Config = { headers: { Authorization: "Bearer " + token.data.access } };
+      const Body = {"refresh": JSON.stringify(refresh_token)};
+      // logout and clear refresh token and user fro local storage
+      axios.post("http://127.0.0.1:8000/api/logout/", Body, Config)
+      .then(() => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('refresh_token');
+        clearUser();
+        history.go("/staff/login");
       })
     })
-
-
-  //   const yourConfig = { headers: { Authorization: "Bearer " + token } }
-  //   axios.post("http://127.0.0.1:8000/api/logout/", yourConfig)
-  //   .then(() => {
-  //     console.log("Success");
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message);
-  //   })
   }
 
   return (
