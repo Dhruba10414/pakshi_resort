@@ -17,7 +17,6 @@ import Admin from "./pages/Admin";
 function App({setUser, clearUser, isLogedIn}) {
   useEffect(() => {
     if(localStorage.getItem('user')){
-      console.log("Ache")
       const retrievedObject = localStorage.getItem('user')
       setUser(JSON.parse(retrievedObject));
     }
@@ -35,7 +34,7 @@ function App({setUser, clearUser, isLogedIn}) {
         <Route exact path="/staff/admin" render={ () => isLogedIn ? <Admin /> : <Redirect to={{ pathname: '/staff/login' }} />} />
         <Route exact path="/staff/park" render={ () => isLogedIn ? <ParkVisitors /> : <Redirect to={{ pathname: '/staff/login' }} />} />
         <Route exact path="/staff/book" render={ () => isLogedIn ? <Book /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/login" render={ () => !isLogedIn ? <Login /> : <Redirect to={{ pathname: '/staff/dashboard' }} />} />
+        <Route exact path="/staff/login" render={ () => !isLogedIn ? <Login /> : <Redirect to={{ pathname: '/staff/dashboard' }} />} /> 
 
         {/* <Route exact path="/staff/login" component={Login} /> */}
         {/* <Route exact path="/staff/dashboard" component={Dashboard} />

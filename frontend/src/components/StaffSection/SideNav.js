@@ -1,8 +1,39 @@
+import axios from "axios";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { boxes, calender, cloud, help, logout, pie, settings, user, users } from '../../assets/images/SVG';
 
-function SideNav({role}) {
+function SideNav({role, clearUser}) {
+
+  const LogoutFunctionality = () => {
+    const refresh_token = localStorage.getItem('refresh_token');
+    //get access token
+    axios.post("http://127.0.0.1:8000/api/token/refresh/", { "refresh": refresh_token })
+    .then(token => {
+      const Config = {
+        headers: { Authorization: "Bearer " + token.data.access },
+        body: { refresh: refresh_token }
+      }
+      axios.post("http://127.0.0.1:8000/api/logout/", Config)
+      .then(res => {
+        console.log(res.message);
+      })
+      .catch(err => {
+        console.log("error: " + err.message);
+      })
+    })
+
+
+  //   const yourConfig = { headers: { Authorization: "Bearer " + token } }
+  //   axios.post("http://127.0.0.1:8000/api/logout/", yourConfig)
+  //   .then(() => {
+  //     console.log("Success");
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message);
+  //   })
+  }
+
   return (
     <div className="sideNav">
       <div className="basics">
@@ -20,7 +51,7 @@ function SideNav({role}) {
         
       </div>
       <div className="additional">
-        <NavLink to="/" exact activeClassName="active-link"> {logout} Logout </NavLink>
+        <Link onClick={LogoutFunctionality}> {logout} Logout </Link>
         <NavLink to="/" exact activeClassName="active-link"> {settings} Settings </NavLink>
         <NavLink to="/" exact activeClassName="active-link"> {help} Help </NavLink>
       </div>

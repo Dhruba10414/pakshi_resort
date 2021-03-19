@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import ContentBox from "../components/StaffSection/ContentBox";
 
@@ -80,6 +80,25 @@ function Admin() {
       })
     }
   };
+
+  // Fetch staffs
+  const GetStaffs = () => {
+    const refresh_token = localStorage.getItem('refresh_token');
+    // get users access token
+    axios.post("http://127.0.0.1:8000/api/token/refresh/", { "refresh": refresh_token })
+    .then(token => {
+      const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      // fetch users
+      axios.get("http://127.0.0.1:8000/api/users/", Config)
+      .then(res => {
+        console.log(res.data);
+      })
+    })
+  }
+
+  useEffect(() => {
+    GetStaffs();
+  }, []);
 
   return (
     <ContentBox heading="Admin">

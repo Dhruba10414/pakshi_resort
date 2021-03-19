@@ -43,7 +43,7 @@ function Login() {
           .then(user => {
             localStorage.setItem('user', JSON.stringify(user.data));
             localStorage.setItem('refresh_token', token.data.refresh);
-            history.push("/staff/dashboard")
+            history.go("/staff/dashboard")
           })
           .catch(() => {
             setError("Login failed. Try again!");

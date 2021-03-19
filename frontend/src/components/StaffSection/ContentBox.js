@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
+import { clearUser } from "../../redux/user/userAction";
 
+// Components
 import SideNav from "./SideNav";
 import StaffHeading from "./StaffHeading";
 
-function ContentBox({currentUser, children, heading}) {
+// Main Function
+function ContentBox({currentUser, clearUser, children, heading}) {
   return (
     <div className="staffArea">
-      <SideNav role={currentUser.role}/>
+      <SideNav role={currentUser.role} clearUser={clearUser}/>
       <div className="contentBox">
         <StaffHeading heading={heading} user_name={currentUser.user_name}/>
         <div className="container">{children}</div>
@@ -16,11 +19,18 @@ function ContentBox({currentUser, children, heading}) {
   );
 }
 
+// Redux states
 const mapStateToProps = (state) => {
   return {
     currentUser: state.user.currentUser,
   };
 };
+// Redux actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearUser: () => { dispatch(clearUser())},
+  };
+};
 
-export default connect(mapStateToProps, null)(ContentBox);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentBox);
 

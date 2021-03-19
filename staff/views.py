@@ -47,7 +47,7 @@ class LogoutAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'logout Successful'}, status=status.HTTP_204_NO_CONTENT)
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
