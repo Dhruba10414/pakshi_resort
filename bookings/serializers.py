@@ -30,18 +30,25 @@ class BookingSerializer(serializers.ModelSerializer):
 
 class RoomSerializer(serializers.ModelSerializer):
     room_type = serializers.SlugRelatedField(slug_field='room_type', read_only=True)
-    is_occupied = serializers.SerializerMethodField()
-    active_booking = BookingSerializer(allow_null=True)
-
+    
     class Meta:
         model = Rooms
-        fields = ['id', 'room_num', 'room_type', 'is_occupied', 'active_booking']
+        fields = ['id', 'room_num', 'room_type']
+
+class RoomOccupiedSerializer(RoomSerializer):
+    is_occupied = serializers.SerializerMethodField()
+    active_booking = BookingSerializer(allow_null=True)
 
     def get_is_occupied(self, obj):
         return obj.active_booking is not None
 
-class RoomGuestEmbededSerializer(RoomSerializer):
+
+class RoomGuestEmbededSerializer(RoomOccupiedSerializer):
     active_booking = BookingEmbededSerializer(allow_null=True)
+
+    class Meta:
+        model = Rooms
+        fields = ['id', 'room_num', 'room_type', 'is_occupied', 'active_booking']
 
 class GuestSerializer(serializers.ModelSerializer):
     class Meta:
