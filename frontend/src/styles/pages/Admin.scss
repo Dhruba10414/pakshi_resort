@@ -137,9 +137,38 @@
       outline: none;
       border: none;
       border-radius: 5px;
+      cursor: pointer;
+      transition: 0.4s;
       &:hover {
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
       }
+    }
+    .success-message{
+      position: absolute;
+      top:11vh;
+      left: 44vw;
+      background-color: var(--green);
+      color: var(--green-dark);
+      font-weight: bold;
+      font-family: var(--quicksand-font);
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      div{
+        width: 30px; height: 30px;
+        border-radius: 50%; border: 2px solid var(--green-dark);
+        margin-right: 10px; display: flex; align-items: center;
+        justify-content: center;
+      }
+      opacity: 1;
+      margin-left: 0;
+      transition: 0.5s;
+    }
+    .success-message.disabled{
+      margin-left: 30px;
+      opacity: 0;
     }
   }
   .stafflist {
@@ -321,7 +350,7 @@
               cursor: pointer;
               transition: 0.4s;
               &:hover{
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
               }
             }
           }

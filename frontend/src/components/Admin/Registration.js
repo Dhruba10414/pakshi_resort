@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { check } from "../../assets/images/SVG";
 
 function Registration() {
   const [name, setName] = useState("");
@@ -64,30 +65,39 @@ function Registration() {
     setRole("S");
   };
 
+  // NOTIFY IF STAFF SUCCESSFULLY
+  const notify = () => {
+    setTimeout(() => {
+      setSuccess(false);
+    }, 4000)
+    setSuccess(true);
+  }
+
   // REGISTRATION FUNCTION
   const registerStaff = (event) => {
     event.preventDefault();
 
     if (requiredFildCheck() && phoneNumberCheck() && passwordValidation()) {
       setLoading(true);
-      axios
-        .post("http://127.0.0.1:8000/api/signup/", {
-          email: email,
-          password: password,
-          user_name: name,
-          contact: phone,
-          gender: gender,
-          role: role,
-        })
+      const refresh_token = localStorage.getItem("refresh_token");
+    // get users access token
+    axios.post("http://127.0.0.1:8000/api/token/refresh/", {refresh: refresh_token,})
+      .then((token) => {
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+        const Body = { "email": email, "password": password, "user_name": name, "contact": phone, "gender": gender, "role": role}
+        
+        // Create users
+        axios.post("http://127.0.0.1:8000/api/signup/", Body, Config)
         .then(() => {
           clearFields();
           setLoading(false);
-          setSuccess(true);
+          notify();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.message);
           setLoading(false);
-        });
+        })
+      });
     }
   };
 
@@ -257,6 +267,10 @@ function Registration() {
           </button>
         )}
       </form>
+
+      <div className={success ? "success-message" : "success-message disabled"}>
+        <div>{ check }</div> Successfully Registered!
+      </div>
     </div>
   );
 }
