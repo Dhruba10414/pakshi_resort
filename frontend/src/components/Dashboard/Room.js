@@ -37,7 +37,8 @@ const xSvg = (
 );
 
 function Room({
-  no,
+  room_no,
+  room_type,
   status,
   active_booking,
   openFoodOrderModal,
@@ -52,12 +53,15 @@ function Room({
               openDetailsModal(
                 active_booking.guest.id,
                 active_booking.guest.name,
-                no
+                active_booking.check_in,
+                active_booking.check_out,
+                room_no,
+                room_type
               )
           : null
       }
     >
-      <div className="no">#{no}</div>
+      <div className="no">#{room_no}</div>
       <div className={status ? "status lock" : "status free"}>
         {status ? <p>{xSvg} Booked</p> : <p>{checkedSvg}Free</p>}
       </div>
@@ -78,7 +82,7 @@ function Room({
               openFoodOrderModal(
                 active_booking.guest.id,
                 active_booking.guest.name,
-                no
+                room_no
               )
             }
           >

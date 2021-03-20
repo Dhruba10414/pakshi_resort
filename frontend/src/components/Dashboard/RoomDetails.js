@@ -1,12 +1,29 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 // assets
-import guest from "../../assets/images/StaffSection/guest.svg";
+import guestSvg from "../../assets/images/StaffSection/guest.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
 import card from "../../assets/images/StaffSection/card.svg";
 import { warning, x } from "../../assets/images/SVG";
 
-function RoomDetails({ id, name, room_no, closeModal }) {
+function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal }) {
+  const [guest , setGuest] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const refresh_token = localStorage.getItem("refresh_token");
+    // get users access token
+    axios.post("http://127.0.0.1:8000/api/token/refresh/", {refresh: refresh_token,})
+    .then((token) => {
+      const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      // get rooms
+      axios.get(`http://127.0.0.1:8000/bookings/guests/?guest=${id}`, Config)
+      .then((res) => { setGuest(res.data); console.log(res.data)})
+      .catch((err) => { setError(err.message);});
+    })
+    .catch((err) => { setError(err.message);})
+  }, []);
+
   return (
     <div className="roomDetails">
       <div className="roomDetails__guest">
@@ -14,7 +31,7 @@ function RoomDetails({ id, name, room_no, closeModal }) {
           <img src={leaf} className="leaf-image" alt="" />
           <div className="back-btn" onClick={closeModal}>{x}</div>
           <div className="image">
-            <img src={guest} alt="" />
+            <img src={guestSvg} alt="" />
           </div>
         </div>
         <div className="guest">
@@ -32,11 +49,11 @@ function RoomDetails({ id, name, room_no, closeModal }) {
             <div className="info-container">
               <div className="info r-48">
                 <div className="label">Email</div>
-                <div className="value">mizanur.rahman03032@gmail.com</div>
+                <div className="value">{guest && guest.email}</div>
               </div>
               <div className="info r-30">
                 <div className="label">Phone</div>
-                <div className="value">+880 1531709712</div>
+                <div className="value">{guest && guest.contact}</div>
               </div>
               <div className="info r-20">
                 <div className="label">Gender</div>
@@ -46,17 +63,17 @@ function RoomDetails({ id, name, room_no, closeModal }) {
             <div className="info-container">
               <div className="info r-100">
                 <div className="label">Address</div>
-                <div className="value">Thonthonia, Bogra Sadar, Bogra</div>
+                <div className="value">{guest && guest.address}</div>
               </div>
             </div>
             <div className="info-container">
               <div className="info r-48">
                 <div className="label">Check in</div>
-                <div className="value">22 JAN 2021</div>
+                <div className="value">{checkIn}</div>
               </div>
               <div className="info r-48">
                 <div className="label">Check out</div>
-                <div className="value">23 JAN 2021</div>
+                <div className="value">{checkOut}</div>
               </div>
             </div>
           </div>
@@ -95,7 +112,7 @@ function RoomDetails({ id, name, room_no, closeModal }) {
           </div>
           <div className="room">
             <h1>{room_no}</h1>
-            <p>Delux Single Room</p>
+            <p>{room_type}</p>
           </div>
         </div>
       </div>
