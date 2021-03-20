@@ -4,10 +4,10 @@ from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+# BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
-# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -83,12 +83,12 @@ DATABASES = {
 }
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
