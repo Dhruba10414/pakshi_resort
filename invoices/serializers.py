@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from bookings.models import Rooms, RoomType, Bookings, Guests
+from bookings.serializers import BookingSerializer
 
 
 class BookingWithBill(BookingSerializer):

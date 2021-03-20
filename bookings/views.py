@@ -17,7 +17,7 @@ def room_available(room_id, from_, to_):
     is_available = Bookings.objects.filter(Q(room__id=room_id),
                                             (
                                                 (Q(check_in__gte=from_) & Q(check_in__lt=to_)) |
-                                                (Q(check_out__gte=from_) & Q(check_out__lt=to_))
+                                                (Q(check_out__gt=from_) & Q(check_out__lt=to_))
                                             )).exclude(is_canceled=True).exists()
     
     return not is_available
@@ -31,8 +31,9 @@ def add_new_booking(room_id, guest_id, staff_id, check_in, check_out):
     if not ok:
         return None
 
-    new_booking = Bookings.objects.create(room__id=room_id, guest__id=guest_id, check_in=check_in, 
-                            check_out=check_out, by_staff__id=staff_id)
+    new_booking = Bookings(room_id=room_id, guest_id=guest_id, check_in=check_in, 
+                            check_out=check_out, by_staff_id=staff_id)
+    new_booking.save()
     
     return new_booking
 
@@ -265,10 +266,10 @@ class BookARoom(generics.GenericAPIView):
     serializer_class = BookingSerializer
 
     def post(self, request, *args, **kwargs):
-        room_id = request.query_params.get('room', None)
-        guest_id = request.query_params.get('guest', None)
-        from_ = request.query_params.get('from', None)
-        to_ = request.query_params.get('to', None)
+        room_id = request.data.get('room', None)
+        guest_id = request.data.get('guest', None)
+        from_ = request.data.get('from_', None)
+        to_ = request.data.get('to_', None)
 
         if from_ is None or to_ is None or room_id is None or guest_id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)

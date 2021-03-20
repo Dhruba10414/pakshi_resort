@@ -12,4 +12,5 @@ urlpatterns = [
     path('checkin/', CheckIn.as_view(), name='checkin'),
     path('checkout/', CheckOut.as_view(), name='checkout'),
     path('rooms/check/', RoomAvailable.as_view(), name='room_check'),
+    path('add/', BookARoom.as_view(), name='add_booking'),
 ]
