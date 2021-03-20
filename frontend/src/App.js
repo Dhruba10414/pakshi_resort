@@ -14,10 +14,11 @@ import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
 import Admin from "./pages/Admin";
 
-function App({setUser, clearUser, isLogedIn}) {
+function App({ setUser, isLogedIn }) {
+  // const location = useLocation();
   useEffect(() => {
-    if(localStorage.getItem('user')){
-      const retrievedObject = localStorage.getItem('user')
+    if (localStorage.getItem("user")) {
+      const retrievedObject = localStorage.getItem("user");
       setUser(JSON.parse(retrievedObject));
     }
   }, []);
@@ -25,24 +26,17 @@ function App({setUser, clearUser, isLogedIn}) {
   return (
     <div className="App">
       <Router>
+        {/* GUEST SECTION */}
         <Route exact path="/" component={Home} />
 
         {/* STAFF SECTION */}
-        <Route exact path="/staff/dashboard" render={ () => isLogedIn ? <Dashboard /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/guests" render={ () => isLogedIn ? <Guests /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/foodorders" render={ () => isLogedIn ? <FoodOrders /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/admin" render={ () => isLogedIn ? <Admin /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/park" render={ () => isLogedIn ? <ParkVisitors /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/book" render={ () => isLogedIn ? <Book /> : <Redirect to={{ pathname: '/staff/login' }} />} />
-        <Route exact path="/staff/login" render={ () => !isLogedIn ? <Login /> : <Redirect to={{ pathname: '/staff/dashboard' }} />} /> 
-
-        {/* <Route exact path="/staff/login" component={Login} /> */}
-        {/* <Route exact path="/staff/dashboard" component={Dashboard} />
-        <Route exact path="/staff/guests" component={Guests} />
-        <Route exact path="/staff/foodorders" component={FoodOrders} />
-        <Route exact path="/staff/park" component={ParkVisitors} />
-        <Route exact path="/staff/book" component={Book} />
-        <Route exact path="/staff/admin" component={Admin} /> */}
+        <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
+        <Route exact path="/staff/dashboard" render={() => isLogedIn ? <Dashboard /> : <Login /> } />
+        <Route exact path="/staff/book" render={() => isLogedIn ? <Book /> : <Login /> } />
+        <Route exact path="/staff/guests" render={() => isLogedIn ? <Guests /> : <Login /> } />
+        <Route exact path="/staff/foodorders" render={() => isLogedIn ? <FoodOrders /> : <Login /> } />
+        <Route exact path="/staff/park" render={() => isLogedIn ? <ParkVisitors /> : <Login /> } />
+        <Route exact path="/staff/admin" render={() => isLogedIn ? <Admin /> : <Login /> } />
       </Router>
     </div>
   );
@@ -58,7 +52,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => dispatch(setUser(user)),
-    clearUser: () => { dispatch(clearUser())},
+    clearUser: () => {
+      dispatch(clearUser());
+    },
   };
 };
 

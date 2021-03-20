@@ -21,7 +21,7 @@ function SideNav({role, clearUser}) {
         localStorage.removeItem('user');
         localStorage.removeItem('refresh_token');
         clearUser();
-        history.go("/staff/login");
+        history.push("/staff/login");
       })
     })
   }
