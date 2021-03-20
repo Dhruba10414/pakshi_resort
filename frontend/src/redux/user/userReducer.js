@@ -1,8 +1,9 @@
-import { CLEAR_USER, SET_USER } from "./userType";
+import { CLEAR_USER, SET_STAFFS, SET_USER } from "./userType";
 
 const initialState = {
   isLogedIn: false,
   currentUser: null,
+  staffs: []
 };
 
 const userReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const userReducer = (state = initialState, action) => {
         currentUser: null,
         isLogedIn: false,
       };
+    case SET_STAFFS:
+      return{
+        ...state,
+        staffs: action.staffs
+      }
     default:
       return state;
   }
