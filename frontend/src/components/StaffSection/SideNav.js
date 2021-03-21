@@ -43,7 +43,7 @@ function SideNav({role, clearUser}) {
         
       </div>
       <div className="additional">
-        <Link onClick={LogoutFunctionality}> {logout} Logout </Link>
+        <Link to="/staff/login" onClick={LogoutFunctionality}> {logout} Logout </Link>
         <NavLink to="/" exact activeClassName="active-link"> {settings} Settings </NavLink>
         <NavLink to="/" exact activeClassName="active-link"> {help} Help </NavLink>
       </div>

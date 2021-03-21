@@ -44,37 +44,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
 
-      // search field
-      .search-field {
-        width: 100%;
-        position: sticky;
-        top: 0;
-        form {
-          width: 100%;
-          margin: 0 10px;
-          height: 50px;
-          display: flex;
-          align-items: center;
-          input {
-            width: 80%;
-            padding: 5px;
-            font-size: 14px;
-            outline: none;
-            border: none;
-            background: transparent;
-          }
-          .icon {
-            height: 40px;
-            padding: 5px 10px;
-            background: transparent;
-            svg {
-              width: 18px;
-              color: gray;
-            }
-          }
-        }
-      }
-
       // orginal tables
       .room-table {
         width: 100%;
@@ -82,6 +51,38 @@
         border-radius: 8px;
         padding: 0;
 
+        // search field
+        .search-field {
+          width: 100%;
+          position: sticky;
+          top: 0;
+          background: var(--body-background-color);
+          form {
+            width: 100%;
+            margin: 0 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            input {
+              width: 80%;
+              padding: 5px;
+              font-size: 14px;
+              outline: none;
+              border: none;
+              background: transparent;
+            }
+            .icon {
+              height: 40px;
+              padding: 5px 10px;
+              background: transparent;
+              svg {
+                width: 18px;
+                color: gray;
+              }
+            }
+          }
+        }
+        // table heading and contents common style
         .table-heading,
         .aroom {
           display: flex;
@@ -134,8 +135,7 @@
         // Table Heading
         .table-heading {
           position: sticky;
-          top: 0;
-          border-radius: 8px 8px 0 0;
+          top: 50px;
           svg {
             width: 12px;
             transform: rotate(-45deg);
@@ -376,7 +376,9 @@
           margin-top: 4vh;
           height: 60vh;
           overflow-y: scroll;
-          &::-webkit-scrollbar { display: none; }
+          &::-webkit-scrollbar {
+            display: none;
+          }
           -ms-overflow-style: none;
           scrollbar-width: none;
         }

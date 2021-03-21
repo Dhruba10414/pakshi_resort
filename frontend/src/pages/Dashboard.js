@@ -72,6 +72,8 @@ function Dashboard() {
           {/* ============== ROOMS TABLE ============== */}
           {!openOrder && !openRoomDetails ? (
             <div className="room-table-container">
+              <div className="room-table">
+                {/* search field */}
               <div className="search-field">
                 <form onSubmit={searchRoom}>
                   <div className="icon">
@@ -99,7 +101,6 @@ function Dashboard() {
                   />
                 </form>
               </div>
-              <div className="room-table">
                 {/* table heading */}
                 <div className="table-heading">
                   <div className="no">Room {rsvg}</div>
