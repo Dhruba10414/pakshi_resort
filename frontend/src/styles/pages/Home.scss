@@ -126,7 +126,7 @@
       }
     }
   }
-
+  /////////////////////////////////////////////////////////////////////////////////////
   &__features {
     padding: 100px;
     @include media("<=phone") {
@@ -173,10 +173,83 @@
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
   &__rooms {
-    padding: 0 100px 100px 100px;
+    display: flex;
     @include media("<=phone") {
       padding: 0 30px 0 30px;
+    }
+    .heading-block{
+      width: 50%;
+      padding: 0 0 0 150px;
+    }
+    .room-images{
+      width: 50%;
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  &__park{
+    height: 80vh;
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    .park{
+      height: 80vh;
+      width: 100%;
+      background: linear-gradient(
+        0deg,
+        rgba(50, 62, 60, 0.6),
+        rgba(17, 45, 50, 0.8)
+      ),
+      url("../../assets/images/resort/view-6.JPG") no-repeat center center / cover;
+      display: flex;
+      align-items: center;
+
+      div{
+        padding: 0 140px;
+        width: 50%;
+        h1{
+          font-family: var(--primary-font);
+          font-size: 3.5rem;
+          color: #fff;
+          font-weight: normal;
+        }
+        p{
+          display: block;
+          width: 80%;
+          color: #fff;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 30px;
+        }
+        a{
+          display: inline-block;
+          margin-top: 30px;
+          padding: 20px 50px;
+          border: 1px solid #fff;
+          border-radius: 3px;
+          font-family: var(--quicksand-font);
+          font-weight: bold;
+          text-decoration: none;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: #fff;
+          transition: 0.5s;
+          @include media("<=phone") {
+              width: 100%;
+              text-align: center;
+              font-size: 18px;
+              font-family: var(--quicksand-font);
+              background: #fff;
+              color: var(--primary-color);
+          }
+          &:hover {
+            background-color: #fff;
+            color: var(--primary-color);
+          }
+        }
+      }
     }
   }
 }
