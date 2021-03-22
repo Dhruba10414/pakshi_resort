@@ -1,6 +1,7 @@
 import React from "react";
 
 import resort from "../assets/images/resort.jpg";
+import Eat from "../components/Home/Eat";
 import Features from "../components/Home/Features";
 import Heading from "../components/Home/Heading";
 import Park from "../components/Home/Park";
@@ -43,10 +44,15 @@ function Home() {
         <div className="home__rooms">
           <Rooms />
         </div>
+
+        <div className="home__park">
+        <Park />
       </div>
 
-      <div className="home__park">
-        <Park />
+      <div className="home__eat">
+        <Eat />
+      </div>
+
       </div>
       <Navigation />
     </>
