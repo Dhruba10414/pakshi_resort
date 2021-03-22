@@ -6,7 +6,7 @@ import Features from "../components/Home/Features";
 import Heading from "../components/Home/Heading";
 import Park from "../components/Home/Park";
 import Rooms from "../components/Home/Rooms";
-import Navigation from '../components/Navigation/Navigation'
+import Navigation from "../components/Navigation/Navigation";
 
 function Home() {
   return (
@@ -19,7 +19,9 @@ function Home() {
           </div>
           <div
             className="home-image"
-            style={{ background: `url(${resort}) no-repeat center center / cover`}}
+            style={{
+              background: `url(${resort}) no-repeat center center / cover`,
+            }}
           ></div>
         </div>
 
@@ -46,13 +48,12 @@ function Home() {
         </div>
 
         <div className="home__park">
-        <Park />
-      </div>
+          <Park />
+        </div>
 
-      <div className="home__eat">
-        <Eat />
-      </div>
-
+        <div className="home__eat">
+          <Eat />
+        </div>
       </div>
       <Navigation />
     </>

@@ -1,0 +1,59 @@
+.roooms{
+    width: 100%;
+    min-height: 90vh;
+
+    &__banner{
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        .banner-left{
+            width: 20%;
+            background-color: var(--primary-color-light);
+        }
+        .banner-right{
+            width: 80%;
+            background-color: var(--primary-color);
+            position: relative;
+            .heading{
+                position: absolute;
+                top: 20vh;
+                left: 15%;
+                p{
+                    color: #fff;
+                    font-family: var(--quicksand-font);
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+                h1{
+                    font-family: var(--primary-font);
+                    color: #fff;
+                    font-size: 4rem;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                }
+            }
+            .image{
+                width: 100%;
+                position: absolute;
+                top: 50vh;
+                left: 0;
+                img{width: 100%;}
+                .design{
+                    position: absolute; right: 0;
+                    margin-top: -5px;
+                    height: 20vh;
+                    width: 30%;
+                    display: flex;
+                    .left{width: 35%; height: 15vh;  background: var(--primary-color-light);}
+                    .right{width: 65%; height: 20vh; background: var(--primary-color);}
+                }
+            }
+        }
+    }
+    .content{
+        width: 100%;
+        height: 100vh;
+        margin-top: 60vh;
+        border: 1px solid red;
+    }
+}

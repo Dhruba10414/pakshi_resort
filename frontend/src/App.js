@@ -13,6 +13,7 @@ import FoodOrders from "./pages/FoodOrders";
 import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
 import Admin from "./pages/Admin";
+import Rooms from "./pages/Rooms";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -28,6 +29,7 @@ function App({ setUser, isLogedIn }) {
       <Router>
         {/* GUEST SECTION */}
         <Route exact path="/" component={Home} />
+        <Route exact path="/rooms" component={Rooms} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
