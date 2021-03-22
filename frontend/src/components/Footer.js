@@ -29,8 +29,8 @@ function Footer() {
           <div className="content__menu">
               <Link to="/">Contact us</Link>
               <Link to="/">News & Accolades</Link>
-              <Link to="/">Privace policy</Link>
               <Link to="/">Sitemap</Link>
+              <Link to="/">Privace policy</Link>
               <Link to="/">FAQ</Link>
           </div>
           <div className="content__contact">

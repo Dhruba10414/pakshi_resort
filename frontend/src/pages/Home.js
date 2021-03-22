@@ -56,7 +56,7 @@ function Home() {
           <Eat />
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
       <Navigation />
     </>
   );
