@@ -176,15 +176,24 @@
   ////////////////////////////////////////////////////////////////////////////////
   &__rooms, &__eat {
     display: flex;
+    flex-wrap: wrap;
     @include media("<=phone") {
-      padding: 0 30px 0 30px;
+      padding: 0;
     }
     .heading-block{
       width: 50%;
       padding: 0 0 0 150px;
+      @include media("<=phone") {
+        width: 100%;
+        padding: 0 30px 0 30px;
+      }
     }
     .room-images, .eat-images{
       width: 50%;
+      @include media("<=phone") {
+        width: 100%;
+        overflow: hidden;
+      }
     }
   }
 
@@ -194,6 +203,7 @@
     width: 100%;
     margin-top: 100px;
     margin-bottom: 100px;
+    @include media("<=phone") {height: 40vh; margin-top: 50px; }
     .park{
       height: 80vh;
       width: 100%;
@@ -205,15 +215,19 @@
       url("../../assets/images/resort/view-6.JPG") no-repeat center center / cover;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      @include media("<=phone") {height: 50vh;}
 
       div{
         padding: 0 140px;
         width: 50%;
+        @include media("<=phone") {padding: 30px; width: 100%; }
         h1{
           font-family: var(--primary-font);
           font-size: 3.5rem;
           color: #fff;
           font-weight: normal;
+          @include media("<=phone") {font-size: 1.5rem;}
         }
         p{
           display: block;
@@ -222,6 +236,7 @@
           font-family: var(--quicksand-font);
           font-size: 18px;
           line-height: 30px;
+          @include media("<=phone") {font-size: 16px; width: 100%; line-height: 20px; display: none;}
         }
         a{
           display: inline-block;
@@ -237,12 +252,12 @@
           color: #fff;
           transition: 0.5s;
           @include media("<=phone") {
-              width: 100%;
+            padding: 15px 25px;
               text-align: center;
-              font-size: 18px;
+              font-size: 14px;
               font-family: var(--quicksand-font);
-              background: #fff;
-              color: var(--primary-color);
+              background: transparent;
+              color: #fff;
           }
           &:hover {
             background-color: #fff;
@@ -250,6 +265,7 @@
           }
         }
       }
+      .desc{ @include media("<=phone") { padding-top: 0; margin-bottom: 60px;}}
     }
   }
 }

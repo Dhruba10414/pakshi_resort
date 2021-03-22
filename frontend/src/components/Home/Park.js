@@ -8,7 +8,7 @@ function Park() {
       <div className="heading">
         <h1>Relax and revive your mental health with our natural park.</h1>
       </div>
-      <div>
+      <div className="desc">
         <p>
           Pakshi covers around 33 acres of land with natural views. It has
           lakes, playground, garden that can heal your stress.
