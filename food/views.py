@@ -32,12 +32,13 @@ class FoodUpdateView(generics.UpdateAPIView):
 
 class FoodOrderingView(generics.GenericAPIView):
     serializer_class=OrderItemEmbededSerializer
-
+    queryset=FoodOrdering.objects.all()
     def get(self,request,*args,**kwargs):
         yesterday = date.today() - timedelta(days=1)
         orders = FoodOrdering.objects.filter(time__gte=yesterday)
-        return Response(orders,status=status.HTTP_200_OK)
-    
+        serialzer_data = self.get_serializer(orders,many=True)
+        return Response(serialzer_data.data,status=status.HTTP_200_OK)
+   
     def post(self,request,*args,**kwargs):
         food_id = request.query_params.get('food_id', None)
         guest_id = request.data.get('guest_id', None)
