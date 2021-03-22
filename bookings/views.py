@@ -82,7 +82,7 @@ class GuestRoomBookView(generics.GenericAPIView):
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -282,3 +282,33 @@ class BookARoom(generics.GenericAPIView):
         booking_info = self.get_serializer(new_booking)
 
         return Response(booking_info.data, status=status.HTTP_201_CREATED)
+
+
+class BookingRequestView(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        req_id = request.query_params.get("id", None)
+
+        if req_id is None:
+            pendings = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False)
+            pendings_seri = BookingRequestSerializer(pendings, many=True)
+        else:
+            try:
+                pendings = BookingRequest.objects.get(id=req_id)
+                pendings_seri = BookingRequestSerializer(pendings)
+            except BookingRequest.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            
+        return Response(pendings_seri.data, status=status.HTTP_200_OK)
+
+
+class AddNewBookingRequestView(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        booking_request = BookingRequestWriteSerializer(data=request.data)
+        booking_request.is_valid(raise_exception=True)
+        booking_request.save()
+
+        return Response(booking_request.data, status=status.HTTP_201_CREATED)
