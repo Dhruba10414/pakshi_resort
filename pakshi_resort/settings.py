@@ -4,10 +4,10 @@ from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+#BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
-# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'staff',
     'rest_framework_simplejwt.token_blacklist',
     'bookings',
+    'food',
 ]
 
 MIDDLEWARE = [
@@ -65,29 +66,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pakshi_resort.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pakshiDB',
-        'USER': 'pakshi',
-        'PASSWORD': 'pu7890',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-
-    }
-}
-
-# ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'pakshiDB',
+#         'USER': 'pakshi',
+#         'PASSWORD': 'pu7890',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+
 #     }
 # }
+
+# ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated'
+         'rest_framework.permissions.AllowAny'
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
      'rest_framework_simplejwt.authentication.JWTAuthentication',
