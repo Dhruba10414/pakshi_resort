@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 
 import view7 from "../../assets/images/resort/view7.JPG";
@@ -6,14 +6,15 @@ import view8 from "../../assets/images/resort/view8.JPG";
 import view9 from "../../assets/images/resort/view9.JPG";
 
 function Eat() {
-    return (
-        <>
-            <div className="heading-block">
-        <p className="secondary-head">Stay with us</p>
+  return (
+    <>
+      <div className="heading-block">
+        <p className="secondary-head">Best dining exoerience</p>
         <h2 className="primary-head">Eat & Drinks</h2>
         <p className="desc-head">
-          From our cosiest to our grandest, we’ve got 26 beautiful bedrooms in 3
-          main categories for the perfect night’s sleep.
+          Beside daily foods our restaurant and juice bars provide the perfect
+          backdrop for special family celebrations, post-round drinks, romantic
+          dinners and sneaky nightcaps.
         </p>
         <Link to="/">Explore more</Link>
       </div>
@@ -27,8 +28,8 @@ function Eat() {
           <img className="i-2" src={view7} alt="" />
         </div>
       </div>
-        </>
-    )
+    </>
+  );
 }
 
-export default Eat
+export default Eat;

@@ -1,6 +1,7 @@
 import React from "react";
 
 import resort from "../assets/images/resort.jpg";
+import Footer from "../components/Footer";
 import Eat from "../components/Home/Eat";
 import Features from "../components/Home/Features";
 import Heading from "../components/Home/Heading";
@@ -55,6 +56,7 @@ function Home() {
           <Eat />
         </div>
       </div>
+      <Footer />
       <Navigation />
     </>
   );
