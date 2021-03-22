@@ -23,9 +23,11 @@ function Navigation() {
   return (
     <>
       <div className="navigation">
-        <div className="navigation__primary">
+        <div className="navigation__primary"></div>
+
+        <div className="navigation__secondary">
           <div className="content">
-            <Link to="/">
+          <Link to="/">
               <div className="index">01</div>
               <div className="name">Stay</div>
             </Link>
@@ -42,31 +44,13 @@ function Navigation() {
               <div className="name">Location</div>
             </Link>
           </div>
+
           <div className="find-us">
             <h3>Find us</h3>
             <p>Khankashorif Road, Paksey, Ishwardi Z6006 Pabna, Rajshahi Division, Bangladesh</p>
             <Link to="https://www.google.com/maps/dir/24.8435584,89.3701066/24.086299,89.0428347/@24.458018,88.9491725,10z/data=!3m1!4b1!4m4!4m3!1m1!4e1!1m0">Get Direction</Link>
           </div>
-        </div>
-        <div className="navigation__secondary">
-          <div className="content">
-            <Link to="/">
-              <div className="index">05</div>
-              <div className="name">Meeting & Events</div>
-            </Link>
-            <Link to="/">
-              <div className="index">06</div>
-              <div className="name">Wedding</div>
-            </Link>
-            <Link to="/">
-              <div className="index">07</div>
-              <div className="name">What's on</div>
-            </Link>
-            <Link to="/">
-              <div className="index">08</div>
-              <div className="name">Gallery</div>
-            </Link>
-          </div>
+
           <div className="phone-link">
             <Link to="/" className="link">
               <svg
@@ -105,6 +89,7 @@ function Navigation() {
             </div>
           </div>
         </div>
+        
       </div>
 
       <div className="nav-button">

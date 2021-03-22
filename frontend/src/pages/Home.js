@@ -44,7 +44,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="home__rooms">
+        {/* <div className="home__rooms">
           <Rooms />
         </div>
 
@@ -54,9 +54,9 @@ function Home() {
 
         <div className="home__eat">
           <Eat />
-        </div>
+        </div> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
       <Navigation />
     </>
   );
