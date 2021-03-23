@@ -25,13 +25,12 @@ function Luxury() {
         <div className="room-features room-desc-heading">
           <h2>Features</h2>
           <ul>
+            <li>Room Size  <span>300 sqf</span></li>
             <li>King Size bed with sofa</li>
             <li>Special bathroom with hot shower</li>
-            <li>Open Garden Restaurant Facility</li>
             <li>Complimentary Breakfast at restaurant side</li>
             <li>LED TV & Wi-Fi</li>
             <li>Air Conditioned</li>
-            <li>Tea & Coffee</li>
             <li>Complimentary Swimming Pool & gym</li>
             <li>Room service</li>
           </ul>

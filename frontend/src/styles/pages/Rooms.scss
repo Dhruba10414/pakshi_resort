@@ -11,7 +11,7 @@
   }
 
   &__nav {
-    width: 50%;
+    width: 30%;
     margin: auto;
     padding: 20px;
     margin-bottom: 150px;
@@ -52,7 +52,7 @@
     // room desc heading
     .room-desc-heading {
       width: 50%;
-      padding: 50px 100px 0 100px;
+      padding: 0 100px 0 100px;
       h3,
       h2 {
         font-family: var(--primary-font);
@@ -61,7 +61,7 @@
         font-weight: normal;
       }
       h3 { font-size: 1.5rem; }
-      h3.price{ margin-top: 15px; font-family: var(--quicksand-font); }
+      h3.price{ margin-top: 15px; font-family: var(--quicksand-font); font-weight: bold; }
       p {
         width: 60%;
         margin-top: 15px;
@@ -103,19 +103,20 @@
         color: #fff;
       }
     }
+    // back button
     .back-button{
       background: transparent;
       outline: none;
       border: none;
       margin-left: 25px;
-      width: 50px;
-      height: 50px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       background: var(--primary-color);
       cursor: pointer;
       transition: all 0.4s;
-      svg{color: #fff; transition: 0.4s;}
+      svg{color: #fff; transition: 0.4s; height: 15px;}
       &:hover{box-shadow: 0 0 15px var(--primary-color-light);}
       &:hover svg{transform: scale(1.4);}
     }
@@ -131,6 +132,7 @@
           position: relative;
           font-family: var(--quicksand-font);
           font-size: 14px;
+          span{font-weight: bold;}
           &:not(:last-child) {
             padding-bottom: 20px;
           }
@@ -143,7 +145,7 @@
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            top: -4px;
+            top: 2px;
             left: -40px;
             font-size: 14px;
             text-align: center;

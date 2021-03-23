@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Navigation from "../components/Navigation/Navigation";
 import Luxury from "../components/Rooms/Luxury";
@@ -14,6 +14,10 @@ function Rooms() {
     const setToDState = () => { setD(true); setL(false); setH(false); }
     const setToLState = () => { setL(true); setD(false); setH(false); }
     const setToHState = () => { setH(true); setD(false); setL(false); }
+
+    useEffect(() => {
+      window.scrollTo(0,0);
+    }, [])
 
   return (
     <>
