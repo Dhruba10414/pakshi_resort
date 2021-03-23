@@ -15,7 +15,7 @@ function Rooms() {
           From our cosiest to our grandest, we’ve got 26 beautiful bedrooms in 3
           main categories for the perfect night’s sleep.
         </p>
-        <Link to="/">Explore more</Link>
+        <Link to="/rooms">Explore more</Link>
       </div>
 
       <div className="room-images">
