@@ -23,7 +23,7 @@ function Luxury() {
         </div>
       ) : (
         <div className="room-features room-desc-heading">
-          <h2>Features</h2>
+          <h2>Luxury room</h2>
           <ul>
             <li>Room Size  <span>300 sqf</span></li>
             <li>King Size bed with sofa</li>
