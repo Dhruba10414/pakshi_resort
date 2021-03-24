@@ -34,7 +34,7 @@ class Room_BookingsListView(generics.GenericAPIView):
 
 class GuestRoomBookView(generics.GenericAPIView):
     serializer_class = BookingGuestDetailSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -50,7 +50,7 @@ class GuestRoomBookView(generics.GenericAPIView):
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated,]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -73,7 +73,7 @@ class GuestDetail(generics.GenericAPIView):
 
 class GuestBookings(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -88,7 +88,7 @@ class GuestBookings(generics.GenericAPIView):
 
 class RoomSearch(generics.GenericAPIView):
     serializer_class = AvailableRoomCountSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         check_in = request.query_params.get('check_in', None)
@@ -125,7 +125,7 @@ class RoomSearch(generics.GenericAPIView):
 
 class NewBooking(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         room_type = request.data.get('room_type', None)
@@ -163,7 +163,7 @@ class NewBooking(generics.GenericAPIView):
         return Response(data=booking.data, status=status.HTTP_200_OK)
 
 class CheckIn(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -188,7 +188,7 @@ class CheckIn(generics.GenericAPIView):
 
 
 class CheckOut(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)

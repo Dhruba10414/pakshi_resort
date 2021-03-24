@@ -18,9 +18,9 @@ class FoodItem(models.Model):
 
 class FoodOrdering(models.Model):
     quantity = models.IntegerField(default=1)
-    time = models.DateField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
     isComplete = models.BooleanField(default=False)
     isCancel = models.BooleanField(default=False)
-    guest = models.ForeignKey(Guests,on_delete=models.SET_NULL,null=True)
-    food = models.ForeignKey(FoodItem,on_delete=models.SET_NULL,null=True)
-    taken_by = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL,null=True)
+    guest = models.ForeignKey(Guests,on_delete=models.SET_NULL,null=True,related_name='guest')
+    food = models.ForeignKey(FoodItem,on_delete=models.SET_NULL,null=True,related_name='food')
+    taken_by = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL,null=True,related_name='taken_by')

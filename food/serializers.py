@@ -16,11 +16,19 @@ class FoodOrderingSerializer(serializers.ModelSerializer):
         fields = ['quantity','time','isComplete','isCancel']
 
 class OrderItemEmbededSerializer(serializers.ModelSerializer):
-    guest = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    guest = serializers.PrimaryKeyRelatedField(read_only=True)
     food = serializers.PrimaryKeyRelatedField(read_only=True)
-    taken_by = serializers.SlugRelatedField(slug_field='user_name', read_only=True)
+    taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model=FoodOrdering
-        fields = '__all__'
+        fields = ['id','guest','food','taken_by','quantity','isComplete','isCancel','time']
 
+class FoodOrderEmbededSerializer(serializers.Serializer):
+    food_name = serializers.CharField(max_length=100)
+    food_price = serializers.FloatField()
+    food_type = serializers.CharField(max_length=1)
+
+    order_quantity = serializers.IntegerField()
+    order_time = serializers.DateTimeField()
+    guest_id = serializers.IntegerField()
