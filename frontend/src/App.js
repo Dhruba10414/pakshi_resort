@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { setUser, clearUser } from "./redux/user/userAction";
 import { connect } from "react-redux";
+import gsap from 'gsap';
 import "./styles/App.scss";
 
 // Pages
@@ -18,11 +19,14 @@ import Rooms from "./pages/Rooms";
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
   useEffect(() => {
+    gsap.to('body', 0, {css: {visibility: "visible"}});
+    
     if (localStorage.getItem("user")) {
       const retrievedObject = localStorage.getItem("user");
       setUser(JSON.parse(retrievedObject));
     }
   }, []);
+
 
   return (
     <div className="App">

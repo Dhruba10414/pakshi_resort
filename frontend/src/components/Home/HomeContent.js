@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import resort from "../../assets/images/resort.jpg";
 import Footer from "../Footer";
 import Eat from "./Eat";
@@ -7,8 +7,13 @@ import Heading from "./Heading";
 import Park from "./Park";
 import Rooms from "./Rooms";
 import Navigation from "../Navigation/Navigation";
+import { HomeAnim } from "../../animations/HomeAnim";
 
 function HomeContent() {
+  useEffect(() => {
+    HomeAnim();
+  }, []);
+
   return (
     <>
       <div className="home">
@@ -17,12 +22,9 @@ function HomeContent() {
           <div className="home-heading">
             <Heading />
           </div>
-          <div
-            className="home-image"
-            style={{
-              background: `url(${resort}) no-repeat center center / cover`,
-            }}
-          ></div>
+          <div className="home-image">
+            <img src={resort} alt="" />
+          </div>
         </div>
 
         <div className="home__features">

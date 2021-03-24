@@ -16,16 +16,16 @@ function Features() {
     const imageHandler = (value) => {
       setTimeout(() => {
         setFront(value);
+        setBack(front);
       }, 300);
-      setBack(front);
     }
 
   
     useEffect(() => {
       const tl = gsap.timeline();
-      tl.from(".image .image-2", 0.8, {   
+      tl.from(".image .image-2", 1, {   
         x: "-100%",
-        ease: "expo.inOut",
+        ease: "power4",
       });
 
     }, [front]);
@@ -33,6 +33,7 @@ function Features() {
   return (
     <>
       <div className="image">
+        <div className="odiv"></div>
         <img className="image-1" src={imageArray[back]} alt="" />
         <img className="image-2" src={imageArray[front]} alt="" />
       </div>

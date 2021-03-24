@@ -4,6 +4,8 @@ import parkImage from "../../assets/images/resort/view-6.JPG";
 
 function Park() {
   return (
+    <>
+    <div className="park-overlay"></div>
     <div className="park">
       <div className="heading">
         <h1>Relax and revive your mental health with our natural park.</h1>
@@ -16,6 +18,7 @@ function Park() {
         <Link to="/">Learn more</Link>
       </div>
     </div>
+    </>
   );
 }
 
