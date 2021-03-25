@@ -9,7 +9,7 @@ function Eat() {
   return (
     <>
       <div className="heading-block">
-        <p className="secondary-head">Best dining exoerience</p>
+        <p className="secondary-head">Best dining experience</p>
         <h2 className="primary-head">Eat & Drinks</h2>
         <p className="desc-head">
           Beside daily foods our restaurant and juice bars provide the perfect

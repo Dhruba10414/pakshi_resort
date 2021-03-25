@@ -1,4 +1,138 @@
-.facilities{
+.facilities {
+  width: 100%;
+  min-height: 100vh;
+  margin-bottom: 100px;
+
+  &__heading {
+    padding: 20vh 180px 10vh 180px;
+    font-size: 1.5rem;
+    h1 {
+      font-family: var(--primary-font);
+      color: var(--primary-color);
+      div {
+        overflow: hidden;
+      }
+    }
+  }
+
+  &__garden, &__honeymoon {
+    min-height: 120vh;
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    position: relative;
+    
+    .first-step,
+    .honeymoon-container {
+      display: flex;
+      justify-content: space-between;
+      .garden-image,
+      .honeymoon-image {
+        width: 48%;
+        height: 80vh;
+        img {
+          height: 80vh;
+        }
+      }
+
+      .garden-desc,
+      .honeymoon-desc {
+        width: 48%;
+        min-height: 60vh;
+        padding-top: 50px;
+        h3 {
+          font-family: var(--quicksand-font);
+          font-size: 2rem;
+          font-weight: normal;
+          color: #444;
+        }
+        h2 {
+          font-family: var(--primary-font);
+          color: var(--primary-color);
+          font-size: 3rem;
+          font-weight: normal;
+        }
+        p {
+          width: 80%;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 25px;
+          margin-top: 15px;
+        }
+        img.img-tw {
+          width: 90%;
+          margin-left: 65px;
+          margin-top: 75px;
+        }
+        img.landscape{
+            width: 65px;
+            margin-left: 30%;
+            margin-bottom: -35px;
+        }
+      }
+      .honeymoon-image { text-align: right; }
+      .honeymoon-desc { text-align: right; p{margin-left: auto;}}
+      .honeymoon-desc{ img.honeymoon{width: 55px; margin-right: 30%; margin-bottom: -30px;} }
+    }
+    img.img-th {
+      position: absolute;
+      top: 85vh;
+      width: 25vw;
+      left: 15vw;
+    }
+  }
+  &__honeymoon{ min-height: 100vh; }
+
+  &__swimming, &__games {
     width: 100%;
     min-height: 100vh;
+    margin-top: 100px;
+    background: #e6e9e6;
+
+    .pool-container,
+    .games-container {
+      width: 80%;
+      height: 100vh;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .pool-desc,
+      .games-desc {
+        width: 49%;
+        padding: 100px 0;
+        height: fit-content;
+        h3 {
+          font-family: var(--quicksand-font);
+          font-size: 2rem;
+          font-weight: normal;
+          color: #444;
+        }
+        h2 {
+          font-family: var(--primary-font);
+          color: var(--primary-color);
+          font-size: 3rem;
+          font-weight: normal;
+        }
+        p {
+          width: 80%;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 25px;
+          margin-top: 15px;
+        }
+        img{
+            width: 60px;
+            margin-left: 30%;
+            margin-bottom: -45px;
+        }
+      }
+      .pool-image,
+      .games-image {
+        width: 49%;
+        img{width: 100%;}
+      }
+    }
+  }
 }
