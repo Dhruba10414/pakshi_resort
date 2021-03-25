@@ -26,19 +26,9 @@ function Facilities() {
         {/* heading */}
         <div className="facilities__heading">
           <h1>
-            <div>
-              <span>
-                Take a look inside the Pakshi resort. A charming, sniptious
-              </span>
-            </div>
-            <div>
-              <span>
-                place, a home from home. A great place to spend leisure
-              </span>
-            </div>
-            <div>
-              <span>memorable time with your family and friends.</span>
-            </div>
+            <div><span>Take a look inside the Pakshi resort. A charming, sniptious</span></div>
+            <div><span>place, a home from home. A great place to spend leisure</span></div>
+            <div><span>memorable time with your family and friends.</span></div>
           </h1>
         </div>
         {/* garden */}
@@ -107,6 +97,7 @@ function Facilities() {
           </div>
         </div>
 
+        {/* Indoor Games */}
         <div className="facilities__games">
           <div className="games-container">
             <div className="games-desc">
