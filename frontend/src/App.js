@@ -15,6 +15,7 @@ import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
 import Admin from "./pages/Admin";
 import Rooms from "./pages/Rooms";
+import Facilities from "./pages/Facilities";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -34,6 +35,7 @@ function App({ setUser, isLogedIn }) {
         {/* GUEST SECTION */}
         <Route exact path="/" component={Home} />
         <Route exact path="/rooms" component={Rooms} />
+        <Route exact path="/facilities" component={Facilities} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />

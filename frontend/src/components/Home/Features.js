@@ -47,7 +47,7 @@ function Features() {
           <div className="feature"><p onClick={() => imageHandler(3)}>Garden & Walk way</p></div>
           <div className="feature"><p onClick={() => imageHandler(4)}>Play Ground</p></div>
         </div>
-        <Link to="/">View More</Link>
+        <Link to="/facilities">View More</Link>
       </div>
     </>
   );
