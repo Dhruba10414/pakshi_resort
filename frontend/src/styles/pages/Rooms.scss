@@ -4,10 +4,13 @@
 
   &__heading {
     padding: 20vh 200px 10vh 200px;
-    font-family: var(--primary-font);
-    font-size: 1.5rem;
-    //    line-height: 3.5rem;
-    color: var(--primary-color);
+    h1{
+      font-family: var(--primary-font);
+      font-size: 3rem;
+      color: var(--primary-color);
+      @include media("<=phone") { font-size: 1.5rem; }
+    }
+    @include media("<=phone") { padding: 10vh 30px 10px 30px; }
   }
 
   &__nav {
@@ -17,6 +20,7 @@
     margin-bottom: 150px;
     display: flex;
     justify-content: space-between;
+    @include media("<=phone") {width: 80%; margin-bottom: 30px; margin-top: 30px; padding: 10px;}
     div {
       font-family: var(--quicksand-font);
       font-size: 18px;
@@ -26,6 +30,7 @@
       color: gray;
       cursor: pointer;
       position: relative;
+      @include media("<=phone") {font-size: 14px;}
       &::after {
         content: "";
         position: absolute;
@@ -49,30 +54,40 @@
 
   &__container {
     margin: 100px 0;
+    @include media("<=phone") {margin: 50px 0;}
     // room desc heading
     .room-desc-heading {
       width: 50%;
       padding: 0 100px 0 100px;
+      @include media("<=phone") {width: 100%; padding: 0;}
       h3,
       h2 {
         font-family: var(--primary-font);
         color: var(--primary-color);
         font-size: 3rem;
         font-weight: normal;
+        @include media("<=phone") { font-size: 2rem;}
       }
       h3 { font-size: 1.5rem; }
-      h3.price{ margin-top: 15px; font-family: var(--quicksand-font); font-weight: bold; }
+      h3.price{ 
+        margin-top: 15px; 
+        font-family: var(--quicksand-font); 
+        font-weight: bold; 
+        @include media("<=phone") {font-size: 20px;}
+      }
       p {
         width: 60%;
         margin-top: 15px;
         font-family: var(--quicksand-font);
         font-size: 16px;
         line-height: 25px;
+        @include media("<=phone") {width: 100%; margin-top: 8px; font-size: 14px;}
       }
     }
     // room desc image
     .room-desc-image {
       width: 50%;
+      @include media("<=phone") {width: 100%; padding: 0;}
       img {
         width: 100%;
       }
@@ -82,6 +97,7 @@
       display: flex;
       align-items: center;
       margin-top: 30px;
+      @include media("<=phone") {margin-bottom: 30px; margin-top: 15px;}
     }
     // view more button
     .view-more-button {
@@ -98,6 +114,7 @@
       letter-spacing: 2px;
       cursor: pointer;
       transition: 0.4s;
+      @include media("<=phone") {font-size: 12px; padding: 8px 13px;}
       &:hover {
         background: var(--primary-color);
         color: #fff;
@@ -165,10 +182,12 @@
       flex-wrap: wrap;
       &__heading {
         width: 50%;
+        @include media("<=phone") {width: 100%;}
       }
     }
     .delux {
       margin-bottom: 100px;
+      @include media("<=phone") {margin-bottom: 30px;}
     }
   }
 }
