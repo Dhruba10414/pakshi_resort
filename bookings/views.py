@@ -5,39 +5,7 @@ from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
 from rest_framework.permissions import IsAuthenticated, AllowAny
-
-def convert_to_date(date_string, f="%d-%m-%Y"):
-    if date_string is not None:
-        return datetime.strptime(date_string, "%d-%m-%Y").date()
-    else:
-        return date.today() 
-
-
-def room_available(room_id, from_, to_):
-    is_available = Bookings.objects.filter(Q(room__id=room_id),
-                                            (
-                                                (Q(check_in__gte=from_) & Q(check_in__lt=to_)) |
-                                                (Q(check_out__gt=from_) & Q(check_out__lt=to_))
-                                            )).exclude(is_canceled=True).exists()
-    
-    return not is_available
-                                
-
-def add_new_booking(room_id, guest_id, staff_id, check_in, check_out):
-    if check_in < date.today() or check_in > check_out:
-        return None
-
-    ok = room_available(room_id, check_in, check_out)
-    if not ok:
-        return None
-
-    new_booking = Bookings(room_id=room_id, guest_id=guest_id, check_in=check_in, 
-                            check_out=check_out, by_staff_id=staff_id)
-    new_booking.save()
-    
-    return new_booking
-
-    
+from .helpers import convert_to_date, room_available, add_new_booking
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
@@ -56,9 +24,11 @@ class Room_BookingsListView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
-            bookings = Bookings.objects.filter(check_out__gte=date.today(), is_complete=False).order_by('check_in')
+            bookings = Bookings.objects.filter(check_out__gte=date.today(), 
+                                                is_complete=False).order_by('check_in')
         else:
-            bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), is_complete=0).order_by('check_in')
+            bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), 
+                                                is_complete=False).order_by('check_in')
         serialized = self.get_serializer(bookings, many=True)
 
         return Response(serialized.data, status=status.HTTP_200_OK)
