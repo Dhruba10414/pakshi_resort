@@ -16,6 +16,7 @@ import Book from "./pages/Book";
 import Admin from "./pages/Admin";
 import Rooms from "./pages/Rooms";
 import Facilities from "./pages/Facilities";
+import Eat from "./pages/Eat";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -36,6 +37,7 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/" component={Home} />
         <Route exact path="/rooms" component={Rooms} />
         <Route exact path="/facilities" component={Facilities} />
+        <Route exact path="/eats" component={Eat} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />

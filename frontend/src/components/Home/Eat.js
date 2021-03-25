@@ -16,7 +16,7 @@ function Eat() {
           backdrop for special family celebrations, post-round drinks, romantic
           dinners and sneaky nightcaps.
         </p>
-        <Link to="/">Explore more</Link>
+        <Link to="/eats">Explore more</Link>
       </div>
 
       <div className="eat-images">

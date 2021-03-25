@@ -5,9 +5,9 @@ import logo from "../../assets/images/Logo/logo-black.png"
 function TopNav() {
   return (
     <div className="topnav">
-      <div className="logo">
+      <Link to="/" className="logo">
         <img src={logo} alt="" />
-      </div>
+      </Link>
       <div className="phone-link">
         <Link to="/" className="link">
           <svg
