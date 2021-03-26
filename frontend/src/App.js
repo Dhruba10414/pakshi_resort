@@ -37,7 +37,7 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/" component={Home} />
         <Route exact path="/rooms" component={Rooms} />
         <Route exact path="/facilities" component={Facilities} />
-        <Route exact path="/eats" component={Eat} />
+        <Route exact path="/eat-drink" component={Eat} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />

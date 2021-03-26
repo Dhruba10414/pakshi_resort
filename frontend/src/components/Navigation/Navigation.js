@@ -31,7 +31,7 @@ function Navigation() {
               <div className="index">01</div>
               <div className="name">Stay</div>
             </Link>
-            <Link to="/eats">
+            <Link to="/eat-drink">
               <div className="index">02</div>
               <div className="name">Eat & Drink</div>
             </Link>
