@@ -6,6 +6,10 @@ import logo from "../assets/images/Logo/logo-white.png";
 import { facebookLogo, instagramLogo, twitterLogo, upC } from '../assets/images/SVG';
 
 function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
+  }
+
   return (
     <div className="footer">
       <div className="footer__top">
@@ -38,10 +42,8 @@ function Footer() {
               <p>+880 1730706252</p>
               <p>+8801 730706252</p>
           </div>
-          <div className="content__up">
-              <div>
-                  {upC}
-              </div>
+          <div className="content__up" onClick={scrollToTop}>
+              <div>{upC}</div>
           </div>
         </div>
         <div className="copyright"></div>

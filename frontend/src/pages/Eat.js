@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../components/Footer";
 import Navigation from "../components/Navigation/Navigation";
 import eat1 from "../assets/images/View/eat-1.JPG";
@@ -12,20 +12,18 @@ import bar1 from "../assets/images/View/bar-1.jpg";
 import bar2 from "../assets/images/View/bar-2.jpg";
 
 function Eat() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="eatsDrinks">
         {/* heading */}
         <div className="eatsDrinks__heading">
           <h1>
-            <div>
-              <span>
-                We are popping the corks and laying the table for ultimate
-              </span>
-            </div>
-            <div>
-              <span>fine dining experience.</span>
-            </div>
+            <div><span>We are popping the corks and laying the table for ultimate</span></div>
+            <div><span>fine dining experience.</span></div>
           </h1>
         </div>
 
