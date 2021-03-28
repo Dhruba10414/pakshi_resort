@@ -8,6 +8,7 @@ function Book() {
   const [availableRooms, setAvailableRooms] = useState([]);
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [bookCardOn, setBookCardOn] = useState(false);
   const [error, setError] = useState("");
 
   const searchRoomUsingDate = (startDate, endDate) => {
@@ -61,7 +62,12 @@ function Book() {
             setSearched={setSearched}
           />
         </div>
-        <RoomInfo availableRooms={availableRooms} searched={searched} />
+        <RoomInfo 
+          availableRooms={availableRooms}
+          searched={searched}
+          bookCardOn={bookCardOn}
+          setBookCardOn={setBookCardOn}
+        />
       </div>
     </ContentBox>
   );

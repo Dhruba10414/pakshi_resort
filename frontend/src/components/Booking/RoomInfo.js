@@ -1,10 +1,16 @@
-import React from "react";
-import search from "../../assets/images/StaffSection/search.svg";
+import React, { useState } from "react";
+import search from "../../assets/images/View/svg/search.svg";
 import RoomInfoCard from "./RoomInfoCard";
-// import notfound from "../../assets/images/StaffSection/notFound.svg";
 
-function RoomInfo({ availableRooms, searched }) {
-    console.log("ROOms: ", availableRooms);
+function RoomInfo({ availableRooms, searched, bookCardOn, setBookCardOn }) {
+    const [roomData, setRoomData] = useState("");
+
+    const openBookingForm = (type) => {
+        setBookCardOn(true);
+        setRoomData(type);
+        console.log(type);
+    }
+
   return (
     <div className="roomInfo">
       {!searched ? (
@@ -14,16 +20,22 @@ function RoomInfo({ availableRooms, searched }) {
             <h2>Fill Checkin & Checkout date to view available rooms</h2>
           </div>
         </div>
-      ) : (
+      ) : !bookCardOn ? (
         <div className="afterSerch">
-            {
-                availableRooms.map(room => (
-                    <RoomInfoCard type={room.type} available={room.available} />
-                ))
-            }
+          {availableRooms.map((room, index) => (
+            <RoomInfoCard
+              key={index}
+              type={room.type}
+              available={room.available}
+              openBookingForm={openBookingForm}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="beforeSearch">
+            {roomData}
         </div>
       )}
-      <div className="serchFailed"></div>
     </div>
   );
 }
