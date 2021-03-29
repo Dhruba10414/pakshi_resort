@@ -14,6 +14,7 @@ function Book() {
   const searchRoomUsingDate = (startDate, endDate) => {
     setLoading(true);
     setSearched(true);
+    setBookCardOn(false);
 
     const sd = startDate.getDate();
     const sm = (startDate.getMonth() + 1).toString().padStart(2, "0");
@@ -25,7 +26,7 @@ function Book() {
     // URLS
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const ROOM_SEARCH_URL = `http://127.0.0.1:8000/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}&as_group=true`;
+    const ROOM_SEARCH_URL = `http://127.0.0.1:8000/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
     // GET DATA USING API URL
     axios

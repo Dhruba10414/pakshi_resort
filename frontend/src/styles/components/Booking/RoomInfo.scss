@@ -1,39 +1,87 @@
-.roomInfo{
-    margin-top: 20px;
-    padding: 10px 0;
+.roomInfo {
+  margin-top: 20px;
+  padding: 10px 0;
+  width: 100%;
+  height: 52vh;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  .beforeSearch,
+  .afterSerch,
+  .serchFailed {
     width: 100%;
     height: 52vh;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    .beforeSearch, .afterSerch, .serchFailed{
+  }
+
+  .beforeSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      width: 30%;
+      margin-top: -50px;
+      font-size: 14px;
+      font-family: var(--secondary-font);
+      text-align: center;
+      img {
         width: 100%;
-        height: 52vh;
+      }
     }
+  }
 
-    .beforeSearch{
+  .afterSerch {
+    display: flex;
+    padding: 0 !important;
+    .availavleRoomTable {
+      width: 70%;
+      height: 50vh;
+      border-right: 2px solid #ccc;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      &::-webkit-scrollbar { display: none; }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      .table-heading, 
+      .available-room {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        div{
-            width: 30%;
-            margin-top: -50px;
-            font-size: 14px;
-            font-family: var(--secondary-font);
-            text-align: center;
-            img{
-                width: 100%;
-            }
+        background: #fff;
+        border-bottom: 3px solid #f4f4f4;
+        div {
+          height: 6vh;
+          display: flex;
+          align-items: center;
+          padding: 0 20px;
+          font-family: var(--secondary-font);
+          font-size: 16px;
+          font-family: var(--quicksand-font);
         }
-    }
+        .id{width: 20%;}
+        .type{width: 50%;}
+        .no{ width: 30%; }
+      }
+      .available-room{
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover{
+          background: #f4f4f4;
+        }
+      }
 
-    .afterSerch{
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        padding: 10px 20px;
-        overflow-y: scroll;
-        &::-webkit-scrollbar {display: none;}
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .table-heading {
+        position: sticky;
+        top: 0;
+        svg {
+          width: 12px;
+          transform: rotate(-45deg);
+          margin-left: 5px;
+        }
+        div {
+          font-weight: bold;
+          font-size: 14px;
+          color: gray;
+          
+        }
+      }
     }
+  }
 }
