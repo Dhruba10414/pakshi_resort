@@ -1,15 +1,15 @@
-from django.shortcuts import render
 from .models import RoomType, Rooms, Guests, Bookings
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .helpers import convert_to_date, room_available, add_new_booking
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         rooms = Rooms.objects.all()
@@ -24,15 +24,17 @@ class Room_BookingsListView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
-            bookings = Bookings.objects.filter(check_out__gte=date.today(), is_complete=0).order_by('check_in')
+            bookings = Bookings.objects.filter(check_out__gte=date.today(), 
+                                                is_complete=False).order_by('check_in')
         else:
-            bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), is_complete=0).order_by('check_in')
+            bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), 
+                                                is_complete=False).order_by('check_in')
         serialized = self.get_serializer(bookings, many=True)
 
         return Response(serialized.data, status=status.HTTP_200_OK)
 
-
-class GuestRoomBookView(generics.GenericAPIView):
+#Unnecessary Duplicated Function
+class GuestRoomListView(generics.GenericAPIView):
     serializer_class = BookingGuestDetailSerializer
     permission_classes = [IsAuthenticated, ]
 
@@ -50,7 +52,7 @@ class GuestRoomBookView(generics.GenericAPIView):
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -86,23 +88,19 @@ class GuestBookings(generics.GenericAPIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class RoomSearch(generics.GenericAPIView):
-    serializer_class = AvailableRoomCountSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         check_in = request.query_params.get('check_in', None)
         check_out = request.query_params.get('check_out', None)
+        as_group = request.query_params.get('as_group', None)
 
-        if check_in is not None:
-            check_in_date = datetime.strptime(check_in, "%d-%m-%Y").date()
-        else:
-            check_in_date = date.today()
-
-        if check_out is not None:
-            check_out_date = datetime.strptime(check_out, "%d-%m-%Y").date()
-        else:
-            check_out_date = date.today() + timedelta(days=1)
+        check_in_date = convert_to_date(check_in)
+        check_out_date = convert_to_date(check_out)
+        if check_out is None:
+            check_out_date += timedelta(days=1)
 
         if check_in_date < date.today() or check_in_date >= check_out_date:
             msg = {
@@ -116,13 +114,16 @@ class RoomSearch(generics.GenericAPIView):
             )
         
         available_rooms = Rooms.objects.exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True)))
-        type_group = available_rooms.values('room_type').annotate(type_=F('room_type__room_type'), available=Count('room_type'))
+        if as_group:
+            type_group = available_rooms.values('room_type').annotate(type_=F('room_type__room_type'), available=Count('room_type'))
     
-        rooms_count = self.get_serializer(type_group, many=True)
+            rooms = AvailableRoomCountSerializer(type_group, many=True)
+        else:
+            rooms = RoomSerializer(available_rooms, many=True)
 
-        return Response(rooms_count.data, status=status.HTTP_200_OK)
+        return Response(rooms.data, status=status.HTTP_200_OK)
 
-
+#To be deleted
 class NewBooking(generics.GenericAPIView):
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated, ]
@@ -136,8 +137,8 @@ class NewBooking(generics.GenericAPIView):
         if check_in is None or check_out is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
-        check_in_date = datetime.strptime(check_in, "%d-%m-%Y").date()
-        check_out_date = datetime.strptime(check_out, "%d-%m-%Y").date()
+        check_in_date = convert_to_date(check_in)
+        check_out_date = convert_to_date(check_out)
 
         if check_in_date < date.today() or check_in_date >= check_out_date:
             msg = {
@@ -170,7 +171,7 @@ class CheckIn(generics.GenericAPIView):
 
         try:
             booking = Bookings.objects.get(id=booking_id)
-            if booking.check_in < date.today():
+            if booking.check_in > date.today() or booking.check_out < date.today():
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             
             room = booking.room
@@ -201,12 +202,85 @@ class CheckOut(generics.GenericAPIView):
             room.save()
 
             guest = booking.guest
-            guest.is_staying = False
-            guest.save()
-            #This endpoint will return the invoice 
+            still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
+            if not still_staying:
+                guest.is_staying = False
+                guest.save()
+             
             booking.is_complete = True
             booking.save()
             return Response(status=status.HTTP_200_OK)
         
         except Bookings.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class RoomAvailable(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        room_id = request.query_params.get('room', None)
+        from_ = request.query_params.get('from', None)
+        to_ = request.query_params.get('to', None)
+
+        if from_ is None or to_ is None or room_id is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        from_date = convert_to_date(from_)
+        to_date = convert_to_date(to_)
+
+        available = room_available(room_id, from_date, to_date)
+
+        return Response(data={"available": available}, status=status.HTTP_200_OK)
+
+
+class BookARoom(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated, ]
+    serializer_class = BookingSerializer
+
+    def post(self, request, *args, **kwargs):
+        room_id = request.data.get('room', None)
+        guest_id = request.data.get('guest', None)
+        from_ = request.data.get('from_', None)
+        to_ = request.data.get('to_', None)
+
+        if from_ is None or to_ is None or room_id is None or guest_id is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        from_date = convert_to_date(from_)
+        to_date = convert_to_date(to_)
+
+        new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
+        if new_booking is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        booking_info = self.get_serializer(new_booking)
+
+        return Response(booking_info.data, status=status.HTTP_201_CREATED)
+
+
+class BookingRequestView(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        req_id = request.query_params.get("id", None)
+
+        if req_id is None:
+            pendings = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False)
+            pendings_seri = BookingRequestSerializer(pendings, many=True)
+        else:
+            try:
+                pendings = BookingRequest.objects.get(id=req_id)
+                pendings_seri = BookingRequestSerializer(pendings)
+            except BookingRequest.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            
+        return Response(pendings_seri.data, status=status.HTTP_200_OK)
+
+
+class AddNewBookingRequestView(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        booking_request = BookingRequestWriteSerializer(data=request.data)
+        booking_request.is_valid(raise_exception=True)
+        booking_request.save()
+
+        return Response(booking_request.data, status=status.HTTP_201_CREATED)
