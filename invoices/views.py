@@ -91,7 +91,9 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
             summury = {
                 'total_bills': bill,
                 'total_paid': paid,
-                'due': bill - paid
+                'due': bill - paid,
+                'romm_bills': BookingWithBill(bills, many=True).data,
+                'payments': PaymentsSerializer(payments, many=True).data
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)

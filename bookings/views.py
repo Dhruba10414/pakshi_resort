@@ -33,8 +33,8 @@ class Room_BookingsListView(generics.GenericAPIView):
 
         return Response(serialized.data, status=status.HTTP_200_OK)
 
-
-class GuestRoomBookView(generics.GenericAPIView):
+#Unnecessary Duplicated Function
+class GuestRoomListView(generics.GenericAPIView):
     serializer_class = BookingGuestDetailSerializer
     permission_classes = [IsAuthenticated, ]
 
@@ -123,7 +123,7 @@ class RoomSearch(generics.GenericAPIView):
 
         return Response(rooms.data, status=status.HTTP_200_OK)
 
-
+#To be deleted
 class NewBooking(generics.GenericAPIView):
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated, ]
@@ -171,7 +171,7 @@ class CheckIn(generics.GenericAPIView):
 
         try:
             booking = Bookings.objects.get(id=booking_id)
-            if booking.check_in < date.today():
+            if booking.check_in > date.today() or booking.check_out < date.today():
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             
             room = booking.room
@@ -202,9 +202,11 @@ class CheckOut(generics.GenericAPIView):
             room.save()
 
             guest = booking.guest
-            guest.is_staying = False
-            guest.save()
-            #This endpoint will return the invoice 
+            still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
+            if not still_staying:
+                guest.is_staying = False
+                guest.save()
+             
             booking.is_complete = True
             booking.save()
             return Response(status=status.HTTP_200_OK)
