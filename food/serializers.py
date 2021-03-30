@@ -24,11 +24,19 @@ class OrderItemEmbededSerializer(serializers.ModelSerializer):
         model=FoodOrdering
         fields = ['id','guest','food','taken_by','quantity','isComplete','isCancel','time']
 
-class FoodOrderEmbededSerializer(serializers.Serializer):
-    food_name = serializers.CharField(max_length=100)
-    food_price = serializers.FloatField()
-    food_type = serializers.CharField(max_length=1)
 
-    order_quantity = serializers.IntegerField()
-    order_time = serializers.DateTimeField()
-    guest_id = serializers.IntegerField()
+class FoodOrderEmbededSerializer(serializers.ModelSerializer):
+    food = FoodItemSerilizer(read_only=True)
+    taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
+    guest = serializers.PrimaryKeyRelatedField(read_only=True)
+    time = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
+    total=serializers.SerializerMethodField()
+
+    class Meta:
+        model=FoodOrdering
+        fields=['id','food','quantity','time','taken_by','guest','total']
+    
+    def get_total(self,obj):
+        return (obj.food.price*obj.quantity)
+
+
