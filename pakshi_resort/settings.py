@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'staff',
     'rest_framework_simplejwt.token_blacklist',
     'bookings',
+    'invoices',
 ]
 
 MIDDLEWARE = [
