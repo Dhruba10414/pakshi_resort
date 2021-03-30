@@ -33,22 +33,6 @@ class Room_BookingsListView(generics.GenericAPIView):
 
         return Response(serialized.data, status=status.HTTP_200_OK)
 
-#Unnecessary Duplicated Function
-class GuestRoomListView(generics.GenericAPIView):
-    serializer_class = BookingGuestDetailSerializer
-    permission_classes = [IsAuthenticated, ]
-
-    def get(self, request, *args, **kwargs):
-        booking_id = request.query_params.get('booking', None)
-
-        if booking_id:
-            bookings = Bookings.objects.get(id=booking_id)
-            serialized = self.get_serializer(bookings)
-        else:
-            bookings = Bookings.objects.filter(check_out__gte=date.today(), is_complete=False, is_canceled=False).order_by('check_in')
-            serialized = self.get_serializer(bookings, many=True)
-        
-        return Response(serialized.data, status=status.HTTP_200_OK)
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
@@ -123,45 +107,6 @@ class RoomSearch(generics.GenericAPIView):
 
         return Response(rooms.data, status=status.HTTP_200_OK)
 
-#To be deleted
-class NewBooking(generics.GenericAPIView):
-    serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
-
-    def post(self, request, *args, **kwargs):
-        room_type = request.data.get('room_type', None)
-        guest_id = request.data.get('guest_id', None)
-        check_in = request.data.get('check_in', None)
-        check_out = request.data.get('check_out', None)
-        
-        if check_in is None or check_out is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        check_in_date = convert_to_date(check_in)
-        check_out_date = convert_to_date(check_out)
-
-        if check_in_date < date.today() or check_in_date >= check_out_date:
-            msg = {
-                'message': 'You can\'t travel time, Sorry! Enter valid check in and\\or check out dates.'
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
-
-        existing_bookings = Bookings.objects.filter(
-                (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
-                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
-            )
-        
-        room_to_book = Rooms.objects.filter(room_type__id=room_type).exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True))).first()
-
-        if not room_to_book:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        new_bookings = Bookings(room=room_to_book, guest_id=guest_id, check_in=check_in_date, check_out=check_out_date)
-        new_bookings.by_staff = request.user
-        new_bookings.save()
-        booking = self.get_serializer(new_bookings)
-
-        return Response(data=booking.data, status=status.HTTP_200_OK)
 
 class CheckIn(generics.GenericAPIView):
     permission_classes = [IsAuthenticated, ]
