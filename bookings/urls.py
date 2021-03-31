@@ -13,4 +13,7 @@ urlpatterns = [
     path('add/', BookARoom.as_view(), name='add_booking'),
     path('guest_requests/', BookingRequestView.as_view(), name='all_requests'),
     path('guest_requests/add/', AddNewBookingRequestView.as_view(), name='new_request'),
+    path('guests/frauds/', RemoveFraudBookingRequests.as_view(), name='fraud_removal'),
+    path('cancel/', CancelBooking.as_view(), name='cancel_booking'),
+    path('guest_requests/notifications/', BookingRequestNotifications.as_view(), name='notifications'),
 ]

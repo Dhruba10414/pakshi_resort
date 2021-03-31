@@ -20,7 +20,7 @@ class RoomListView(generics.GenericAPIView):
 
 class Room_BookingsListView(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
@@ -219,29 +219,16 @@ class BookingRequestView(generics.GenericAPIView):
             
         return Response(pendings_seri.data, status=status.HTTP_200_OK)
 
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         req_id = request.data.get("id", None)
-        rooms = request.data.get("rooms", None)
-
-        success = []
-        failure = []
-
+        
         try:
             booking_req = BookingRequest.objects.get(id=req_id)
-            guest = booking_req.guest
-            for room in rooms:
-                book = add_new_booking(room, guest.id, request.user.id, booking_req.check_in, booking_req.check_out)
-                if not book:
-                    failure.append(room)
-                else:
-                    success.append(room)
-            
-            booking_req.is_complete = True
-            booking_req.save()
-
-            return Response({"success": success,
-                             "failure": failure}, status=status.HTTP_200_OK)
-
+            booking_req.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except BookingRequest.DoesNotExist:
+            return Response({"error": "No such pending booking"}, status=status.HTTP_404_NOT_FOUND)
 
 class AddNewBookingRequestView(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
@@ -257,7 +244,7 @@ class RemoveFraudBookingRequests(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
 
     def delete(self, request, *args, **kwargs):
-        guest_id = request.data.get('guest', None):
+        guest_id = request.data.get('guest', None)
 
         try:
             guest = Guests.objects.get(id=guest_id)
