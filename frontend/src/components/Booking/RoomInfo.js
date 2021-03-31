@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import search from "../../assets/images/View/svg/search.svg";
-import { hexagon, rsvg } from "../../assets/images/SVG";
+import { rsvg } from "../../assets/images/SVG";
 
-import BookingForm from "./BookingForm";
 
-function RoomInfo({ availableRooms, availableRoomsByGroup, searched, bookCardOn, setBookCardOn }) {
-  const [roomData, setRoomData] = useState("");
-
-  const openBookingForm = (no) => {
+function RoomInfo({
+  availableRooms,
+  availableRoomsByGroup,
+  searched,
+  setBookCardOn,
+  selectRoomToBook,
+}) {
+  
+  // OPEN BOOKING FORM
+  const openBookingForm = (data) => {
     setBookCardOn(true);
-    setRoomData(no);
+    selectRoomToBook(data);
   };
 
   return (
     <div className="roomInfo">
-      {!searched ? (
+      {!searched 
+      ? (
         <div className="beforeSearch">
           <div>
             <img src={search} alt="" />
             <h2>Fill Checkin & Checkout date to view available rooms</h2>
           </div>
         </div>
-      ) : !bookCardOn ? (
+      ) : (
         <div className="afterSerch">
+          {/* available rooms by name */}
           <div className="availavleRoomTable">
             <div className="table-heading">
               <div className="id">Id {rsvg}</div>
@@ -32,9 +39,8 @@ function RoomInfo({ availableRooms, availableRoomsByGroup, searched, bookCardOn,
             {availableRooms.map((room) => (
               <div
                 className="available-room"
-                onClick={() => {
-                  openBookingForm(room.room_num);
-                }}
+                onClick={() => { openBookingForm(room);}}
+                key={room.id}
               >
                 <div className="id">{room.id}</div>
                 <div className="no"># {room.room_num}</div>
@@ -42,27 +48,18 @@ function RoomInfo({ availableRooms, availableRoomsByGroup, searched, bookCardOn,
               </div>
             ))}
           </div>
+          {/* available rooms by group */}
           <div className="availableRoomGroup">
             <div className="head">Total available rooms</div>
-            {
-              availableRoomsByGroup.map(room => (
-                <div className="data">
-                  {/* <div className="logo">{hexagon}</div> */}
-                  <div className="type">{room.type}</div>
-                  <div className="value"><h3>{room.available}</h3></div>
+            {availableRoomsByGroup.map((room, index) => (
+              <div className="data" key={index}>
+                <div className="type">{room.type}</div>
+                <div className="value">
+                  <h3>{room.available}</h3>
                 </div>
-              ))
-            }
-            <div className="data">
-                  {/* <div className="logo">{hexagon}</div> */}
-                  <div className="type">Extra entry</div>
-                  <div className="value"><h3>0</h3></div>
-            </div>
+              </div>
+            ))}
           </div>
-        </div>
-      ) : (
-        <div className="beforeSearch">
-          <BookingForm roomNo={roomData} />
         </div>
       )}
     </div>
