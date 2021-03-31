@@ -34,7 +34,6 @@
     .availavleRoomTable {
       width: 70%;
       height: 50vh;
-      border-right: 2px solid #ccc;
       overflow-y: scroll;
       overflow-x: hidden;
       &::-webkit-scrollbar { display: none; }
@@ -80,6 +79,62 @@
           font-size: 14px;
           color: gray;
           
+        }
+      }
+    }
+
+    .availableRoomGroup{
+      width: 29%;
+      height: calc(50vh - 5px);
+      margin-left: 5px;
+      padding-bottom: 10px;
+      border-radius: 8px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      &::-webkit-scrollbar { display: none; }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      background-color: #f4f4f4;
+
+      .head{
+        padding: 20px;
+        position: sticky;
+        top: 0;
+        font-family: var(--quicksand-font);
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--primary-color);
+        background: #f4f4f4;
+        text-transform: uppercase;
+      }
+      
+      .data{
+        display: flex;
+        align-items: center;
+        font-family: var(--quicksand-font);
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 10px 10px 10px 20px;
+        font-size: 16px;
+        background-color: #fff;
+        border-radius: 8px;
+
+        .logo{width: 10%; svg{color: var(--blue-dark);}}
+        .type{width: 80%; font-weight: bold; color: #444; }
+        .value{
+          width: 20%;
+          display: flex;
+          justify-content: flex-end;
+          h3{
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--green);
+            display: flex; justify-content: center; align-items: center;
+            color: var(--primary-color);
+            border-radius: 10px;
+          }
         }
       }
     }

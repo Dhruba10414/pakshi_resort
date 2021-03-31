@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import search from "../../assets/images/View/svg/search.svg";
-import { rsvg } from "../../assets/images/SVG";
+import { hexagon, rsvg } from "../../assets/images/SVG";
 
 import BookingForm from "./BookingForm";
 
-function RoomInfo({ availableRooms, searched, bookCardOn, setBookCardOn }) {
+function RoomInfo({ availableRooms, availableRoomsByGroup, searched, bookCardOn, setBookCardOn }) {
   const [roomData, setRoomData] = useState("");
 
   const openBookingForm = (no) => {
@@ -41,6 +41,23 @@ function RoomInfo({ availableRooms, searched, bookCardOn, setBookCardOn }) {
                 <div className="type">{room.room_type}</div>
               </div>
             ))}
+          </div>
+          <div className="availableRoomGroup">
+            <div className="head">Total available rooms</div>
+            {
+              availableRoomsByGroup.map(room => (
+                <div className="data">
+                  {/* <div className="logo">{hexagon}</div> */}
+                  <div className="type">{room.type}</div>
+                  <div className="value"><h3>{room.available}</h3></div>
+                </div>
+              ))
+            }
+            <div className="data">
+                  {/* <div className="logo">{hexagon}</div> */}
+                  <div className="type">Extra entry</div>
+                  <div className="value"><h3>0</h3></div>
+            </div>
           </div>
         </div>
       ) : (

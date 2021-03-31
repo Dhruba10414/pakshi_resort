@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Book() {
   const [availableRooms, setAvailableRooms] = useState([]);
+  const [availableRoomsByGroup, setAvailableRoomsByGroup] = useState([]);
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [bookCardOn, setBookCardOn] = useState(false);
@@ -33,16 +34,26 @@ function Book() {
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-        axios
-          .get(ROOM_SEARCH_URL, Config)
-          .then((res) => {
-            setAvailableRooms(res.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError("Something went wrong! Try again.");
-            setLoading(false);
-          });
+
+        // search by list
+        axios.get(ROOM_SEARCH_URL, Config)
+        .then((res) => {
+          setAvailableRooms(res.data);
+        })
+        .catch((err) => {
+          setError("Something went wrong! Try again.");
+        });
+        // search by group
+        axios.get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
+        .then((res) => {
+          setAvailableRoomsByGroup(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError("Something went wrong! Try again.");
+          setLoading(false);
+        });
+
       })
       .catch((err) => {
         setError("Atherization Error! Please login and try again");
@@ -65,6 +76,7 @@ function Book() {
         </div>
         <RoomInfo 
           availableRooms={availableRooms}
+          availableRoomsByGroup={availableRoomsByGroup}
           searched={searched}
           bookCardOn={bookCardOn}
           setBookCardOn={setBookCardOn}
