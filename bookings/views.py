@@ -219,6 +219,29 @@ class BookingRequestView(generics.GenericAPIView):
             
         return Response(pendings_seri.data, status=status.HTTP_200_OK)
 
+    def post(self, request, *args, **kwargs):
+        req_id = request.data.get("id", None)
+        rooms = request.data.get("rooms", None)
+
+        success = []
+        failure = []
+
+        try:
+            booking_req = BookingRequest.objects.get(id=req_id)
+            guest = booking_req.guest
+            for room in rooms:
+                book = add_new_booking(room, guest.id, request.user.id, booking_req.check_in, booking_req.check_out)
+                if not book:
+                    failure.append(room)
+                else:
+                    success.append(room)
+            
+            booking_req.is_complete = True
+            booking_req.save()
+
+            return Response({"success": success,
+                             "failure": failure}, status=status.HTTP_200_OK)
+
 
 class AddNewBookingRequestView(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
@@ -229,3 +252,48 @@ class AddNewBookingRequestView(generics.GenericAPIView):
         booking_request.save()
 
         return Response(booking_request.data, status=status.HTTP_201_CREATED)
+
+class RemoveFraudBookingRequests(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def delete(self, request, *args, **kwargs):
+        guest_id = request.data.get('guest', None):
+
+        try:
+            guest = Guests.objects.get(id=guest_id)
+            valid_bookings = Bookings.objects.filter(guest=guest).exists()
+            if valid_bookings:
+                return Response({"error": "Guest has previously confirmed bookings"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            BookingRequest.objects.filter(guest=guest).delete()
+            guest.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except Guests.DoesNotExist:
+            return Response({"error": "No such Guest"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CancelBooking(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        booking_id = request.data.get('booking', None)
+
+        try:
+            booking = Bookings.objects.get(id=booking_id)
+            booking.is_canceled = True
+            booking.save()
+            return Response(status=status.HTTP_200_OK)
+
+        except Bookings.DoesNotExist:
+            return Response({"error": "No such booking"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class BookingRequestNotifications(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        notifications = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False).count()
+
+        return Response({"notifications": notifications}, status=status.HTTP_200_OK)
