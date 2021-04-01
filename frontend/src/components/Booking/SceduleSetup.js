@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DateRangePicker } from "react-dates";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 
-function SceduleSetup({updateSchedule}) {
+function SceduleSetup({searchRoomUsingDate, setSearched}) {
   const [dateRange, setdateRange] = useState({ startDate: null, endDate: null});
   const [focus, setFocus] = useState("startDate");
 
@@ -12,9 +12,16 @@ function SceduleSetup({updateSchedule}) {
 
   const updateScheduleInfo = () => {
     if(dateRange.startDate && dateRange.endDate){
-      updateSchedule(dateRange.startDate._d, dateRange.endDate._d);
+      searchRoomUsingDate(dateRange.startDate._d, dateRange.endDate._d);
     }
   }
+
+  useEffect(() => {
+    // If search field is cleared that means it is not searched yet
+    if(!dateRange){
+      setSearched(false);
+    }
+  }, [dateRange])
 
   return (
     <div className="bookingGeneral">

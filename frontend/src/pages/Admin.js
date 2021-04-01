@@ -33,7 +33,7 @@ function Admin() {
   }, []);
 
   return (
-    <ContentBox heading="Admin">
+    <ContentBox heading="Staff Management">
       <div className="admin">
         <Registration />
         <Staffs stafflist={staffs}/>

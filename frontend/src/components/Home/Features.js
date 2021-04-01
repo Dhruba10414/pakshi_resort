@@ -16,16 +16,16 @@ function Features() {
     const imageHandler = (value) => {
       setTimeout(() => {
         setFront(value);
+        setBack(front);
       }, 300);
-      setBack(front);
     }
 
   
     useEffect(() => {
       const tl = gsap.timeline();
-      tl.from(".image .image-2", 0.8, {   
+      tl.from(".image .image-2", 1, {   
         x: "-100%",
-        ease: "expo.inOut",
+        ease: "power4",
       });
 
     }, [front]);
@@ -33,12 +33,13 @@ function Features() {
   return (
     <>
       <div className="image">
+        <div className="odiv"></div>
         <img className="image-1" src={imageArray[back]} alt="" />
         <img className="image-2" src={imageArray[front]} alt="" />
       </div>
       <div className="content">
-        <p className="content-desc">We provide you these</p>
-        <h2>FEATURES</h2>
+        <p className="content-desc">We have these</p>
+        <h2>FACILITIES</h2>
         <div className="feature-list">
           <div className="feature"><p onClick={() => imageHandler(0)}>Restaurant and Juice Bar</p></div>
           <div className="feature"><p onClick={() => imageHandler(1)}>Fitness center</p></div>
@@ -46,7 +47,7 @@ function Features() {
           <div className="feature"><p onClick={() => imageHandler(3)}>Garden & Walk way</p></div>
           <div className="feature"><p onClick={() => imageHandler(4)}>Play Ground</p></div>
         </div>
-        <Link to="/">View More</Link>
+        <Link to="/facilities">View More</Link>
       </div>
     </>
   );

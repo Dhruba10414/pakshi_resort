@@ -31,3 +31,14 @@ class Bookings(models.Model):
     is_complete = models.BooleanField(default=False)
     is_canceled = models.BooleanField(default=False)
     by_staff = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='staff_booked', null=True)
+
+
+class BookingRequest(models.Model):
+    guest = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name='pending_bookings')
+    room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
+    requested_on = models.DateTimeField(auto_now=True)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    num_of_rooms = models.IntegerField()
+    has_confirmed = models.BooleanField(default=False)
+    has_canceled = models.BooleanField(default=False)

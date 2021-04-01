@@ -1,0 +1,34 @@
+.homeoverlay{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    position: relative;
+
+    .divider{
+        width: 33.3333333%;
+        background: var(--primary-color);
+    }
+    .loading-container{
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        img{
+            width: 150px;
+        }
+        h1{
+            font-family: var(--quicksand-font);
+            color: #fff;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 20px;
+            display: none;
+        }
+    }
+}

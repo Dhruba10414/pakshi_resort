@@ -1,30 +1,11 @@
 import React from "react";
 import Guest from "../components/Guests/Guest";
 import ContentBox from "../components/StaffSection/ContentBox";
+import {rsvg, searchSvg} from '../assets/images/SVG'
 
 // data
 import { guestsList } from "../assets/DummyGuestData";
 
-// COMMON SVG FOR TABLE HEADING
-const rsvg = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokewidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="feather feather-maximize-2"
-  >
-    <polyline points="15 3 21 3 21 9"></polyline>
-    <polyline points="9 21 3 21 3 15"></polyline>
-    <line x1="21" y1="3" x2="14" y2="10"></line>
-    <line x1="3" y1="21" x2="10" y2="14"></line>
-  </svg>
-);
 
 // MAIN FUNCTION
 function Guests() {
@@ -33,24 +14,9 @@ function Guests() {
       <div className="guests">
         {/* HEADING */}
         <div className="heading">
-          <h1>Guests</h1>
           <form className="search-area">
             <div className="field">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-search"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+              {searchSvg}
               <input type="text" placeholder="Search by" />
             </div>
             <select name="Filter" id="filter">
@@ -75,8 +41,9 @@ function Guests() {
 
             {/* GUESTS */}
             <div className="guestentries">
-              {guestsList.map((guest) => (
+              {guestsList.map((guest, index) => (
                 <Guest
+                  key={index}
                   name={guest.name}
                   phone={guest.phone}
                   checkin={guest.checkin}
@@ -92,21 +59,21 @@ function Guests() {
               <h2>Sort by</h2>
               <div>
                 <input
-                  class="styled-checkbox"
+                  className="styled-checkbox"
                   id="checkin"
                   type="checkbox"
                   value="checkin"
                 />
-                <label for="checkin">Check in</label>
+                <label htmlFor="checkin">Check in</label>
               </div>
               <div>
                 <input
-                  class="styled-checkbox"
+                  className="styled-checkbox"
                   id="checkout"
                   type="checkbox"
                   value="checkout"
                 />
-                <label for="checkout">Check out</label>
+                <label htmlFor="checkout">Check out</label>
               </div>
             </form>
             {/* style */}

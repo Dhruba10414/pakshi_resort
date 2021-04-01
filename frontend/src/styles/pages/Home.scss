@@ -5,14 +5,18 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
-    
 
     .home-image {
       position: absolute;
-      bottom: 0;
+      bottom: 5vh;
       right: 0;
       height: 80vh;
-      width: 75%;
+      width: 70%;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+      }
       @include media("<=phone") {
         width: 100%;
         height: 40vh;
@@ -21,16 +25,17 @@
     }
 
     .home-heading {
+      opacity: 0;
       position: absolute;
       bottom: 0;
       left: 0;
       height: 80vh;
-      width: 25%;
-      padding: 50px 50px 0 50px;
+      width: 30%;
+      padding: 50px 50px 0 100px;
       @include media("<=phone") {
         width: 100%;
         height: 40vh;
-        bottom: 50vh;
+        bottom: 38vh;
         padding: 10px 30px 0 30px;
       }
       h1 {
@@ -67,7 +72,7 @@
         }
       }
       h3 {
-        font-family: WRITTEN;
+        font-family: WRITTEN2;
         font-size: 2.5rem;
         line-height: 2.5rem;
         font-weight: bold;
@@ -126,7 +131,7 @@
       }
     }
   }
-
+  /////////////////////////////////////////////////////////////////////////////////////
   &__features {
     padding: 100px;
     @include media("<=phone") {
@@ -135,7 +140,7 @@
     p.short-desc {
       width: 50%;
       margin: auto;
-      margin-top: 100px;
+      // margin-top: 100px;
       margin-bottom: 100px;
       font-size: 2rem;
       font-family: var(--secondary-font);
@@ -173,10 +178,112 @@
     }
   }
 
-  &__rooms {
-    padding: 0 100px 100px 100px;
+  ////////////////////////////////////////////////////////////////////////////////
+  &__rooms, &__eat {
+    display: flex;
+    flex-wrap: wrap;
     @include media("<=phone") {
-      padding: 0 30px 0 30px;
+      padding: 0;
+    }
+    .heading-block{
+      width: 50%;
+      padding: 0 0 0 150px;
+      @include media("<=phone") {
+        width: 100%;
+        padding: 0 30px 0 30px;
+      }
+    }
+    .room-images, .eat-images{
+      width: 50%;
+      @include media("<=phone") {
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  &__park{
+    height: 80vh;
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    position: relative;
+    overflow: hidden;
+    @include media("<=phone") {height: 40vh; margin-top: 50px; }
+    .park-overlay{
+      width: 100%; height: 80vh;
+      background: var(--primary-color);
+      position: absolute;
+      top: 0;
+      top: 0;
+      z-index: 5;
+    }
+    .park{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 80vh;
+      width: 100%;
+      background: linear-gradient(
+        0deg,
+        rgba(50, 62, 60, 0.6),
+        rgba(17, 45, 50, 0.8)
+      ),
+      url("../../assets/images/resort/view-6.JPG") no-repeat center center / cover;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      @include media("<=phone") {height: 50vh;}
+
+      div{
+        padding: 0 140px;
+        width: 50%;
+        @include media("<=phone") {padding: 30px; width: 100%; }
+        h1{
+          font-family: var(--primary-font);
+          font-size: 3.5rem;
+          color: #fff;
+          font-weight: normal;
+          @include media("<=phone") {font-size: 1.5rem;}
+        }
+        p{
+          display: block;
+          width: 80%;
+          color: #fff;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 30px;
+          @include media("<=phone") {font-size: 16px; width: 100%; line-height: 20px; display: none;}
+        }
+        a{
+          display: inline-block;
+          margin-top: 30px;
+          padding: 20px 50px;
+          border: 1px solid #fff;
+          border-radius: 3px;
+          font-family: var(--quicksand-font);
+          font-weight: bold;
+          text-decoration: none;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: #fff;
+          transition: 0.5s;
+          @include media("<=phone") {
+            padding: 15px 25px;
+              text-align: center;
+              font-size: 14px;
+              font-family: var(--quicksand-font);
+              background: transparent;
+              color: #fff;
+          }
+          &:hover {
+            background-color: #fff;
+            color: var(--primary-color);
+          }
+        }
+      }
+      .desc{ @include media("<=phone") { padding-top: 0; margin-bottom: 60px;}}
     }
   }
 }

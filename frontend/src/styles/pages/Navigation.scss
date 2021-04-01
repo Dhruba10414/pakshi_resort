@@ -15,40 +15,53 @@
     min-height: 100vh;
     background: linear-gradient(
         0deg,
-        rgba(37, 78, 88, 0.6),
-        rgba(17, 45, 50, 0.8)
+        rgba(37, 78, 88, 0.3),
+        rgba(17, 45, 50, 0.5)
       ),
-      url("../../assets/images/resort.jpg") no-repeat center center / cover;
+      url("../../assets/images/Logo/poster.png") no-repeat center center / cover;
     position: relative;
     @include media("<=phone") {
       width: 100%;
-      min-height: 50vh;
+      min-height: 0;
+      height: 0;
+    }
+  }
+
+  &__secondary {
+    width: 40%;
+    min-height: 100vh;
+    background: var(--primary-color);
+    position: relative;
+    @include media("<=phone") {
+      width: 100%;
+      min-height: 100vh;
     }
     .content {
       position: absolute;
-      right: 300px;
+      left: 100px;
       top: 200px;
       @include media("<=phone") {
-        top: 50%;
-        transform: translateY(-50%);
-        right: 100px;
+        top: 100px;
+        left: 50px;
       }
     }
+
     .find-us{
-      width: 60%;
+      width: 100%;
       position: absolute;
       bottom: 100px;
-      right: 20px;
+      left: 100px;
       @include media("<=phone") {
-        bottom: 30px;
-        right: 100px;
+        width: 90%;
+        bottom: 100px;
+        left: 50px;
       }
       h3{
         font-family: var(--secondary-font);
         color: #fff;
         font-size: 1rem;
         @include media("<=phone") {
-          display: none;
+          // display: none;
         }
       }
       p{
@@ -59,7 +72,8 @@
         margin-bottom: 20px;
         margin-top: 20px;
         @include media("<=phone") {
-          display: none;
+          width: 80%;
+          font-size: 12px;
         }
       }
       a{
@@ -85,26 +99,7 @@
         }
       }
     }
-  }
 
-  &__secondary {
-    width: 40%;
-    min-height: 100vh;
-    background: var(--primary-color);
-    position: relative;
-    @include media("<=phone") {
-      width: 100%;
-      min-height: 50vh;
-    }
-    .content {
-      position: absolute;
-      left: 100px;
-      top: 200px;
-      @include media("<=phone") {
-        top: 100px;
-        left: 50px;
-      }
-    }
     .phone-link {
       position: absolute;
       top: 100px;

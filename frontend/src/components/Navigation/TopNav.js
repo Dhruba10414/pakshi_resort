@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../assets/images/Logo/logo-black.png"
 
 function TopNav() {
   return (
     <div className="topnav">
+      <Link to="/" className="logo">
+        <img src={logo} alt="" />
+      </Link>
       <div className="phone-link">
         <Link to="/" className="link">
           <svg
