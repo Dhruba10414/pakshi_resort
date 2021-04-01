@@ -156,18 +156,27 @@
         }
       }
     }
+    .heading{ margin-bottom: 40px;}
     .additional-data{
-      margin-top: 30px;
       padding: 0 30px 30px 30px;
       h3{
+        display: flex;
+        align-items: center;
         font-family: var(--quicksand-font);
         font-size: 16px;
+        svg{height: 16px; margin-right: 5px;}
+        margin-left: -5px;
       }
+      h3.r{color: var(--blue-dark);}
+      h3.s{color: var(--yellow-dark);}
+
       .data{
         display: flex;
         margin-top: 15px;
         font-size: 16px;
         .label{width: 40%; font-weight: bold; font-size: var(--quicksand-font); color: gray; font-size: 14px;}
+        .value{font-family: var(--quicksand-font);}
+        .value.room_num{ background: var(--blue); color: var(--blue-dark); padding: 5px 15px; border-radius: 10px; font-weight: bold;  }
       }
     }
   }

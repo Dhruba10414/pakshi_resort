@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import cheklist from "../../assets/images/View/svg/checklist.svg";
 import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
-import { arrowLeftCherovon } from "../../assets/images/SVG";
+import { arrowLeftCherovon, clock, homeSvg } from "../../assets/images/SVG";
 
-function BookingForm({ roomData, stayingTime, setBookCardOn }) {
+function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ function BookingForm({ roomData, stayingTime, setBookCardOn }) {
     if(name && contact && email && address){
       return true;
     } else{
-      setError("Required all fields");
+      setError("All fields required.");
       return false;
     }
   }
@@ -29,12 +29,13 @@ function BookingForm({ roomData, stayingTime, setBookCardOn }) {
     setError("");
   }
 
+  // CALL BOOKING FUNTION WHICH IS DELARED IN PARENT COMPONENT
   const makeABooking = (event) => {
     event.preventDefault();
 
     if(requiredFieldCheck()){
       clearFields();
-      console.log("OK");
+      bookARoomForGuest(name, email, contact, address);
     }
   }
 
@@ -110,10 +111,10 @@ function BookingForm({ roomData, stayingTime, setBookCardOn }) {
           <p>information</p>
         </div>
         <div className="additional-data">
-          <h3>Room Information</h3>
+          <h3 className="r">{homeSvg} Room Information</h3>
           <div className="data">
             <div className="label">Room number :</div>
-            <div className="value">{roomData.room_num}</div>
+            <div className="value room_num">{roomData.room_num}</div>
           </div>
           <div className="data">
             <div className="label">Room type :</div>
@@ -121,7 +122,7 @@ function BookingForm({ roomData, stayingTime, setBookCardOn }) {
           </div>
         </div>
         <div className="additional-data">
-          <h3>Staying Information</h3>
+          <h3 className="s">{clock} Staying Information</h3>
           <div className="data">
             <div className="label">Check-in :</div>
             <div className="value">{stayingTime.checkIn}</div>

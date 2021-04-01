@@ -74,6 +74,22 @@ function Book() {
     setRoomToBooked(roomData);
   };
 
+  // BOOK A ROOM FOR A GUEST
+  const bookARoomForGuest = (name, email, contact, address) => {
+    console.log("------------GUEST----------");
+    console.log(name);
+    console.log(email);
+    console.log(contact);
+    console.log(address);
+    console.log("------------ROOM---------");
+    console.log(roomToBooked.id);
+    console.log(roomToBooked.room_num);
+    console.log(roomToBooked.room_type);
+    console.log("-------------DATE----------");
+    console.log(stayingTime.checkIn);
+    console.log(stayingTime.checkOut);
+  }
+
   return (
     <ContentBox heading="Booking">
       {!bookCardOn ? (
@@ -102,6 +118,7 @@ function Book() {
           roomData={roomToBooked}
           stayingTime={stayingTime}
           setBookCardOn={setBookCardOn}
+          bookARoomForGuest={bookARoomForGuest}
          />
       )}
     </ContentBox>
