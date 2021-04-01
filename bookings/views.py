@@ -7,6 +7,37 @@ from django.db.models import Q, Subquery, Count, F
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 
+class RoomCategoryView(generics.GenericAPIView):
+    serializer_class = RoomTypeSerializer
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        categories = RoomType.objects.all()
+        categories_serialized = self.get_serializer(categories, many=True)
+
+        return Response(categories_serialized.data, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        new_category = self.get_serializer(data=request.data)
+        new_category.is_valid(raise_exception=True)
+        new_category.save()
+
+        return Response(new_category.data, status=status.HTTP_201_CREATED)
+
+    def patch(self, request, *args, **kwargs):
+        id_ = request.data.pop('id', None)
+
+        try:
+            category = RoomType.objects.get(id=id_)
+            updated = self.get_queryset(category, data=request.data, partial=True)
+            updated.is_valid(raise_exception=True)
+            updated.save()
+
+            return Response(updated.data, status=status.HTTP_202_ACCEPTED)
+        except RoomType.DoesNotExist:
+            return Response({"error": "No such room category"}, status=status.HTTP_404_NOT_FOUND)
+
+
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
     permission_classes = [AllowAny, ]
@@ -119,10 +150,11 @@ class CheckIn(generics.GenericAPIView):
             if booking.check_in > date.today() or booking.check_out < date.today():
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             
+            booking.is_active = True
+            booking.save()
             room = booking.room
             room.active_booking = booking
             room.save()
-
             guest = booking.guest
             guest.is_staying = True
             guest.save()
@@ -141,7 +173,7 @@ class CheckOut(generics.GenericAPIView):
 
         try:
             booking = Bookings.objects.get(id=booking_id)
-        
+
             room = booking.room
             room.active_booking = None
             room.save()
@@ -153,6 +185,7 @@ class CheckOut(generics.GenericAPIView):
                 guest.save()
              
             booking.is_complete = True
+            booking.is_active = False
             booking.save()
             return Response(status=status.HTTP_200_OK)
         

@@ -2,6 +2,13 @@ from rest_framework import serializers
 from .models import Rooms, RoomType, Bookings, Guests, BookingRequest
 from datetime import date
 
+
+class RoomTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomType
+        fields = '__all__'
+
+
 class GuestIdNameSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Guests
