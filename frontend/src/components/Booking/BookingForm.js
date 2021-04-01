@@ -4,7 +4,7 @@ import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
 import { arrowLeftCherovon, clock, homeSvg, check } from "../../assets/images/SVG";
 
-function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, success }) {
+function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, success, loading }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -95,7 +95,11 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
           <small>{error}</small>
           <div className="btn-box">
             <button className="back-btn" onClick={() => setBookCardOn(false)}>{arrowLeftCherovon} Back</button>
-            <button className="submit-btn" onClick={makeABooking}>Submit</button>
+            {
+              !loading
+              ? <button className="submit-btn" onClick={makeABooking}>Submit</button>
+              : <button className="disabled-btn">Processing...</button>
+            }
           </div>
         </form>
       </div>

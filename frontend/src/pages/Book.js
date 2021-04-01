@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {check} from '../assets/images/SVG';
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { clearUser } from "../redux/user/userAction";
 
 // Components
 import BookingForm from "../components/Booking/BookingForm";
@@ -8,7 +10,7 @@ import SceduleSetup from "../components/Booking/SceduleSetup";
 import RoomInfo from "../components/Booking/RoomInfo";
 import ContentBox from "../components/StaffSection/ContentBox";
 
-function Book() {
+function Book({clearUser}) {
   const [availableRooms, setAvailableRooms] = useState([]);
   const [availableRoomsByGroup, setAvailableRoomsByGroup] = useState([]);
   const [roomToBooked, setRoomToBooked] = useState(null);
@@ -19,6 +21,8 @@ function Book() {
   const [bookCardOn, setBookCardOn] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  const history = useHistory();
 
   // SEARCH AVAILABLE ROOMS
   const searchRoomUsingDate = (startDate, endDate) => {
@@ -39,38 +43,39 @@ function Book() {
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
     const ROOM_SEARCH_URL = `http://127.0.0.1:8000/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
-    axios
-      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-      .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
-
-        // search by list
-        axios
-          .get(ROOM_SEARCH_URL, Config)
-          .then((res) => {
-            setAvailableRooms(res.data);
-          })
-          .catch((err) => {
-            setError("Something went wrong! Try again.");
-          });
-        // search by group
-        axios
-          .get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
-          .then((res) => {
-            setAvailableRoomsByGroup(res.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError("Something went wrong! Try again.");
-            setLoading(false);
-          });
+    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+    .then((token) => {
+      const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      
+      // search by list
+      axios.get(ROOM_SEARCH_URL, Config)
+      .then((res) => {
+        setAvailableRooms(res.data);
       })
       .catch((err) => {
-        setError("Atherization Error! Please login and try again");
+        setError("Something went wrong! Try again.");
+      });
+      
+      // search by group
+      axios.get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
+      .then((res) => {
+        setAvailableRoomsByGroup(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError("Something went wrong! Try again.");
         setLoading(false);
       });
+    })
+    .catch((err) => {
+      setError(err.message);
+      localStorage.removeItem('user');
+      localStorage.removeItem('refresh_token');
+      clearUser();
+      history.push("/staff/login");
+      setLoading(false);
+      setLoading(false);
+    });
   };
 
   // SELECT A ROOM TO BOOK
@@ -78,7 +83,7 @@ function Book() {
     setRoomToBooked(roomData);
   };
 
-  // NOTIFY IF STAFF SUCCESSFULLY
+  // NOTIFY IF BOOKING SUCCESSFULLY CREATED
   const notify = () => {
     setTimeout(() => {
       setSuccess(false);
@@ -89,19 +94,41 @@ function Book() {
 
   // BOOK A ROOM FOR A GUEST
   const bookARoomForGuest = (name, email, contact, address) => {
-    console.log("------------GUEST----------");
-    console.log(name);
-    console.log(email);
-    console.log(contact);
-    console.log(address);
-    console.log("------------ROOM---------");
-    console.log(roomToBooked.id);
-    console.log(roomToBooked.room_num);
-    console.log(roomToBooked.room_type);
-    console.log("-------------DATE----------");
-    console.log(stayingTime.checkIn);
-    console.log(stayingTime.checkOut);
-    notify();
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+    const CREATE_GUEST = `http://127.0.0.1:8000/bookings/guests/`;
+    const CREATE_BOOKING = `http://127.0.0.1:8000/bookings/add/`
+
+    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+        const BodyForGuest = {"name": name, "email": email, "address": address, "contact": contact};
+
+        // create a guest
+        axios.post(CREATE_GUEST, BodyForGuest, Config)
+        .then(res => {
+          const BodyForBooking = {
+            "room": roomToBooked.id,
+            "guest": res.data.id,
+            "from_": stayingTime.checkIn,
+            "to_": stayingTime.checkOut
+          }
+          // Create booking for this guest
+          axios.post(CREATE_BOOKING, BodyForBooking, Config)
+          .then(() => {notify(); setLoading(false);})
+          .catch(err => {console.log(err.message); setLoading(false);});
+        })
+        .catch(err => {console.log(err.message); setLoading(false);})
+      })
+      .catch((err) => {
+        //auth error
+        setError(err.message);
+        localStorage.removeItem('user');
+        localStorage.removeItem('refresh_token');
+        clearUser();
+        history.push("/staff/login");
+        setLoading(false);
+      });
   }
 
   return (
@@ -134,10 +161,16 @@ function Book() {
           setBookCardOn={setBookCardOn}
           bookARoomForGuest={bookARoomForGuest}
           success={success}
+          loading={loading}
          />
       )}
     </ContentBox>
   );
 }
 
-export default Book;
+// Redux actions
+const mapDispatchToProps = (dispatch) => {
+  return { clearUser: () => { dispatch(clearUser())} };
+};
+
+export default connect(null, mapDispatchToProps)(Book);
