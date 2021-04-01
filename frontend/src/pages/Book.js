@@ -94,6 +94,8 @@ function Book({clearUser}) {
 
   // BOOK A ROOM FOR A GUEST
   const bookARoomForGuest = (name, email, contact, address) => {
+    setLoading(true);
+
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
     const CREATE_GUEST = `http://127.0.0.1:8000/bookings/guests/`;
@@ -122,12 +124,11 @@ function Book({clearUser}) {
       })
       .catch((err) => {
         //auth error
-        setError(err.message);
+        setLoading(false);
         localStorage.removeItem('user');
         localStorage.removeItem('refresh_token');
         clearUser();
         history.push("/staff/login");
-        setLoading(false);
       });
   }
 

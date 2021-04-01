@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
 import { useHistory } from "react-router-dom";
+import {check} from '../assets/images/SVG';
 
 // Component & Svg
 import Entry from "../components/Booking/Entry";
@@ -14,11 +15,21 @@ function Booking({clearUser}) {
   const [booking, setBooking] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const history = useHistory();
 
+  // SEARCH FUNCTIONALITY
   const searching = () => {
     console.log(name);
   };
+
+  // NOTIFY IF CHECK-IN SUCCESSFULLY DONE
+  const notify = () => {
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000)
+    setSuccess(true);
+  }
 
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -85,6 +96,7 @@ function Booking({clearUser}) {
           booking && booking.map(entry => (
             <Entry 
               key={entry.id}
+              bookingId={entry.id}
               room={entry.room}
               guest={entry.guest}
               check_in={entry.check_in}
@@ -92,9 +104,13 @@ function Booking({clearUser}) {
               book_on={entry.booked_on}
               is_complete={entry.is_complete}
               is_canceled={entry.is_canceled}
+              notify={notify}
             />
           ))
         }
+        <div className={success ? "success-message" : "success-message disabled"}>
+          <div>{ check }</div> Successfully Submitted!
+        </div>
       </div>
     </ContentBox>
   );
