@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 function OrderedFoodItem({ id, name, quantity, decreaseItem, increaseItem }) {
-  useEffect(() => {console.log(quantity)}, [quantity]);
+  const [localQuantity, setLocalQuantity] = useState(quantity);
 
   return (
     <div className="ofood">
