@@ -4,8 +4,10 @@ from rest_framework.response import Response
 from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
+
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
+
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer
@@ -36,7 +38,7 @@ class Room_BookingsListView(generics.GenericAPIView):
 #Unnecessary Duplicated Function
 class GuestRoomListView(generics.GenericAPIView):
     serializer_class = BookingGuestDetailSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -75,7 +77,7 @@ class GuestDetail(generics.GenericAPIView):
 
 class GuestBookings(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -126,7 +128,7 @@ class RoomSearch(generics.GenericAPIView):
 #To be deleted
 class NewBooking(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         room_type = request.data.get('room_type', None)
@@ -164,7 +166,7 @@ class NewBooking(generics.GenericAPIView):
         return Response(data=booking.data, status=status.HTTP_200_OK)
 
 class CheckIn(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -189,7 +191,7 @@ class CheckIn(generics.GenericAPIView):
 
 
 class CheckOut(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
