@@ -5,7 +5,7 @@ import "react-dates/lib/css/_datepicker.css";
 
 function SceduleSetup({searchRoomUsingDate, setSearched}) {
   const [dateRange, setdateRange] = useState({ startDate: null, endDate: null});
-  const [focus, setFocus] = useState("startDate");
+  const [focus, setFocus] = useState("");
 
   const { startDate, endDate } = dateRange;
   const handleOnDateChange = (startDate, endDate) => setdateRange(startDate, endDate);

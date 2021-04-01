@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import cheklist from "../../assets/images/View/svg/checklist.svg";
 import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
-import { arrowLeftCherovon, clock, homeSvg } from "../../assets/images/SVG";
+import { arrowLeftCherovon, clock, homeSvg, check } from "../../assets/images/SVG";
 
-function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest }) {
+function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, success }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -132,6 +132,10 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest }
             <div className="value">{stayingTime.checkOut}</div>
           </div>
         </div>
+      </div>
+
+      <div className={success ? "success-message" : "success-message disabled"}>
+        <div>{ check }</div> Successfully Submitted!
       </div>
     </div>
   );

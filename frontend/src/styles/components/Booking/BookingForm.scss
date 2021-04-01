@@ -4,6 +4,7 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   .heading {
     text-align: center;
@@ -179,5 +180,33 @@
         .value.room_num{ background: var(--blue); color: var(--blue-dark); padding: 5px 15px; border-radius: 10px; font-weight: bold;  }
       }
     }
+  }
+
+  .success-message{
+    position: absolute;
+    top: 20px;
+    left: 31vw;
+    background-color: var(--green);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-family: var(--quicksand-font);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    div{
+      width: 30px; height: 30px;
+      border-radius: 50%; border: 2px solid var(--green-dark);
+      margin-right: 10px; display: flex; align-items: center;
+      justify-content: center;
+    }
+    opacity: 1;
+    margin-left: 0;
+    transition: 0.5s;
+  }
+  .success-message.disabled{
+    margin-left: 30px;
+    opacity: 0;
   }
 }

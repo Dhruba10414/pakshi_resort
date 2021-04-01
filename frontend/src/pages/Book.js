@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import {check} from '../assets/images/SVG';
+
+// Components
+import BookingForm from "../components/Booking/BookingForm";
 import SceduleSetup from "../components/Booking/SceduleSetup";
 import RoomInfo from "../components/Booking/RoomInfo";
 import ContentBox from "../components/StaffSection/ContentBox";
-import axios from "axios";
-import BookingForm from "../components/Booking/BookingForm";
 
 function Book() {
   const [availableRooms, setAvailableRooms] = useState([]);
@@ -14,6 +17,7 @@ function Book() {
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [bookCardOn, setBookCardOn] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
   // SEARCH AVAILABLE ROOMS
@@ -74,6 +78,15 @@ function Book() {
     setRoomToBooked(roomData);
   };
 
+  // NOTIFY IF STAFF SUCCESSFULLY
+  const notify = () => {
+    setTimeout(() => {
+      setSuccess(false);
+      setBookCardOn(false);
+    }, 4000)
+    setSuccess(true);
+  }
+
   // BOOK A ROOM FOR A GUEST
   const bookARoomForGuest = (name, email, contact, address) => {
     console.log("------------GUEST----------");
@@ -88,6 +101,7 @@ function Book() {
     console.log("-------------DATE----------");
     console.log(stayingTime.checkIn);
     console.log(stayingTime.checkOut);
+    notify();
   }
 
   return (
@@ -112,13 +126,14 @@ function Book() {
             setBookCardOn={setBookCardOn}
             selectRoomToBook={selectRoomToBook}
           />
-        </div>
+          </div>
       ) : (
         <BookingForm
           roomData={roomToBooked}
           stayingTime={stayingTime}
           setBookCardOn={setBookCardOn}
           bookARoomForGuest={bookARoomForGuest}
+          success={success}
          />
       )}
     </ContentBox>
