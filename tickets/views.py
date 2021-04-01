@@ -2,7 +2,7 @@ from .models import Services, Tickets
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .serializers import *
 from django.db.models import F, ExpressionWrapper, FloatField
 
@@ -21,7 +21,7 @@ class ServicesEndpoint(GenericAPIView):
         new_service.is_valid(raise_exception=True)
         new_service.save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(new_service.data, status=status.HTTP_201_CREATED)
 
     def patch(self, request, *args, **kwargs):
         service_id = request.data.pop('id', None)
@@ -44,7 +44,7 @@ class BuyTicket(GenericAPIView):
         ticket_bought.is_valid(raise_exception=True)
         ticket_bought.save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(ticket_bought.data, status=status.HTTP_201_CREATED)
 
 
 class GuestTicketsInvoiceList(GenericAPIView):
