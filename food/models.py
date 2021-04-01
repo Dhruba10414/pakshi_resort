@@ -5,7 +5,7 @@ from bookings.models import  Guests
 
 class FoodItem(models.Model):
     name=models.CharField(max_length=100,null=False)
-    description = models.CharField(max_length=300,null=True)
+    description = models.CharField(max_length=15,null=True)
     price = models.FloatField(null=False)
     available = models.BooleanField(default=True)
 

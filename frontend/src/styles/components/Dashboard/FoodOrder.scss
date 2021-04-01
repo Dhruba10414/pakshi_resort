@@ -1,0 +1,287 @@
+// ============================ FOOD ORDER CONTAINER ======================
+.food-order-container {
+    width: 100%;
+    display: flex;
+    .foodOrdering {
+      width: 45%;
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+
+      .heading-content {
+        position: relative;
+        .heading {
+          text-align: center;
+          h3 {
+            font-family: var(--quicksand-font);
+            font-size: 3rem;
+            line-height: 20px;
+            color: var(--primary-color);
+          }
+          p {
+            font-family: WRITTEN;
+            font-size: 5rem;
+            color: var(--primary-color-light);
+            line-height: 20px;
+          }
+        }
+        .heading-button {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--primary-color);
+          box-shadow: 0 0 20px var(--primary-color-light);
+          cursor: pointer;
+          transition: 0.4s;
+          svg {
+            height: 18px;
+            color: #fff;
+            transition: 0.5s;
+          }
+          &:hover svg {
+            transform: scale(1.5);
+          }
+        }
+      }
+
+      h3.secondary-head {
+        margin-top: 40px;
+        font-family: var(--quicksand-font);
+        color: var(--primary-color);
+      }
+
+      .orderedFood {
+        border: 2px solid #f4f4f4;
+        margin-top: 2vh;
+        height: 48vh;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        .table-heading,
+        .ofood {
+          display: flex;
+          border-top: 1px solid #f4f4f4;
+          border-bottom: 1px solid #f4f4f4;
+          div {
+            height: 7vh;
+            display: flex;
+            align-items: center;
+            font-family: var(--secondary-font);
+            font-size: 16px;
+          }
+          .no { width: 20%; padding: 0 20px; }
+          .name { width: 60%; padding: 0 20px; }
+          .quantity { width: 20%; padding: 0 10px;}
+        }
+        .table-heading {
+          position: sticky;
+          top: 0;
+          background: #fff;
+          svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
+          div { font-weight: bold; font-size: 14px; color: gray; }
+          .quantity{padding: 0 20px;}
+        }
+      }
+      .ofood {
+        .quantity{
+          justify-content: space-between;
+          div{
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .btn{
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--primary-color-light); color: var(--primary-color);
+            font-size: 18px; font-weight: bold; font-family: var(--quicksand-font);
+            cursor: pointer;
+          }
+        }
+        &:not(:last-child) {
+          border-bottom: none;
+        }
+      }
+
+      button {
+        border: none;
+        border-radius: 5px;
+        background: var(--primary-color);
+        color: var(--primary-color-light);
+        cursor: pointer;
+        font-family: var(--quicksand-font);
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 20px;
+        outline: none;
+        padding: 10px 40px;
+        &:hover {
+          box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+        }
+      }
+    }
+
+    // ------ Available foods --------
+    .available-foods {
+      width: calc(55% - 10px);
+      margin-left: 10px;
+      padding: 20px;
+      border-radius: 8px;
+      background: #fff;
+
+      .heading-container {
+        width: 100%;
+        height: 20vh;
+        position: relative;
+        .text-part {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          h3 {
+            font-family: var(--quicksand-font);
+            font-size: 3rem;
+            line-height: 20px;
+            color: var(--primary-color);
+          }
+          p {
+            font-family: WRITTEN;
+            font-size: 5rem;
+            color: var(--primary-color-light);
+            line-height: 20px;
+            margin-left: 20px;
+          }
+        }
+
+        .style-part {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 20vh;
+          width: 40%;
+          background: var(--primary-color);
+          border-radius: 0 0 0 25px;
+          .style {
+            width: 100%;
+            height: 20vh;
+            position: relative;
+            img { width: 100%; position: absolute; bottom: -50px; right: -20px; }
+          }
+        }
+        form { position: absolute; bottom: 0; left: 25px; }
+      }
+      // ------------------ available food table -------------------------
+      .availabel-table {
+        border: 2px solid #f4f4f4;
+        margin-top: 4vh;
+        height: 60vh;
+        overflow-y: scroll;
+        &::-webkit-scrollbar { display: none; }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        .table-heading,
+        .foodItem {
+          min-height: 6vh;
+          display: flex;
+          border-top: 1px solid #f4f4f4;
+          border-bottom: 1px solid #f4f4f4;
+          cursor: pointer;
+          div {
+            height: 5vh;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-family: var(--quicksand-font);
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+
+          }
+          .name { width: 40%; }
+          .desc { width: 30%; }
+          .price { width: 15%; font-size: 16px; }
+          .status { width: 15%; svg{height: 18px;}}
+        }
+        .table-heading {
+          position: sticky; top: 0; background: #fff;
+          svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
+          div { font-weight: bold; font-size: 14px; color: gray; }
+        }
+        .foodItem{ 
+            transition: 0.4s; margin-bottom: 3px; &:hover{ background: #dfdfe1; }
+            .status.unlock{ svg{color: var(--green-dark);} }
+            .status.lock{ svg{color: var(--red-dark);} }
+            
+        }
+        .foodItem.disabled{background: #f4f4f4; &:hover{ background: #f4f4f4; }}
+      }
+    }
+
+    form {
+      margin-top: 40px;
+      width: 100%;
+      .input-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .input {
+          width: 49%;
+          display: flex;
+          flex-direction: column;
+          label {
+            font-family: var(--quicksand-font);
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 5px;
+          }
+          input,
+          select {
+            padding: 10px;
+            border: 2px solid var(--primary-color-light);
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            font-weight: bold;
+            transition: 0.4s;
+            &:focus { border: 2px solid var(--primary-color);}
+            option { border: none; padding: 5px 10px; color: var(--primary-color); }
+          }
+          select { appearance: none; outline: none; }
+        }
+        .select {
+          width: 100%;
+          position: relative;
+          select {
+            width: 100%;
+          }
+          &::after {
+            content: "";
+            width: 0.8em;
+            height: 0.5em;
+            background-color: var(--primary-color-light);
+            clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+          }
+        }
+        .w-50 { width: 49%; }
+        .w-30 { width: 29%; }
+        .w-20 { width: 19%; }
+      }
+    }
+  }
