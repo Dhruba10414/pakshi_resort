@@ -4,7 +4,7 @@ from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+#BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'staff',
     'rest_framework_simplejwt.token_blacklist',
     'bookings',
+    'food',
     'invoices',
 ]
 
@@ -88,7 +89,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated'
+         'rest_framework.permissions.AllowAny'
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
      'rest_framework_simplejwt.authentication.JWTAuthentication',
