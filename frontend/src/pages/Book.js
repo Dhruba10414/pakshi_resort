@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
 
 // Components
-import BookingForm from "../components/Booking/BookingForm";
-import SceduleSetup from "../components/Booking/SceduleSetup";
-import RoomInfo from "../components/Booking/RoomInfo";
+import BookingForm from "../components/Book/BookingForm";
+import SceduleSetup from "../components/Book/SceduleSetup";
+import RoomInfo from "../components/Book/RoomInfo";
 import ContentBox from "../components/StaffSection/ContentBox";
 
 function Book({clearUser}) {
@@ -132,7 +132,7 @@ function Book({clearUser}) {
   }
 
   return (
-    <ContentBox heading="Booking">
+    <ContentBox heading="Book">
       {!bookCardOn ? (
         <div className="bookBox">
           <div className="schedule-info">

@@ -565,3 +565,37 @@ export const cofeeSVG = (
     <line x1="14" y1="1" x2="14" y2="4"></line>
   </svg>
 );
+
+export const activity = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-activity"
+  >
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+  </svg>
+);
+
+export const checkedIn = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-check"
+  >
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+);
