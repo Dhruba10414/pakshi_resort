@@ -140,7 +140,7 @@ function Dashboard({clearUser}) {
             </div>
           ) : openOrder ? (
             <FoodOrder
-              id={orderFor.id}
+              guestId={orderFor.id}
               name={orderFor.name}
               room={orderFor.room_no}
               closeModal={closeModal}

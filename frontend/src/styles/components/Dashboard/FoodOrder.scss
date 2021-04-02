@@ -1,88 +1,45 @@
-// ============================ FOOD ORDER CONTAINER ======================
 .food-order-container {
     width: 100%;
     display: flex;
+
     .foodOrdering {
-      width: 45%;
+      width: calc(45% - 10px);
+      margin-left: 10px;
       background: #fff;
       border-radius: 8px;
       padding: 20px;
 
       .heading-content {
         position: relative;
+        height: fit content;
         .heading {
           text-align: center;
-          h3 {
-            font-family: var(--quicksand-font);
-            font-size: 3rem;
-            line-height: 20px;
-            color: var(--primary-color);
-          }
-          p {
-            font-family: WRITTEN;
-            font-size: 5rem;
-            color: var(--primary-color-light);
-            line-height: 20px;
-          }
+          h3 { font-family: var(--quicksand-font); font-size: 3rem; line-height: 20px; color: var(--primary-color); }
+          p { font-family: WRITTEN; font-size: 5rem; color: var(--primary-color-light); line-height: 30px; }
         }
-        .heading-button {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--primary-color);
-          box-shadow: 0 0 20px var(--primary-color-light);
-          cursor: pointer;
-          transition: 0.4s;
-          svg {
-            height: 18px;
-            color: #fff;
-            transition: 0.5s;
-          }
-          &:hover svg {
-            transform: scale(1.5);
-          }
-        }
-      }
-
-      h3.secondary-head {
-        margin-top: 40px;
-        font-family: var(--quicksand-font);
-        color: var(--primary-color);
       }
 
       .orderedFood {
-        border: 2px solid #f4f4f4;
-        margin-top: 2vh;
         height: 48vh;
+        margin-top: 3vh;
+        background: #f7f7f7;
+        border: 2px solid #d4d4e1;
+        border-radius: 8px;
+        position: relative;
         overflow-y: scroll;
-        &::-webkit-scrollbar {
-          display: none;
-        }
+        &::-webkit-scrollbar {display: none;}
         -ms-overflow-style: none;
         scrollbar-width: none;
 
         .table-heading,
         .ofood {
           display: flex;
-          border-top: 1px solid #f4f4f4;
-          border-bottom: 1px solid #f4f4f4;
-          div {
-            height: 7vh;
-            display: flex;
-            align-items: center;
-            font-family: var(--secondary-font);
-            font-size: 16px;
-          }
-          .no { width: 20%; padding: 0 20px; }
-          .name { width: 60%; padding: 0 20px; }
+          div { height: 7vh; display: flex; align-items: center; font-family: var(--secondary-font); font-size: 16px; }
+          .price { width: 25%; padding: 0 10px 0 26px; }
+          .name { width: 55%; padding: 0 20px; }
           .quantity { width: 20%; padding: 0 10px;}
         }
+
         .table-heading {
           position: sticky;
           top: 0;
@@ -91,50 +48,104 @@
           div { font-weight: bold; font-size: 14px; color: gray; }
           .quantity{padding: 0 20px;}
         }
-      }
-      .ofood {
-        .quantity{
-          justify-content: space-between;
-          div{
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        .ofood {
+          background-color: #fff;
+          width: 97%;
+          margin: auto;
+          margin-top: 7px;
+          border-radius: 5px;
+          .quantity{
+            justify-content: space-between;
+            div{ padding: 0; display: flex; justify-content: center; align-items: center; }
+            .btn{
+              width: 30px; height: 30px; border-radius: 5px;
+              background: var(--primary-color-light); color: var(--primary-color);
+              font-size: 20px; font-weight: bold; font-family: var(--quicksand-font);
+              cursor: pointer; transition: 0.4s;
+              &:hover{ background-color: var(--primary-color); color: #fff; }
+            }
           }
-          .btn{
-            width: 30px; height: 30px; border-radius: 50%;
-            background: var(--primary-color-light); color: var(--primary-color);
-            font-size: 18px; font-weight: bold; font-family: var(--quicksand-font);
-            cursor: pointer;
-          }
+          &:not(:last-child) { border-bottom: none; }
         }
-        &:not(:last-child) {
-          border-bottom: none;
+
+        img{ width: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+        h2.empty-head{ 
+          font-family: var(--quicksand-font); text-align: center; font-size: 20px; font-weight: normal;
+          position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);}
+      }
+
+      .price-block{
+        width: 100%;
+        height: 15vh;
+        background: #f7f7f7;
+        border: 2px solid #d4d4e1;
+        padding: 20px;
+        margin-top: 15px;
+        border-radius: 8px;
+        display: flex;
+        .customer{
+          width: 60%;
+          h3{font-family: var(--quicksand-font); font-size: 16px; margin-bottom: 10px;}
+          .data{display: flex; align-items: center;}
+          .label{ width: 24%; font-weight: bold; font-size: 14px; color: gray; }
+          .value{ width: 76%; font-weight: normal; color: #444; }          
+          // .value p{background-color: var(--yellow); color: var(--yellow-dark); font-weight: bold; border-radius: 10px;}
+        }
+        .price{
+          width: 40%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-end;
+          h1, h3{ display: block; font-family: var(--quicksand-font); }
+          h1{ font-size: 3rem; line-height: 2.5rem; font-weight: normal; color: var(--primary-color-light); span{font-size: 2.3rem;} }
+          h3{font-size: 16px; color: gray; span{margin-left: 10px; color: #444; font-size: 18px;}}
         }
       }
 
+      // button box
+      .btn-box{display: flex; margin-top: 30px;}
       button {
-        border: none;
+        width: 25%;
+        padding: 15px 0;
         border-radius: 5px;
-        background: var(--primary-color);
-        color: var(--primary-color-light);
-        cursor: pointer;
         font-family: var(--quicksand-font);
-        font-size: 16px;
         font-weight: bold;
-        margin-top: 20px;
+        text-align: center;
         outline: none;
-        padding: 10px 40px;
+        border: none;
+        cursor: pointer;
+        transition: 0.4s;
+        background: var(--primary-color-2);
+        color: #fff;
         &:hover {
-          box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+          color: var(--primary-color-light);
         }
+      }
+      button.back-btn{
+        margin-right: 20px;
+        padding: 10px 20px; 
+        background: #fff;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        width: 20%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        svg{height: 18px;}
+      }
+      button.disabled-btn{
+        background-color: #ccc;
+        color: #444;
       }
     }
 
-    // ------ Available foods --------
+    // ======================================================== Available foods =======================================================
     .available-foods {
-      width: calc(55% - 10px);
-      margin-left: 10px;
+      width: 55%;
+      height: calc(90vh - 10px);
       padding: 20px;
       border-radius: 8px;
       background: #fff;
@@ -181,9 +192,10 @@
       }
       // ------------------ available food table -------------------------
       .availabel-table {
-        border: 2px solid #f4f4f4;
-        margin-top: 4vh;
         height: 60vh;
+        margin-top: 3.5vh;
+        border: 2px solid #d4d4e1;
+        border-radius: 8px;
         overflow-y: scroll;
         &::-webkit-scrollbar { display: none; }
         -ms-overflow-style: none;

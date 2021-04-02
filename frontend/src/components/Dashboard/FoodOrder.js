@@ -11,7 +11,7 @@ import Ordered from "./Ordered";
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 
-function FoodOrder({ id, name, room, closeModal, clearUser}) {
+function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [foodType, setFoodType] = useState("B");
@@ -23,7 +23,6 @@ function FoodOrder({ id, name, room, closeModal, clearUser}) {
     const filteredFoodsByType = availabelFood.filter(food => food.food_type === event.target.value);
     setFilteredFoods(filteredFoodsByType);
   }
-
 
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
@@ -53,14 +52,6 @@ function FoodOrder({ id, name, room, closeModal, clearUser}) {
 
   return (
     <div className="food-order-container">
-      <div className="foodOrdering">
-        <div className="heading-content">
-          <div className="heading"> <h3>Food Order</h3> <p>for guest</p> </div>
-          <div className="heading-button" onClick={() => closeModal()}>{x}</div>
-        </div>   
-        <Ordered />
-      </div>
-
       {/* AVAILABLE FOODS */}
       <div className="available-foods">
         <div className="heading-container">
@@ -84,8 +75,6 @@ function FoodOrder({ id, name, room, closeModal, clearUser}) {
             </div>
           </form>
         </div>
-
-        
         <div className="availabel-table">
           <div className="table-heading">
             <div className="name">Name {rsvg}</div>
@@ -107,6 +96,19 @@ function FoodOrder({ id, name, room, closeModal, clearUser}) {
             ))
           }
         </div>
+      </div>
+
+      {/* ORDERED FOODS */}
+      <div className="foodOrdering">
+        <div className="heading-content">
+          <div className="heading"> <h3>Food Order</h3> <p>for guest</p> </div>
+        </div>
+        <Ordered
+          guestId={guestId}
+          name={name}
+          room={room}
+          closeModal={closeModal}
+        />
       </div>
     </div>
   );

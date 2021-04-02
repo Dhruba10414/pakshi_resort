@@ -26,7 +26,10 @@ function FoodItem({ id, type, name, desc, available, price, addFoodToBasket }) {
   };
 
   return (
-    <div className={status ? "foodItem" : "foodItem disabled"} onClick={() => addFoodToBasket({id, name, quantity: 1})}>
+    <div 
+      className={status ? "foodItem" : "foodItem disabled"} 
+      onClick={() => addFoodToBasket({id, name, price, quantity: 1})}
+    >
       <div className="name">{name}</div>
       <div className="desc">{desc.length === 0 ? "........" : desc}</div>
       <div className="price">{price}</div>

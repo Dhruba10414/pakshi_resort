@@ -15,11 +15,3 @@ export const removeFoodFromBasket = (id) => {
     id,
   };
 };
-
-// INCREASE BASKET ITEM
-export const increaseItem = (id) => {
-  return{
-    type: INCREASE_ITEM,
-    id,
-  }
-}
