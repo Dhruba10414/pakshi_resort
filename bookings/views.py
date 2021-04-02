@@ -29,7 +29,7 @@ class RoomCategoryView(generics.GenericAPIView):
 
         try:
             category = RoomType.objects.get(id=id_)
-            updated = self.get_queryset(category, data=request.data, partial=True)
+            updated = self.get_serializer(category, data=request.data, partial=True)
             updated.is_valid(raise_exception=True)
             updated.save()
 
@@ -37,6 +37,30 @@ class RoomCategoryView(generics.GenericAPIView):
         except RoomType.DoesNotExist:
             return Response({"error": "No such room category"}, status=status.HTTP_404_NOT_FOUND)
 
+
+class RoomUpdateView(generics.GenericAPIView):
+    serializer_class = RoomSerializer
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        new_room = self.get_serializer(data=request.data)
+        new_room.is_valid(raise_exception=True)
+        new_room.save()
+
+        return Response(new_room.data, status=status.HTTP_201_CREATED)
+
+    def patch(self, request, *args, **kwargs):
+        id_ = request.data.pop('id', None)
+
+        try:
+            room = Rooms.objects.get(id=id_)
+            updated_room = self.get_serializer(room, data=request.data, partial=True)
+            updated_room.is_valid(raise_exception=True)
+            updated_room.save()
+
+            return Response(updated_room.data, status=status.HTTP_202_ACCEPTED)
+        except Rooms.DoesNotExist:
+            return Response({"error": "No such room"}, status=status.HTTP_400_BAD_REQUEST)
 
 class RoomListView(generics.GenericAPIView):
     serializer_class = RoomGuestEmbededSerializer

@@ -2,6 +2,8 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('room-type/', RoomCategoryView.as_view(), name='room_type'),
+    path('room-update/', RoomUpdateView.as_view(), name='room'),
     path('rooms/', RoomListView.as_view(), name='rooms_list'),
     path('rooms/bookings/', Room_BookingsListView.as_view(), name='rooms_bookings'),
     path('guests/', GuestDetail.as_view(), name='guest_info'),
