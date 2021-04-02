@@ -1,17 +1,25 @@
-import { ADD_TO_BASKET, REMOVE_FROM_BASKET } from './foodType';
+import { ADD_TO_BASKET, REMOVE_FROM_BASKET, INCREASE_ITEM } from "./foodType";
 
-// SETUP USER PRIMARY INFO
+// ADD NEW FOOD TO BASKET
 export const addFoodToBasket = (data) => {
-    return {
-      type: ADD_TO_BASKET,
-      data
-    };
+  return {
+    type: ADD_TO_BASKET,
+    data,
+  };
 };
 
-// SETUP USER PRIMARY INFO
-export const removeFoodToBasket = (data) => {
-    return {
-      type: REMOVE_FROM_BASKET,
-      data
-    };
+// REMOVE A FOOD FROM BASKET
+export const removeFoodFromBasket = (id) => {
+  return {
+    type: REMOVE_FROM_BASKET,
+    id,
+  };
 };
+
+// INCREASE BASKET ITEM
+export const increaseItem = (id) => {
+  return{
+    type: INCREASE_ITEM,
+    id,
+  }
+}

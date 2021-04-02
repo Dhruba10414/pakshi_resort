@@ -1,4 +1,4 @@
-import { ADD_TO_BASKET, REMOVE_FROM_BASKET } from "./foodType";
+import { ADD_TO_BASKET, REMOVE_FROM_BASKET, INCREASE_ITEM } from "./foodType";
 
 export const initialState = {
   basket: [],
@@ -19,14 +19,22 @@ const foodReducer = (state = initialState, action) => {
       if (!found) {
         return {
           ...state,
-          basket: [...state.basket, { ...action.data, amount: 1 }],
+          basket: [...state.basket, { ...action.data }],
         };
       }
+
     case REMOVE_FROM_BASKET:
         return {
             ...state,
-            basket: state.basket.filter((food) => { return food.id !== action.data.id; })
+            basket: state.basket.filter((food) => { return food.id !== action.id; })
         }
+
+    case INCREASE_ITEM:
+        state.basket.map((item )=> {
+          if(item.id === action.id)
+            item.quantity++; 
+        })
+        
     default:
       return state;
   }

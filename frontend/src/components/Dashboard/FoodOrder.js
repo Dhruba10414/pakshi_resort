@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { x, rsvg } from "../../assets/images/SVG";
-import meal from "../../assets/images/StaffSection/meal.svg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-import { clearUser } from "../../redux/user/userAction";
+// SVG
+import { x, rsvg } from "../../assets/images/SVG";
+import meal from "../../assets/images/StaffSection/meal.svg";
+// Component
 import FoodItem from "./FoodItem";
 import Ordered from "./Ordered";
+// Redux
+import { connect } from "react-redux";
+import { clearUser } from "../../redux/user/userAction";
 
-function FoodOrder({ id, name, room, closeModal, clearUser }) {
+function FoodOrder({ id, name, room, closeModal, clearUser}) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
-  const [orderedFood, setOrderedFood] = useState([]);
   const [foodType, setFoodType] = useState("B");
   const history = useHistory();
 
@@ -22,38 +24,6 @@ function FoodOrder({ id, name, room, closeModal, clearUser }) {
     setFilteredFoods(filteredFoodsByType);
   }
 
-  // ADD FOODS IN CART FOR ORDER
-  const addFoodAsOrder = (id, name, quantity) => {
-    setOrderedFood([...orderedFood, {id, name, quantity}]);
-  }
-
-  // DELETE FOOD ITEM
-  const deleteItem = (id) => {
-    const result = orderedFood.filter((food) => { return food.id !== id; })
-    setOrderedFood(result);
-  }
-
-  // INCREASE FOOD ITEM
-  const increaseItem = (id) => {
-    console.log("i")
-    orderedFood.map(food => {
-      if(food.id === id){
-        food.quantity++;
-      }
-    })
-  }
-
-  // DECREASE FOOD ITEM
-  const decreaseItem = (id) => {
-    orderedFood.map(food => {
-      if(food.id === id && food.quantity > 0){
-        food.quantity--;
-      }
-      if(food.quantity === 0){
-        deleteItem(id);
-      }
-    })
-  }
 
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
@@ -87,13 +57,8 @@ function FoodOrder({ id, name, room, closeModal, clearUser }) {
         <div className="heading-content">
           <div className="heading"> <h3>Food Order</h3> <p>for guest</p> </div>
           <div className="heading-button" onClick={() => closeModal()}>{x}</div>
-        </div>
-        
-        <Ordered
-          orderedFood={orderedFood}
-          increaseItem={increaseItem}
-          decreaseItem={decreaseItem}
-        />
+        </div>   
+        <Ordered />
       </div>
 
       {/* AVAILABLE FOODS */}
@@ -138,7 +103,6 @@ function FoodOrder({ id, name, room, closeModal, clearUser }) {
                 price={food.price}
                 available={food.available}
                 type={food.food_type}
-                addFoodAsOrder={addFoodAsOrder}
               />
             ))
           }
@@ -148,9 +112,12 @@ function FoodOrder({ id, name, room, closeModal, clearUser }) {
   );
 }
 
-// Redux actions
-const mapDispatchToProps = (dispatch) => {
-  return { clearUser: () => { dispatch(clearUser())} };
+const mapStateToProps = (state) => {
+  return { basket: state.food.basket, };
 };
 
-export default connect(null, mapDispatchToProps)(FoodOrder);
+const mapDispatchToProps = (dispatch) => {
+  return {  clearUser: () => { dispatch(clearUser()); }};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodOrder);
