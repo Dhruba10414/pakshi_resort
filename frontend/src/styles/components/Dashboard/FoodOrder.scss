@@ -70,6 +70,7 @@
         }
 
         img{ width: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+        img.check {height: 30%; width: auto;}
         h2.empty-head{ 
           font-family: var(--quicksand-font); text-align: center; font-size: 20px; font-weight: normal;
           position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);}

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {removeFoodFromBasket} from "../../redux/foods/foodAction";
+import {removeFoodFromBasket, removeAllFoods} from "../../redux/foods/foodAction";
+// imaeg & svg
 import { arrowLeftCherovon, rsvg } from "../../assets/images/SVG";
 import emptysvg from "../../assets/images/View/svg/empty.svg"
+import checksvg from "../../assets/images/View/svg/check.svg"
 
-function Ordered({ basket, removeFood, closeModal, name, guestId, room }) {
-  const [changed, setChanged] = useState(false);
+function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId, room }) {
   const [total, setTotal] = useState(0);
+  const [changed, setChanged] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // CALCULATE TOTAL PRICE
   const calcTotal = () => {
@@ -39,10 +42,27 @@ function Ordered({ basket, removeFood, closeModal, name, guestId, room }) {
     setChanged(true);
   }
 
+  // NOTIFY
+  const notify = () => {
+    setTimeout(() => {
+      setSuccess(false);
+    }, 4000)
+    setSuccess(true);
+  }
+
+  // ORDER FOOD
+  const OrderFoods = () => {
+    const orderedfoodList = basket.map((food) => { return {id: food.id, quantity: food.quantity} });
+    const order = {"foods": orderedfoodList, "guest": guestId};
+    console.log(order);
+    removeAllFoods();
+    notify();
+  }
+  
+  // RE RENDER
   useEffect(() => {
     setChanged(false);
     calcTotal();
-    console.log("Run")
   }, [changed, basket]);
 
   return (
@@ -69,12 +89,17 @@ function Ordered({ basket, removeFood, closeModal, name, guestId, room }) {
           ))}
         {/* if basket is empty */}
         { 
-          basket.length === 0 
+          success
           ? <>
-            <img src={emptysvg} alt="" />
-            <h2 className="empty-head">Foods are not ordered yet!</h2>
+            <img src={checksvg} className="check" alt="" />
+              <h2 className="empty-head">Order Confirmed!</h2>
+          </>
+          : basket.length === 0 
+            ? <>
+              <img src={emptysvg} alt="" />
+              <h2 className="empty-head">Foods are not ordered yet!</h2>
             </>
-          : null
+            : null
         }
       </div>
 
@@ -94,7 +119,7 @@ function Ordered({ basket, removeFood, closeModal, name, guestId, room }) {
         <button className="back-btn" onClick={closeModal}>{arrowLeftCherovon} Back</button>
         {
           !loading
-            ? <button className="submit-btn">Order</button>
+            ? <button className="submit-btn" onClick={OrderFoods}>Order</button>
             : <button className="disabled-btn">Processing...</button>
         }
       </div>
@@ -109,7 +134,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { removeFood: (id) => {dispatch(removeFoodFromBasket(id))}};
+  return { 
+    removeFood: (id) => {dispatch(removeFoodFromBasket(id))},
+    removeAllFoods: () => {dispatch(removeAllFoods())},
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ordered);

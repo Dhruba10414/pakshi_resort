@@ -1,4 +1,4 @@
-import { ADD_TO_BASKET, REMOVE_FROM_BASKET } from "./foodType";
+import { ADD_TO_BASKET, REMOVE_ALL_FOODS, REMOVE_FROM_BASKET } from "./foodType";
 
 export const initialState = {
   basket: [],
@@ -28,6 +28,11 @@ const foodReducer = (state = initialState, action) => {
             ...state,
             basket: state.basket.filter((food) => { return food.id !== action.id; })
         }
+    case REMOVE_ALL_FOODS:
+      return {
+          ...state,
+          basket: []
+      }
     default:
       return state;
   }

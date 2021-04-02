@@ -1,4 +1,4 @@
-import { ADD_TO_BASKET, REMOVE_FROM_BASKET, INCREASE_ITEM } from "./foodType";
+import { ADD_TO_BASKET, REMOVE_FROM_BASKET, REMOVE_ALL_FOODS } from "./foodType";
 
 // ADD NEW FOOD TO BASKET
 export const addFoodToBasket = (data) => {
@@ -15,3 +15,11 @@ export const removeFoodFromBasket = (id) => {
     id,
   };
 };
+
+
+// REMOVE ALL FOODS FROM BASKET
+export const removeAllFoods = () => {
+  return {
+    type: REMOVE_ALL_FOODS
+  }
+}
