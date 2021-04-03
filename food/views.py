@@ -68,7 +68,7 @@ class FoodOrderingView(generics.GenericAPIView):
         IsComplete = request.data.get('isComplete',None)
         food_Type = request.data.get('food_type',None)
 
-        yesterday = date.today() - timedelta(days=1)
+        yesterday = date.today() - timedelta(days=1) #need to check 
 
         if IsCancel:
             orders = FoodOrdering.objects.filter(isCancel=True).order_by('-time')
@@ -96,8 +96,11 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 if food["quantity"] is None :
                     return Response(data={'message :''You have to select a specific Quantity'},status=status.HTTP_404_NOT_FOUND)
+                if food["price"] is None:
+                    return Response(data={"message : " "You have to include the price "},status=status.HTTP_404_NOT_FOUND)
                 
-                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"])
+                
+                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=food["price"])
                 new_order.taken_by=request.user.id
                 new_order.save()
                 
