@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from food.models import FoodItem,FoodOrdering
-from bookings.serializers import GuestIdNameSerailizer
+from bookings.serializers import GuestSerializer
 from staff.serializers import UserSerializer
 
 
@@ -16,8 +16,9 @@ class FoodOrderingSerializer(serializers.ModelSerializer):
         fields = ['quantity','time','isComplete','isCancel']
 
 class OrderItemEmbededSerializer(serializers.ModelSerializer):
-    guest = serializers.PrimaryKeyRelatedField(read_only=True)
-    food = serializers.PrimaryKeyRelatedField(read_only=True)
+    guest = GuestSerializer(read_only=True)
+    food = FoodItemSerilizer(read_only=True)
+    
     taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
