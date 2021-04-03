@@ -64,8 +64,21 @@ class FoodOrderingView(generics.GenericAPIView):
     queryset=FoodOrdering.objects.all() 
 
     def get(self,request,*args,**kwargs):
+        IsCancel = request.data.get('isCancel',None)
+        IsComplete = request.data.get('isComplete',None)
+        food_Type = request.data.get('food_type',None)
+
         yesterday = date.today() - timedelta(days=1)
-        orders = FoodOrdering.objects.filter(isCancel=False,isComplete=False).order_by('guest_id','-time')
+
+        if IsCancel:
+            orders = FoodOrdering.objects.filter(isCancel=True).order_by('-time')
+        elif IsComplete:
+            orders = FoodOrdering.objects.filter(isComplete=True).order_by('-time')
+        elif food_Type:
+            orders = FoodOrdering.objects.filter(time__gte=yesterday,food__food_type=food_Type).order_by('-time')
+        else:
+            orders = FoodOrdering.objects.filter(isCancel=False,isComplete=False).order_by('guest_id','-time')
+
         serialzer_data = self.get_serializer(orders,many=True)
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
    
