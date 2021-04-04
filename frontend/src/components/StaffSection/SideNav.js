@@ -3,7 +3,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
 
 // Assets
-import { boxes, calender, cloud, help, logout, pie, settings, user, users } from '../../assets/images/SVG';
+import { boxes, calender, cloud, help, logout, pie, settings, user, users, cofeeSVG, activity } from '../../assets/images/SVG';
 
 function SideNav({role, clearUser}) {
   const history = useHistory();
@@ -29,15 +29,19 @@ function SideNav({role, clearUser}) {
   return (
     <div className="sideNav">
       <div className="basics">
-        <NavLink to="/staff/dashboard" exact activeClassName="active-link"> {boxes} Dashboard
-        </NavLink>
+        <NavLink to="/staff/dashboard" exact activeClassName="active-link"> {boxes} Dashboard</NavLink>
         <NavLink to="/staff/book" exact activeClassName="active-link"> {calender} Book </NavLink>
+        <NavLink to="/staff/booking" exact activeClassName="active-link"> {activity} Bookings </NavLink>
         <NavLink to="/staff/guests" exact activeClassName="active-link"> {users} Guests </NavLink>
-        <NavLink to="/staff/foodorders" exact activeClassName="active-link"> {pie} Food Orders </NavLink>
+        <NavLink to="/staff/foodorders" exact activeClassName="active-link"> {cofeeSVG} Food Orders </NavLink>
         <NavLink to="/staff/park" exact activeClassName="active-link"> {cloud} Park Visitors </NavLink>
         {
           role === 'A'
-          ? (<NavLink to="/staff/admin" exact activeClassName="active-link"> {user} Staff Management </NavLink>)
+          ? (<>
+              <NavLink to="/staff/admin/staff" exact activeClassName="active-link"> {user} Staff Management </NavLink>
+              <NavLink to="/staff/admin/food" exact activeClassName="active-link"> {pie} Food Management </NavLink>
+            </>
+            )
           : null
         }
         
