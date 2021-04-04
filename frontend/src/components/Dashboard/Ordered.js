@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+//redux
 import { connect } from "react-redux";
+import { clearUser } from "../../redux/user/userAction";
 import {removeFoodFromBasket, removeAllFoods} from "../../redux/foods/foodAction";
 // imaeg & svg
 import { arrowLeftCherovon, rsvg } from "../../assets/images/SVG";
@@ -11,6 +15,7 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
   const [changed, setChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
 
   // CALCULATE TOTAL PRICE
   const calcTotal = () => {
@@ -52,11 +57,36 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
 
   // ORDER FOOD
   const OrderFoods = () => {
-    const orderedfoodList = basket.map((food) => { return {id: food.id, quantity: food.quantity} });
-    const order = {"foods": orderedfoodList, "guest": guestId};
-    console.log(order);
-    removeAllFoods();
-    notify();
+    if(basket && basket.length > 0)
+    {
+      setLoading(true);
+      const orderedfoodList = basket.map((food) => { return {id: food.id, quantity: food.quantity, price: food.price} });
+      const Order = {"foods": orderedfoodList, "guest_id": guestId};
+      
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+      const FOOD_ORDER_URL = `http://127.0.0.1:8000/food/orders/`;
+
+      axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+          
+          axios.post(FOOD_ORDER_URL, Order, Config)
+          .then(() => {
+            removeAllFoods();
+            notify();
+            setLoading(false);
+          })
+          .catch(err => {console.log(err.message); setLoading(false);})
+        })
+        .catch(() => {
+          setLoading(false);
+          localStorage.removeItem('user');
+          localStorage.removeItem('refresh_token');
+          clearUser();
+          history.push("/staff/login");
+        })
+    }
   }
   
   // RE RENDER
