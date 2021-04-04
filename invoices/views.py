@@ -22,7 +22,7 @@ class GuestInvoiceView(generics.GenericAPIView):
         if guest_id is not None:
             guest_bookings = Bookings.objects.filter(guest__id=guest_id, is_canceled=False
                             ).annotate(stayed=Datediff(F('check_out'), F('check_in'))
-                            ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                            ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField())).order_by('check_in')
 
             bills = self.get_serializer(guest_bookings, many=True)
@@ -44,7 +44,7 @@ class BookingBill(generics.GenericAPIView):
 
         booking = Bookings.objects.filter(id=booking_id
                         ).annotate(stayed=Datediff('check_out', 'check_in')
-                        ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                        ).annotate(bill=ExpressionWrapper(F('rate')*
                         F('stayed'), output_field=FloatField())).first()
         
         bill = self.get_serializer(booking)
@@ -74,7 +74,7 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
         if guest is not None:
             bills = Bookings.objects.filter(guest__id=guest, is_canceled=False).annotate(
                                 stayed=Datediff('check_out', 'check_in')
-                                ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                                ).annotate(bill=ExpressionWrapper(F('rate')*
                                 F('stayed'), output_field=FloatField()))
             total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
 

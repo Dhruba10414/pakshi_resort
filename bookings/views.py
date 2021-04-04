@@ -172,13 +172,16 @@ class CheckIn(generics.GenericAPIView):
         try:
             booking = Bookings.objects.get(id=booking_id)
             if booking.check_in > date.today() or booking.check_out < date.today():
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Invalid Checkin/Checkout dates"}, status=status.HTTP_400_BAD_REQUEST)
             
-            booking.is_active = True
-            booking.save()
             room = booking.room
+            if room.active_booking is not None:
+                return Response({"error": "Already staying a guest"}, status=status.HTTP_400_BAD_REQUEST)
+            
             room.active_booking = booking
             room.save()
+            booking.is_active = True
+            booking.save()
             guest = booking.guest
             guest.is_staying = True
             guest.save()
