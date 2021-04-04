@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from food.models import FoodItem,FoodOrdering
-from bookings.serializers import GuestIdNameSerailizer
+from bookings.serializers import GuestSerializer
 from staff.serializers import UserSerializer
 
 
@@ -16,13 +16,14 @@ class FoodOrderingSerializer(serializers.ModelSerializer):
         fields = ['quantity','time','isComplete','isCancel']
 
 class OrderItemEmbededSerializer(serializers.ModelSerializer):
-    guest = serializers.PrimaryKeyRelatedField(read_only=True)
-    food = serializers.PrimaryKeyRelatedField(read_only=True)
+    guest = GuestSerializer(read_only=True)
+    food = FoodItemSerilizer(read_only=True)
+    
     taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model=FoodOrdering
-        fields = ['id','guest','food','taken_by','quantity','isComplete','isCancel','time']
+        fields = ['id','guest','food','taken_by','order_price','quantity','isComplete','isCancel','time']
 
 
 class FoodOrderEmbededSerializer(serializers.ModelSerializer):
@@ -34,7 +35,7 @@ class FoodOrderEmbededSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=FoodOrdering
-        fields=['id','food','quantity','time','taken_by','guest','total']
+        fields=['id','food','quantity','time','taken_by','guest','order_price','total']
     
     def get_total(self,obj):
         return (obj.food.price*obj.quantity)

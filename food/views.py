@@ -64,8 +64,21 @@ class FoodOrderingView(generics.GenericAPIView):
     queryset=FoodOrdering.objects.all() 
 
     def get(self,request,*args,**kwargs):
-        yesterday = date.today() - timedelta(days=1)
-        orders = FoodOrdering.objects.filter(isCancel=False,isComplete=False).order_by('guest_id','-time')
+        IsCancel = request.data.get('isCancel',None)
+        IsComplete = request.data.get('isComplete',None)
+        food_Type = request.data.get('food_type',None)
+
+        yesterday = date.today() - timedelta(days=1) #need to check 
+
+        if IsCancel:
+            orders = FoodOrdering.objects.filter(isCancel=True).order_by('-time')
+        elif IsComplete:
+            orders = FoodOrdering.objects.filter(isComplete=True).order_by('-time')
+        elif food_Type:
+            orders = FoodOrdering.objects.filter(time__gte=yesterday,food__food_type=food_Type).order_by('-time')
+        else:
+            orders = FoodOrdering.objects.filter(isCancel=False,isComplete=False).order_by('guest_id','-time')
+
         serialzer_data = self.get_serializer(orders,many=True)
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
    
@@ -83,8 +96,11 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 if food["quantity"] is None :
                     return Response(data={'message :''You have to select a specific Quantity'},status=status.HTTP_404_NOT_FOUND)
+                if food["price"] is None:
+                    return Response(data={"message : " "You have to include the price "},status=status.HTTP_404_NOT_FOUND)
                 
-                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"])
+                
+                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=food["price"])
                 new_order.taken_by=request.user.id
                 new_order.save()
                 
