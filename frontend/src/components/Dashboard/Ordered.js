@@ -71,7 +71,7 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
         .then((token) => {
           const Config = { headers: { Authorization: "Bearer " + token.data.access }};
           
-          axios.post(FOOD_ORDER_URL, Order, Config)
+          axios.post(FOOD_ORDER_URL, Order)
           .then(() => {
             removeAllFoods();
             notify();

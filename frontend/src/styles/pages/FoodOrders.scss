@@ -12,7 +12,7 @@
         scrollbar-width: none;
         background: #fff;
     }
-
+    // ========================================================= SEARCH ==============================================
     .search-field {
         width: 100%;
         position: sticky;
@@ -43,11 +43,14 @@
           }
         }
       }
-      
+      // ========================================================= FILTER ==============================================
       .filter-by-type{
         background: var(--body-background-color);
         padding: 10px;
         display: flex;
+        position: sticky;
+        top: 50px;
+        // position: relative;
         div{
           margin-right: 30px; font-family: var(--quicksand-font);
           cursor: pointer; font-weight: bold; color: gray; position: relative; transition: 0.4s;
@@ -63,9 +66,46 @@
           color: var(--green-dark);
           &::after{width: 100%;}
         }
+        .message{
+          position: absolute;
+          bottom: 10px;
+          right: 20px;
+          font-weight: bold;
+          font-family: var(--quicksand-font);
+          padding: 10px 20px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          div{
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            margin-right: 10px; display: flex; align-items: center;
+            justify-content: center;
+          }
+          opacity: 1;
+          margin-left: 0;
+          transition: 0.5s;
+        }
+        .message.success{ 
+          background-color: var(--green); color: var(--green-dark);
+          div{border: 2px solid var(--green-dark); svg{color: var(--green-dark);}}
+        }
+        .message.warning{ 
+          background-color: var(--yellow); color: var(--yellow-dark);
+          div{border: none; svg{color: var(--yellow-dark);}}
+        }
+        .message.cancel{
+          background-color: var(--red); color: var(--red-dark);
+          div{border: none; svg{color: var(--red-dark);}}
+        }
+        .message.disabled{
+          margin-right: -30px;
+          opacity: 0;
+        }
       }
 
-      // table heading and contents common style
+      // ========================================================= TABLE ==============================================
       .table-heading,
       .orderItem {
         display: flex;
@@ -85,24 +125,24 @@
         .quantity {width: 10%;}
         
         .status p {
-          width: 100%;
-          padding: 8px 16px;
-          border-radius: 5px;
+          // width: 100%;
+          padding: 6px 16px;
+          border-radius: 20px;
           font-size: 16px;
           font-family: var(--quicksand-font);
           font-weight: bold;
           text-align: center;
           svg { height: 14px; }
         }
-        .status.complete p { color: var(--green-dark); }
-        .status.cancel p { color: var(--red-dark); }
-        .status.pending p { color: var(--yellow-dark); }
+        .status.complete p { background: var(--green); color: var(--green-dark); }
+        .status.cancel p { background: var(--red); color: var(--red-dark); }
+        .status.pending p { background: var(--yellow); color: var(--yellow-dark); }
     }
 
       // Table Heading
     .table-heading {
         position: sticky;
-        top: 50px;
+        top: 90px;
         border-radius: 8px 8px 0 0;
         svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
         div { height: 8vh; font-weight: bold; font-size: 14px; color: gray; }
@@ -119,13 +159,15 @@
     }
     .orderItem.selected{background: #f7f7f7; color: gray;}
 
+    
+    // ========================================================= EMPTY LIST ==============================================
     .empty-list{
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       img{ margin-top: 10vh; margin-bottom: 5vh; height: 20vh;}
       div{width: fit-content; font-family: var(--quicksand-font); font-size: 2em;}
     }
     
-
+    // ========================================================= BUTTON BOX ==============================================
     .btn-box{
         width: 100%;
         height: calc(10vh - 10px);

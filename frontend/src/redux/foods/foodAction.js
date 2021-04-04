@@ -5,6 +5,7 @@ import {
   SAVE_ORDERS,
   RETURN_COMPETED_ORDERS,
   RETURN_CANCELED_ORDERS,
+  RETURN_PENDING_ORDERS,
 } from "./foodType";
 
 // ADD NEW FOOD TO BASKET
@@ -49,5 +50,12 @@ export const filterByComplete = () => {
 export const filterByCancel = () => {
   return {
     type: RETURN_CANCELED_ORDERS,
+  };
+}
+
+// FILTER FOOD ORDERS BY CANCELATION
+export const filterByPending = () => {
+  return {
+    type: RETURN_PENDING_ORDERS,
   };
 }

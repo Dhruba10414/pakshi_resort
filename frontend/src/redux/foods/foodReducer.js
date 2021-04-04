@@ -5,6 +5,7 @@ import {
   RETURN_COMPETED_ORDERS,
   RETURN_CANCELED_ORDERS,
   SAVE_ORDERS,
+  RETURN_PENDING_ORDERS,
 } from "./foodType";
 
 export const initialState = {
@@ -62,6 +63,13 @@ const foodReducer = (state = initialState, action) => {
         ...state,
         filteredOrders: state.orders.filter((order) => {
           return order.isCancel === true;
+        }),
+      };
+    case RETURN_PENDING_ORDERS:
+      return {
+        ...state,
+        filteredOrders: state.orders.filter((order) => {
+          return !order.isCancel && !order.isComplete;
         }),
       };
     default:
