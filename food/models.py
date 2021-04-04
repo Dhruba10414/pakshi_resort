@@ -22,6 +22,7 @@ class FoodOrdering(models.Model):
     time = models.DateTimeField(auto_now=True)
     isComplete = models.BooleanField(default=False)
     isCancel = models.BooleanField(default=False)
+    order_price = models.FloatField(default=0.0)
     guest = models.ForeignKey(Guests,on_delete=models.SET_NULL,null=True,related_name='guest')
     food = models.ForeignKey(FoodItem,on_delete=models.SET_NULL,null=True,related_name='food')
     taken_by = models.ForeignKey(get_user_model(),on_delete=models.SET_NULL,null=True,related_name='taken_by')
