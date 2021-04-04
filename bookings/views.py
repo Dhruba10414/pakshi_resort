@@ -41,7 +41,7 @@ class RoomCategoryView(generics.GenericAPIView):
 
 class RoomView(generics.GenericAPIView):
     serializer_class = RoomSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
 
     def get(self, request, *args, **kwargs):
         rooms = Rooms.objects.all()
@@ -69,9 +69,10 @@ class RoomView(generics.GenericAPIView):
         except Rooms.DoesNotExist:
             return Response({"error": "No such room"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class Room_BookingsListView(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [AllowAny, ]
+    
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
@@ -110,7 +111,6 @@ class GuestDetail(generics.GenericAPIView):
 
 class GuestBookings(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -160,7 +160,6 @@ class RoomSearch(generics.GenericAPIView):
 
 
 class CheckIn(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -189,7 +188,6 @@ class CheckIn(generics.GenericAPIView):
 
 
 class CheckOut(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -217,7 +215,6 @@ class CheckOut(generics.GenericAPIView):
 
 
 class BookARoom(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated, ]
     serializer_class = BookingSerializer
 
     def post(self, request, *args, **kwargs):
@@ -240,7 +237,6 @@ class BookARoom(generics.GenericAPIView):
 
 
 class BookingRequestView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         req_id = request.query_params.get("id", None)
@@ -268,6 +264,7 @@ class BookingRequestView(generics.GenericAPIView):
         except BookingRequest.DoesNotExist:
             return Response({"error": "No such pending booking"}, status=status.HTTP_404_NOT_FOUND)
 
+
 class AddNewBookingRequestView(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
 
@@ -278,8 +275,8 @@ class AddNewBookingRequestView(generics.GenericAPIView):
 
         return Response(booking_request.data, status=status.HTTP_201_CREATED)
 
+
 class RemoveFraudBookingRequests(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def delete(self, request, *args, **kwargs):
         guest_id = request.data.get('guest', None)
@@ -300,7 +297,6 @@ class RemoveFraudBookingRequests(generics.GenericAPIView):
 
 
 class CancelBooking(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         booking_id = request.data.get('booking', None)
@@ -316,7 +312,6 @@ class CancelBooking(generics.GenericAPIView):
 
 
 class BookingRequestNotifications(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         notifications = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False).count()
