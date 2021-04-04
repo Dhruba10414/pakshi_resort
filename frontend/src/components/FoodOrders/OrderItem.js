@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
 import { checkSquare } from '../../assets/images/SVG'
 
-function OrderItem({id, guest, food, isComplete, isCancel, quantity}) {
+function OrderItem({id, guest, food, isComplete, isCancel, quantity, selectFoodItem, removeFoodItem}) {
     const [select, setSelect] = useState(false);
+
+    const selectFoodItemFunc = () => {
+        if(select){
+            setSelect(false);
+            removeFoodItem(id);
+        } else{
+            if(!isComplete){
+                setSelect(true);
+                selectFoodItem(id);
+            }
+        }
+    }
     
     return (
         <div 
             className={!select ? "orderItem" : "orderItem selected"}
-            onClick={() => setSelect(!select)}
+            onClick={selectFoodItemFunc}
         >
             <div className="no">
                 {select ? checkSquare : null}

@@ -1,7 +1,16 @@
-import { ADD_TO_BASKET, REMOVE_ALL_FOODS, REMOVE_FROM_BASKET } from "./foodType";
+import {
+  ADD_TO_BASKET,
+  REMOVE_ALL_FOODS,
+  REMOVE_FROM_BASKET,
+  RETURN_COMPETED_ORDERS,
+  RETURN_CANCELED_ORDERS,
+  SAVE_ORDERS,
+} from "./foodType";
 
 export const initialState = {
   basket: [],
+  orders: [],
+  filteredOrders: [],
 };
 
 const foodReducer = (state = initialState, action) => {
@@ -24,15 +33,37 @@ const foodReducer = (state = initialState, action) => {
       }
 
     case REMOVE_FROM_BASKET:
-        return {
-            ...state,
-            basket: state.basket.filter((food) => { return food.id !== action.id; })
-        }
+      return {
+        ...state,
+        basket: state.basket.filter((food) => {
+          return food.id !== action.id;
+        }),
+      };
     case REMOVE_ALL_FOODS:
       return {
-          ...state,
-          basket: []
-      }
+        ...state,
+        basket: [],
+      };
+    case SAVE_ORDERS:
+      return {
+        ...state,
+        orders: action.orders,
+        filteredOrders: action.orders,
+      };
+    case RETURN_COMPETED_ORDERS:
+      return {
+        ...state,
+        filteredOrders: state.orders.filter((order) => {
+          return order.isComplete === true;
+        }),
+      };
+    case RETURN_CANCELED_ORDERS:
+      return {
+        ...state,
+        filteredOrders: state.orders.filter((order) => {
+          return order.isCancel === true;
+        }),
+      };
     default:
       return state;
   }

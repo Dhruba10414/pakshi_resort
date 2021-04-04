@@ -43,6 +43,28 @@
           }
         }
       }
+      
+      .filter-by-type{
+        background: var(--body-background-color);
+        padding: 10px;
+        display: flex;
+        div{
+          margin-right: 30px; font-family: var(--quicksand-font);
+          cursor: pointer; font-weight: bold; color: gray; position: relative; transition: 0.4s;
+          &::after{
+            content: "";
+            position: absolute; bottom: -4px; left: 0;
+            width: 0%; height: 2px;
+            background: var(--green-dark);
+            transition: 0.4s;
+          }
+        }
+        .active{
+          color: var(--green-dark);
+          &::after{width: 100%;}
+        }
+      }
+
       // table heading and contents common style
       .table-heading,
       .orderItem {
@@ -96,6 +118,13 @@
         &:hover{background: #f4f4f4;}
     }
     .orderItem.selected{background: #f7f7f7; color: gray;}
+
+    .empty-list{
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      img{ margin-top: 10vh; margin-bottom: 5vh; height: 20vh;}
+      div{width: fit-content; font-family: var(--quicksand-font); font-size: 2em;}
+    }
+    
 
     .btn-box{
         width: 100%;
