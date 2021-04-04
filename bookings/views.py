@@ -166,8 +166,9 @@ class CheckIn(generics.GenericAPIView):
 
         try:
             booking = Bookings.objects.get(id=booking_id)
-            if booking.check_in > date.today() or booking.check_out < date.today():
-                return Response({"error": "Invalid Checkin/Checkout dates"}, status=status.HTTP_400_BAD_REQUEST)
+            if booking.check_in > date.today() or booking.check_out < date.today() or booking.is_canceled:
+                return Response({"error": "Invalid Checkin/Checkout dates OR booking has canceled eariler"}, 
+                                status=status.HTTP_400_BAD_REQUEST)
             
             room = booking.room
             if room.active_booking is not None:
@@ -195,6 +196,8 @@ class CheckOut(generics.GenericAPIView):
         try:
             booking = Bookings.objects.get(id=booking_id)
 
+            if not booking.is_active or booking.is_canceled:
+                return Response({"error": "Can't checkout from an unactive/canceled booking"}, status=status.HTTP_400_BAD_REQUEST)
             room = booking.room
             room.active_booking = None
             room.save()
@@ -303,6 +306,8 @@ class CancelBooking(generics.GenericAPIView):
 
         try:
             booking = Bookings.objects.get(id=booking_id)
+            if booking.is_active:
+                return Response({"error": "Can not cancel an active booking"}, status=status.HTTP_400_BAD_REQUEST)
             booking.is_canceled = True
             booking.save()
             return Response(status=status.HTTP_200_OK)
