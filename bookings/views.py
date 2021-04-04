@@ -6,10 +6,11 @@ from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
+from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly
 
 class RoomCategoryView(generics.GenericAPIView):
     serializer_class = RoomTypeSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
 
     def get(self, request, *args, **kwargs):
         categories = RoomType.objects.all()
@@ -38,9 +39,15 @@ class RoomCategoryView(generics.GenericAPIView):
             return Response({"error": "No such room category"}, status=status.HTTP_404_NOT_FOUND)
 
 
-class RoomUpdateView(generics.GenericAPIView):
+class RoomView(generics.GenericAPIView):
     serializer_class = RoomSerializer
     permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        rooms = Rooms.objects.all()
+        serialized_data = RoomGuestEmbededSerializer(rooms, many=True)
+
+        return Response(serialized_data.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         new_room = self.get_serializer(data=request.data)
@@ -61,17 +68,6 @@ class RoomUpdateView(generics.GenericAPIView):
             return Response(updated_room.data, status=status.HTTP_202_ACCEPTED)
         except Rooms.DoesNotExist:
             return Response({"error": "No such room"}, status=status.HTTP_400_BAD_REQUEST)
-
-class RoomListView(generics.GenericAPIView):
-    serializer_class = RoomGuestEmbededSerializer
-    permission_classes = [AllowAny, ]
-
-    def get(self, request, *args, **kwargs):
-        rooms = Rooms.objects.all()
-        serialized_data = self.get_serializer(rooms, many=True)
-
-        return Response(serialized_data.data, status=status.HTTP_200_OK)
-
 
 class Room_BookingsListView(generics.GenericAPIView):
     serializer_class = BookingSerializer
@@ -218,24 +214,6 @@ class CheckOut(generics.GenericAPIView):
         
         except Bookings.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-class RoomAvailable(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
-
-    def get(self, request, *args, **kwargs):
-        room_id = request.query_params.get('room', None)
-        from_ = request.query_params.get('from', None)
-        to_ = request.query_params.get('to', None)
-
-        if from_ is None or to_ is None or room_id is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        from_date = convert_to_date(from_)
-        to_date = convert_to_date(to_)
-
-        available = room_available(room_id, from_date, to_date)
-
-        return Response(data={"available": available}, status=status.HTTP_200_OK)
 
 
 class BookARoom(generics.GenericAPIView):
