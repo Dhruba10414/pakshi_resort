@@ -14,7 +14,6 @@ from django.db.models.functions import Coalesce
 
 class GuestInvoiceView(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -34,7 +33,6 @@ class GuestInvoiceView(generics.GenericAPIView):
 
 class BookingBill(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -52,9 +50,19 @@ class BookingBill(generics.GenericAPIView):
         return Response(bill.data, status=status.HTTP_200_OK)
 
 
-class PaymentReceiveView(generics.GenericAPIView):
+class PaymentsView(generics.GenericAPIView):
     serializer_class = PaymentReceiveSerializer
-    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        guest_id = request.query_params.get('guest', None)
+
+        if guest_id is not None:
+            payments = Payments.objects.filter(guest_id=guest_id)
+            payments_data = PaymentsSerializer(payments, many=True)
+            return Response(payments_data.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         request.data['received_by'] = request.user.id
@@ -66,7 +74,6 @@ class PaymentReceiveView(generics.GenericAPIView):
         
 
 class GuestInvoiceSummuryView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
@@ -88,20 +95,5 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-class GuestPaymentsList(generics.GenericAPIView):
-    serializer_class = PaymentsSerializer
-
-    def get(self, request, *args, **kwargs):
-        guest_id = request.query_params.get('guest', None)
-
-        if guest_id is not None:
-            payments = Payments.objects.filter(guest_id=guest_id)
-            payments_data = self.get_serializer(payments, many=True)
-            return Response(payments_data.data, status=status.HTTP_200_OK)
-
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
