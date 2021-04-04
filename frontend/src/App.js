@@ -13,10 +13,12 @@ import Guests from "./pages/Guests";
 import FoodOrders from "./pages/FoodOrders";
 import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
+import Booking from "./pages/Booking";
 import Admin from "./pages/Admin";
 import Rooms from "./pages/Rooms";
 import Facilities from "./pages/Facilities";
 import Eat from "./pages/Eat";
+import FoodManagement from "./pages/FoodManagement";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -43,10 +45,12 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
         <Route exact path="/staff/dashboard" render={() => isLogedIn ? <Dashboard /> : <Login /> } />
         <Route exact path="/staff/book" render={() => isLogedIn ? <Book /> : <Login /> } />
+        <Route exact path="/staff/booking" render={() => isLogedIn ? <Booking/> : <Login /> } />
         <Route exact path="/staff/guests" render={() => isLogedIn ? <Guests /> : <Login /> } />
         <Route exact path="/staff/foodorders" render={() => isLogedIn ? <FoodOrders /> : <Login /> } />
         <Route exact path="/staff/park" render={() => isLogedIn ? <ParkVisitors /> : <Login /> } />
-        <Route exact path="/staff/admin" render={() => isLogedIn ? <Admin /> : <Login /> } />
+        <Route exact path="/staff/admin/staff" render={() => isLogedIn ? <Admin /> : <Login /> } />
+        <Route exact path="/staff/admin/food" render={() => isLogedIn ? <FoodManagement /> : <Login /> } />
       </Router>
     </div>
   );

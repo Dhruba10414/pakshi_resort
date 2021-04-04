@@ -1,0 +1,258 @@
+// ============================ GUEST DETAILS CONTAINER ======================
+.roomDetails {
+    width: 100%;
+    display: flex;
+    // guest section
+    &__guest {
+      width: 60%;
+      padding: 0;
+      background: #fff;
+      border-radius: 8px;
+      .image-container {
+        width: 100%;
+        position: relative;
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+        .leaf-image {
+          width: 110%;
+          position: absolute;
+          top: -50px;
+          left: -30px;
+          opacity: 0.3;
+        }
+        .back-btn {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: var(--primary-color);
+          color: #fff;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          box-shadow: 0 0 20px var(--primary-color-light);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          svg {
+            color: #fff;
+            height: 20px;
+            transition: 0.4s;
+          }
+          &:hover svg {
+            transform: scale(1.5);
+          }
+        }
+        .image {
+          width: 200px;
+          height: 200px;
+          margin: auto;
+          margin-top: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          overflow: hidden;
+          background-color: #dfdfe1;
+          img {
+            height: 100%;
+            margin-bottom: -15px;
+          }
+        }
+      }
+      .guest {
+        width: 100%;
+        padding: 20px 40px;
+        margin-top: 20px;
+        .heading {
+          text-align: center;
+          h3 {
+            font-family: var(--quicksand-font);
+            font-size: 3rem;
+            line-height: 20px;
+            color: var(--primary-color);
+          }
+          p {
+            font-family: WRITTEN;
+            font-size: 5rem;
+            color: var(--primary-color-light);
+            line-height: 20px;
+          }
+        }
+        .infos {
+          width: 100%;
+          margin-top: 30px;
+          .info-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            .info {
+              .label {
+                font-family: var(--quicksand-font);
+                font-weight: 600;
+                color: #888;
+                font-size: 12px;
+                margin-left: 4px;
+                margin-bottom: 5px;
+              }
+              .value {
+                border: 2px solid var(--primary-color-light);
+                padding: 10px;
+                border-radius: 5px;
+                color: #000;
+                font-size: 16px;
+                font-weight: 400;
+              }
+              .value.name {
+                text-transform: uppercase;
+                font-size: 18px;
+              }
+            }
+            .r-100 {
+              width: 100%;
+            }
+            .r-60 {
+              width: 60%;
+            }
+            .r-48 {
+              width: 49%;
+            }
+            .r-30 {
+              width: 31%;
+            }
+            .r-20 {
+              width: 15%;
+            }
+          }
+        }
+      }
+    }
+    // payments & room info section
+    &__others {
+      width: calc(40% - 20px);
+      margin-left: 15px;
+
+      .room-info {
+        height: 45vh;
+        padding: 40px;
+        border-radius: 10px;
+        background: #fff;
+        .heading {
+          text-align: center;
+          h3 {
+            font-family: var(--quicksand-font);
+            font-size: 3rem;
+            line-height: 20px;
+            color: var(--primary-color);
+          }
+          p {
+            font-family: WRITTEN;
+            font-size: 5rem;
+            color: var(--primary-color-light);
+            line-height: 20px;
+          }
+        }
+        .room {
+          height: 20vh;
+          margin-top: 30px;
+          h1 {
+            display: block;
+            font-size: 10rem;
+            font-family: var(--quicksand-font);
+            letter-spacing: -15px;
+            line-height: 8rem;
+            color: var(--primary-color);
+            text-align: center;
+          }
+          p {
+            font-family: var(--secondary-font);
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: -1px;
+          }
+        }
+      }
+      .payment-info {
+        height: calc(45vh - 20px);
+        margin-bottom: 10px;
+        border-radius: 10px;
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+        .card-image {
+          width: 50%;
+          position: absolute;
+          right: -40px;
+          bottom: -42px;
+        }
+        .heading {
+          padding: 40px 40px 0 40px;
+          text-align: center;
+          h3 {
+            font-family: var(--quicksand-font);
+            font-size: 3rem;
+            line-height: 20px;
+            color: var(--primary-color);
+          }
+          p {
+            font-family: WRITTEN;
+            font-size: 5rem;
+            color: var(--primary-color-light);
+            line-height: 20px;
+          }
+        }
+        .calculation {
+          margin-top: 50px;
+          padding: 0 40px;
+          .calc {
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            .label {
+              width: 40%;
+              font-weight: bold;
+              font-family: var(--quicksand-font);
+              font-size: 16px;
+              color: #888;
+            }
+            .value {
+              font-family: var(--quicksand-font);
+              font-size: 20px;
+              display: flex;
+              align-items: center;
+              svg {
+                margin-right: 5px;
+                margin-left: -5px;
+                height: 18px;
+              }
+            }
+            .value.warning {
+              border-radius: 5px;
+              color: #f29f05;
+              font-weight: bold;
+            }
+          }
+          button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: var(--primary-color-light);
+            color: var(--primary-color);
+            font-family: var(--quicksand-font);
+            font-size: 16px;
+            font-weight: bold;
+            &:hover {
+              box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+            }
+          }
+        }
+      }
+    }
+  }

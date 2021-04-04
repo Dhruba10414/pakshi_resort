@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import ContentBox from "../components/StaffSection/ContentBox";
+import { useHistory } from "react-router-dom";
 import {rsvg} from '../assets/images/SVG';
+import { connect } from "react-redux";
+import { clearUser } from "../redux/user/userAction";
 
 // compoents
+import ContentBox from "../components/StaffSection/ContentBox";
 import Room from "../components/Dashboard/Room";
 import FoodOrder from "../components/Dashboard/FoodOrder";
 import RoomDetails from "../components/Dashboard/RoomDetails";
 import axios from "axios";
 
 
-function Dashboard() {
+function Dashboard({clearUser}) {
   /* ----------------- V A R I A B L E S ----------------------- */
   // for room list shoen in dashboard
   const [roomList, setRoomList] = useState([]);
@@ -23,6 +26,8 @@ function Dashboard() {
   // for view room details
   const [openRoomDetails, setOpenRoomDetails] = useState(false);
   const [details, setDetails] = useState({});
+
+  const history = useHistory();
 
   /* ----------------- F U N C T I O N S ----------------------- */
   // OPEN FOOD ORDER MODAL
@@ -62,8 +67,15 @@ function Dashboard() {
       .then((res) => { setRoomList(res.data);})
       .catch((err) => { setError(err.message);});
     })
-    .catch((err) => { setError(err.message);})
-  }, [])
+    .catch((err) => { 
+      //auth error
+      setError(err.message);
+      localStorage.removeItem('user');
+      localStorage.removeItem('refresh_token');
+      clearUser();
+      history.push("/staff/login");
+    })
+  }, []);
 
   return (
     <ContentBox heading="Dashboard">
@@ -128,7 +140,7 @@ function Dashboard() {
             </div>
           ) : openOrder ? (
             <FoodOrder
-              id={orderFor.id}
+              guestId={orderFor.id}
               name={orderFor.name}
               room={orderFor.room_no}
               closeModal={closeModal}
@@ -153,4 +165,9 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+// Redux actions
+const mapDispatchToProps = (dispatch) => {
+  return { clearUser: () => { dispatch(clearUser())} };
+};
+
+export default connect(null, mapDispatchToProps)(Dashboard);
