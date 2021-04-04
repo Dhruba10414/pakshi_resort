@@ -28,8 +28,13 @@ def add_new_booking(room_id, guest_id, staff_id, check_in, check_out):
     if not ok:
         return None
 
-    new_booking = Bookings(room_id=room_id, guest_id=guest_id, check_in=check_in, 
-                            check_out=check_out, by_staff_id=staff_id)
-    new_booking.save()
+    try:
+        room = Rooms.objects.get(id=room_id)
+        new_booking = Bookings(room=room, guest_id=guest_id, check_in=check_in, 
+                                check_out=check_out, by_staff_id=staff_id)
+        new_booking.rate = room.room_type.tariff
+        new_booking.save()
     
-    return new_booking   
+        return new_booking
+    except Rooms.DoesNotExist:
+        return None   

@@ -14,7 +14,6 @@ from django.db.models.functions import Coalesce
 
 class GuestInvoiceView(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -22,7 +21,7 @@ class GuestInvoiceView(generics.GenericAPIView):
         if guest_id is not None:
             guest_bookings = Bookings.objects.filter(guest__id=guest_id, is_canceled=False
                             ).annotate(stayed=Datediff(F('check_out'), F('check_in'))
-                            ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                            ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField())).order_by('check_in')
 
             bills = self.get_serializer(guest_bookings, many=True)
@@ -34,7 +33,6 @@ class GuestInvoiceView(generics.GenericAPIView):
 
 class BookingBill(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -44,7 +42,7 @@ class BookingBill(generics.GenericAPIView):
 
         booking = Bookings.objects.filter(id=booking_id
                         ).annotate(stayed=Datediff('check_out', 'check_in')
-                        ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                        ).annotate(bill=ExpressionWrapper(F('rate')*
                         F('stayed'), output_field=FloatField())).first()
         
         bill = self.get_serializer(booking)
@@ -52,9 +50,19 @@ class BookingBill(generics.GenericAPIView):
         return Response(bill.data, status=status.HTTP_200_OK)
 
 
-class PaymentReceiveView(generics.GenericAPIView):
+class PaymentsView(generics.GenericAPIView):
     serializer_class = PaymentReceiveSerializer
-    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        guest_id = request.query_params.get('guest', None)
+
+        if guest_id is not None:
+            payments = Payments.objects.filter(guest_id=guest_id)
+            payments_data = PaymentsSerializer(payments, many=True)
+            return Response(payments_data.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         request.data['received_by'] = request.user.id
@@ -66,7 +74,6 @@ class PaymentReceiveView(generics.GenericAPIView):
         
 
 class GuestInvoiceSummuryView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
@@ -74,7 +81,7 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
         if guest is not None:
             bills = Bookings.objects.filter(guest__id=guest, is_canceled=False).annotate(
                                 stayed=Datediff('check_out', 'check_in')
-                                ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                                ).annotate(bill=ExpressionWrapper(F('rate')*
                                 F('stayed'), output_field=FloatField()))
             total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
 
@@ -88,20 +95,5 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-class GuestPaymentsList(generics.GenericAPIView):
-    serializer_class = PaymentsSerializer
-
-    def get(self, request, *args, **kwargs):
-        guest_id = request.query_params.get('guest', None)
-
-        if guest_id is not None:
-            payments = Payments.objects.filter(guest_id=guest_id)
-            payments_data = self.get_serializer(payments, many=True)
-            return Response(payments_data.data, status=status.HTTP_200_OK)
-
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
