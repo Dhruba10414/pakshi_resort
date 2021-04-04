@@ -62,22 +62,22 @@ class OrderCompleteView(generics.GenericAPIView):
 class FoodOrderingView(generics.GenericAPIView):
     serializer_class=OrderItemEmbededSerializer
     queryset=FoodOrdering.objects.all() 
-
+    
     def get(self,request,*args,**kwargs):
-        IsCancel = request.data.get('isCancel',None)
-        IsComplete = request.data.get('isComplete',None)
-        food_Type = request.data.get('food_type',None)
+        IsCancel = request.query_params.get('isCancel',None)
+        IsComplete = request.query_params.get('isComplete',None)
+        food_Type = request.query_params.get('food_type',None)
 
         yesterday = date.today() - timedelta(days=1) #need to check 
 
         if IsCancel:
-            orders = FoodOrdering.objects.filter(isCancel=True).order_by('-time')
+            orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=True).order_by('-time')
         elif IsComplete:
-            orders = FoodOrdering.objects.filter(isComplete=True).order_by('-time')
+            orders = FoodOrdering.objects.filter(time__gte=yesterday,isComplete=True).order_by('-time')
         elif food_Type:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,food__food_type=food_Type).order_by('-time')
         else:
-            orders = FoodOrdering.objects.filter(isCancel=False,isComplete=False).order_by('guest_id','-time')
+            orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=False,isComplete=False).order_by('-time')
 
         serialzer_data = self.get_serializer(orders,many=True)
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
