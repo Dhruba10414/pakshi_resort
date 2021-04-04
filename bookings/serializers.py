@@ -74,8 +74,6 @@ class BookingRequestSerializer(serializers.ModelSerializer):
     check_in = serializers.DateField(format="%d-%m-%Y", input_formats=["%d-%m-%Y", ])
     check_out = serializers.DateField(format="%d-%m-%Y", input_formats=["%d-%m-%Y", ])
     requested_on = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
-    has_confirmed = serializers.BooleanField(read_only=True)
-    has_canceled = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = BookingRequest

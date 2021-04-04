@@ -22,7 +22,7 @@ class RoomListView(generics.GenericAPIView):
 
 class Room_BookingsListView(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
@@ -35,22 +35,6 @@ class Room_BookingsListView(generics.GenericAPIView):
 
         return Response(serialized.data, status=status.HTTP_200_OK)
 
-#Unnecessary Duplicated Function
-class GuestRoomListView(generics.GenericAPIView):
-    serializer_class = BookingGuestDetailSerializer
-    permission_classes = [AllowAny, ]
-
-    def get(self, request, *args, **kwargs):
-        booking_id = request.query_params.get('booking', None)
-
-        if booking_id:
-            bookings = Bookings.objects.get(id=booking_id)
-            serialized = self.get_serializer(bookings)
-        else:
-            bookings = Bookings.objects.filter(check_out__gte=date.today(), is_complete=False, is_canceled=False).order_by('check_in')
-            serialized = self.get_serializer(bookings, many=True)
-        
-        return Response(serialized.data, status=status.HTTP_200_OK)
 
 class GuestDetail(generics.GenericAPIView):
     serializer_class = GuestSerializer
@@ -125,45 +109,6 @@ class RoomSearch(generics.GenericAPIView):
 
         return Response(rooms.data, status=status.HTTP_200_OK)
 
-#To be deleted
-class NewBooking(generics.GenericAPIView):
-    serializer_class = BookingSerializer
-    permission_classes = [AllowAny, ]
-
-    def post(self, request, *args, **kwargs):
-        room_type = request.data.get('room_type', None)
-        guest_id = request.data.get('guest_id', None)
-        check_in = request.data.get('check_in', None)
-        check_out = request.data.get('check_out', None)
-        
-        if check_in is None or check_out is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        check_in_date = convert_to_date(check_in)
-        check_out_date = convert_to_date(check_out)
-
-        if check_in_date < date.today() or check_in_date >= check_out_date:
-            msg = {
-                'message': 'You can\'t travel time, Sorry! Enter valid check in and\\or check out dates.'
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
-
-        existing_bookings = Bookings.objects.filter(
-                (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
-                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
-            )
-        
-        room_to_book = Rooms.objects.filter(room_type__id=room_type).exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True))).first()
-
-        if not room_to_book:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        new_bookings = Bookings(room=room_to_book, guest_id=guest_id, check_in=check_in_date, check_out=check_out_date)
-        new_bookings.by_staff = request.user
-        new_bookings.save()
-        booking = self.get_serializer(new_bookings)
-
-        return Response(data=booking.data, status=status.HTTP_200_OK)
 
 class CheckIn(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
@@ -276,6 +221,16 @@ class BookingRequestView(generics.GenericAPIView):
             
         return Response(pendings_seri.data, status=status.HTTP_200_OK)
 
+    def delete(self, request, *args, **kwargs):
+        req_id = request.data.get("id", None)
+        
+        try:
+            booking_req = BookingRequest.objects.get(id=req_id)
+            booking_req.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except BookingRequest.DoesNotExist:
+            return Response({"error": "No such pending booking"}, status=status.HTTP_404_NOT_FOUND)
 
 class AddNewBookingRequestView(generics.GenericAPIView):
     permission_classes = [AllowAny, ]
@@ -286,3 +241,48 @@ class AddNewBookingRequestView(generics.GenericAPIView):
         booking_request.save()
 
         return Response(booking_request.data, status=status.HTTP_201_CREATED)
+
+class RemoveFraudBookingRequests(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def delete(self, request, *args, **kwargs):
+        guest_id = request.data.get('guest', None)
+
+        try:
+            guest = Guests.objects.get(id=guest_id)
+            valid_bookings = Bookings.objects.filter(guest=guest).exists()
+            if valid_bookings:
+                return Response({"error": "Guest has previously confirmed bookings"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            BookingRequest.objects.filter(guest=guest).delete()
+            guest.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except Guests.DoesNotExist:
+            return Response({"error": "No such Guest"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CancelBooking(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        booking_id = request.data.get('booking', None)
+
+        try:
+            booking = Bookings.objects.get(id=booking_id)
+            booking.is_canceled = True
+            booking.save()
+            return Response(status=status.HTTP_200_OK)
+
+        except Bookings.DoesNotExist:
+            return Response({"error": "No such booking"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class BookingRequestNotifications(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        notifications = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False).count()
+
+        return Response({"notifications": notifications}, status=status.HTTP_200_OK)
