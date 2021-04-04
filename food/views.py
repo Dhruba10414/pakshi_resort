@@ -6,6 +6,7 @@ from .serializers import FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbed
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated
 from datetime import date, datetime, timedelta
+from django.db.models.functions import Extract
 
 
 class FoodItemView(generics.GenericAPIView):
@@ -67,6 +68,7 @@ class FoodOrderingView(generics.GenericAPIView):
         IsCancel = request.query_params.get('isCancel',None)
         IsComplete = request.query_params.get('isComplete',None)
         food_Type = request.query_params.get('food_type',None)
+        date_in = request.query_params.get('date',None)
 
         yesterday = date.today() - timedelta(days=1) #need to check 
 
@@ -76,6 +78,8 @@ class FoodOrderingView(generics.GenericAPIView):
             orders = FoodOrdering.objects.filter(time__gte=yesterday,isComplete=True).order_by('-time')
         elif food_Type:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,food__food_type=food_Type).order_by('-time')
+        elif date_in:
+            orders = FoodOrdering.objects.filter(time__startswith=date_in).order_by('-time')
         else:
             orders = FoodOrdering.objects.filter(time__gte=yesterday).order_by('-time')
 
