@@ -77,7 +77,7 @@ class FoodOrderingView(generics.GenericAPIView):
         elif food_Type:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,food__food_type=food_Type).order_by('-time')
         else:
-            orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=False,isComplete=False).order_by('-time')
+            orders = FoodOrdering.objects.filter(time__gte=yesterday).order_by('-time')
 
         serialzer_data = self.get_serializer(orders,many=True)
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
