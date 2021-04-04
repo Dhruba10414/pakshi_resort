@@ -5,10 +5,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .serializers import *
 from django.db.models import F, ExpressionWrapper, FloatField
+from datetime import datetime
 
 class ServicesEndpoint(GenericAPIView):
     serializer_class = ServicesSerializer
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         services = Services.objects.all()
@@ -36,8 +36,18 @@ class ServicesEndpoint(GenericAPIView):
             return Response({"error": "No such service"}, status=status.HTTP_404_NOT_FOUND)
 
 
-class BuyTicket(GenericAPIView):
+class TicketsView(GenericAPIView):
     serializer_class = TicketWriteSerializer
+
+    def get(self, request, *args, **kwargs):
+        check_ = request.query_params.get('date', None)
+
+        if check_:
+            check_date = datetime.strptime(check_, "%d-%m-%Y").date()
+            tickets = Tickets.objects.filter(issued_date=check_date)
+            tickets_serialized = TicketReadOnlySerializer(tickets, many=True)
+
+            return Response(tickets_serialized.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         ticket_bought = self.get_serializer(data=request.data)
@@ -49,7 +59,6 @@ class BuyTicket(GenericAPIView):
 
 class GuestTicketsInvoiceList(GenericAPIView):
     serializer_class = TicketWithTotalPrice
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
