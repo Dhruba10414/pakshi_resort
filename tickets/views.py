@@ -48,6 +48,8 @@ class TicketsView(GenericAPIView):
             tickets_serialized = TicketReadOnlySerializer(tickets, many=True)
 
             return Response(tickets_serialized.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "No date filter provided"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         ticket_bought = self.get_serializer(data=request.data)
