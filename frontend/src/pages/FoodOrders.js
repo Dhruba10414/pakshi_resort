@@ -47,7 +47,9 @@ function FoodOrders({
 
   // FOOD-ORDER COMPLETION
   const orderCompletion = () => {
-    setLoading(true);
+    if(selectedFoods.length > 0)
+    {
+      setLoading(true);
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
     const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/complete/`;
@@ -75,11 +77,14 @@ function FoodOrders({
         clearUser();
         history.push("/staff/login");
       });
+    }
   };
 
   // FOOD-ORDER CANCELATION
   const orderCancelation = () => {
-    setLoading(true);
+    if(selectedFoods.length > 0)
+    {
+      setLoading(true);
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
     const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/cancel/`;
@@ -107,6 +112,7 @@ function FoodOrders({
         clearUser();
         history.push("/staff/login");
       });
+    }
   };
 
   // FILTER BY COMPLETE
@@ -128,7 +134,6 @@ function FoodOrders({
   // FETCH FOOD ORDERS
   useEffect(() => {
     setChange(false);
-    setSelectedFoods([]);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;

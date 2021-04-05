@@ -31,10 +31,6 @@ function OrderItem({
     }
   };
 
-  useEffect(() => {
-    setSelect(false);
-  })
-
   return (
     <div
       className={!select ? "orderItem" : "orderItem selected"}
