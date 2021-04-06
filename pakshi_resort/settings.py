@@ -8,7 +8,7 @@ import os
 #BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
-#BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -69,19 +69,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pakshi_resort.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pakshiDB',
-        'USER': 'pakshi',
-        'PASSWORD': 'pu7890',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'pakshiDB',
+#         'USER': 'pakshi',
+#         'PASSWORD': 'pu7890',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
 
-    }
-}
+#     }
+# }
 
-'''
+
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
 DATABASES = {
     'default': {
@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-'''
+
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [

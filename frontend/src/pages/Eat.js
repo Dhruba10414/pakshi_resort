@@ -33,8 +33,8 @@ function Eat() {
               <img className="img-on" src={eat1} alt="" />
             </div>
             <div className="resturent-desc">
-              <h3>Smple & Minimal</h3>
-              <h2>Main Resturent</h2>
+              <h3>Simple & Minimal</h3>
+              <h2>Main Restaurant</h2>
               <p>
                 Our main restaurants are run by some experienced chefs and
                 waiters which is an ideal place for a delightful and satisfying
@@ -107,7 +107,7 @@ function Eat() {
               <img className="img-on" src={bar1} alt="" />
             </div>
             <div className="resturent-desc">
-              <h3>Delightfu</h3>
+              <h3>Delightful</h3>
               <h2>Juice Bar</h2>
               <p>
                 Come and meet our team of creative mixologists. for signature,
