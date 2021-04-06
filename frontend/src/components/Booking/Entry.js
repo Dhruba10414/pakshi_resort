@@ -37,8 +37,6 @@ function Entry({
       axios.post(CHECK_IN_URL, Body, Config)
       .then(() => {notify(); setLoading(false);})
       .catch(err => {console.log(err.message); setLoading(false);})
-      notify();
-
     })
     .catch((err) => {
       setLoading(false);
