@@ -15,7 +15,7 @@ class FoodItemView(generics.GenericAPIView):
     serializer_class = FoodItemSerilizer
 
     def get(self, request, *args, **kwargs):
-        queryset = FoodItem.objects.filter(available=True)
+        queryset = FoodItem.objects.all()
         serialized_data = FoodItemSerilizer(queryset, many=True)
         return Response(serialized_data.data, status=status.HTTP_200_OK)
 
@@ -120,7 +120,7 @@ class OrderInvoiceView(generics.GenericAPIView):
         guest_no = request.data.get('guest_id',None)
 
         try:
-            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False)
+            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False,isComplete=True)
             serializer_data=self.get_serializer(order_list,many=True)
             return Response(data=serializer_data.data,status=status.HTTP_200_OK)
 

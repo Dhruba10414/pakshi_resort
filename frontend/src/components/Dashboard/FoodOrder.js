@@ -1,99 +1,125 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+// SVG
 import { x, rsvg } from "../../assets/images/SVG";
 import meal from "../../assets/images/StaffSection/meal.svg";
+// Component
+import FoodItem from "./FoodItem";
+import Ordered from "./Ordered";
+// Redux
+import { connect } from "react-redux";
+import { clearUser } from "../../redux/user/userAction";
 
-function FoodOrder({ id, name, room, closeModal }) {
+function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
+  const [availabelFood, setAvailableFood] = useState([]);
+  const [filteredFoods, setFilteredFoods] = useState([]);
+  const [foodType, setFoodType] = useState("B");
+  const history = useHistory();
+
+  // FILTER FOOD BY TYPE
+  const filterFood = (event) => {
+    setFoodType(event.target.value);
+    const filteredFoodsByType = availabelFood.filter(food => food.food_type === event.target.value);
+    setFilteredFoods(filteredFoodsByType);
+  }
+
+  // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
+  useEffect(() => {
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+    const AVAILABLE_FOOD = `http://127.0.0.1:8000/food/allfood/`;
+
+    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+        
+        axios.get(AVAILABLE_FOOD, Config)
+        .then(res => {
+          setAvailableFood(res.data);
+          const filteredFoodsByType = res.data.filter(food => food.food_type === "B");
+          setFilteredFoods(filteredFoodsByType);
+        })
+        .catch(err => {console.log(err.message)});
+      })
+      .catch(() => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('refresh_token');
+        clearUser();
+        history.push("/staff/login");
+      });
+  }, []);
+
   return (
     <div className="food-order-container">
-      <div className="foodOrdering">
-        <div className="heading-content">
-          <div className="heading">
-            <h3>Food Order</h3>
-            <p>for guest</p>
-          </div>
-          <div className="heading-button" onClick={() => closeModal()}>
-            {" "}
-            {x}{" "}
-          </div>
-        </div>
-
-        <form>
-          <div className="input-container">
-            <div className="input w-20">
-              <label>Room</label>
-              <input type="text" disabled value={room} />
-            </div>
-            <div className="input w-50">
-              <label>Name</label>
-              <input type="text" disabled value={name} />
-            </div>
-            <div className="input w-30">
-              <label>Phone</label>
-              <input type="text" disabled value={id} />
-            </div>
-          </div>
-        </form>
-        <h3 className="secondary-head">Orderd Foods</h3>
-        <div className="orderedFood">
-          <div className="table-heading">
-            <div className="no">Id {rsvg}</div>
-            <div className="name">Name {rsvg}</div>
-            <div className="quantity">Quantity{rsvg}</div>
-          </div>
-          {/* dummy foods */}
-          <div className="food">
-            <div className="no">0201</div>
-            <div className="name">Parata</div>
-            <div className="quantity">6</div>
-          </div>
-          <div className="food">
-            <div className="no">0201</div>
-            <div className="name">Parata</div>
-            <div className="quantity">6</div>
-          </div>
-          <div className="food">
-            <div className="no">0201</div>
-            <div className="name">Parata</div>
-            <div className="quantity">6</div>
-          </div>
-        </div>
-        <button>Order</button>
-      </div>
-
       {/* AVAILABLE FOODS */}
       <div className="available-foods">
-        {/* heading */}
         <div className="heading-container">
-          <div className="text-part">
-            <h3>Availabe</h3>
-            <p>foods</p>
-          </div>
+          <div className="text-part"> <h3>Availabe</h3> <p>foods</p> </div>
           <div className="style-part">
-            <div className="style">
-              <img src={meal} alt="" />
-            </div>
+            <div className="style"> <img src={meal} alt="" /></div>
           </div>
+
           <form>
             <div className="input-container">
               <div className="input w-30">
                 <div className="select">
-                  <select name="role" id="role">
-                    <option value="b ">Breakfast </option>
-                    <option value="l">Lunch</option>
-                    <option value="d">Dinner</option>
+                  <select name="role" id="role" value={foodType} onChange={filterFood}>
+                    <option value="B">Breakfast </option>
+                    <option value="L">Lunch</option>
+                    <option value="D">Dinner</option>
+                    <option value="S">Snacks</option>
                   </select>
                 </div>
               </div>
             </div>
           </form>
         </div>
-        {/* availabel */}
         <div className="availabel-table">
-            
+          <div className="table-heading">
+            <div className="name">Name {rsvg}</div>
+            <div className="desc">Descrition {rsvg}</div>
+            <div className="price">Price{rsvg}</div>
+            <div className="status"></div>
+          </div>
+          {
+            filteredFoods && filteredFoods.map(food => (
+              <FoodItem
+                key={food.id}
+                id={food.id}
+                name={food.name}
+                desc={food.description}
+                price={food.price}
+                available={food.available}
+                type={food.food_type}
+              />
+            ))
+          }
         </div>
+      </div>
+
+      {/* ORDERED FOODS */}
+      <div className="foodOrdering">
+        <div className="heading-content">
+          <div className="heading"> <h3>Food Order</h3> <p>for guest</p> </div>
+        </div>
+        <Ordered
+          guestId={guestId}
+          name={name}
+          room={room}
+          closeModal={closeModal}
+        />
       </div>
     </div>
   );
 }
 
-export default FoodOrder;
+const mapStateToProps = (state) => {
+  return { basket: state.food.basket, };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {  clearUser: () => { dispatch(clearUser()); }};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodOrder);

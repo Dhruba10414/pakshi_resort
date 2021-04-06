@@ -37,7 +37,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
         <div className="guest">
           <div className="heading">
             <h3>Guest</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="infos">
             <div className="info-container">
@@ -86,7 +86,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
           <img src={card} alt="" className="card-image"/>
           <div className="heading">
             <h3>Payment</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="calculation">
             <div className="calc">
@@ -108,7 +108,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
         <div className="room-info">
           <div className="heading">
             <h3>Room</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="room">
             <h1>{room_no}</h1>
