@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import AddFood from '../components/FoodManagement./AddFood';
-import FreeSpace from '../components/FoodManagement./FreeSpace';
-import Menu from '../components/FoodManagement./Menu';
-import MenuUpdate from '../components/FoodManagement./MenuUpdate';
+import AddFood from '../components/FoodManagement/AddFood';
+import FreeSpace from '../components/FoodManagement/FreeSpace';
+import Menu from '../components/FoodManagement/Menu';
+import MenuUpdate from '../components/FoodManagement/MenuUpdate';
 import ContentBox from "../components/StaffSection/ContentBox";
 
 function FoodManagement() {
