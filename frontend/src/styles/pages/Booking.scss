@@ -86,13 +86,9 @@
         height: 14px;
       }
     }
-    .status.completed p {
+    .status.active p {
       color: var(--green-dark);
       background: var(--green);
-    }
-    .status.canceled p {
-      color: var(--red-dark);
-      background: var(--red);
     }
     .status.pending p {
       color: var(--yellow-dark);
@@ -101,6 +97,10 @@
 
     .func {
       padding: 0;
+      p{
+        color: var(--green-dark);
+        svg{height: 16px;}
+      }
       button {
         width: 70%;
         height: 6vh;
@@ -109,8 +109,8 @@
         border: none;
         font-size: 16px;
         font-weight: bold;
-        background: var(--blue);
-        color: var(--blue-dark);
+        background: var(--yellow);
+        color: var(--yellow-dark);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -122,7 +122,7 @@
         svg{
           color: #fff; 
           width: 20px; height: 20px;
-          background: var(--blue-dark);
+          background: var(--yellow-dark);
           border-radius: 50%;
           padding: 3px;
           margin-right: 4px;

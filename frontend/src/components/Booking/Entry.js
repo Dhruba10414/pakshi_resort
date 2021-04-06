@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 import { useHistory } from "react-router-dom";
-import { checkedIn } from "../../assets/images/SVG";
+import { checkedIn, lock } from "../../assets/images/SVG";
 
 function Entry({
   bookingId,
@@ -12,8 +12,7 @@ function Entry({
   check_in,
   check_out,
   book_on,
-  is_complete,
-  is_canceled,
+  is_active,
   clearUser,
   notify
 }) {
@@ -53,31 +52,27 @@ function Entry({
       <div className="guest-name">{guest}</div>
       <div
         className={
-          is_canceled
-            ? "status canceled"
-            : is_complete
-            ? "status completed"
+          is_active
+            ? "status active"
             : "status pending"
         }
       >
         <p>
-          {is_canceled ? "Canceled" : is_complete ? "Completed" : "Pending"}
+          {is_active ? "staying" : "pending"}
         </p>
       </div>
       <div className="bookon">{book_on}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">
-        {!is_canceled ? (
-          !is_complete ?
+        {!is_active 
+        ?
             !loading
             ? <button onClick={() => checkedInFunc(bookingId)}>{checkedIn} Check-in </button>
             : <button className="disabled" >{checkedIn} Loading.. </button>
-          : 
-          <button className="disabled" >{checkedIn} Checked </button>
-        ) : (
-          "----"
-        )}
+        :
+          <p>{lock} Checked</p>
+        }
       </div>
     </div>
   );

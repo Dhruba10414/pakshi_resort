@@ -4,11 +4,10 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
 import { useHistory } from "react-router-dom";
-import {check} from '../assets/images/SVG';
+import {check, rsvg} from '../assets/images/SVG';
 
 // Component & Svg
 import Entry from "../components/Booking/Entry";
-import {rsvg} from '../assets/images/SVG';
 
 function Booking({clearUser}) {
   const [name, setName] = useState("");
@@ -102,8 +101,7 @@ function Booking({clearUser}) {
               check_in={entry.check_in}
               check_out={entry.check_out}
               book_on={entry.booked_on}
-              is_complete={entry.is_complete}
-              is_canceled={entry.is_canceled}
+              is_active={entry.is_active}
               notify={notify}
             />
           ))
