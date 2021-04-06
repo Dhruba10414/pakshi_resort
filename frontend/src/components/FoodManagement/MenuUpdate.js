@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {check} from '../../assets/images/SVG';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { check } from "../../assets/images/SVG";
 
-function MenuUpdate({selectedFood, cancelUpdate}) {
+function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -9,40 +11,81 @@ function MenuUpdate({selectedFood, cancelUpdate}) {
   const [price, setPrice] = useState("");
   const [available, setAvailable] = useState(true);
   const [error, setError] = useState("");
-  const [loading, setLaoding] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
 
   // REQUIRED FIELD CHECK
   const requiredValidaion = () => {
-    if(name && price){
+    if (name && price) {
       return true;
-    } else{
-      setError("Required all fields.")
+    } else {
+      setError("Required all fields.");
       return false;
     }
-  }
+  };
 
   // NOTIFY IF FOOD UPDATED SUCCESSFULLY
   const notify = () => {
     setTimeout(() => {
       setSuccess(false);
-    }, 2000)
+    }, 2000);
     setSuccess(true);
-  }
+  };
 
   const updateFood = (event) => {
     event.preventDefault();
-    
-    if(requiredValidaion()){
-      setError("");
-      console.log(`id: ${id}\n name: ${name}\n desc: ${desc}\n price: ${price}\n availabel: ${available}\n`);
-      setTimeout(() => {
-        setLaoding(false);
-      }, 2000)
-      setLaoding(true);
-      notify();
-    }
 
+    if (requiredValidaion()) {
+      setLoading(true);
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+      const UPDATE_FOOD_LINK = `http://127.0.0.1:8000/food/update/${id}/`;
+
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
+          let Body = {};
+          if (desc.length > 0) {
+            Body = {
+              name: name,
+              description: desc,
+              price: price,
+              available: true,
+              food_type: type,
+            };
+          } else {
+            Body = {
+              name: name,
+              price: price,
+              available: true,
+              food_type: type,
+            };
+          }
+
+          axios
+            .put(UPDATE_FOOD_LINK, Body, Config)
+            .then((res) => {
+              setLoading(false);
+              notify();
+              setChanged(true);
+            })
+            .catch((err) => {
+              console.log(err.message);
+              setLoading(false);
+            });
+        })
+        .catch(() => {
+          setLoading(false);
+          localStorage.removeItem("user");
+          localStorage.removeItem("refresh_token");
+          clearUser();
+          history.push("/staff/login");
+        });
+    }
   };
 
   useEffect(() => {
@@ -53,7 +96,6 @@ function MenuUpdate({selectedFood, cancelUpdate}) {
     setPrice(selectedFood.price);
     setAvailable(selectedFood.available);
   }, [selectedFood.id]);
-
 
   return (
     <div className="menuUpdate">
@@ -137,16 +179,23 @@ function MenuUpdate({selectedFood, cancelUpdate}) {
         <div className="btn-box">
           {!loading ? (
             <>
-              <button className="submit-btn" onClick={updateFood}>Update</button>
-              <button className="cancel-btn" onClick={cancelUpdate}> Cancel </button>
+              <button className="submit-btn" onClick={updateFood}>
+                Update
+              </button>
+              <button className="cancel-btn" onClick={cancelUpdate}>
+                {" "}
+                Cancel{" "}
+              </button>
             </>
           ) : (
             <button className="disabled-btn">Processing...</button>
           )}
         </div>
-        <div className={success ? "success-message" : "success-message disabled"}>
-        <div>{ check }</div> Successfully Updated!
-      </div>
+        <div
+          className={success ? "success-message" : "success-message disabled"}
+        >
+          <div>{check}</div> Successfully Updated!
+        </div>
       </form>
     </div>
   );

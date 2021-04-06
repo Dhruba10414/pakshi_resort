@@ -9,7 +9,7 @@ import FoodItem from "./FoodItem";
 // Svg
 import { rsvg } from "../../assets/images/SVG";
 
-function Menu({ clearUser, selectAfood }) {
+function Menu({ clearUser, selectAfood, changed }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [foodType, setFoodType] = useState("B");
@@ -56,7 +56,7 @@ function Menu({ clearUser, selectAfood }) {
         clearUser();
         history.push("/staff/login");
       });
-  }, []);
+  }, [changed]);
 
   return (
     <div className="foodMenu">
