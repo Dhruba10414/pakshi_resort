@@ -2,6 +2,13 @@ from rest_framework import serializers
 from .models import Rooms, RoomType, Bookings, Guests, BookingRequest
 from datetime import date
 
+
+class RoomTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomType
+        fields = '__all__'
+
+
 class GuestIdNameSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Guests
@@ -30,15 +37,28 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RoomSerializer(serializers.ModelSerializer):
-    room_type = serializers.SlugRelatedField(slug_field='room_type', read_only=True)
+    room_type = serializers.PrimaryKeyRelatedField(queryset=RoomType.objects.all())
     
     class Meta:
         model = Rooms
         fields = ['id', 'room_num', 'room_type']
 
-class RoomOccupiedSerializer(RoomSerializer):
+    def create(self, validated_data):
+        new_room = Rooms(**validated_data)
+        new_room.active_booking = None
+        new_room.save()
+
+        return new_room
+
+
+class RoomOccupiedSerializer(serializers.ModelSerializer):
+    room_type = serializers.SlugRelatedField(slug_field='room_type', read_only=True)
     is_occupied = serializers.SerializerMethodField()
     active_booking = BookingSerializer(allow_null=True)
+
+    class Meta:
+        model = Rooms
+        fields = '__all__'
 
     def get_is_occupied(self, obj):
         return obj.active_booking is not None
@@ -74,8 +94,6 @@ class BookingRequestSerializer(serializers.ModelSerializer):
     check_in = serializers.DateField(format="%d-%m-%Y", input_formats=["%d-%m-%Y", ])
     check_out = serializers.DateField(format="%d-%m-%Y", input_formats=["%d-%m-%Y", ])
     requested_on = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
-    has_confirmed = serializers.BooleanField(read_only=True)
-    has_canceled = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = BookingRequest

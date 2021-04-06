@@ -9,11 +9,11 @@ from django.db.models import F, ExpressionWrapper
 from django.db.models import DurationField, FloatField, IntegerField
 from .db_tools import Datediff
 from django.db.models.aggregates import Sum
+from django.db.models.functions import Coalesce
 
 
 class GuestInvoiceView(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest_id = request.query_params.get('guest', None)
@@ -21,7 +21,7 @@ class GuestInvoiceView(generics.GenericAPIView):
         if guest_id is not None:
             guest_bookings = Bookings.objects.filter(guest__id=guest_id, is_canceled=False
                             ).annotate(stayed=Datediff(F('check_out'), F('check_in'))
-                            ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                            ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField())).order_by('check_in')
 
             bills = self.get_serializer(guest_bookings, many=True)
@@ -33,7 +33,6 @@ class GuestInvoiceView(generics.GenericAPIView):
 
 class BookingBill(generics.GenericAPIView):
     serializer_class = BookingWithBill
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         booking_id = request.query_params.get('booking', None)
@@ -43,7 +42,7 @@ class BookingBill(generics.GenericAPIView):
 
         booking = Bookings.objects.filter(id=booking_id
                         ).annotate(stayed=Datediff('check_out', 'check_in')
-                        ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                        ).annotate(bill=ExpressionWrapper(F('rate')*
                         F('stayed'), output_field=FloatField())).first()
         
         bill = self.get_serializer(booking)
@@ -51,9 +50,19 @@ class BookingBill(generics.GenericAPIView):
         return Response(bill.data, status=status.HTTP_200_OK)
 
 
-class PaymentReceiveView(generics.GenericAPIView):
+class PaymentsView(generics.GenericAPIView):
     serializer_class = PaymentReceiveSerializer
-    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        guest_id = request.query_params.get('guest', None)
+
+        if guest_id is not None:
+            payments = Payments.objects.filter(guest_id=guest_id)
+            payments_data = PaymentsSerializer(payments, many=True)
+            return Response(payments_data.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         request.data['received_by'] = request.user.id
@@ -65,7 +74,6 @@ class PaymentReceiveView(generics.GenericAPIView):
         
 
 class GuestInvoiceSummuryView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
@@ -73,27 +81,17 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
         if guest is not None:
             bills = Bookings.objects.filter(guest__id=guest, is_canceled=False).annotate(
                                 stayed=Datediff('check_out', 'check_in')
-                                ).annotate(bill=ExpressionWrapper(F('room__room_type__tariff')*
+                                ).annotate(bill=ExpressionWrapper(F('rate')*
                                 F('stayed'), output_field=FloatField()))
-
-            if bills.exists():
-                bill = bills.aggregate(total=Sum('bill'))['total']
-            else:
-                bill = 0.0
+            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
 
             payments = Payments.objects.filter(guest__id=guest)
+            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
             
-            if payments.exists():
-                paid = payments.aggregate(total=Sum('amount'))['total']
-            else:
-                paid = 0.0
-
             summury = {
-                'total_bills': bill,
-                'total_paid': paid,
-                'due': bill - paid,
-                'romm_bills': BookingWithBill(bills, many=True).data,
-                'payments': PaymentsSerializer(payments, many=True).data
+                'total_bills': total_bill,
+                'total_paid': total_paid,
+                'due': total_bill - total_paid
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)

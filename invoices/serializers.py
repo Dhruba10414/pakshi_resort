@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 class BookingWithBill(BookingSerializer):
     room_num = serializers.SerializerMethodField()
     room_type = serializers.SerializerMethodField()
-    room_tariff = serializers.SerializerMethodField()
     bill = serializers.FloatField()
     stayed = serializers.IntegerField()
 
@@ -17,14 +16,14 @@ class BookingWithBill(BookingSerializer):
     def get_room_type(self, obj):
         return obj.room.room_type.room_type
 
-    def get_room_tariff(self, obj):
-        return obj.room.room_type.tariff
 
 
 class PaymentsSerializer(serializers.ModelSerializer):
     guest = serializers.SlugRelatedField(slug_field='name', read_only=True)
     received_by = serializers.SlugRelatedField(slug_field='user_name', read_only=True)
     timestamp = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
+    paid_for = serializers.ChoiceField(choices=Payments.paid_for_options)
+    
     class Meta:
         model = Payments
         fields = '__all__'
