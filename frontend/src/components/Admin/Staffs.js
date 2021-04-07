@@ -4,7 +4,6 @@ import Staff from "./Staff";
 
 function Staffs({ stafflist }) {
   const [active, setActive] = useState("");
-  console.log(stafflist);
 
   return (
     <div className="stafflist">

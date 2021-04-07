@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import parkImage from "../../assets/images/resort/view-6.JPG";
 
 function Park() {
   return (

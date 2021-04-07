@@ -48,8 +48,6 @@ function Booking({clearUser}) {
     })
   }, []);
 
-  console.log(booking);
-
   return (
     <ContentBox heading="Bookings">
       <div className="bookingPage">

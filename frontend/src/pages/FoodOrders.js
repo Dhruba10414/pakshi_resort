@@ -4,7 +4,12 @@ import axios from "axios";
 // redux
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
-import { saveOrderes, filterByComplete, filterByCancel, filterByPending} from "../redux/foods/foodAction";
+import {
+  saveOrderes,
+  filterByComplete,
+  filterByCancel,
+  filterByPending,
+} from "../redux/foods/foodAction";
 // Components
 import OrderItem from "../components/FoodOrders/OrderItem";
 import ContentBox from "../components/StaffSection/ContentBox";
@@ -18,7 +23,7 @@ function FoodOrders({
   filteredOrders,
   filterByCancel,
   filterByComplete,
-  filterByPending
+  filterByPending,
 }) {
   const [searchedEntry, setSearchedEntry] = useState([]);
   const [selectedFoods, setSelectedFoods] = useState([]);
@@ -47,71 +52,81 @@ function FoodOrders({
 
   // FOOD-ORDER COMPLETION
   const orderCompletion = () => {
-    if(selectedFoods.length > 0)
-    {
+    if (selectedFoods.length > 0) {
       setLoading(true);
-    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/complete/`;
-    axios
-      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-      .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+      const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/complete/`;
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
 
-        axios.post(CANCEL_ORDER_LINK, {"order_id": selectedFoods})
-        .then(() => {
-          setTimeout(() => {
-            setConfirm(false);
-          }, 1500);
-          setSelectedFoods([]);
-          setChange(true);
-          setConfirm(true);
-          setLoading(false);
+          axios
+            .post(CANCEL_ORDER_LINK, { order_id: selectedFoods })
+            .then(() => {
+              setTimeout(() => {
+                setConfirm(false);
+              }, 1500);
+              setSelectedFoods([]);
+              setChange(true);
+              setConfirm(true);
+              setLoading(false);
+            })
+            .catch((err) => {
+              console.log(err.messafe);
+              setLoading(false);
+            });
         })
-        .catch(err => {console.log(err.messafe); setLoading(false);})
-      })
-      .catch(() => {
-        setLoading(false);
-        localStorage.removeItem("user");
-        localStorage.removeItem("refresh_token");
-        clearUser();
-        history.push("/staff/login");
-      });
+        .catch(() => {
+          setLoading(false);
+          localStorage.removeItem("user");
+          localStorage.removeItem("refresh_token");
+          clearUser();
+          history.push("/staff/login");
+        });
     }
   };
 
   // FOOD-ORDER CANCELATION
   const orderCancelation = () => {
-    if(selectedFoods.length > 0)
-    {
+    if (selectedFoods.length > 0) {
       setLoading(true);
-    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/cancel/`;
-    axios
-      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-      .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
+      const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/cancel/`;
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
 
-        axios.post(CANCEL_ORDER_LINK, {"order_id": selectedFoods})
-        .then(() => {
-          setTimeout(() => {
-            setCancel(false);
-          }, 1500);
-          setSelectedFoods([]);
-          setLoading(false);
-          setChange(true);
-          setCancel(true);
+          axios
+            .post(CANCEL_ORDER_LINK, { order_id: selectedFoods })
+            .then(() => {
+              setTimeout(() => {
+                setCancel(false);
+              }, 1500);
+              setSelectedFoods([]);
+              setLoading(false);
+              setChange(true);
+              setCancel(true);
+            })
+            .catch((err) => {
+              console.log(err.messafe);
+              setLoading(false);
+            });
         })
-        .catch(err => {console.log(err.messafe); setLoading(false);})
-      })
-      .catch(() => {
-        setLoading(false);
-        localStorage.removeItem("user");
-        localStorage.removeItem("refresh_token");
-        clearUser();
-        history.push("/staff/login");
-      });
+        .catch(() => {
+          setLoading(false);
+          localStorage.removeItem("user");
+          localStorage.removeItem("refresh_token");
+          clearUser();
+          history.push("/staff/login");
+        });
     }
   };
 
@@ -129,7 +144,7 @@ function FoodOrders({
   const filterOrderListByPending = () => {
     setFilterby("pe");
     filterByPending();
-  }
+  };
 
   // FETCH FOOD ORDERS
   useEffect(() => {
@@ -160,7 +175,6 @@ function FoodOrders({
         clearUser();
         history.push("/staff/login");
       });
-      console.log(selectedFoods)
   }, [changed]);
 
   return (
@@ -180,14 +194,48 @@ function FoodOrders({
           </div>
 
           <div className="filter-by-type">
-            <div className={filterby === "all" ? "active" : ""} onClick={() => { setFilterby("all"); }}> All </div>
-            <div className={filterby === "pe" ? "active" : ""} onClick={filterOrderListByPending}> Pending </div>
-            <div className={filterby === "co" ? "active" : ""} onClick={filterOrderListByComplete}> Complete </div>
-            <div className={filterby === "ca" ? "active" : ""} onClick={filterOrderListByCancel}> Cancel </div>
-            
-            <div className={confirm ? "message success" : "message disabled"}> <div>{check}</div> Order Completed!</div>
-            <div className={warnings ? "message warning" : "message disabled"}> <div>{warning}</div> Can't be selected!</div>
-            <div className={cancel ? "message cancel" : "message disabled"}><div>{warning}</div> Order Canceled!</div>
+            <div
+              className={filterby === "all" ? "active" : ""}
+              onClick={() => {
+                setFilterby("all");
+              }}
+            >
+              {" "}
+              All{" "}
+            </div>
+            <div
+              className={filterby === "pe" ? "active" : ""}
+              onClick={filterOrderListByPending}
+            >
+              {" "}
+              Pending{" "}
+            </div>
+            <div
+              className={filterby === "co" ? "active" : ""}
+              onClick={filterOrderListByComplete}
+            >
+              {" "}
+              Complete{" "}
+            </div>
+            <div
+              className={filterby === "ca" ? "active" : ""}
+              onClick={filterOrderListByCancel}
+            >
+              {" "}
+              Cancel{" "}
+            </div>
+
+            <div className={confirm ? "message success" : "message disabled"}>
+              {" "}
+              <div>{check}</div> Order Completed!
+            </div>
+            <div className={warnings ? "message warning" : "message disabled"}>
+              {" "}
+              <div>{warning}</div> Can't be selected!
+            </div>
+            <div className={cancel ? "message cancel" : "message disabled"}>
+              <div>{warning}</div> Order Canceled!
+            </div>
           </div>
 
           {/* table heading */}
@@ -270,11 +318,21 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => { dispatch(clearUser());},
-    saveOrderes: (orders) => {dispatch(saveOrderes(orders));},
-    filterByComplete: () => {dispatch(filterByComplete());},
-    filterByCancel: () => {dispatch(filterByCancel());},
-    filterByPending: () => {dispatch(filterByPending());}
+    clearUser: () => {
+      dispatch(clearUser());
+    },
+    saveOrderes: (orders) => {
+      dispatch(saveOrderes(orders));
+    },
+    filterByComplete: () => {
+      dispatch(filterByComplete());
+    },
+    filterByCancel: () => {
+      dispatch(filterByCancel());
+    },
+    filterByPending: () => {
+      dispatch(filterByPending());
+    },
   };
 };
 
