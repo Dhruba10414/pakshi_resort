@@ -145,26 +145,12 @@
         font-family: var(--secondary-font);
         font-weight: 600;
         font-size: 18px;
-        margin-top: 25px;
+        margin-top: 15px;
         color: var(--primary-color);
         transform: 0.5s;
         @include media("<=phone") {
           font-size: 14px;
           margin-top: 10px;
-        }
-        &:after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          // transform: translateY(-50%);
-          right: -60px;
-          width: 50px;
-          height: 2px;
-          background-color: var(--primary-color-light);
-          @include media("<=phone") {
-            width: 25px;
-            right: -30px;
-          }
         }
         &:hover {
           color: var(--primary-color-light);

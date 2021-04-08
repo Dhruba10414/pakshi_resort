@@ -8,7 +8,6 @@
 @import "./variable.scss";
 
 // SCSS FOR PAGES
-@import "./pages/Home.scss";
 @import "./pages/PageNotfound.scss";
 @import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
@@ -19,9 +18,12 @@
 @import "./pages/FoodOrders.scss";
 @import "./pages/FoodManagement.scss";
 @import "./pages/Admin.scss";
+
+@import "./pages/Home.scss";
 @import "./pages/Rooms.scss";
 @import "./pages/Facilities.scss";
 @import "./pages/Eat.scss";
+@import "./pages/About.scss";
 
 
 // SCSS FOR COMPONENTS

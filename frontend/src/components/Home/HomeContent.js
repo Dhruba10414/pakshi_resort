@@ -70,26 +70,14 @@ function HomeContent() {
             <p>We provide you these</p>
             <h2>FEATURES</h2>
           </div>
-          <div className="features">
-            <Features />
-          </div>
+          <div className="features"><Features /></div>
         </div>
 
-        <div className="home__rooms">
-          <Rooms />
-        </div>
+        <div className="home__rooms"><Rooms /></div>
+        <div className="home__park"><Park /></div>
+        <div className="home__eat"><Eat /></div>
+        <div className="home__events"><Meeting /></div>
 
-        <div className="home__park">
-          <Park />
-        </div>
-
-        <div className="home__eat">
-          <Eat />
-        </div>
-
-        <div className="home__events">
-          <Meeting />
-        </div>
       </div>
       <Footer />
       <Navigation />

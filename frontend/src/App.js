@@ -6,7 +6,6 @@ import gsap from 'gsap';
 import "./styles/App.scss";
 
 // Pages
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Guests from "./pages/Guests";
@@ -15,10 +14,13 @@ import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
 import Booking from "./pages/Booking";
 import Admin from "./pages/Admin";
-import Rooms from "./pages/Rooms";
-import Facilities from "./pages/Facilities";
-import Eat from "./pages/Eat";
 import FoodManagement from "./pages/FoodManagement";
+
+import Home from "./pages/Guest/Home";
+import Rooms from "./pages/Guest/Rooms";
+import Facilities from "./pages/Guest/Facilities";
+import Eat from "./pages/Guest/Eat";
+import About from './pages/Guest/About';
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -40,6 +42,7 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/rooms" component={Rooms} />
         <Route exact path="/facilities" component={Facilities} />
         <Route exact path="/eat-drink" component={Eat} />
+        <Route exact path="/about" component={About} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
