@@ -5,8 +5,13 @@ gsap.registerPlugin(ScrollTrigger);
 export const HomeAnim = () => {
     // Banner block
     let tl = gsap.timeline();
-    tl.from(".home .home__container .home-image img", 1.5, {
-        x: "-100%",
+    tl.from(".home .home__container .home-image", 1.8, {
+        y: "-100%",
+        ease: "expo.inOut",
+        delay: 0.5
+    })
+    .from(".slick-dots", 1, {
+        x: "100%",
         ease: "expo.inOut",
     })
     .to(".home .home-heading", 1, {

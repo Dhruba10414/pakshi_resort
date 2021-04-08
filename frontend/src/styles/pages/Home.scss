@@ -8,14 +8,55 @@
 
     .home-image {
       position: absolute;
-      bottom: 5vh;
+      bottom: 0;
       right: 0;
-      height: 80vh;
+      height: 90vh;
       width: 70%;
       overflow: hidden;
-      img{
+      .slider {
         width: 100%;
-        height: 100%;
+        height: 88vh;
+        @include media("<=phone") {
+          width: 100%;
+          height: 40vh;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      ul.slick-dots {
+        background: var(--body-background-color);
+        padding: 5px;
+        width: fit-content;
+        position: absolute;
+        right: 0;
+        bottom: -18px;
+        li {
+          width: 90px;
+          height: 50px;
+          display: inline-block;
+          padding: 0 !important;
+          margin: 10px 5px;
+          transition: 0.4s;
+          .custom-dots {
+            width: 90px;
+            height: 50px;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+              width: 90%;
+              height: 100%;
+            }
+          }
+        }
+        li.slick-active{
+          // padding: 5px;
+          padding: 0 !important;
+          transform: scale(1.3);
+        }
       }
       @include media("<=phone") {
         width: 100%;
@@ -160,17 +201,17 @@
         font-weight: normal;
       }
     }
-    .features--heading-for-mobile{
+    .features--heading-for-mobile {
       display: none;
       @include media("<=phone") {
         display: block;
         margin-top: 50px;
-        h2{
+        h2 {
           font-family: var(--primary-font);
           color: var(--primary-color);
           font-size: 2rem;
         }
-        p{
+        p {
           font-family: var(--secondary-font);
           font-size: 14px;
         }
@@ -179,13 +220,14 @@
   }
 
   ////////////////////////////////////////////////////////////////////////////////
-  &__rooms, &__eat {
+  &__rooms,
+  &__eat {
     display: flex;
     flex-wrap: wrap;
     @include media("<=phone") {
       padding: 0;
     }
-    .heading-block{
+    .heading-block {
       width: 50%;
       padding: 0 0 0 150px;
       @include media("<=phone") {
@@ -193,7 +235,8 @@
         padding: 0 30px 0 30px;
       }
     }
-    .room-images, .eat-images{
+    .room-images,
+    .eat-images {
       width: 50%;
       @include media("<=phone") {
         width: 100%;
@@ -203,60 +246,77 @@
   }
 
   ////////////////////////////////////////////////////////////////////////////////
-  &__park{
+  &__park {
     height: 80vh;
     width: 100%;
     margin-top: 100px;
     margin-bottom: 100px;
     position: relative;
     overflow: hidden;
-    @include media("<=phone") {height: 40vh; margin-top: 50px; }
-    .park-overlay{
-      width: 100%; height: 80vh;
+    @include media("<=phone") {
+      height: 40vh;
+      margin-top: 50px;
+    }
+    .park-overlay {
+      width: 100%;
+      height: 80vh;
       background: var(--primary-color);
       position: absolute;
       top: 0;
       top: 0;
       z-index: 5;
     }
-    .park{
+    .park {
       position: absolute;
       top: 0;
       left: 0;
       height: 80vh;
       width: 100%;
       background: linear-gradient(
-        0deg,
-        rgba(50, 62, 60, 0.6),
-        rgba(17, 45, 50, 0.8)
-      ),
-      url("../../assets/images/resort/view-6.JPG") no-repeat center center / cover;
+          0deg,
+          rgba(50, 62, 60, 0.6),
+          rgba(17, 45, 50, 0.8)
+        ),
+        url("../../assets/images/View/garden-4.JPG") no-repeat center center /
+          cover;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      @include media("<=phone") {height: 50vh;}
+      @include media("<=phone") {
+        height: 50vh;
+      }
 
-      div{
+      div {
         padding: 0 140px;
         width: 50%;
-        @include media("<=phone") {padding: 30px; width: 100%; }
-        h1{
+        @include media("<=phone") {
+          padding: 30px;
+          width: 100%;
+        }
+        h1 {
           font-family: var(--primary-font);
           font-size: 3.5rem;
           color: #fff;
           font-weight: normal;
-          @include media("<=phone") {font-size: 1.5rem;}
+          @include media("<=phone") {
+            font-size: 1.5rem;
+          }
         }
-        p{
+        p {
           display: block;
           width: 80%;
           color: #fff;
           font-family: var(--quicksand-font);
           font-size: 18px;
           line-height: 30px;
-          @include media("<=phone") {font-size: 16px; width: 100%; line-height: 20px; display: none;}
+          @include media("<=phone") {
+            font-size: 16px;
+            width: 100%;
+            line-height: 20px;
+            display: none;
+          }
         }
-        a{
+        a {
           display: inline-block;
           margin-top: 30px;
           padding: 20px 50px;
@@ -271,11 +331,11 @@
           transition: 0.5s;
           @include media("<=phone") {
             padding: 15px 25px;
-              text-align: center;
-              font-size: 14px;
-              font-family: var(--quicksand-font);
-              background: transparent;
-              color: #fff;
+            text-align: center;
+            font-size: 14px;
+            font-family: var(--quicksand-font);
+            background: transparent;
+            color: #fff;
           }
           &:hover {
             background-color: #fff;
@@ -283,7 +343,12 @@
           }
         }
       }
-      .desc{ @include media("<=phone") { padding-top: 0; margin-bottom: 60px;}}
+      .desc {
+        @include media("<=phone") {
+          padding-top: 0;
+          margin-bottom: 60px;
+        }
+      }
     }
   }
 }
