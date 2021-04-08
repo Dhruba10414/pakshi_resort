@@ -27,17 +27,17 @@ function Navigation() {
 
         <div className="navigation__secondary">
           <div className="content">
-          <Link to="/">
+          <Link to="/rooms">
               <div className="index">01</div>
               <div className="name">Stay</div>
+            </Link>
+            <Link to="/facilities">
+              <div className="index">03</div>
+              <div className="name">Garden & Park</div>
             </Link>
             <Link to="/eat-drink">
               <div className="index">02</div>
               <div className="name">Eat & Drink</div>
-            </Link>
-            <Link to="/">
-              <div className="index">03</div>
-              <div className="name">Garden & Park</div>
             </Link>
             <Link to="/">
               <div className="index">04</div>
