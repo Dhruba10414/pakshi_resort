@@ -7,6 +7,7 @@ import Features from "./Features";
 import Heading from "./Heading";
 import Park from "./Park";
 import Rooms from "./Rooms";
+import Meeting from "./Events";
 import Navigation from "../Navigation/Navigation";
 // Animation
 import { HomeAnim } from "../../animations/HomeAnim";
@@ -84,6 +85,10 @@ function HomeContent() {
 
         <div className="home__eat">
           <Eat />
+        </div>
+
+        <div className="home__events">
+          <Meeting />
         </div>
       </div>
       <Footer />
