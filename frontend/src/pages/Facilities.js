@@ -6,6 +6,9 @@ import Navigation from "../components/Navigation/Navigation";
 import garden1 from "../assets/images/View/garden-1.jpg";
 import garden2 from "../assets/images/View/garden-2.jpg";
 import garden3 from "../assets/images/View/garden-3.jpg";
+import garden5 from "../assets/images/View/garden-5.jpg";
+import garden6 from "../assets/images/View/garden-6.jpg";
+import garden7 from "../assets/images/View/garden-7.jpg";
 import pool1 from "../assets/images/View/pool-3.jpg";
 import indoor from "../assets/images/View/indoor.jpg";
 import honeymoon1 from "../assets/images/View/honeymoon-1.jpg";
@@ -14,6 +17,7 @@ import splash from "../assets/images/View/svg/splash.svg";
 import landscape from "../assets/images/View/svg/landscape.svg";
 import honeymoon from "../assets/images/View/svg/honeymoon.svg";
 import indoorGames from "../assets/images/View/svg/ball-pool.svg";
+import park from "../assets/images/View/svg/park.svg";
 
 function Facilities() {
   useEffect(() => {
@@ -115,6 +119,31 @@ function Facilities() {
               <img src={indoor} alt="" />
             </div>
           </div>
+        </div>
+
+        {/* garden seatinh */}
+        <div className="facilities__garden">
+          <div className="first-step">
+            <div className="garden-image">
+              <img className="img-on" src={garden5} alt="" />
+            </div>
+            <div className="garden-desc">
+              <img className="landscape" src={park} alt="" />
+              <h3>Comfortable</h3>
+              <h2>Garden Seating</h2>
+              <p>
+                Here you will find beautiful, secluded and well-arranged gardens
+                and spacious playgrounds with fresh air. If you want, you can
+                sit in the garden and chat with your family or friends. Or you
+                can walk in the middle of the field where you will find some
+                deer cubs. It’s a wonderful combination and the only real
+                decision you have to make is whether to enjoy it all in the
+                saddle or on your own two feet.
+              </p>
+              <img className="img-tw" src={garden6} alt="" />
+            </div>
+          </div>
+          <img className="img-th" src={garden7} alt="" />
         </div>
       </div>
 
