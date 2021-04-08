@@ -51,9 +51,7 @@ function HomeContent() {
           </div>
           <div className="home-image">
             <Slider {...settings} className="slider">
-              {
-                imageArray.map(image => (<img src={image} alt="" />))
-              }
+              { imageArray.map((image, index) => (<img key={index} src={image} alt="" />)) }
             </Slider>
           </div>
         </div>

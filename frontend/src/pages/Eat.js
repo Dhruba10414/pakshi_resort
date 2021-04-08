@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
+// Components
 import Footer from "../components/Footer";
 import Navigation from "../components/Navigation/Navigation";
-import eat1 from "../assets/images/View/eat-1.JPG";
-import eat2 from "../assets/images/View/eat-2.jpg";
-import eat3 from "../assets/images/View/eat-3.jpg";
-import eat4 from "../assets/images/View/eat-4.jpg";
-import eat5 from "../assets/images/View/eat-5.jpg";
-import eat6 from "../assets/images/View/eat-6.JPG";
-import eat7 from "../assets/images/View/eat-7.jpeg";
-import bar1 from "../assets/images/View/bar-1.jpg";
-import bar2 from "../assets/images/View/bar-2.jpg";
+// Images
+import eat1 from "../assets/images/Restaurent/restaurent-8.JPG";
+import eat2 from "../assets/images/Restaurent/restaurent-5.jpg";
+import eat3 from "../assets/images/Restaurent/restaurent-7.jpg";
+import eat4 from "../assets/images/Restaurent/restaurent-9.jpg";
+import eat5 from "../assets/images/Restaurent/restaurent-10.jpg";
+import eat6 from "../assets/images/Restaurent/restaurent-2.jpg";
+import eat7 from "../assets/images/Restaurent/food-3.jpeg";
+import bar1 from "../assets/images/Restaurent/bar-1.jpg";
+import bar2 from "../assets/images/Restaurent/bar-2.jpg";
 
 function Eat() {
   useEffect(() => {
