@@ -5,11 +5,14 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.models import F, ExpressionWrapper
+from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 from .db_tools import Datediff
 from django.db.models.aggregates import Sum
 from django.db.models.functions import Coalesce
+import csv
+from django.http import HttpResponse
+from datetime import datetime, date
 
 
 class GuestInvoiceView(generics.GenericAPIView):
@@ -97,3 +100,42 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
             return Response(data=summury, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResortLog(generics.GenericAPIView):
+    serializer_class = BookingSerializer
+    permission_classes = [AllowAny, ]
+
+    def get(self, request, *args, **kwargs):
+        default_month = date.today().month
+        default_year = date.today().year
+        month_from = request.query_params.get('month_start', default_month)
+        year_from = request.query_params.get('year_start', default_year)
+        month_to = request.query_params.get('month_end', default_month)
+        year_to = request.query_params.get('year_end', default_year)
+
+        response = HttpResponse(content_type='text/csv')
+        filename = f'From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+        writer = csv.writer(response)
+
+        filtered = Bookings.objects.filter(check_in__month__gte=month_from, check_in__year__gte=year_from, 
+                            check_in__month__lte=month_to, check_in__year__lte=year_to).annotate(
+                            stayed=Datediff('check_out', 'check_in')
+                            ).annotate(bill=ExpressionWrapper(F('rate')*
+                            F('stayed'), output_field=FloatField()))
+        
+        writer.writerow(['Guest', 'Guest Email' 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
+        for q in filtered:
+            row = [q.guest.name,
+                    q.guest.email,
+                    q.room.room_num,
+                    datetime.strftime(q.booked_on, format="%d-%m-%Y"), 
+                    datetime.strftime(q.check_in, format="%d-%m-%Y"), 
+                    datetime.strftime(q.check_out, format="%d-%m-%Y"),
+                    q.stayed,
+                    q.bill, 
+                    q.by_staff.user_name]
+            writer.writerow(row)
+
+        return response
