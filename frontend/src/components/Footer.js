@@ -31,11 +31,10 @@ function Footer() {
             <Link to="/">{twitterLogo}</Link>
           </div>
           <div className="content__menu">
-              <Link to="/">Contact us</Link>
+              <Link to="/contact">Contact us</Link>
               <Link to="/">News & Accolades</Link>
-              <Link to="/">Sitemap</Link>
-              <Link to="/">Privace policy</Link>
-              <Link to="/">FAQ</Link>
+              <Link to="/sitemaps">Sitemap</Link>
+              <Link to="/privacy-policy">Privacy & policy</Link>
           </div>
           <div className="content__contact">
               <h3>Reservation</h3>

@@ -21,6 +21,9 @@ import Rooms from "./pages/Guest/Rooms";
 import Facilities from "./pages/Guest/Facilities";
 import Eat from "./pages/Guest/Eat";
 import About from './pages/Guest/About';
+import Contact from "./pages/Guest/Contact";
+import Privacy from "./pages/Guest/Privacy";
+import Sitemaps from "./pages/Guest/Sitemaps";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -39,10 +42,13 @@ function App({ setUser, isLogedIn }) {
       <Router>
         {/* GUEST SECTION */}
         <Route exact path="/" component={Home} />
-        <Route exact path="/rooms" component={Rooms} />
-        <Route exact path="/facilities" component={Facilities} />
-        <Route exact path="/eat-drink" component={Eat} />
         <Route exact path="/about" component={About} />
+        <Route exact path="/facilities" component={Facilities} />
+        <Route exact path="/rooms" component={Rooms} />
+        <Route exact path="/eat-drink" component={Eat} />
+        <Route exact path="/contact" component={Contact} />
+        <Route exact path="/privacy-policy" component={Privacy} />
+        <Route exact path="/sitemaps" component={Sitemaps} />
 
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
