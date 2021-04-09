@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly
 
+
 class RoomCategoryView(generics.GenericAPIView):
     serializer_class = RoomTypeSerializer
     permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
