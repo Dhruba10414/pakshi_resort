@@ -147,7 +147,7 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
           {!loading ? (
             <>
               <button className="submit-btn" onClick={addFoodToMenu}>
-                Update
+                Add
               </button>
               <button className="cancel-btn" onClick={cancelUpdate}>
                 Cancel

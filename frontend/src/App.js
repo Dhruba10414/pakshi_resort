@@ -24,6 +24,8 @@ import About from './pages/Guest/About';
 import Contact from "./pages/Guest/Contact";
 import Privacy from "./pages/Guest/Privacy";
 import Sitemaps from "./pages/Guest/Sitemaps";
+import RoomsUpdated from "./pages/Guest/RoomsUpdated";
+import Room from "./pages/Guest/Room";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -44,7 +46,10 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
         <Route exact path="/facilities" component={Facilities} />
-        <Route exact path="/rooms" component={Rooms} />
+        <Route exact path="/rooms" component={RoomsUpdated} />
+        <Route exact path="/room/delux-couple" component={Room} />
+        <Route exact path="/room/delux-double" component={Room} />
+        <Route exact path="/room/delux-twin" component={Room} />
         <Route exact path="/eat-drink" component={Eat} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/privacy-policy" component={Privacy} />

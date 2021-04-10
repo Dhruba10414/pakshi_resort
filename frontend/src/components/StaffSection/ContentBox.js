@@ -10,12 +10,16 @@ import StaffHeading from "./StaffHeading";
 function ContentBox({ currentUser, clearUser, children, heading }) {
   return (
     <div className="staffArea">
-      <SideNav role={currentUser.role} clearUser={clearUser} />
+      <SideNav
+        role={currentUser.role}
+        clearUser={clearUser}
+        is_staff={currentUser.is_staff}
+      />
       <div className="contentBox">
         <StaffHeading
           heading={heading}
-          role={currentUser.role}
           user_name={currentUser.user_name}
+          is_staff={currentUser.is_staff}
         />
         <div className="container">{children}</div>
       </div>

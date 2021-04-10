@@ -5,7 +5,7 @@ import axios from "axios";
 // Assets
 import { boxes, calender, cloud, help, logout, pie, settings, user, users, cofeeSVG, activity } from '../../assets/images/SVG';
 
-function SideNav({role, clearUser}) {
+function SideNav({role, clearUser, is_staff}) {
   const history = useHistory();
   
   const LogoutFunctionality = () => {
@@ -35,11 +35,11 @@ function SideNav({role, clearUser}) {
         <NavLink to="/staff/guests" exact activeClassName="active-link"> {users} Guests </NavLink>
         <NavLink to="/staff/foodorders" exact activeClassName="active-link"> {cofeeSVG} Food Orders </NavLink>
         <NavLink to="/staff/park" exact activeClassName="active-link"> {cloud} Park Visitors </NavLink>
+        <NavLink to="/staff/admin/food" exact activeClassName="active-link"> {pie} Food Management </NavLink>
         {
-          role === 'A'
+          is_staff
           ? (<>
               <NavLink to="/staff/admin/staff" exact activeClassName="active-link"> {user} Staff Management </NavLink>
-              <NavLink to="/staff/admin/food" exact activeClassName="active-link"> {pie} Food Management </NavLink>
             </>
             )
           : null
