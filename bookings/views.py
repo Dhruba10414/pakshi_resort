@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
+from django.db import transaction
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly
@@ -175,13 +176,14 @@ class CheckIn(generics.GenericAPIView):
             if room.active_booking is not None:
                 return Response({"error": "Already staying a guest"}, status=status.HTTP_400_BAD_REQUEST)
             
-            room.active_booking = booking
-            room.save()
-            booking.is_active = True
-            booking.save()
-            guest = booking.guest
-            guest.is_staying = True
-            guest.save()
+            with transaction.atomic():
+                room.active_booking = booking
+                room.save()
+                booking.is_active = True
+                booking.save()
+                guest = booking.guest
+                guest.is_staying = True
+                guest.save()
 
             return Response(status=status.HTTP_200_OK)
         
@@ -199,19 +201,21 @@ class CheckOut(generics.GenericAPIView):
 
             if not booking.is_active or booking.is_canceled:
                 return Response({"error": "Can't checkout from an unactive/canceled booking"}, status=status.HTTP_400_BAD_REQUEST)
-            room = booking.room
-            room.active_booking = None
-            room.save()
-
-            guest = booking.guest
-            still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
-            if not still_staying:
-                guest.is_staying = False
-                guest.save()
-             
-            booking.is_complete = True
-            booking.is_active = False
-            booking.save()
+            
+            with transaction.atomic():
+                room = booking.room
+                room.active_booking = None
+                room.save()
+                guest = booking.guest
+                still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
+                if not still_staying:
+                    guest.is_staying = False
+                    guest.save()
+                
+                booking.is_complete = True
+                booking.is_active = False
+                booking.save()
+            
             return Response(status=status.HTTP_200_OK)
         
         except Bookings.DoesNotExist:
