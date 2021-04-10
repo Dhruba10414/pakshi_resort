@@ -218,25 +218,29 @@ class CheckOut(generics.GenericAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class BookARoom(generics.GenericAPIView):
+class BookRooms(generics.GenericAPIView):
     serializer_class = BookingSerializer
+    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
-        room_id = request.data.get('room', None)
+        rooms = request.data.get('room', None)
         guest_id = request.data.get('guest', None)
         from_ = request.data.get('from_', None)
         to_ = request.data.get('to_', None)
 
-        if from_ is None or to_ is None or room_id is None or guest_id is None:
+        if from_ is None or to_ is None or not isinstance(rooms, list) or guest_id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         from_date = convert_to_date(from_)
         to_date = convert_to_date(to_)
-
-        new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
-        if new_booking is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        booking_info = self.get_serializer(new_booking)
-
+        booked = []
+        
+        for room_id in rooms:
+            new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
+            if new_booking:
+                booked.append(new_booking)
+        
+        booking_info = self.get_serializer(booked, many=True)
+        
         return Response(booking_info.data, status=status.HTTP_201_CREATED)
 
 
