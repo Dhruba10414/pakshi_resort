@@ -10,6 +10,7 @@ class RoomType(models.Model):
 class Rooms(models.Model):
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE, related_name='rooms')
     room_num = models.IntegerField(unique=True)
+    cottage_num = models.IntegerField(default=1)
     active_booking = models.ForeignKey('Bookings', on_delete=models.SET_NULL, null=True)
 
 
