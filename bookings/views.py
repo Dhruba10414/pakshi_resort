@@ -224,7 +224,6 @@ class CheckOut(generics.GenericAPIView):
 
 class BookRooms(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         rooms = request.data.get('room', None)
@@ -234,6 +233,10 @@ class BookRooms(generics.GenericAPIView):
 
         if from_ is None or to_ is None or not isinstance(rooms, list) or guest_id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if not Guests.objects.filter(id=guest_id).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         from_date = convert_to_date(from_)
         to_date = convert_to_date(to_)
         booked = []
