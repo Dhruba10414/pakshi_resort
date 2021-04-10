@@ -26,6 +26,7 @@ import Privacy from "./pages/Guest/Privacy";
 import Sitemaps from "./pages/Guest/Sitemaps";
 import RoomsUpdated from "./pages/Guest/RoomsUpdated";
 import Room from "./pages/Guest/Room";
+import BookInGuestSide from "./pages/Guest/BookInGuestSide";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -50,6 +51,7 @@ function App({ setUser, isLogedIn }) {
         <Route exact path="/room/delux-couple" component={Room} />
         <Route exact path="/room/delux-double" component={Room} />
         <Route exact path="/room/delux-twin" component={Room} />
+        <Route exact path="/booking" component={BookInGuestSide} />
         <Route exact path="/eat-drink" component={Eat} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/privacy-policy" component={Privacy} />

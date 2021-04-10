@@ -9,7 +9,7 @@ function TopNav() {
         <img src={logo} alt="" />
       </Link>
       <div className="phone-link">
-        <Link to="/" className="link">
+        <Link to="/booking" className="link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
