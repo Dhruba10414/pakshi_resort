@@ -41,7 +41,7 @@ class RoomSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Rooms
-        fields = ['id', 'room_num', 'room_type']
+        fields = ['id', 'room_num', 'cottage_num', 'room_type']
 
     def create(self, validated_data):
         new_room = Rooms(**validated_data)
@@ -69,7 +69,7 @@ class RoomGuestEmbededSerializer(RoomOccupiedSerializer):
 
     class Meta:
         model = Rooms
-        fields = ['id', 'room_num', 'room_type', 'is_occupied', 'active_booking']
+        fields = ['id', 'room_num', 'room_type', 'cottage_num', 'is_occupied', 'active_booking']
 
 class GuestSerializer(serializers.ModelSerializer):
     class Meta:

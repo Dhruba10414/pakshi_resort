@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .serializers import *
 from datetime import date, datetime, timedelta
 from django.db.models import Q, Subquery, Count, F
+from django.db import transaction
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly
@@ -175,13 +176,14 @@ class CheckIn(generics.GenericAPIView):
             if room.active_booking is not None:
                 return Response({"error": "Already staying a guest"}, status=status.HTTP_400_BAD_REQUEST)
             
-            room.active_booking = booking
-            room.save()
-            booking.is_active = True
-            booking.save()
-            guest = booking.guest
-            guest.is_staying = True
-            guest.save()
+            with transaction.atomic():
+                room.active_booking = booking
+                room.save()
+                booking.is_active = True
+                booking.save()
+                guest = booking.guest
+                guest.is_staying = True
+                guest.save()
 
             return Response(status=status.HTTP_200_OK)
         
@@ -199,44 +201,53 @@ class CheckOut(generics.GenericAPIView):
 
             if not booking.is_active or booking.is_canceled:
                 return Response({"error": "Can't checkout from an unactive/canceled booking"}, status=status.HTTP_400_BAD_REQUEST)
-            room = booking.room
-            room.active_booking = None
-            room.save()
-
-            guest = booking.guest
-            still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
-            if not still_staying:
-                guest.is_staying = False
-                guest.save()
-             
-            booking.is_complete = True
-            booking.is_active = False
-            booking.save()
+            
+            with transaction.atomic():
+                room = booking.room
+                room.active_booking = None
+                room.save()
+                guest = booking.guest
+                still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
+                if not still_staying:
+                    guest.is_staying = False
+                    guest.save()
+                
+                booking.is_complete = True
+                booking.is_active = False
+                booking.save()
+            
             return Response(status=status.HTTP_200_OK)
         
         except Bookings.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-class BookARoom(generics.GenericAPIView):
+class BookRooms(generics.GenericAPIView):
     serializer_class = BookingSerializer
 
     def post(self, request, *args, **kwargs):
-        room_id = request.data.get('room', None)
+        rooms = request.data.get('room', None)
         guest_id = request.data.get('guest', None)
         from_ = request.data.get('from_', None)
         to_ = request.data.get('to_', None)
 
-        if from_ is None or to_ is None or room_id is None or guest_id is None:
+        if from_ is None or to_ is None or not isinstance(rooms, list) or guest_id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if not Guests.objects.filter(id=guest_id).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         from_date = convert_to_date(from_)
         to_date = convert_to_date(to_)
-
-        new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
-        if new_booking is None:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        booking_info = self.get_serializer(new_booking)
-
+        booked = []
+        
+        for room_id in rooms:
+            new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
+            if new_booking:
+                booked.append(new_booking)
+        
+        booking_info = self.get_serializer(booked, many=True)
+        
         return Response(booking_info.data, status=status.HTTP_201_CREATED)
 
 
