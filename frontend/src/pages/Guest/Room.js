@@ -126,7 +126,11 @@ function Room() {
             <img src={areaSVG} alt="" /> <p>230 sqft</p>
           </div>
           <div className="short-desc">
-            <img src={takaSVG} alt="" /> <p>5,000 Tk/PER NIGHT</p>
+            <img src={takaSVG} alt="" />{" "}
+            <p>
+              {deco ? "5,000" : dedo ? "5,000" : detw ? "7,000" : "10,000"}{" "}
+              Tk/PER NIGHT
+            </p>
           </div>
         </div>
 
@@ -134,9 +138,9 @@ function Room() {
           {deco && (
             <p>
               A 230 square feet security safe air-conditioned room each with an
-              attached bath and garden view. Here we 13 delux coupled bed
-              rooms that are furnished with a queen size bed, a reading corner,
-              closet space, multimedia facility. Couples or a family can enjoy a
+              attached bath and garden view. Here we 13 delux coupled bed rooms
+              that are furnished with a queen size bed, a reading corner, closet
+              space, multimedia facility. Couples or a family can enjoy a
               pleasant stay.
             </p>
           )}
@@ -154,8 +158,8 @@ function Room() {
             <p>
               A 275 square feet security safe air-conditioned room each with an
               attached bath. Here we have 9 delux delux twin bed rooms that are
-              furnished with twin single size bed, a reading corner, closet space,
-              multimedia facility.
+              furnished with twin single size bed, a reading corner, closet
+              space, multimedia facility.
             </p>
           )}
         </div>
