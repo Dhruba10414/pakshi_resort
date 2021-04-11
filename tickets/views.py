@@ -2,10 +2,12 @@ from .models import Services, Tickets
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from .serializers import *
 from django.db.models import F, ExpressionWrapper, FloatField
 from datetime import datetime
+from django.http import HttpResponse
+import csv
 
 class ServicesEndpoint(GenericAPIView):
     serializer_class = ServicesSerializer
@@ -73,3 +75,36 @@ class GuestTicketsInvoiceList(GenericAPIView):
             return Response(tickets_serialized.data, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Invalid Request. Provide guest id."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TicketsLog(GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+
+    def get(self, request, *args, **kwargs):
+        default_month = date.today().month
+        default_year = date.today().year
+        month_from = request.query_params.get('month_start', default_month)
+        year_from = request.query_params.get('year_start', default_year)
+        month_to = request.query_params.get('month_end', default_month)
+        year_to = request.query_params.get('year_end', default_year)
+
+        response = HttpResponse(content_type='text/csv')
+        filename = f'Tickets-Sells-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+        writer = csv.writer(response)
+
+        tickets = Tickets.objects.filter(issued_date__month__gte=month_from, issued_date__year__gte=year_from, 
+                            issued_date__month__lte=month_to, issued_date__year__lte=year_to)
+
+        writer.writerow(['Guest', 'Guest Email', 'Ticket For Service', 'Price', 'Number Of Tickets', 'Ticket Bought On', 'Ticket Issued Date', 'Registed By'])
+        for tick in tickets:
+            row = [tick.bought_by.name,
+                    tick.bought_by.email,
+                    tick.ticket_for.name,
+                    tick.ticket_tariff,
+                    tick.num_tickets,
+                    datetime.strftime(tick.issued_on, format="%d-%m-%Y %I:%M %p"),
+                    datetime.strftime(tick.issued_date, format="%d-%m-%Y")]
+            writer.writerow(row)
+
+        return response

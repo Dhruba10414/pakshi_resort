@@ -4,7 +4,7 @@ from bookings.models import RoomType, Rooms, Guests, Bookings
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import *
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAdminUser
 from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 from .db_tools import Datediff
@@ -104,7 +104,7 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
 
 class ResortLog(generics.GenericAPIView):
     serializer_class = BookingSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
 
     def get(self, request, *args, **kwargs):
         default_month = date.today().month
@@ -115,7 +115,7 @@ class ResortLog(generics.GenericAPIView):
         year_to = request.query_params.get('year_end', default_year)
 
         response = HttpResponse(content_type='text/csv')
-        filename = f'From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        filename = f'Resort-Bookings-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
         response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
         writer = csv.writer(response)
 
