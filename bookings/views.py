@@ -7,12 +7,12 @@ from django.db.models import Q, Subquery, Count, F
 from django.db import transaction
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
-from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly
+from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly, AdminWriteOrReadOnly
 
 
 class RoomCategoryView(generics.GenericAPIView):
     serializer_class = RoomTypeSerializer
-    permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
+    permission_classes = [AdminWriteOrReadOnly, ]
 
     def get(self, request, *args, **kwargs):
         categories = RoomType.objects.all()
