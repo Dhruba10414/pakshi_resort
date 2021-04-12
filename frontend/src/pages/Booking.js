@@ -46,7 +46,7 @@ function Booking({clearUser}) {
     .catch(err => {
       console.log(err.message);
     })
-  }, []);
+  }, [success]);
 
   return (
     <ContentBox heading="Bookings">
