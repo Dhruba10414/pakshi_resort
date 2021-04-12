@@ -14,7 +14,7 @@ import { clearUser } from "../../redux/user/userAction";
 function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
-  const [foodType, setFoodType] = useState("B");
+  const [foodType, setFoodType] = useState("Breakfast");
   const history = useHistory();
 
   // FILTER FOOD BY TYPE
@@ -37,7 +37,7 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
         axios.get(AVAILABLE_FOOD, Config)
         .then(res => {
           setAvailableFood(res.data);
-          const filteredFoodsByType = res.data.filter(food => food.food_type === "B");
+          const filteredFoodsByType = res.data.filter(food => food.food_type === "Breakfast");
           setFilteredFoods(filteredFoodsByType);
         })
         .catch(err => {console.log(err.message)});
@@ -65,10 +65,13 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
               <div className="input w-30">
                 <div className="select">
                   <select name="role" id="role" value={foodType} onChange={filterFood}>
-                    <option value="B">Breakfast </option>
-                    <option value="L">Lunch</option>
-                    <option value="D">Dinner</option>
-                    <option value="S">Snacks</option>
+                    <option value="Breakfast">Breakfast </option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Burger">Burger</option>
+                    <option value="Chinese Platter">Chinese Platter</option>
                   </select>
                 </div>
               </div>

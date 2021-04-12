@@ -5,7 +5,7 @@ import { check } from "../../assets/images/SVG";
 
 function AddFood({ cancelUpdate, clearUser, setChanged }) {
   const [name, setName] = useState("");
-  const [type, setType] = useState("B");
+  const [type, setType] = useState("Breakfast");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
@@ -36,9 +36,9 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
   const clearAllFields = () => {
     setName("");
     setDesc("");
-    setType("B");
+    setType("Breakfast");
     setPrice("");
-  }
+  };
 
   // ADD FOOD TO MENU
   const addFoodToMenu = (event) => {
@@ -52,12 +52,25 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
           let Body = {};
-          if(desc.length > 0){
-            Body = { "name": name, "description": desc, "price": price, "available": true, "food_type": type };
-          } else{
-            Body = { "name": name, "price": price, "available": true, "food_type": type };
+          if (desc.length > 0) {
+            Body = {
+              name: name,
+              description: desc,
+              price: price,
+              available: true,
+              food_type: type,
+            };
+          } else {
+            Body = {
+              name: name,
+              price: price,
+              available: true,
+              food_type: type,
+            };
           }
 
           axios
@@ -72,7 +85,6 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
               console.log(err.message);
               setLoading(false);
             });
-          
         })
         .catch(() => {
           setLoading(false);
@@ -112,10 +124,13 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value="B">Breakfast </option>
-                <option value="L">Lunch</option>
-                <option value="D">Dinner</option>
-                <option value="S">Snacks</option>
+                <option value="Breakfast">Breakfast </option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Burger">Burger</option>
+                <option value="Chinese Platter">Chinese Platter</option>
               </select>
             </div>
           </div>

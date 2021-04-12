@@ -12,7 +12,7 @@ import { rsvg } from "../../assets/images/SVG";
 function Menu({ clearUser, selectAfood, changed }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
-  const [foodType, setFoodType] = useState("B");
+  const [foodType, setFoodType] = useState("Breakfast");
   const history = useHistory();
 
   // FILTER FOOD BY TYPE
@@ -42,7 +42,7 @@ function Menu({ clearUser, selectAfood, changed }) {
           .then((res) => {
             setAvailableFood(res.data);
             const filteredFoodsByType = res.data.filter(
-              (food) => food.food_type === "B"
+              (food) => food.food_type === "Breakfast"
             );
             setFilteredFoods(filteredFoodsByType);
           })
@@ -77,10 +77,13 @@ function Menu({ clearUser, selectAfood, changed }) {
                   value={foodType}
                   onChange={filterFood}
                 >
-                  <option value="B">Breakfast </option>
-                  <option value="L">Lunch</option>
-                  <option value="D">Dinner</option>
-                  <option value="S">Snacks</option>
+                  <option value="Breakfast">Breakfast </option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                  <option value="Snacks">Snacks</option>
+                  <option value="Pizza">Pizza</option>
+                  <option value="Burger">Burger</option>
+                  <option value="Chinese Platter">Chinese Platter</option>
                 </select>
               </div>
             </div>
@@ -88,7 +91,7 @@ function Menu({ clearUser, selectAfood, changed }) {
         </form>
         <div className="availabel-table">
           <div className="table-heading">
-          <div className="id">id</div>
+            <div className="id">id</div>
             <div className="name">Name {rsvg}</div>
             <div className="desc">Descrition {rsvg}</div>
             <div className="price">Price{rsvg}</div>
