@@ -1,7 +1,7 @@
 .guestbook {
-  width: 100%;
+  width: 80%;
+  margin: auto;
   min-height: 100vh;
-  margin-top: 32px;
   padding: 100px 200px;
 
   .heading {
@@ -9,6 +9,12 @@
       font-family: var(--primary-font);
       font-size: 3.5rem;
       color: var(--primary-color);
+    }
+    p{
+      font-family: var(--quicksand-font);
+      font-size: 18px;
+      margin-top: 5px;
+      text-align: justify;
     }
   }
   h2 {
@@ -98,17 +104,18 @@
     .just-label{margin-bottom: 0;}
     small.error {
       color: red;
-      font-size: 14px;
+      font-size: 16px;
     }
     .button-box {
         margin-top: 20px;
       display: flex;
-      justify-content: space-between;
       button {
-        width: 49%;
+        width: 40%;
         outline: none;
         border: none;
         padding: 20px 25px;
+        border-radius: 5px;
+        margin-right: 20px;
         font-size: 20px;
         background: var(--primary-color-2);
         color: #fff;
@@ -118,21 +125,27 @@
           background: var(--primary-color);
         }
       }
+      button.back{
+        background: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
     }
     //
     .DateRangePickerInput {
-      width: 100%;
+      width: 100% !important;
+      // width: 55vw !important;
       background: transparent;
     }
     .DateRangePickerInput__withBorder {
       border: none;
     }
     .DateInput {
-      padding: 20px 25px;
+      padding: 10px 25px;
       width: 48%;
       border: 2px solid #ccc;
       font-size: 20px !important;
-      &:not(:last-child){margin-right: 20px;}
+      &:not(:last-child){margin-right: 15px;}
     }
     .DateRangePickerInput_arrow {
       display: none;
@@ -180,6 +193,7 @@
     }
   }
 
+  // ----------- ROOM INFO TAKING -----------
   .room-info-taking {
     width: 100%;
     min-height: 50vh;
@@ -187,12 +201,12 @@
     justify-content: space-between;
     form {
       width: 49%;
-      margin-top: 30px;
+      margin-top: 50px;
     }
     .room-desc {
-      margin-top: 30px;
+      margin-top: 50px;
       width: 49%;
-      padding: 0 80px;
+      padding-left: 80px;
       .room-desc-info {
         width: 100%;
         display: flex;
@@ -200,9 +214,9 @@
         align-items: flex-end;
         margin-bottom: 30px;
         .name {
-          width: 70%;
+          width: 80%;
           font-family: var(--primary-font);
-          font-size: 2rem;
+          font-size: 1.5rem;
           color: #444;
         }
         .price {
@@ -213,15 +227,9 @@
           text-align: right;
         }
         .logo {
-          margin-right: 30px;
-          img {
-            height: 20px;
-          }
+          margin-right: 30px; img { height: 20px; }
         }
-        .value {
-          font-size: 25px;
-          font-family: var(--primary-font);
-        }
+        .value { font-size: 25px; font-family: var(--primary-font); }
       }
       .others {
         justify-content: left;
@@ -230,7 +238,7 @@
       .room-detail-price {
         margin-top: 30px;
         font-family: var(--quicksand-font);
-        font-size: 5rem;
+        font-size: 3.5rem;
         font-weight: bold;
         line-height: 3.8rem;
         color: var(--primary-color);
@@ -253,5 +261,12 @@
         }
       }
     }
+  }
+  .guestInfo{
+    form{margin-top: 50px;}
+  }
+
+  .confirmed{
+    
   }
 }

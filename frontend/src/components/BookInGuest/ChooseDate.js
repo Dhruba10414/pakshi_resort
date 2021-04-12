@@ -6,7 +6,7 @@ import "react-dates/lib/css/_datepicker.css";
 import moon from "../../assets/images/View/svg/moon.svg";
 import room from "../../assets/images/View/svg/room.svg";
 
-function ChooseDate({ roomTypeWithPrice, makeBooking }) {
+function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
   const [numberOfRooms, seNumberOfRooms] = useState("1");
   const [roomType, setRoomType] = useState("0");
   const [checkin, setCheckIn] = useState("");
@@ -41,7 +41,11 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
   const updateDateAndRoom = (event) => {
     event.preventDefault();
     if (validationError()) {
-        makeBooking(dateRange.startDate._d, dateRange.endDate._d, roomTypeWithPrice[roomType].room_type );
+      makeBooking(
+        dateRange.startDate._d,
+        dateRange.endDate._d,
+        roomTypeWithPrice[roomType].room_type
+      );
     }
   };
 
@@ -49,7 +53,7 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
     <div className="room-info-taking">
       <form onSubmit={updateDateAndRoom}>
         <div className="input-container">
-          <div className="input w-70">
+          <div className="input w-100">
             <label>Room types</label>
             <div className="select">
               <select
@@ -65,14 +69,6 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
                 ))}
               </select>
             </div>
-          </div>
-          <div className="input w-30">
-            <label>Number of rooms</label>
-            <input
-              type="text"
-              value={numberOfRooms}
-              onChange={(e) => seNumberOfRooms(e.target.value)}
-            />
           </div>
         </div>
         <div className="input-container just-label">
@@ -97,11 +93,22 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
             onFocusChange={(focus) => setFocus(focus)}
           />
         </div>
+        <div className="input-container">
+          <div className="input w-100">
+            <label>Number of rooms</label>
+            <input
+              type="text"
+              value={numberOfRooms}
+              onChange={(e) => seNumberOfRooms(e.target.value)}
+            />
+          </div>
+        </div>
         <small className="error">{error}</small>
         <div className="button-box">
-          <button className="w-50" onClick={updateDateAndRoom}>
-            Next
+          <button className="back" onClick={() => setState(0)}>
+            Back
           </button>
+          <button onClick={updateDateAndRoom}>Next</button>
         </div>
       </form>
 
@@ -110,9 +117,6 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
           <div className="name">{roomTypeWithPrice[roomType].room_type}</div>
           <div className="price">{roomTypeWithPrice[roomType].tariff}৳</div>
         </div>
-        <p>
-          -----------------------------------------------------------------------
-        </p>
         <div className="room-desc-info others">
           <div className="logo">
             <img src={moon} alt="" />
@@ -124,7 +128,8 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
               : "1"}
             {dateRange.startDate && dateRange.endDate
               ? (dateRange.endDate._d - dateRange.startDate._d) /
-                  (1000 * 3600 * 24) > 1
+                  (1000 * 3600 * 24) >
+                1
                 ? " nights"
                 : " night"
               : " night"}
@@ -141,9 +146,6 @@ function ChooseDate({ roomTypeWithPrice, makeBooking }) {
             {numberOfRooms > 1 ? " rooms" : " room"}
           </div>
         </div>
-        <p>
-          -----------------------------------------------------------------------
-        </p>
         <div className="room-detail-price">
           <div>total cost</div>
           {numberOfRooms === "" || numberOfRooms === "0"
