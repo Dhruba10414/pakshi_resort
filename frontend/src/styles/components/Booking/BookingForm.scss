@@ -184,7 +184,8 @@
         margin-top: 15px;
         font-size: 16px;
         .label{width: 40%; font-weight: bold; font-size: var(--quicksand-font); color: gray; font-size: 14px;}
-        .value{font-family: var(--quicksand-font);}
+        .values{display: flex;}
+        .value{font-family: var(--quicksand-font); margin-right: 7px;}
         .value.room_num{ background: var(--blue); color: var(--blue-dark); padding: 5px 15px; border-radius: 10px; font-weight: bold;  }
       }
     }
