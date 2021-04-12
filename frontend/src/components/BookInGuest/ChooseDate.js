@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+// Daterange picker
 import { DateRangePicker } from "react-dates";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
-
+// SVGS
 import moon from "../../assets/images/View/svg/moon.svg";
 import room from "../../assets/images/View/svg/room.svg";
+import feather from "../../assets/images/View/svg/feather-2.svg";
 
-function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
+function ChooseDate({ roomTypeWithPrice, setInfo, setState }) {
   const [numberOfRooms, seNumberOfRooms] = useState("1");
   const [roomType, setRoomType] = useState("0");
-  const [checkin, setCheckIn] = useState("");
-  const [checkout, setCheckout] = useState("");
   const [focus, setFocus] = useState("");
   const [dateRange, setdateRange] = useState({
     startDate: null,
@@ -19,10 +19,12 @@ function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
   const { startDate, endDate } = dateRange;
   const [error, setError] = useState("");
 
+  // SETUP DATE DANGE
   const handleOnDateChange = (startDate, endDate) => {
-    setdateRange(startDate, endDate);
+      setdateRange(startDate, endDate);
   };
 
+  // VALIDATION CHECK
   const validationError = () => {
     if (!dateRange.startDate && !dateRange.endDate) {
       setError("Required reservation (check-in & check-out) time.");
@@ -38,14 +40,39 @@ function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
     }
   };
 
+  // UPDATE DATE AND ROOM
   const updateDateAndRoom = (event) => {
     event.preventDefault();
     if (validationError()) {
-      makeBooking(
-        dateRange.startDate._d,
-        dateRange.endDate._d,
-        roomTypeWithPrice[roomType].room_type
-      );
+      // info processing
+      const sd = dateRange.startDate._d.getDate();
+      const sm = (dateRange.startDate._d.getMonth() + 1).toString().padStart(2, "0");
+      const sy = dateRange.startDate._d.getFullYear();
+      const ed = dateRange.endDate._d.getDate();
+      const em = (dateRange.endDate._d.getMonth() + 1).toString().padStart(2, "0");
+      const ey = dateRange.endDate._d.getFullYear();
+
+      // info selecting
+      const checkinDate = `${sd}-${sm}-${sy}`;
+      const checkoutDate = `${ed}-${em}-${ey}`;
+      const type = roomTypeWithPrice[roomType].room_type;
+      const roomBill = roomTypeWithPrice[roomType].tariff;
+      const stayingDays = dateRange.endDate._d - dateRange.startDate._d;
+      const totalBill = numberOfRooms * roomBill  *  stayingDays / (1000 * 3600 * 24);
+
+      // info assigning
+      setInfo({
+        "checkin": checkinDate,
+        "checkout": checkoutDate,
+        "type": type,
+        "roomNumbers": numberOfRooms,
+        "stayingDays": stayingDays,
+        "roomBill": roomBill,
+        "totalBills": totalBill
+      });
+
+      // state changing
+      setState(3);
     }
   };
 
@@ -113,9 +140,10 @@ function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
       </form>
 
       <div className="room-desc">
-        <div className="room-desc-info">
-          <div className="name">{roomTypeWithPrice[roomType].room_type}</div>
-          <div className="price">{roomTypeWithPrice[roomType].tariff}৳</div>
+        <h3>{roomTypeWithPrice[roomType].room_type}</h3>
+        <div className="room-desc-info others">
+          <div className="logo">৳</div>
+          <div className="value">{roomTypeWithPrice[roomType].tariff}</div>
         </div>
         <div className="room-desc-info others">
           <div className="logo">
@@ -162,6 +190,8 @@ function ChooseDate({ roomTypeWithPrice, makeBooking, setState }) {
             : numberOfRooms * roomTypeWithPrice[roomType].tariff}
           <div className="symbol">৳</div>
         </div>
+
+        <img src={feather} alt="" className="feather" />
       </div>
     </div>
   );

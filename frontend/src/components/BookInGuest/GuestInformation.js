@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function GuestInformation({ setState, loading, setupGuestBody }) {
+function GuestInformation({ setState, loading, setGuest }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ function GuestInformation({ setState, loading, setupGuestBody }) {
   const makeABooking = (event) => {
     event.preventDefault();
     if (requiredFieldCheck()) {
-      setupGuestBody(name, email, contact, address);
+      setGuest({ "name": name, "email": email, "contact": contact, "address": address });
       setState(1);
     }
   };
@@ -80,13 +80,38 @@ function GuestInformation({ setState, loading, setupGuestBody }) {
         <div className="button-box">
           {!loading ? (
             <button className="submit-btn" onClick={makeABooking}>
-              Submit
+              Next
             </button>
           ) : (
             <button className="disabled-btn">Processing...</button>
           )}
         </div>
       </form>
+
+      <div className="instruction">
+        <h3>Booking Instructions</h3>
+        <p>
+          Unfortunately we are not able to offer you the booking system directly
+          from online but you can request for your required room book with just
+          the necessary information.
+        </p>
+        <p>
+          When we receive your request, we will verify the information by phone
+          call and confirm your booking.
+        </p>
+        <p>Follow the instructions below for the booking request</p>
+        <ul>
+          <li>
+            In the first form you have to give your name, email, active phone
+            number and current address
+          </li>
+          <li>
+            In the second form you have to give your desired room with number of
+            rooms and checkin, checkout date.
+          </li>
+          <li>Finally confirm your request.</li>
+        </ul>
+      </div>
     </div>
   );
 }
