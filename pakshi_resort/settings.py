@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'food',
     'invoices',
     'tickets',
+
 ]
 
 MIDDLEWARE = [
@@ -165,7 +166,8 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pakshiresortruet@gmail.com'
-EMAIL_HOST_PASSWORD = 'ruet1603'
+EMAIL_HOST = 'mail.pakshiresort.com'
+EMAIL_PORT = 2525
+
+EMAIL_HOST_USER = 'info@pakshiresort.com'
+EMAIL_HOST_PASSWORD = 'sadik1603075'

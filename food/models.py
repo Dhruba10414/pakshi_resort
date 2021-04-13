@@ -27,7 +27,8 @@ class FoodOrdering(models.Model):
     time = models.DateTimeField(auto_now=True)
     isComplete = models.BooleanField(default=False)
     isCancel = models.BooleanField(default=False)
-    custom_order =models.CharField(max_length=101,null=True,default="",blank=True)
+    
+
     order_price = models.FloatField(default=0.0)
     guest = models.ForeignKey(Guests,on_delete=models.SET_NULL,null=True,related_name='guest')
     food = models.ForeignKey(FoodItem,on_delete=models.SET_NULL,null=True,related_name='food')
