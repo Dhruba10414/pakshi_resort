@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
 // Images
 import dcouple1 from "../../assets/images/Room/delux-couple/dc.jpg";
-import dcouple2 from "../../assets/images/Room/delux-couple/dc2.png";
+import dcouple2 from "../../assets/images/Room/delux-couple/dc2.jpg";
 import dcouple3 from "../../assets/images/Room/delux-couple/dc3.jpg";
 import ddouble1 from "../../assets/images/Room/delux-double/dd1.jpg";
 import ddouble2 from "../../assets/images/Room/delux-double/dd2.jpg";

@@ -28,6 +28,7 @@ function Sitemaps() {
                 </ul>
               </li>
               <li><Link to="/eat-drink">Eat & Drinks</Link></li>
+              <li><Link to="/booking">Reservation</Link></li>
               <li><Link to="/contact">Contact us</Link></li>
               <li><Link to="/privacy-policy">Privacy & Policies</Link></li>
           </ul>

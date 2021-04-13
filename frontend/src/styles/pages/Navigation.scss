@@ -39,7 +39,7 @@
     .content {
       position: absolute;
       left: 100px;
-      top: 200px;
+      top: 25vh;
       @include media("<=phone") {
         top: 100px;
         left: 50px;
@@ -49,7 +49,7 @@
     .find-us{
       width: 100%;
       position: absolute;
-      bottom: 100px;
+      bottom: 10vh;
       left: 100px;
       @include media("<=phone") {
         width: 90%;
@@ -60,9 +60,6 @@
         font-family: var(--secondary-font);
         color: #fff;
         font-size: 1rem;
-        @include media("<=phone") {
-          // display: none;
-        }
       }
       p{
         width: 70%;
@@ -106,7 +103,7 @@
 
     .phone-link {
       position: absolute;
-      top: 100px;
+      top: 10vh;
       right: 200px;
       display: flex;
       align-items: center;
@@ -150,7 +147,7 @@
       text-decoration: none;
       display: flex;
       color: #fff;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       @include media("<=phone") {
         margin-bottom: 10px;
       }
@@ -164,7 +161,7 @@
       }
       .name {
         font-family: var(--primary-font);
-        font-size: 2.5rem;
+        font-size: 2rem;
         @include media("<=phone") {
           font-size: 1.5rem;
         }

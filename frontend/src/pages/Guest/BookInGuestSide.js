@@ -6,18 +6,20 @@ import Navigation from "../../components/Navigation/Navigation";
 import ChooseDate from "../../components/BookInGuest/ChooseDate";
 import GuestInformation from "../../components/BookInGuest/GuestInformation";
 import Confirmation from "../../components/BookInGuest/Confirmation";
+// Dummy Data
+import { roomTypeWithPrice } from "../../assets/DummyRoomType";
 
 function BookInGuestSide() {
   const [state, setState] = useState(0);
   const [guest, setGuest] = useState(null);
   const [info, setInfo] = useState(null);
-  const [roomTypeWithPrice, setRoomTypeWithPrice] = useState([]);
+  // const [roomTypeWithPrice, setRoomTypeWithPrice] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // MAKE A BOOKING
   const makeBooking = () => {
     // create a guest first
-    axios.post("http://127.0.0.1:8000/bookings/guests/", guest)
+    axios.post("http://api.pakshiresort.com/bookings/guests/", guest)
     .then((res) => { 
       // send booking request using gues.id
       const Body = {
@@ -27,7 +29,7 @@ function BookInGuestSide() {
         "check_in": info.checkin,
         "check_out": info.checkout
       }
-      axios.post("http://127.0.0.1:8000/bookings/guest_requests/add/", Body)
+      axios.post("http://api.pakshiresort.com/bookings/guest_requests/add/", Body)
       .then(() => {console.log("Success")})
       .catch((err) => {console.log(err.message)});
      })
@@ -36,14 +38,14 @@ function BookInGuestSide() {
   };
 
   // FETCH ROOMS TYPE WITH PRICE
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/bookings/room-type/")
-      .then((res) => {
-        setRoomTypeWithPrice(res.data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://api.pakshiresort.com/bookings/room-type/")
+  //     .then((res) => {
+  //       setRoomTypeWithPrice(res.data);
+  //     })
+  //     .catch((err) => console.log(err.message));
+  // }, []);
 
   return (
     <>

@@ -12,7 +12,7 @@ import Navigation from "../Navigation/Navigation";
 // Animation
 import { HomeAnim } from "../../animations/HomeAnim";
 // Images
-import resort1 from "../../assets/images/Banner/resort1.jpeg";
+import resort1 from "../../assets/images/Banner/resort1.jpg";
 import resort2 from "../../assets/images/Banner/resort2.jpg";
 import resort3 from "../../assets/images/Banner/resort3.jpg";
 
