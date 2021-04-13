@@ -7,12 +7,20 @@ import SideNav from "./SideNav";
 import StaffHeading from "./StaffHeading";
 
 // Main Function
-function ContentBox({currentUser, clearUser, children, heading}) {
+function ContentBox({ currentUser, clearUser, children, heading }) {
   return (
     <div className="staffArea">
-      <SideNav role={currentUser.role} clearUser={clearUser}/>
+      <SideNav
+        role={currentUser.role}
+        clearUser={clearUser}
+        is_staff={currentUser.is_staff}
+      />
       <div className="contentBox">
-        <StaffHeading heading={heading} user_name={currentUser.user_name}/>
+        <StaffHeading
+          heading={heading}
+          user_name={currentUser.user_name}
+          is_staff={currentUser.is_staff}
+        />
         <div className="container">{children}</div>
       </div>
     </div>
@@ -28,9 +36,10 @@ const mapStateToProps = (state) => {
 // Redux actions
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => { dispatch(clearUser())},
+    clearUser: () => {
+      dispatch(clearUser());
+    },
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentBox);
-

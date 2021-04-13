@@ -1,0 +1,96 @@
+.footer {
+  width: 100%;
+  &__top {
+    width: 100%;
+    padding: 50px 200px;
+    text-align: center;
+    background-color: var(--primary-color);
+    @include media("<=phone") {padding: 30px;}
+    h1 {
+      font-family: var(--primary-font);
+      font-size: 2rem;
+      font-weight: normal;
+      text-transform: uppercase;
+      color: #fff;
+      @include media("<=phone") {font-size: 16px;}
+    }
+  }
+  &__bottom {
+    background: var(--primary-color-2);
+    padding: 100px 200px;
+    @include media("<=phone") {padding: 30px;}
+    .content {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      color: #fff;
+      div{ @include media("<=phone") {width: 100%;} }
+
+      &__up { width: 9%; }
+      &__logo, &__desc, &__menu, &__contact { width: 21%; }
+      &__logo{ img{width: 60%;} @include media("<=phone") {text-align: center;} }
+      &__desc, &__contact{
+          h3{
+              font-family: var(--quicksand-font);
+              font-size: 25px;
+              font-weight: normal;
+              line-height: 25px;
+              margin-bottom: 10px;
+              @include media("<=phone") {font-size: 18px;}
+          }
+          p{
+              display: block;
+              font-family: var(--quicksand-font);
+              font-size: 18px;
+              margin-bottom: 8px;
+              @include media("<=phone") {font-size: 15px;}
+          }
+          a{
+              display: inline-block;
+              margin-top: 30px;
+              margin-right: 20px;
+              text-decoration: none;
+              color: #fff;
+              @include media("<=phone") {margin-top: 10px;}
+              svg{@include media("<=phone") {width: 16px;}}
+              &:hover{color: var(--secondary-color);}
+          }
+          @include media("<=phone") {margin-top: 20px;}
+      }
+      &__menu{
+          padding: 0 50px;
+          a{
+              display: block;
+              text-decoration: none;
+              color: #fff;
+              font-family: var(--quicksand-font);
+              font-size: 16px;
+              margin-bottom: 20px;
+              transition: 0.3s;
+              &:hover{
+                color: var(--secondary-color);
+              }
+          }
+          @include media("<=phone") {padding: 0; margin-top: 30px;}
+      }
+      &__up{
+          div{
+              border: 2px solid #fff;
+              border-radius: 5px;
+              width: 50px;
+              height: 50px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              transition: 0.4s;
+              svg{color: #fff; transition: 0.4s;}
+              &:hover{ background: #fff; }
+              &:hover svg{ color: var(--primary-color-2); }
+          }
+          @include media("<=phone") {display: flex; justify-content: flex-end;}
+      }
+    }
+  }
+}

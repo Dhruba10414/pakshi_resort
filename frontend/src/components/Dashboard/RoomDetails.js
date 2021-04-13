@@ -6,7 +6,7 @@ import leaf from "../../assets/images/StaffSection/leafs.png";
 import card from "../../assets/images/StaffSection/card.svg";
 import { warning, x } from "../../assets/images/SVG";
 
-function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal }) {
+function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal, openInvoiceModal }) {
   const [guest , setGuest] = useState(null);
   const [error, setError] = useState("");
 
@@ -37,7 +37,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
         <div className="guest">
           <div className="heading">
             <h3>Guest</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="infos">
             <div className="info-container">
@@ -86,7 +86,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
           <img src={card} alt="" className="card-image"/>
           <div className="heading">
             <h3>Payment</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="calculation">
             <div className="calc">
@@ -101,14 +101,14 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
               <div className="label">Payment Status</div>
               <div className="value warning">{warning} Due</div>
             </div>
-            <button>Confirm Paymnent</button>
+            <button onClick={openInvoiceModal}>Invoice</button>
           </div>
         </div>
         {/* Room Info */}
         <div className="room-info">
           <div className="heading">
             <h3>Room</h3>
-            <p>iformation</p>
+            <p>information</p>
           </div>
           <div className="room">
             <h1>{room_no}</h1>

@@ -28,12 +28,15 @@
       top: 0;
       left: 0;
       width: 100%;
+      height: 80vh;
     }
     .image-1 {
       z-index: 0;
+      width: 100%;
     }
     .image-2 {
       z-index: 1;
+      width: 100%;
     }
   }
   .content {
@@ -43,25 +46,30 @@
     }
     h2 {
       font-family: var(--primary-font);
-      font-size: 4rem;
+      font-size: 3.5rem;
       color: var(--primary-color);
       text-transform: uppercase;
       @include media("<=phone") { display: none; }
     }
     p.content-desc {
-      font-family: var(--secondary-font);
-      font-size: 18px;
+      font-family: var(--quicksand-font);
+      font-size: 2rem;
+      margin-bottom: 10px;
       @include media("<=phone") { display: none; }
     }
     a {
       display: inline-block;
       margin-top: 40px;
-      padding: 15px 40px;
+      padding: 20px 50px;
       border: 1px solid var(--primary-color);
-      font-family: var(--primary-font);
+      font-family: var(--quicksand-font);
       text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
       color: var(--primary-color);
+      border-radius: 3px;
       transition: 0.5s;
+      font-weight: bold;
       @include media("<=phone") {
           width: 100%;
           text-align: center;
@@ -80,6 +88,7 @@
       .feature {
         padding: 20px 0 20px;
         border-bottom: 0.1px solid var(--primary-color-light);
+        overflow: hidden;
         p {
           font-size: 25px;
           font-family: var(--primary-font);

@@ -15,6 +15,7 @@ function Login() {
   const [state, setState] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -33,6 +34,7 @@ function Login() {
     event.preventDefault();
 
     if (validationCheck()) {
+      setLoading(true);
       axios
         .post("http://127.0.0.1:8000/api/token/", { email, password,})
         .then((token) => {
@@ -41,15 +43,18 @@ function Login() {
           // get user
           axios.get("http://127.0.0.1:8000/api/user/", yourConfig)
           .then(user => {
+            setLoading(false);
             localStorage.setItem('user', JSON.stringify(user.data));
             localStorage.setItem('refresh_token', token.data.refresh);
             history.go("/staff/dashboard")
           })
           .catch(() => {
+            setLoading(false);
             setError("Login failed. Try again!");
           })
         })
         .catch(() => {
+          setLoading(false);
           setError("Email and password doesn't match.");
         });
     }
@@ -128,9 +133,11 @@ function Login() {
               )}
             </div>
             <small>{error}</small>
-            <button type="button" onClick={LoginFunctionality}>
-              Login
-            </button>
+            {
+              !loading
+              ? <button type="button" onClick={LoginFunctionality}>Login</button>
+              : <button type="button" className="loading">Loading...</button>
+            }
             <Link to="/">Forgot password?</Link>
           </form>
         </div>

@@ -26,11 +26,10 @@ function Heading() {
         Pabna
       </h2>
       <p>
-        We are open and ready to welcome you. Learn more about how we are
-        keeping our resort and customers. Book your rooms today and feel
+        We are open and ready to welcome you. Book your rooms today and feel
         stress-free with our flexible cancellation policy.
       </p>
-      <Link to="/">Read more</Link>
+      <Link to="/about">Read more</Link>
     </>
   );
 }

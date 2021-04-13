@@ -8,23 +8,43 @@
 @import "./variable.scss";
 
 // SCSS FOR PAGES
-@import "./pages/Home.scss";
 @import "./pages/PageNotfound.scss";
 @import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
 @import "./pages/Guests.scss";
 @import "./pages/Book.scss";
+@import "./pages/Booking.scss";
+@import "./pages/BookInGuestSide.scss";
+@import "./pages/FoodOrders.scss";
+@import "./pages/FoodManagement.scss";
 @import "./pages/Admin.scss";
+
+@import "./pages/Home.scss";
+@import "./pages/Rooms.scss";
+@import "./pages/Room.scss";
+@import "./pages/Facilities.scss";
+@import "./pages/Eat.scss";
+@import "./pages/About.scss";
+@import "./pages/Contact.scss";
+@import "./pages/Privacy.scss";
+@import "./pages/Sitemaps.scss";
 
 
 // SCSS FOR COMPONENTS
 @import "./components/Home/Rooms.scss";
 @import "./components/Home/Features.scss";
+@import "./components/Home/Overlay.scss";
+@import "./components/Home/Events.scss";
 @import "./components/Navigation/TopNav.scss";
 @import "./components/StaffsSection/ContentBox.scss";
 @import "./components/StaffsSection/StaffHeading.scss";
 @import "./components/Booking/RoomInfo.scss";
+@import "./components/Booking/BookingForm.scss";
+@import "./components//Dashboard/FoodOrder.scss";
+@import "./components//Dashboard/RoomDetails.scss";
+@import "./components//Dashboard/Invoice.scss";
+@import "./components/Footer.scss";
 
 // FOR ALL COMPONENTS
 *{
@@ -37,4 +57,7 @@
 body,
 html {
   background: #FAF7F2;
+  visibility: hidden;
+  user-select: none;
+  overscroll-behavior: none;
 }

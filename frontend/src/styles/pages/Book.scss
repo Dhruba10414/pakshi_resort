@@ -1,19 +1,14 @@
 .bookBox {
   width: 100%;
-  height: calc(90vh - 20px);
+  margin-top: 10px;
+  height: calc(90vh - 10px);
   border-radius: 8px;
   padding: 10px 20px;
   background: #fff;
-
-  h2 {
-    font-size: 20px;
-    font-family: var(--secondary-font);
-    font-weight: normal;
-  }
+  position: relative;
 
   .schedule-info {
     width: 100%;
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
 
@@ -26,7 +21,7 @@
         font-family: WRITTEN;
         font-size: 70px;
         line-height: 20px;
-        color: var(--red-dark);
+        color: var(--primary-color-light);
         margin-top: -10px;
         margin-left: 40px;
       }
@@ -65,24 +60,24 @@
         border: none;
       }
       .CalendarDay__selected_span {
-        background: var(--red);
-        color: #444;
+        background: var(--primary-color-light);
+        color: var(--primary-color);
         border: none;
       }
       .CalendarDay__selected {
-        background: var(--red-dark);
+        background: var(--primary-color-2);
         border: none;
-        color: white;
+        color: #fff;
       }
       .CalendarDay__selected:hover {
-        background: var(--red);
-        color: #444;
+        background: var(--primary-color-light);
+        color: var(--primary-color);
       }
       .CalendarDay__hovered_span:hover,
       .CalendarDay__hovered_span {
-        background: var(--red);
+        background: var(--primary-color-light);
         border: none;
-        color: #444;
+        color: var(--primary-color);
       }
       .DayPickerKeyboardShortcuts_show__bottomRight::before {
         display: none;
@@ -91,7 +86,7 @@
         font-family: var(--secondary-font);
       }
       button.DateRangePickerInput_clearDates {
-        background: var(--red);
+        background: var(--primary-color);
         width: 50px;
         height: 50px;
         border-radius: 5px;
@@ -99,7 +94,7 @@
         align-items: center;
         justify-content: center;
         svg {
-          color: var(--red-dark) !important;
+          color: #fff !important;
         }
       }
       .apply,
@@ -111,17 +106,15 @@
         border-radius: 5px;
         cursor: pointer;
         transition: 0.4s;
-        &:hover {
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-        }
       }
       .apply {
-        background: var(--red);
-        color: var(--red-dark);
+        background: var(--primary-color-2);
+        color: #fff;
+        &:hover{color: var(--primary-color-light);}
       }
       .back {
-        background: #ccc;
-        color: #444;
+        background: #fff;
+        color: #fff;
       }
     }
   }

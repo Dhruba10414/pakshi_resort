@@ -29,11 +29,9 @@ function Staff({
         // remove user
         axios.put("http://127.0.0.1:8000/api/remove/", Body, Config)
         .then(() => {
-          console.log(Body)
           setLoading(false);
         })
         .catch((err) => {
-          console.log("Error: " + err.message);
           setLoading(false);
         })
       })

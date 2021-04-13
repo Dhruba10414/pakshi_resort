@@ -1,4 +1,5 @@
 .staffHeading {
+  min-height: 8vh;
   padding: 10px 50px;
   display: flex;
   justify-content: space-between;
@@ -22,10 +23,19 @@
   &__staff {
     display: flex;
     align-items: center;
+    .bulb{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .bulb.admin{background: var(--green-dark); border: 4px solid var(--green);}
+    .bulb.staff{background: var(--yellow-dark); border: 4px solid var(--yellow);}
     .staff-name {
       margin-right: 10px;
       font-family: var(--quicksand-font);
-      color: #000;
+      color: #444;
+      font-weight: bold;
     }
     .staff-image {
       width: 40px;

@@ -1,0 +1,234 @@
+.eatsDrinks {
+  width: 100%;
+  min-height: 100vh;
+  margin-bottom: 100px;
+  @include media("<=phone") {
+    margin-bottom: 30px;
+  }
+
+  &__heading {
+    padding: 20vh 180px 10vh 180px;
+    @include media("<=phone") {
+      padding: 10vh 30px 10px 30px;
+    }
+    h1 {
+      font-family: var(--primary-font);
+      color: var(--primary-color);
+      font-size: 3rem;
+      @include media("<=phone") {
+        font-size: 22px;
+      }
+      div {
+        overflow: hidden;
+      }
+    }
+  }
+
+  &__resturent {
+    min-height: 120vh;
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    position: relative;
+    @include media("<=phone") {
+      margin-top: 30px;
+    }
+
+    .resturent-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .resturent-image {
+        width: 48%;
+        height: 80vh;
+        @include media("<=phone") {
+          width: 100%;
+          height: fit-content;
+        }
+        img {
+          height: 80vh;
+          width: 80%;
+          @include media("<=phone") {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+
+      .resturent-desc {
+        width: 48%;
+        min-height: 60vh;
+        padding-top: 50px;
+        @include media("<=phone") {
+          width: 100%;
+          padding-top: 25px;
+        }
+        h3 {
+          font-family: var(--quicksand-font);
+          font-size: 1.8rem;
+          font-weight: normal;
+          color: #444;
+          @include media("<=phone") {
+            font-size: 16px;
+          }
+        }
+        h2 {
+          font-family: var(--primary-font);
+          color: var(--primary-color);
+          font-size: 3rem;
+          font-weight: normal;
+          @include media("<=phone") {
+            font-size: 1.8rem;
+          }
+        }
+        p {
+          width: 80%;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 25px;
+          margin-top: 15px;
+          @include media("<=phone") {
+            width: 100%;
+            font-size: 14px;
+            text-align: justify;
+            margin-top: 8px;
+          }
+        }
+        img.img-tw {
+          width: 90%;
+          margin-left: 65px;
+          margin-top: 75px;
+          @include media("<=phone") {
+            width: 100%;
+            margin-top: 20px;
+            margin-left: 0;
+          }
+        }
+        img.landscape {
+          width: 65px;
+          margin-left: 30%;
+          margin-bottom: -35px;
+          @include media("<=phone") {
+            display: none;
+          }
+        }
+      }
+    }
+    img.img-th {
+      position: absolute;
+      top: 85vh;
+      width: 25vw;
+      left: 15vw;
+      @include media("<=phone") {
+        display: none;
+      }
+    }
+  }
+
+  &__cresturent,
+  &__shef {
+    width: 100%;
+    min-height: 100vh;
+    margin-top: 100px;
+    background: #282224;
+    @include media("<=phone") {
+      min-height: fit-content;
+      margin-top: 30px;
+    }
+
+    .cresturent-container {
+      width: 80%;
+      height: 100vh;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      @include media("<=phone") {
+        height: fit-content;
+        padding: 30px 0;
+      }
+
+      .cresturent-desc,
+      .cresturent-desc {
+        width: 49%;
+        padding: 100px 0;
+        height: fit-content;
+        @include media("<=phone") {
+          width: 100%;
+          padding: 0;
+        }
+        h3 {
+          font-family: var(--quicksand-font);
+          font-size: 2rem;
+          font-weight: normal;
+          color: #fff;
+          @include media("<=phone") {
+            font-size: 16px;
+          }
+        }
+        h2 {
+          font-family: var(--primary-font);
+          color: var(--primary-color-light);
+          font-size: 3rem;
+          font-weight: normal;
+          @include media("<=phone") {
+            font-size: 1.8rem;
+          }
+        }
+        p {
+          width: 80%;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          line-height: 25px;
+          margin-top: 15px;
+          color: #fff;
+          @include media("<=phone") {
+            font-size: 14px;
+            text-align: justify;
+            width: 100%;
+            margin-top: 8px;
+            align-items: inherit;
+          }
+        }
+        img {
+          width: 60px;
+          margin-left: 30%;
+          margin-bottom: -45px;
+          @include media("<=phone") {
+            display: none;
+          }
+        }
+      }
+      .cresturent-image {
+        width: 49%;
+        @include media("<=phone") {
+          width: 100%;
+          margin-top: 30px;
+        }
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__gresturent {
+    min-height: 100vh;
+  }
+  &__shef {
+    background: #e6e9e6;
+    .cresturent-container .cresturent-desc {
+      h3 {
+        color: #444;
+      }
+      h2 {
+        color: var(--primary-color);
+      }
+      p {
+        color: #000;
+      }
+    }
+  }
+}
