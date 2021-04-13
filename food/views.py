@@ -8,6 +8,15 @@ from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated
 from datetime import date, datetime, timedelta
 from django.db.models.functions import Extract
 
+from django.db.models import F, ExpressionWrapper, Q
+from django.db.models import DurationField, FloatField, IntegerField
+
+from django.db.models.aggregates import Sum
+from django.db.models.functions import Coalesce
+import csv
+from django.http import HttpResponse
+
+
 
 class FoodItemView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
@@ -61,7 +70,7 @@ class OrderCompleteView(generics.GenericAPIView):
 
 
 class FoodOrderingView(generics.GenericAPIView):
-    serializer_class=OrderItemEmbededSerializer
+    serializer_class=FoodOrderEmbededSerializer
     queryset=FoodOrdering.objects.all() 
     
     def get(self,request,*args,**kwargs):
@@ -70,7 +79,7 @@ class FoodOrderingView(generics.GenericAPIView):
         food_Type = request.query_params.get('food_type',None)
         date_in = request.query_params.get('date',None)
 
-        yesterday = date.today() - timedelta(days=1) #need to check 
+        yesterday = date.today() - timedelta(days=30) #need to check 
 
         if IsCancel:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=True).order_by('-time')
@@ -100,11 +109,10 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 if food["quantity"] is None :
                     return Response(data={'message :''You have to select a specific Quantity'},status=status.HTTP_404_NOT_FOUND)
-                if food["price"] is None:
-                    return Response(data={"message : " "You have to include the price "},status=status.HTTP_404_NOT_FOUND)
                 
                 
-                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=food["price"])
+                
+                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price)
                 new_order.taken_by=request.user.id
                 new_order.save()
                 
@@ -126,3 +134,40 @@ class OrderInvoiceView(generics.GenericAPIView):
 
         except FoodOrdering.DoesNotExist:
             return Response(data={'message : Guest id does not exists in the Food order list..'},status=status.HTTP_404_NOT_FOUND)
+
+
+
+class FoodLogView(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+    serializer_class=FoodOrderEmbededSerializer
+
+    def get(self, request, *args, **kwargs):
+        default_month = date.today().month
+        default_year = date.today().year
+        month_from = request.query_params.get('month_start', default_month)
+        year_from = request.query_params.get('year_start', default_year)
+        month_to = request.query_params.get('month_end', default_month)
+        year_to = request.query_params.get('year_end', default_year)
+
+        response = HttpResponse(content_type='text/csv')
+        filename = f'Resort-Food-Orders-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+        writer = csv.writer(response)
+
+        filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
+                            time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField()))
+        
+        writer.writerow(['Guest', 'Guest Email' ,'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
+        for q in filtered:
+            row = [q.guest.name,
+                    q.guest.email,
+                    q.food.name,
+                    q.food.food_type,
+                    q.order_price,
+                    q.quantity,
+                    q.bill,
+                    q.taken_by.name]
+            writer.writerow(row)
+
+        return response
