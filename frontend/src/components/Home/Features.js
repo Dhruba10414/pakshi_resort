@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import restaurent from "../../assets/images/Restaurent/restaurent-4.jpg";
-import pool from "../../assets/images/SwimmingPools/pool-4.jpg";
+import pool from "../../assets/images/Banner/resort2.jpg";
 import garden from "../../assets/images/View/garden-2.jpg";
 import playground from "../../assets/images/View/play-ground.jpg"
 

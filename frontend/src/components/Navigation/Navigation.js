@@ -24,36 +24,9 @@ function Navigation() {
     <>
       <div className="navigation">
         <div className="navigation__primary"></div>
-
         <div className="navigation__secondary">
-          <div className="content">
-          <Link to="/rooms">
-              <div className="index">01</div>
-              <div className="name">Stay</div>
-            </Link>
-            <Link to="/facilities">
-              <div className="index">03</div>
-              <div className="name">Garden & Park</div>
-            </Link>
-            <Link to="/eat-drink">
-              <div className="index">02</div>
-              <div className="name">Eat & Drink</div>
-            </Link>
-            <Link to="/contact">
-              <div className="index">04</div>
-              <div className="name">Contact</div>
-            </Link>
-          </div>
-
-          <div className="find-us">
-            <h3>Find us</h3>
-            <p>Khankashorif Road, Paksey, Ishwardi Z6006 Pabna, Rajshahi Division, Bangladesh</p>
-            <a href="https://www.google.com/maps/dir/24.8435584,89.3701066/24.086299,89.0428347/@24.458018,88.9491725,10z/data=!3m1!4b1!4m4!4m3!1m1!4e1!1m0" target="_blank">
-              Get Direction
-            </a>
-          </div>
-
-          <div className="phone-link">
+        <div className="phone-link">
+          {/* ------------- RESERVATION AND PHONES ---------- */}
             <Link to="/booking" className="link">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +62,35 @@ function Navigation() {
               </svg>
               <span>01730 706252</span>
             </div>
+          </div>
+
+          {/* ------------------- LINKS ---------------- */}
+          <div className="content">
+          <Link to="/rooms">
+              <div className="index">01</div>
+              <div className="name">Stay</div>
+            </Link>
+            <Link to="/facilities">
+              <div className="index">03</div>
+              <div className="name">Garden & Park</div>
+            </Link>
+            <Link to="/eat-drink">
+              <div className="index">02</div>
+              <div className="name">Eat & Drink</div>
+            </Link>
+            <Link to="/contact">
+              <div className="index">04</div>
+              <div className="name">Contact</div>
+            </Link>
+          </div>
+
+          {/* ---------------------- LOCATION ------------------ */}
+          <div className="find-us">
+            <h3>Find us</h3>
+            <p>Khankashorif Road, Paksey, Ishwardi Z6006 Pabna, Rajshahi Division, Bangladesh</p>
+            <a href="https://www.google.com/maps/dir/24.8435584,89.3701066/24.086299,89.0428347/@24.458018,88.9491725,10z/data=!3m1!4b1!4m4!4m3!1m1!4e1!1m0" target="_blank">
+              Get Direction
+            </a>
           </div>
         </div>
         
