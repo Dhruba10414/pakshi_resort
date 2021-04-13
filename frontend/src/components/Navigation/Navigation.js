@@ -39,9 +39,9 @@ function Navigation() {
               <div className="index">02</div>
               <div className="name">Eat & Drink</div>
             </Link>
-            <Link to="/">
+            <Link to="/contact">
               <div className="index">04</div>
-              <div className="name">Location</div>
+              <div className="name">Contact</div>
             </Link>
           </div>
 

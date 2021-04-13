@@ -88,17 +88,17 @@ function Room() {
         <div className="dRooms__heading">
           {deco && (
             <h1>
-              Delux Couple Bed <Link to="/">Book Now</Link>{" "}
+              Delux Couple Bed <Link to="/booking">Book Now</Link>{" "}
             </h1>
           )}
           {dedo && (
             <h1>
-              Delux Double Bed <Link to="/">Book Now</Link>{" "}
+              Delux Double Bed <Link to="/booking">Book Now</Link>{" "}
             </h1>
           )}
           {detw && (
             <h1>
-              Delux Twin Bed <Link to="/">Book Now</Link>{" "}
+              Delux Twin Bed <Link to="/booking">Book Now</Link>{" "}
             </h1>
           )}
 

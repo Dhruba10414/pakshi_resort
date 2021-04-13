@@ -2,17 +2,21 @@
   width: 100%;
   min-height: 100vh;
   margin-bottom: 50px;
+  @include media("<=phone") { margin-bottom: 0; overflow: hidden;}
 
   &__heading {
     padding-top: 150px;
     width: 70%;
     height: fit-content;
     margin: auto;
+    @include media("<=phone") {padding-top: 80px; width: 100%;}
     .slider {
       margin-top: 30px;
       height: 90vh;
+      @include media("<=phone") {height: 45vh; margin-top: 15px;}
       img {
         height: 90vh;
+        @include media("<=phone") {height: 45vh;}
       }
     }
     h1 {
@@ -24,6 +28,7 @@
       color: var(--primary-color);
       font-weight: normal;
       font-size: 3rem;
+      @include media("<=phone") { font-size: 1.5rem; padding-left: 20px;}
       a{
           color: var(--primary-color);
           font-family: var(--quicksand-font);
@@ -32,6 +37,7 @@
           padding: 10px 20px;
           border-radius: 5px;
           transition: 0.3s;
+          @include media("<=phone") { font-size: 14px; }
           &:hover{
               color: var(--secondary-color);
           }
@@ -47,6 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @include media("<=phone") { width: 100%; margin-top: 20px; margin-bottom: 50px;}
     .short-desc {
       width: 30%;
       height: 10vh;
@@ -57,12 +64,14 @@
       img {
         height: 5vh;
         margin: auto;
+        @include media("<=phone") { height: 3vh; }
       }
       p {
         text-align: center;
         color: gray;
         font-family: var(--quicksand-font);
         font-size: 16px;
+        @include media("<=phone") { font-size: 12px; }
       }
     }
   }
@@ -70,10 +79,12 @@
   &__desc {
     width: 70%;
     margin: auto;
+    @include media("<=phone") { width: 100%; padding: 0 30px;}
     p {
       font-family: var(--quicksand-font);
       font-size: 18px;
       line-height: 28px;
+      @include media("<=phone") { font-size: 15px; text-align: justify;}
     }
   }
 
@@ -81,11 +92,13 @@
     width: 70%;
     margin: auto;
     margin-top: 100px;
+    @include media("<=phone") { width: 100%; margin-top: 30px; padding: 0 30px;}
     h2 {
       font-family: var(--primary-font);
       font-size: 2.4rem;
       font-weight: normal;
       color: var(--primary-color);
+      @include media("<=phone") { font-size: 2rem; }
     }
     .amenities {
       margin-top: 20px;
@@ -98,13 +111,16 @@
         min-height: 10vh;
         display: flex;
         align-items: center;
+        @include media("<=phone") { width: 48%; min-height: 8vh; }
         img {
           height: 5vh;
           margin-right: 25px;
+          @include media("<=phone") { height: 3vh; margin-right: 10px;}
         }
         p {
           font-family: var(--quicksand-font);
           font-size: 18px;
+          @include media("<=phone") { font-size: 14px; }
         }
       }
     }
@@ -114,19 +130,24 @@
     width: 70%;
     margin: auto;
     margin-top: 100px;
+    @include media("<=phone") { width: 100%; margin-top: 50px;}
     h2 {
       font-family: var(--primary-font);
       font-size: 2.4rem;
       font-weight: normal;
       color: var(--primary-color);
+      @include media("<=phone") { font-size: 1.5rem; padding: 0 30px;}
     }
     .similarRooms {
       margin-top: 20px;
       display: flex;
+      flex-wrap: wrap;
+      @include media("<=phone") { padding: 0 30px; }
       &__room {
         width: 30%;
         height: 50vh;
         margin-right: 30px;
+        @include media("<=phone") { width: 100%; margin-right: 0; height: 60vh;}
 
         img {
           width: 100%;
