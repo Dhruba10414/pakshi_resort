@@ -49,7 +49,7 @@ function GuestInformation({ setState, loading, setGuest }) {
           </div>
         </div>
         <div className="input-container">
-          <div className="input w-55">
+          <div className="input w-50">
             <label>Email</label>
             <input
               type="email"
@@ -57,7 +57,7 @@ function GuestInformation({ setState, loading, setGuest }) {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="input w-45">
+          <div className="input w-50">
             <label>Phone</label>
             <input
               type="text"

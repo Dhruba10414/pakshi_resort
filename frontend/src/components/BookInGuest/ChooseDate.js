@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Daterange picker
 import { DateRangePicker } from "react-dates";
 import "react-dates/initialize";
@@ -18,10 +18,11 @@ function ChooseDate({ roomTypeWithPrice, setInfo, setState }) {
   });
   const { startDate, endDate } = dateRange;
   const [error, setError] = useState("");
+  const [isMobileDevice, setMobileDevice] = useState(false);
 
   // SETUP DATE DANGE
   const handleOnDateChange = (startDate, endDate) => {
-      setdateRange(startDate, endDate);
+    setdateRange(startDate, endDate);
   };
 
   // VALIDATION CHECK
@@ -46,35 +47,46 @@ function ChooseDate({ roomTypeWithPrice, setInfo, setState }) {
     if (validationError()) {
       // info processing
       const sd = dateRange.startDate._d.getDate();
-      const sm = (dateRange.startDate._d.getMonth() + 1).toString().padStart(2, "0");
+      const sm = (dateRange.startDate._d.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
       const sy = dateRange.startDate._d.getFullYear();
       const ed = dateRange.endDate._d.getDate();
-      const em = (dateRange.endDate._d.getMonth() + 1).toString().padStart(2, "0");
+      const em = (dateRange.endDate._d.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
       const ey = dateRange.endDate._d.getFullYear();
 
       // info selecting
       const checkinDate = `${sd}-${sm}-${sy}`;
       const checkoutDate = `${ed}-${em}-${ey}`;
-      const type = roomTypeWithPrice[roomType].room_type;
+      const type = parseInt(roomType) + 1;
       const roomBill = roomTypeWithPrice[roomType].tariff;
       const stayingDays = dateRange.endDate._d - dateRange.startDate._d;
-      const totalBill = numberOfRooms * roomBill  *  stayingDays / (1000 * 3600 * 24);
+      const totalBill =
+        (numberOfRooms * roomBill * stayingDays) / (1000 * 3600 * 24);
 
       // info assigning
       setInfo({
-        "checkin": checkinDate,
-        "checkout": checkoutDate,
-        "type": type,
-        "roomNumbers": numberOfRooms,
-        "stayingDays": stayingDays,
-        "roomBill": roomBill,
-        "totalBills": totalBill
+        checkin: checkinDate,
+        checkout: checkoutDate,
+        type: type,
+        roomNumbers: numberOfRooms,
+        stayingDays: stayingDays,
+        roomBill: roomBill,
+        totalBills: totalBill,
       });
 
       // state changing
       setState(3);
     }
   };
+
+  useEffect(() => {
+    if (window.innerWidth < 420) {
+      setMobileDevice(true);
+    }
+  }, [window.innerWidth]);
 
   return (
     <div className="room-info-taking">
@@ -107,18 +119,35 @@ function ChooseDate({ roomTypeWithPrice, setInfo, setState }) {
           </div>
         </div>
         <div className="input-container">
-          <DateRangePicker
-            startDatePlaceholderText=""
-            startDate={startDate}
-            startDateId="startDate"
-            onDatesChange={handleOnDateChange}
-            endDatePlaceholderText=""
-            endDate={endDate}
-            endDateId="endDate"
-            displayFormat="DD MMM YYYY"
-            focusedInput={focus}
-            onFocusChange={(focus) => setFocus(focus)}
-          />
+          {isMobileDevice ? (
+            <DateRangePicker
+              startDatePlaceholderText=""
+              startDate={startDate}
+              startDateId="startDate"
+              onDatesChange={handleOnDateChange}
+              endDatePlaceholderText=""
+              endDate={endDate}
+              endDateId="endDate"
+              displayFormat="DD MMM YYYY"
+              focusedInput={focus}
+              onFocusChange={(focus) => setFocus(focus)}
+              verticalHeight={350}
+              orientation="vertical"
+            />
+          ) : (
+            <DateRangePicker
+              startDatePlaceholderText=""
+              startDate={startDate}
+              startDateId="startDate"
+              onDatesChange={handleOnDateChange}
+              endDatePlaceholderText=""
+              endDate={endDate}
+              endDateId="endDate"
+              displayFormat="DD MMM YYYY"
+              focusedInput={focus}
+              onFocusChange={(focus) => setFocus(focus)}
+            />
+          )}
         </div>
         <div className="input-container">
           <div className="input w-100">

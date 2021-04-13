@@ -16,12 +16,23 @@ function BookInGuestSide() {
 
   // MAKE A BOOKING
   const makeBooking = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    console.log(guest);
-    console.log(info);
+    // create a guest first
+    axios.post("http://127.0.0.1:8000/bookings/guests/", guest)
+    .then((res) => { 
+      // send booking request using gues.id
+      const Body = {
+        "guest": res.data.id,
+        "room_type": parseInt(info.type),
+        "num_of_rooms": parseInt(info.roomNumbers),
+        "check_in": info.checkin,
+        "check_out": info.checkout
+      }
+      axios.post("http://127.0.0.1:8000/bookings/guest_requests/add/", Body)
+      .then(() => {console.log("Success")})
+      .catch((err) => {console.log(err.message)});
+     })
+    .catch(err => {console.log(err.message)});
+    console.log(info)
   };
 
   // FETCH ROOMS TYPE WITH PRICE

@@ -48,11 +48,13 @@ function Navigation() {
           <div className="find-us">
             <h3>Find us</h3>
             <p>Khankashorif Road, Paksey, Ishwardi Z6006 Pabna, Rajshahi Division, Bangladesh</p>
-            <Link to="https://www.google.com/maps/dir/24.8435584,89.3701066/24.086299,89.0428347/@24.458018,88.9491725,10z/data=!3m1!4b1!4m4!4m3!1m1!4e1!1m0">Get Direction</Link>
+            <a href="https://www.google.com/maps/dir/24.8435584,89.3701066/24.086299,89.0428347/@24.458018,88.9491725,10z/data=!3m1!4b1!4m4!4m3!1m1!4e1!1m0" target="_blank">
+              Get Direction
+            </a>
           </div>
 
           <div className="phone-link">
-            <Link to="/" className="link">
+            <Link to="/booking" className="link">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
