@@ -46,7 +46,10 @@
               margin-bottom: 8px;
               @include media("<=phone") {font-size: 15px;}
           }
-          a{
+          .socila-links{
+            display: flex;
+            align-items: center;
+            a{
               display: inline-block;
               margin-top: 30px;
               margin-right: 20px;
@@ -55,6 +58,9 @@
               @include media("<=phone") {margin-top: 10px;}
               svg{@include media("<=phone") {width: 16px;}}
               &:hover{color: var(--secondary-color);}
+
+              img{ width: 30px; @include media("<=phone") {width: 22px;}}
+          }
           }
           @include media("<=phone") {margin-top: 20px;}
       }

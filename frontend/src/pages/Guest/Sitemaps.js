@@ -19,7 +19,14 @@ function Sitemaps() {
               <li><Link to="/">Pakshi Resort LTD</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/facilities">Facilities</Link></li>
-              <li><Link to="/rooms">Rooms</Link></li>
+              <li>
+                <Link to="/rooms">Rooms</Link>
+                <ul>
+                  <li><Link to="/room/delux-couple">Delux Couple Bed</Link></li>
+                  <li><Link to="/room/delux-double">Delux Double Bed</Link></li>
+                  <li><Link to="/room/delux-twin">Delux Twin Bed</Link></li>
+                </ul>
+              </li>
               <li><Link to="/eat-drink">Eat & Drinks</Link></li>
               <li><Link to="/contact">Contact us</Link></li>
               <li><Link to="/privacy-policy">Privacy & Policies</Link></li>
