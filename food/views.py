@@ -78,7 +78,7 @@ class FoodOrderingView(generics.GenericAPIView):
         food_Type = request.query_params.get('food_type',None)
         date_in = request.query_params.get('date',None)
 
-        yesterday = date.today() - timedelta(days=30) #need to check 
+        yesterday = date.today() - timedelta(days=1) #need to check 
 
         if IsCancel:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=True).order_by('-time')
