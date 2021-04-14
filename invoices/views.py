@@ -4,7 +4,7 @@ from bookings.models import RoomType, Rooms, Guests, Bookings
 from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import *
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser
 from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 from .db_tools import Datediff
@@ -103,7 +103,6 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
 
 
 class ResortLog(generics.GenericAPIView):
-    serializer_class = BookingSerializer
     permission_classes = [IsAdminUser, ]
 
     def get(self, request, *args, **kwargs):
@@ -142,7 +141,7 @@ class ResortLog(generics.GenericAPIView):
 
 
 class ResortAnalytics(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
     serializer_class = AnalyticsSerializer
 
     def get(self, request, *args, **kwargs):

@@ -2,7 +2,7 @@ from .models import Services, Tickets
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser
 from .serializers import *
 from django.db.models import F, ExpressionWrapper, FloatField
 from django.db.models.functions import TruncMonth
@@ -113,8 +113,8 @@ class TicketsLog(GenericAPIView):
 
 
 class TicketsAnalytics(GenericAPIView):
-    permission_classes = [AllowAny, ]
     serializer_class = SellsAnalyticsSerializer
+    permission_classes = [IsAdminUser, ]
     
     def get(self, request, *args, **kwargs):
         analytics = Tickets.objects.annotate(price=ExpressionWrapper(F('ticket_tariff')*F('num_tickets'),
