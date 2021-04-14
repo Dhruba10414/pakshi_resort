@@ -20,7 +20,6 @@ from django.http import HttpResponse
 
 class FoodItemView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
-    permission_classes=[AllowAny]
     serializer_class = FoodItemSerilizer
 
     def get(self, request, *args, **kwargs):
@@ -138,7 +137,7 @@ class OrderInvoiceView(generics.GenericAPIView):
 
 
 class FoodLogView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
     serializer_class=FoodOrderEmbededSerializer
 
     def get(self, request, *args, **kwargs):
