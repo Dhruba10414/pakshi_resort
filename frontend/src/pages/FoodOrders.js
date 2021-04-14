@@ -67,7 +67,7 @@ function FoodOrders({
           };
 
           axios
-            .post(COMPLETE_ORDER_LINK, { order_id: selectedFoods })
+            .post(COMPLETE_ORDER_LINK, { order_id: selectedFoods }, Config)
             .then(() => {
               setTimeout(() => {
                 setConfirm(false);
