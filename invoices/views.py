@@ -125,7 +125,7 @@ class ResortLog(generics.GenericAPIView):
                             ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField()))
         
-        writer.writerow(['Guest', 'Guest Email' 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,

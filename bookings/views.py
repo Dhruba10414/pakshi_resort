@@ -268,6 +268,35 @@ class BookingRequestView(generics.GenericAPIView):
             
         return Response(pendings_seri.data, status=status.HTTP_200_OK)
 
+    def post(self, request, *args, **kwargs):
+        req_id = request.data.get('id', None)
+        rooms = request.data.get('rooms', None)
+
+        if not isinstance(rooms, list) or req_id is None:
+            return Response({"error": "Invalid Input"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            booking_req = BookingRequest.objects.get(id=req_id)
+            booked = []
+
+            for room_id in rooms:
+                new_booking = add_new_booking(room_id, booking_req.guest.id, request.user.id,
+                                            booking_req.check_in, booking_req.check_out)
+                if new_booking:
+                    booked.append(new_booking)
+            
+            booking_req.has_confirmed = True
+            booking_req.save()
+            
+            booking_req = BookingRequestSerializer(booking_req)
+            booked_rooms = BookingSerializer(booked, many=True)
+            
+            return Response({"Status": booking_req.data,
+                            "Room Booked": booked_rooms.data}, status=status.HTTP_201_CREATED)
+        
+        except BookingRequest.DoesNotExist:
+            return Response({"error": "Invalid Id"}, status=status.HTTP_404_NOT_FOUND) 
+
     def delete(self, request, *args, **kwargs):
         req_id = request.data.get("id", None)
         
