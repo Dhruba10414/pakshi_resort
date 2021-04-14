@@ -46,8 +46,8 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
     if (requiredValidaion()) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-      const ADD_FOOD_LINK = `http://127.0.0.1:8000/food/create/`;
+      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+      const ADD_FOOD_LINK = `http://api.pakshiresort.com/food/create/`;
 
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

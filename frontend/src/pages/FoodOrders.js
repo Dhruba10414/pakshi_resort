@@ -55,8 +55,8 @@ function FoodOrders({
     if (selectedFoods.length > 0) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-      const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/complete/`;
+      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+      const CANCEL_ORDER_LINK = `http://api.pakshiresort.com/food/order/complete/`;
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
@@ -95,8 +95,8 @@ function FoodOrders({
     if (selectedFoods.length > 0) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-      const CANCEL_ORDER_LINK = `http://127.0.0.1:8000/food/order/cancel/`;
+      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+      const CANCEL_ORDER_LINK = `http://api.pakshiresort.com/food/order/cancel/`;
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
@@ -151,8 +151,8 @@ function FoodOrders({
     setChange(false);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const FOOD_ORDERS = `http://127.0.0.1:8000/food/orders/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const FOOD_ORDERS = `http://api.pakshiresort.com/food/orders/`;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

@@ -13,11 +13,11 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
   useEffect(() => {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
-    axios.post("http://127.0.0.1:8000/api/token/refresh/", {refresh: refresh_token,})
+    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
       // get rooms
-      axios.get(`http://127.0.0.1:8000/bookings/guests/?guest=${id}`, Config)
+      axios.get(`http://api.pakshiresort.com/bookings/guests/?guest=${id}`, Config)
       .then((res) => { setGuest(res.data); console.log(res.data)})
       .catch((err) => { setError(err.message);});
     })

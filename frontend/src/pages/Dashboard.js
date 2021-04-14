@@ -76,7 +76,7 @@ function Dashboard({ clearUser }) {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://127.0.0.1:8000/api/token/refresh/", {
+      .post("http://api.pakshiresort.com/api/token/refresh/", {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -85,7 +85,7 @@ function Dashboard({ clearUser }) {
         };
         // get rooms
         axios
-          .get("http://127.0.0.1:8000/bookings/rooms/", Config)
+          .get("http://api.pakshiresort.com/bookings/rooms/", Config)
           .then((res) => {
             setRoomList(res.data);
           })

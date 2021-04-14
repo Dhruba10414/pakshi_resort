@@ -26,8 +26,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const CHECK_IN_URL = `http://127.0.0.1:8000/bookings/checkin/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const CHECK_IN_URL = `http://api.pakshiresort.com/bookings/checkin/`;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
@@ -62,8 +62,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const CHECK_OUT_URL = `http://127.0.0.1:8000/bookings/checkout/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const CHECK_OUT_URL = `http://api.pakshiresort.com/bookings/checkout/`;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

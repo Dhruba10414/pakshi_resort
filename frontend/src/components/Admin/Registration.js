@@ -81,13 +81,13 @@ function Registration() {
       setLoading(true);
       const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
-    axios.post("http://127.0.0.1:8000/api/token/refresh/", {refresh: refresh_token,})
+    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { "email": email, "password": password, "user_name": name, "contact": phone, "gender": gender, "role": role}
         
         // Create users
-        axios.post("http://127.0.0.1:8000/api/signup/", Body, Config)
+        axios.post("http://api.pakshiresort.com/api/signup/", Body, Config)
         .then(() => {
           clearFields();
           setLoading(false);

@@ -21,13 +21,13 @@ function Staff({
     
     // get users access token
     const refresh_token = localStorage.getItem("refresh_token");
-    axios.post("http://127.0.0.1:8000/api/token/refresh/", {refresh: refresh_token,})
+    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = {"id": id+1};
         
         // remove user
-        axios.put("http://127.0.0.1:8000/api/remove/", Body, Config)
+        axios.put("http://api.pakshiresort.com/api/remove/", Body, Config)
         .then(() => {
           setLoading(false);
         })

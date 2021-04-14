@@ -14,7 +14,7 @@ function Admin() {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://127.0.0.1:8000/api/token/refresh/", {
+      .post("http://api.pakshiresort.com/api/token/refresh/", {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -22,7 +22,7 @@ function Admin() {
           headers: { Authorization: "Bearer " + token.data.access },
         };
         // fetch users
-        axios.get("http://127.0.0.1:8000/api/users/", Config).then((res) => {
+        axios.get("http://api.pakshiresort.com/api/users/", Config).then((res) => {
           setStaffs(res.data);
         });
       });

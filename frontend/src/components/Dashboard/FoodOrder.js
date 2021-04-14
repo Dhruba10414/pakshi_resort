@@ -27,8 +27,8 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const AVAILABLE_FOOD = `http://127.0.0.1:8000/food/allfood/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const AVAILABLE_FOOD = `http://api.pakshiresort.com/food/allfood/`;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {

@@ -32,8 +32,8 @@ function Booking({clearUser}) {
 
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const BOOKING_TABLE_URL = `http://127.0.0.1:8000/bookings/rooms/bookings/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const BOOKING_TABLE_URL = `http://api.pakshiresort.com/bookings/rooms/bookings/`;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
