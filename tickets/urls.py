@@ -6,4 +6,5 @@ urlpatterns = [
     path('sells/', TicketsView.as_view(), name='ticket_buying'),
     path('guest-tickets/', GuestTicketsInvoiceList.as_view(), name='guest_tickets'),
     path('logs/', TicketsLog.as_view(), name='ticket_logs'),
+    path('analytics/', TicketsAnalytics.as_view(), name='tickets_analytics'),
 ]
