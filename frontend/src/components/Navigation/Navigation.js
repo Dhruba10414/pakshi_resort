@@ -66,19 +66,19 @@ function Navigation() {
 
           {/* ------------------- LINKS ---------------- */}
           <div className="content">
-          <Link to="/rooms">
+          <Link to="/rooms" onClick={navigationManager}>
               <div className="index">01</div>
               <div className="name">Stay</div>
             </Link>
-            <Link to="/facilities">
+            <Link to="/facilities" onClick={navigationManager}>
               <div className="index">03</div>
               <div className="name">Garden & Park</div>
             </Link>
-            <Link to="/eat-drink">
+            <Link to="/eat-drink" onClick={navigationManager}>
               <div className="index">02</div>
               <div className="name">Eat & Drink</div>
             </Link>
-            <Link to="/contact">
+            <Link to="/contact" onClick={navigationManager}>
               <div className="index">04</div>
               <div className="name">Contact</div>
             </Link>

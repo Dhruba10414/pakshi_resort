@@ -28,7 +28,7 @@
     min-height: 120vh;
     width: 80%;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     position: relative;
     @include media("<=desktop") { margin-top: 70px; }
     @include media("<=phone") { margin-top: 30px; }

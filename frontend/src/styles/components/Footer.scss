@@ -12,12 +12,14 @@
       font-weight: normal;
       text-transform: uppercase;
       color: #fff;
+      @include media("<=desktop") { font-size: 1.7rem; }  
       @include media("<=phone") {font-size: 16px;}
     }
   }
   &__bottom {
     background: var(--primary-color-2);
     padding: 100px 200px;
+    @include media("<=desktop") { padding: 100px 130px; }
     @include media("<=phone") {padding: 30px;}
     .content {
       width: 100%;
@@ -37,6 +39,7 @@
               font-weight: normal;
               line-height: 25px;
               margin-bottom: 10px;
+              @include media("<=desktop") { font-size: 20px; }
               @include media("<=phone") {font-size: 18px;}
           }
           p{
@@ -44,7 +47,7 @@
               font-family: var(--quicksand-font);
               font-size: 18px;
               margin-bottom: 8px;
-              @include media("<=desktop") { font-size: 16px; }
+              @include media("<=desktop") { font-size: 15px; }
               @include media("<=phone") {font-size: 15px;}
           }
           .socila-links{
@@ -98,6 +101,7 @@
               &:hover{ background: #fff; }
               &:hover svg{ color: var(--primary-color-2); }
           }
+          @include media("<=desktop") { width: 40px; height: 40px; }
           @include media("<=phone") {display: flex; justify-content: flex-end;}
       }
     }

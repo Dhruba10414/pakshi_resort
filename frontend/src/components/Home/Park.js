@@ -14,7 +14,7 @@ function Park() {
           Pakshi covers around 33 acres of land with natural views. It has
           lakes, playground, garden that can heal your stress.
         </p>
-        <Link to="/">Learn more</Link>
+        <Link to="/facilities">Learn more</Link>
       </div>
     </div>
     </>

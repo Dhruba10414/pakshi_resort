@@ -5,11 +5,13 @@
 
   &__heading {
     padding: 20vh 180px 10vh 180px;
+    @include media("<=desktop") { padding: 20vh 120px 10px 120px; }
     @include media("<=phone") { padding: 10vh 30px 10px 30px; }
     h1 {
       font-family: var(--primary-font);
       color: var(--primary-color);
       font-size: 3rem;
+      @include media("<=desktop") { font-size: 2.4rem; }
       @include media("<=phone") { font-size: 22px; }
       div { overflow: hidden; }
     }
@@ -37,6 +39,7 @@
           font-size: 2rem;
           font-weight: normal;
           margin-bottom: 32px;
+          @include media("<=desktop") { font-size: 1.5rem; width: 95%; }
           @include media("<=phone") { width: 100%; font-size: 22px; }
         }
         p {
@@ -45,6 +48,7 @@
           font-size: 18px;
           margin-bottom: 20px;
           text-align: justify;
+          @include media("<=desktop") { font-size: 15px; }
           @include media("<=phone") { width: 100%; font-size: 16px; }
         }
         h3 {
