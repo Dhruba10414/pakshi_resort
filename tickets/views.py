@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from .serializers import *
 from django.db.models import F, ExpressionWrapper, FloatField
+from django.db.models.functions import TruncMonth
+from django.db.models.aggregates import Sum
 from datetime import datetime
 from django.http import HttpResponse
 import csv
@@ -108,3 +110,17 @@ class TicketsLog(GenericAPIView):
             writer.writerow(row)
 
         return response
+
+
+class TicketsAnalytics(GenericAPIView):
+    serializer_class = SellsAnalyticsSerializer
+    permission_classes = [IsAdminUser, ]
+    
+    def get(self, request, *args, **kwargs):
+        analytics = Tickets.objects.annotate(price=ExpressionWrapper(F('ticket_tariff')*F('num_tickets'),
+                        output_field=FloatField())).annotate(month=TruncMonth('issued_date')).values(
+                            'month').annotate(income=Sum('price'), sold=Sum('num_tickets'))
+        
+        analytics_serialized = self.get_serializer(analytics, many=True)
+
+        return Response(analytics_serialized.data, status=status.HTTP_200_OK)
