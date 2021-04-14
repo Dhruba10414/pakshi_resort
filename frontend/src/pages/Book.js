@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
+//urls
+import {api} from "../assets/URLS";
 
 // Components
 import BookingForm from "../components/Book/BookingForm";
@@ -39,8 +41,8 @@ function Book({clearUser}) {
     setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`});
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const ROOM_SEARCH_URL = `http://api.pakshiresort.com/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const ROOM_SEARCH_URL = `${api.available_rooms}?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
@@ -128,17 +130,14 @@ function Book({clearUser}) {
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CREATE_GUEST = `http://api.pakshiresort.com/bookings/guests/`;
-    const CREATE_BOOKING = `http://api.pakshiresort.com/bookings/add/`
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CREATE_GUEST = api.create_guest;
+    const CREATE_BOOKING = api.make_booking;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const BodyForGuest = {"name": name, "email": email, "address": address, "contact": contact};
-
-        const rooms = roomToBooked.map(room => room.id);
-        console.log(rooms);
 
         // create a guest
         axios.post(CREATE_GUEST, BodyForGuest, Config)

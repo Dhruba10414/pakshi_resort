@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { check } from "../../assets/images/SVG";
+import {api} from "../../assets/URLS";
 
 function AddFood({ cancelUpdate, clearUser, setChanged }) {
   const [name, setName] = useState("");
@@ -46,8 +47,8 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
     if (requiredValidaion()) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-      const ADD_FOOD_LINK = `http://api.pakshiresort.com/food/create/`;
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const ADD_FOOD_LINK = api.food_create;
 
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

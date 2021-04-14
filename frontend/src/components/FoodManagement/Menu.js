@@ -8,6 +8,8 @@ import { clearUser } from "../../redux/user/userAction";
 import FoodItem from "./FoodItem";
 // Svg
 import { rsvg } from "../../assets/images/SVG";
+//urls
+import {api} from "../../assets/URLS";
 
 function Menu({ clearUser, selectAfood, changed }) {
   const [availabelFood, setAvailableFood] = useState([]);
@@ -27,8 +29,8 @@ function Menu({ clearUser, selectAfood, changed }) {
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const AVAILABLE_FOOD = `http://api.pakshiresort.com/food/allfood/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const AVAILABLE_FOOD = api.food_list;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

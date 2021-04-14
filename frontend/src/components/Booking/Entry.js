@@ -3,7 +3,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 import { useHistory } from "react-router-dom";
-import { checkedIn, lock } from "../../assets/images/SVG";
+import { checkedIn } from "../../assets/images/SVG";
+//urls
+import {api} from "../../assets/URLS";
 
 function Entry({
   bookingId,
@@ -26,8 +28,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CHECK_IN_URL = `http://api.pakshiresort.com/bookings/checkin/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CHECK_IN_URL = api.check_in;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
@@ -62,8 +64,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CHECK_OUT_URL = `http://api.pakshiresort.com/bookings/checkout/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CHECK_OUT_URL = api.check_out;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

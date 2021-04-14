@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { rsvg, searchSvg } from "../assets/images/SVG";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
+import {api} from "../assets/URLS";
 
 // compoents
 import ContentBox from "../components/StaffSection/ContentBox";
@@ -76,7 +77,7 @@ function Dashboard({ clearUser }) {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://api.pakshiresort.com/api/token/refresh/", {
+      .post(api.refresh, {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -85,7 +86,7 @@ function Dashboard({ clearUser }) {
         };
         // get rooms
         axios
-          .get("http://api.pakshiresort.com/bookings/rooms/", Config)
+          .get( api.rooms, Config)
           .then((res) => {
             setRoomList(res.data);
           })

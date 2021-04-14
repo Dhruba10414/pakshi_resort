@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
 import { useHistory } from "react-router-dom";
 import {check, rsvg} from '../assets/images/SVG';
-
+//urls
+import {api} from "../assets/URLS";
 // Component & Svg
 import Entry from "../components/Booking/Entry";
 
@@ -32,8 +33,8 @@ function Booking({clearUser}) {
 
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const BOOKING_TABLE_URL = `http://api.pakshiresort.com/bookings/rooms/bookings/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const BOOKING_TABLE_URL = api.booking_table;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {

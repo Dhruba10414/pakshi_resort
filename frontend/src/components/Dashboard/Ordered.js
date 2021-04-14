@@ -9,6 +9,8 @@ import {removeFoodFromBasket, removeAllFoods} from "../../redux/foods/foodAction
 import { arrowLeftCherovon, rsvg } from "../../assets/images/SVG";
 import emptysvg from "../../assets/images/View/svg/empty.svg"
 import checksvg from "../../assets/images/View/svg/check.svg"
+//urls
+import {api} from "../../assets/URLS";
 
 function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId, room }) {
   const [total, setTotal] = useState(0);
@@ -63,15 +65,16 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
       const orderedfoodList = basket.map((food) => { return {id: food.id, quantity: food.quantity, price: food.price} });
       const Order = {"foods": orderedfoodList, "guest_id": guestId};
       
+      // setup neccessary urls
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-      const FOOD_ORDER_URL = `http://api.pakshiresort.com/food/orders/`;
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const FOOD_ORDER_URL = api.food_order;
 
       axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = { headers: { Authorization: "Bearer " + token.data.access }};
           
-          axios.post(FOOD_ORDER_URL, Order)
+          axios.post(FOOD_ORDER_URL, Order, Config)
           .then(() => {
             removeAllFoods();
             notify();

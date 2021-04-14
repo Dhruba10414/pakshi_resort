@@ -10,6 +10,8 @@ import Ordered from "./Ordered";
 // Redux
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
+//urls
+import {api} from "../../assets/URLS";
 
 function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
   const [availabelFood, setAvailableFood] = useState([]);
@@ -27,8 +29,8 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const AVAILABLE_FOOD = `http://api.pakshiresort.com/food/allfood/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const AVAILABLE_FOOD = api.food_list;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {

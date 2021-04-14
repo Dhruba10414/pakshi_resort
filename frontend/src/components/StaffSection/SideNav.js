@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
+//urls
+import {api} from "../../assets/URLS";
 
 // Assets
 import {
@@ -24,13 +26,12 @@ function SideNav({clearUser, is_staff }) {
     // clear token from local storage
     localStorage.removeItem("user");
     localStorage.removeItem("refresh_token");
-    clearUser();
     history.push("/staff/login");
 
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://api.pakshiresort.com/api/token/refresh/", {
+      .post(api.refresh, {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -40,7 +41,7 @@ function SideNav({clearUser, is_staff }) {
         const Body = { refresh: JSON.stringify(refresh_token) };
         // logout and clear refresh token and user fro local storage
         axios
-          .post("http://api.pakshiresort.com/api/logout/", Body, Config)
+          .post(api.logout, Body, Config)
           .then(() => {
             localStorage.removeItem("user");
             localStorage.removeItem("refresh_token");

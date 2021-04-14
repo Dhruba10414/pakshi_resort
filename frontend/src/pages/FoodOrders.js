@@ -15,6 +15,8 @@ import OrderItem from "../components/FoodOrders/OrderItem";
 import ContentBox from "../components/StaffSection/ContentBox";
 import { rsvg, searchSvg, check, warning } from "../assets/images/SVG";
 import search from "../assets/images/View/svg/search-3.svg";
+//urls
+import {api} from "../assets/URLS"
 
 function FoodOrders({
   clearUser,
@@ -55,8 +57,8 @@ function FoodOrders({
     if (selectedFoods.length > 0) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-      const CANCEL_ORDER_LINK = `http://api.pakshiresort.com/food/order/complete/`;
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const COMPLETE_ORDER_LINK = api.food_order_complete;
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
@@ -65,7 +67,7 @@ function FoodOrders({
           };
 
           axios
-            .post(CANCEL_ORDER_LINK, { order_id: selectedFoods })
+            .post(COMPLETE_ORDER_LINK, { order_id: selectedFoods })
             .then(() => {
               setTimeout(() => {
                 setConfirm(false);
@@ -95,17 +97,15 @@ function FoodOrders({
     if (selectedFoods.length > 0) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-      const CANCEL_ORDER_LINK = `http://api.pakshiresort.com/food/order/cancel/`;
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const CANCEL_ORDER_LINK = api.food_order_cancel;
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = { headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
-            .post(CANCEL_ORDER_LINK, { order_id: selectedFoods })
+            .post(CANCEL_ORDER_LINK, { order_id: selectedFoods }, Config)
             .then(() => {
               setTimeout(() => {
                 setCancel(false);
@@ -151,8 +151,8 @@ function FoodOrders({
     setChange(false);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const FOOD_ORDERS = `http://api.pakshiresort.com/food/orders/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const FOOD_ORDERS = api.food_orders;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

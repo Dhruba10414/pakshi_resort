@@ -5,6 +5,8 @@ import axios from "axios";
 import ContentBox from "../components/StaffSection/ContentBox";
 import Registration from "../components/Admin/Registration";
 import Staffs from "../components/Admin/Staffs";
+// urls
+import {api} from "../assets/URLS";
 
 function Admin() {
   const [staffs, setStaffs] = useState([]);
@@ -14,7 +16,7 @@ function Admin() {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://api.pakshiresort.com/api/token/refresh/", {
+      .post(api.refresh, {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -22,7 +24,7 @@ function Admin() {
           headers: { Authorization: "Bearer " + token.data.access },
         };
         // fetch users
-        axios.get("http://api.pakshiresort.com/api/users/", Config).then((res) => {
+        axios.get(api.get_all_users, Config).then((res) => {
           setStaffs(res.data);
         });
       });

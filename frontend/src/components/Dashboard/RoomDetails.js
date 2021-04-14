@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+// urls
+import {api} from "../../assets/URLS";
 // assets
 import guestSvg from "../../assets/images/StaffSection/guest.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
@@ -13,11 +15,11 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
   useEffect(() => {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
-    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
+    axios.post(api.refresh, {refresh: refresh_token,})
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
       // get rooms
-      axios.get(`http://api.pakshiresort.com/bookings/guests/?guest=${id}`, Config)
+      axios.get(`${api.guest_detail}?guest=${id}`, Config)
       .then((res) => { setGuest(res.data); console.log(res.data)})
       .catch((err) => { setError(err.message);});
     })
