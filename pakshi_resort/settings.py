@@ -93,7 +93,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'staff.User'
 REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.AllowAny'
+         'rest_framework.permissions.IsAuthenticated'
          ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
      'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -165,7 +165,7 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pakshiresortruet@gmail.com'
-EMAIL_HOST_PASSWORD = 'ruet1603'
+EMAIL_HOST = 'mail.pakshiresort.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'no-reply@pakshiresort.com'
+EMAIL_HOST_PASSWORD = 'fDNvN?62+Ioe'
