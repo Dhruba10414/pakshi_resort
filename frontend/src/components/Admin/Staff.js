@@ -7,6 +7,7 @@ function Staff({
   name,
   status,
   role,
+  is_staff,
   email,
   contact,
   gender,
@@ -52,8 +53,8 @@ function Staff({
         }}
       >
         <div className="name">{name}</div>
-        <div className={role === "A" ? "role a" : "role s"}>
-          <p>{role === "A" ? "admin" : "staff"}</p>
+        <div className={is_staff ? "role a" : "role s"}>
+          <p>{is_staff ? "admin" : "staff"}</p>
         </div>
         <div className={status ? "status active" : "status disable"}>
           {status ? smile : sad}

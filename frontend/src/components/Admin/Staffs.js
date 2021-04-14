@@ -33,6 +33,7 @@ function Staffs({ stafflist }) {
             name={staff.user_name}
             status={staff.is_active}
             role={staff.role}
+            is_staff={staff.is_active}
             email={staff.email}
             contact={staff.contact}
             gender={staff.gender}

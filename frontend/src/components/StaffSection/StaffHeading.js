@@ -1,6 +1,7 @@
 import React from "react";
 
 function StaffHeading({ heading, user_name, is_staff }) {
+  console.log(is_staff);
   return (
     <div className="staffHeading">
       <div className="staffHeading__heading">

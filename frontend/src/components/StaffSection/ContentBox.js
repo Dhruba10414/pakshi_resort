@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 
@@ -8,18 +8,22 @@ import StaffHeading from "./StaffHeading";
 
 // Main Function
 function ContentBox({ currentUser, clearUser, children, heading }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(currentUser))
+  }, []);
+
   return (
     <div className="staffArea">
       <SideNav
-        role={currentUser.role}
-        clearUser={clearUser}
-        is_staff={currentUser.is_staff}
+        is_staff={user && user.is_staff}
       />
       <div className="contentBox">
         <StaffHeading
           heading={heading}
-          user_name={currentUser.user_name}
-          is_staff={currentUser.is_staff}
+          user_name={user && user.user_name}
+          is_staff={user && user.is_admin}
         />
         <div className="container">{children}</div>
       </div>
