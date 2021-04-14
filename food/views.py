@@ -96,7 +96,7 @@ class FoodOrderingView(generics.GenericAPIView):
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
    
     def post(self,request,*args,**kwargs):
-        food_id_and_quantity_list = request.data.get('foods', None)
+        food_id_and_quantity_list = request.data.get('foods',[])
         guest_id = request.data.get('guest_id', None)
         
        
@@ -167,7 +167,7 @@ class FoodLogView(generics.GenericAPIView):
                     q.order_price,
                     q.quantity,
                     q.bill,
-                    q.taken_by.name]
+                    q.taken_by.user_name]
             writer.writerow(row)
 
         return response
