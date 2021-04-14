@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import room from "../../assets/images/resort/room1.jpg";
+import room from "../../assets/images/Room/room-1.jpg";
 import { x } from "../../assets/images/SVG";
 
 function Honeymoon() {

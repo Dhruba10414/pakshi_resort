@@ -4,7 +4,7 @@ import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
 import { arrowLeftCherovon, clock, homeSvg, check } from "../../assets/images/SVG";
 
-function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, success, loading }) {
+function BookingForm({ roomData, stayingTime, setBookCardOn, bookRoomForGuest, success, loading }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -13,13 +13,14 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
 
   // VALIDATION CHECK
   const requiredFieldCheck = () => {
-    if(name && contact && email && address){
+    if (name && contact && email && address) {
       return true;
-    } else{
+    } else {
       setError("All fields required.");
       return false;
     }
-  }
+  };
+
   // CLEAR FIELDS
   const clearFields = () => {
     setName("");
@@ -27,24 +28,25 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
     setAddress("");
     setContact("");
     setError("");
-  }
+  };
 
   // CALL BOOKING FUNTION WHICH IS DELARED IN PARENT COMPONENT
   const makeABooking = (event) => {
     event.preventDefault();
-
-    if(requiredFieldCheck()){
+    if (requiredFieldCheck()) {
       clearFields();
-      bookARoomForGuest(name, email, contact, address);
+      bookRoomForGuest(name, email, contact, address);
     }
-  }
+  };
 
   return (
     <div className="bookingForm">
       <div className="guest">
         <div className="image-container">
           <img src={leaf} className="leaf-image" alt="" />
-          <div className="image"><img src={question} alt="" /></div>
+          <div className="image">
+            <img src={question} alt="" />
+          </div>
         </div>
 
         <div className="heading">
@@ -94,16 +96,20 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
           </div>
           <small>{error}</small>
           <div className="btn-box">
-            <button className="back-btn" onClick={() => setBookCardOn(false)}>{arrowLeftCherovon} Back</button>
-            {
-              !loading
-              ? <button className="submit-btn" onClick={makeABooking}>Submit</button>
-              : <button className="disabled-btn">Processing...</button>
-            }
+            <button className="back-btn" onClick={() => setBookCardOn(false)}>
+              {arrowLeftCherovon} Back
+            </button>
+            {!loading ? (
+              <button className="submit-btn" onClick={makeABooking}>
+                Submit
+              </button>
+            ) : (
+              <button className="disabled-btn">Processing...</button>
+            )}
           </div>
         </form>
       </div>
-      
+
       <div className="room">
         <div className="design">
           <div className="design__colored">
@@ -118,7 +124,13 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
           <h3 className="r">{homeSvg} Room Information</h3>
           <div className="data">
             <div className="label">Room number :</div>
-            <div className="value room_num">{roomData.room_num}</div>
+            <div className="values">
+              {roomData.map((room) => (
+                <div className="value room_num" key={room.id}>
+                  {room.room_num}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="data">
             <div className="label">Room type :</div>
@@ -139,7 +151,7 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookARoomForGuest, 
       </div>
 
       <div className={success ? "success-message" : "success-message disabled"}>
-        <div>{ check }</div> Successfully Submitted!
+        <div>{check}</div> Successfully Submitted!
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import parkImage from "../../assets/images/resort/view-6.JPG";
 
 function Park() {
   return (
@@ -15,7 +14,7 @@ function Park() {
           Pakshi covers around 33 acres of land with natural views. It has
           lakes, playground, garden that can heal your stress.
         </p>
-        <Link to="/">Learn more</Link>
+        <Link to="/facilities">Learn more</Link>
       </div>
     </div>
     </>

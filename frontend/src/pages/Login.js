@@ -15,6 +15,7 @@ function Login() {
   const [state, setState] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -28,28 +29,38 @@ function Login() {
     }
   };
 
+  // Set to local storage (temporary)
+  const saveToLocalStorage = (user, token) => {
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('refresh_token', token);
+  }
+
   // Function Logic
   const LoginFunctionality = (event) => {
     event.preventDefault();
 
     if (validationCheck()) {
+      setLoading(true);
+      //   --> http://127.0.0.1:8000/api/users/
       axios
-        .post("http://127.0.0.1:8000/api/token/", { email, password,})
+        .post("http://api.pakshiresort.com/api/token/", { email, password,})
         .then((token) => {
           // config
           const yourConfig = { headers: { Authorization: "Bearer " + token.data.access } }
           // get user
-          axios.get("http://127.0.0.1:8000/api/user/", yourConfig)
+          axios.get("http://api.pakshiresort.com/api/user/", yourConfig)
           .then(user => {
-            localStorage.setItem('user', JSON.stringify(user.data));
-            localStorage.setItem('refresh_token', token.data.refresh);
+            setLoading(false);
+            saveToLocalStorage(JSON.stringify(user.data), token.data.refresh)
             history.go("/staff/dashboard")
           })
           .catch(() => {
+            setLoading(false);
             setError("Login failed. Try again!");
           })
         })
         .catch(() => {
+          setLoading(false);
           setError("Email and password doesn't match.");
         });
     }
@@ -128,9 +139,11 @@ function Login() {
               )}
             </div>
             <small>{error}</small>
-            <button type="button" onClick={LoginFunctionality}>
-              Login
-            </button>
+            {
+              !loading
+              ? <button type="button" onClick={LoginFunctionality}>Login</button>
+              : <button type="button" className="loading">Loading...</button>
+            }
             <Link to="/">Forgot password?</Link>
           </form>
         </div>

@@ -105,23 +105,23 @@
         margin-top: 10px;
         padding: 15px 0;
         border-radius: 5px;
+        font-size: 16px;
         font-family: var(--quicksand-font);
         font-weight: bold;
         text-align: center;
         outline: none;
         border: none;
         cursor: pointer;
-        transition: 0.4s;
+        transition: 0.3s;
         background: var(--primary-color-2);
         color: #fff;
         &:hover {
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
           color: var(--primary-color-light);
         }
       }
       button.back-btn{
         margin-right: 20px;
-        padding: 10px 20px; 
+        padding: 10px 30px 10px 20px; 
         background: #fff;
         border: 2px solid var(--primary-color);
         color: var(--primary-color);
@@ -129,6 +129,10 @@
         text-align: center;
         display: flex;
         align-items: center;
+        &:hover{
+          border: 2px solid var(--primary-color-light);
+          color: var(--primary-color-light);
+        }
       }
       button.disabled-btn{
         background-color: #ccc;
@@ -180,7 +184,8 @@
         margin-top: 15px;
         font-size: 16px;
         .label{width: 40%; font-weight: bold; font-size: var(--quicksand-font); color: gray; font-size: 14px;}
-        .value{font-family: var(--quicksand-font);}
+        .values{display: flex;}
+        .value{font-family: var(--quicksand-font); margin-right: 7px;}
         .value.room_num{ background: var(--blue); color: var(--blue-dark); padding: 5px 15px; border-radius: 10px; font-weight: bold;  }
       }
     }

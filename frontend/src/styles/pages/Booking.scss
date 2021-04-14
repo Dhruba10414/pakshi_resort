@@ -86,13 +86,9 @@
         height: 14px;
       }
     }
-    .status.completed p {
+    .status.active p {
       color: var(--green-dark);
       background: var(--green);
-    }
-    .status.canceled p {
-      color: var(--red-dark);
-      background: var(--red);
     }
     .status.pending p {
       color: var(--yellow-dark);
@@ -101,6 +97,10 @@
 
     .func {
       padding: 0;
+      p{
+        color: var(--green-dark);
+        svg{height: 16px;}
+      }
       button {
         width: 70%;
         height: 6vh;
@@ -109,8 +109,6 @@
         border: none;
         font-size: 16px;
         font-weight: bold;
-        background: var(--blue);
-        color: var(--blue-dark);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -120,9 +118,7 @@
           box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
         svg{
-          color: #fff; 
           width: 20px; height: 20px;
-          background: var(--blue-dark);
           border-radius: 50%;
           padding: 3px;
           margin-right: 4px;
@@ -132,6 +128,16 @@
         background: #cccc;
         color: gray;
         svg{background: gray; color: #ccc;}
+      }
+      button.checkin{
+        background: var(--yellow);
+        color: var(--yellow-dark);
+        svg{background: var(--yellow-dark); color: #fff; }
+      }
+      button.checkout{
+        background: var(--green);
+        color: var(--green-dark);
+        svg{background: var(--green-dark); color: #fff; }
       }
     }
   }

@@ -64,12 +64,16 @@
                         }
                     }
                     input{
-                        padding: 20px;
+                        padding: 15px;
                         background: #f7f7f7;
-                        border: 1.6px solid var(--primary-color);
+                        border: 2px solid #ccc;
                         border-radius: 5px;
                         font-size: 18px;
                         font-family: var(--secondary-font);
+                        outline: none;
+                        &:focus{
+                            border: 2px solid var(--primary-color-light);
+                        }
                         @include media("<=phone") {
                             padding: 10px;
                             font-size: 16px;
@@ -77,11 +81,12 @@
                     }
                     svg{
                         position: absolute;
-                        bottom: 15px;
-                        right: 15px;
+                        bottom: 20px;
+                        right: 20px;
                         width: 16px;
-                        height: 16px;
+                        height: 20px;
                         cursor: pointer;
+                        color: #444;
                     }
                 }
                 small{
@@ -91,20 +96,28 @@
                     display: block;
                     width: 100%;
                     margin-top: 25px;
-                    padding: 20px;
+                    padding: 18px;
                     background: var(--primary-color);
                     color: #fff;
-                    font-size: 18px;
+                    font-size: 16px;
                     font-family: var(--secondary-font);
                     border-radius: 5px;
                     border: none;
                     outline: none;
                     cursor: pointer;
+                    transition: 0.3s;
+                    &:hover{
+                        color: var(--primary-color-light);
+                    }
                     @include media("<=phone") {
                         padding: 12px 10px;
                         font-size: 16px;
                         margin-top: 20px;
                     }
+                }
+                button.loading{
+                    background: #ccc;
+                    color: gray;
                 }
                 a{
                     display: block;

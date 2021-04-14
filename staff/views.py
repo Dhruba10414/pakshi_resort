@@ -23,9 +23,7 @@ from django.http import HttpResponsePermanentRedirect
 
 
 class UserRegistrationView(CreateAPIView):
-
     serializer_class = UserRegistrationSerializer
-    authentication_classes=[JWTAuthentication]
     permission_classes = [IsAdminUser,] ##IsAdminUser
 
     def post(self, request,*args,**kwargs):
@@ -40,7 +38,6 @@ class UserRegistrationView(CreateAPIView):
 
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
-    authentication_classes=[JWTAuthentication]
     permission_classes = (IsAuthenticated,) ###IsAuthenticated
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -51,27 +48,23 @@ class LogoutAPIView(generics.GenericAPIView):
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
-    authentication_classes=[JWTAuthentication]
     permission_classes = (IsAuthenticated,) ###IsAuthenticated
     serializer_class = ChangePasswordSerializer
     
 
 
 class UserList(generics.ListCreateAPIView):
-    authentication_classes=[JWTAuthentication]
     permission_classes = [IsAdminUser,] ###IsAdminUser
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class UserDeleteView(generics.DestroyAPIView):
-    authentication_classes=[JWTAuthentication]
     permission_classes=[IsAdminUser,] ###IsAdmin
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class StaffLeaved(generics.GenericAPIView):
-    authentication_classes=[JWTAuthentication]
     permission_classes=[IsAdminUser,] ##IsAdmin
     serializer_class=UserRemoveSerializer
     
@@ -94,7 +87,6 @@ class StaffLeaved(generics.GenericAPIView):
 ####funtionality need to be added
 class RequestPasswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
-    authentication_classes=[JWTAuthentication]
     permission_classes=(AllowAny,)
 
     def post(self, request):
@@ -165,7 +157,6 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
 
 class UserView(generics.GenericAPIView):
-    authentication_classes=[JWTAuthentication]
     permission_classes=(IsAuthenticated,)
     serializer_class = UserSerializer
 

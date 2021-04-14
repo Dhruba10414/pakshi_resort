@@ -54,7 +54,8 @@
           font-size: 16px;
           font-family: var(--quicksand-font);
         }
-        .id{width: 20%;}
+        .icon{width: 5%; svg{color: var(--green-dark); transform: scale(5);}}
+        .id{width: 15%;}
         .type{width: 50%;}
         .no{ width: 30%; }
       }
@@ -138,5 +139,30 @@
         }
       }
     }
+  }
+
+  button.find{
+    width: 13vw;
+    background: var(--primary-color-2);
+    color: #fff;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-family: var(--quicksand-font);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover{
+      color: var(--primary-color-light);
+    }
+  }
+
+  small.error{
+    color: red;
+    font-size: 18px;
+    margin-left: 30px;
+    font-family: var(--quicksand-font);
   }
 }

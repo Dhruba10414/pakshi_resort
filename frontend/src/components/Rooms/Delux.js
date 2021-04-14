@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import room from "../../assets/images/resort/room1.jpg";
+import dcouple from "../../assets/images/Room/delux-couple/dc.jpg";
+import dtween from "../../assets/images/Room/delux-twin/delux-twin-1.jpg";
+import dtripple from "../../assets/images/Room/delux-twin/delux-twin-2.jpg";
 import { x } from "../../assets/images/SVG";
 
 function Delux() {
@@ -50,14 +52,14 @@ function Delux() {
           </div>
         )}
         <div className="delux__image room-desc-image">
-          <img src={room} alt="" />
+          <img src={dcouple} alt="" />
         </div>
       </div>
 
       {/* //////////////////////////////////////////////////// */}
       <div className="delux">
         <div className="delux__image room-desc-image">
-          <img src={room} alt="" />
+          <img src={dtween} alt="" />
         </div>
         {!tw ? (
           <div className="delux__heading room-desc-heading">
@@ -141,7 +143,7 @@ function Delux() {
           </div>
         )}
         <div className="delux__image room-desc-image">
-          <img src={room} alt="" />
+          <img src={dtripple} alt="" />
         </div>
       </div>
     </>

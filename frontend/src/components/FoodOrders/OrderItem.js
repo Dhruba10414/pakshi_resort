@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { checkSquare } from "../../assets/images/SVG";
 
 function OrderItem({
@@ -30,10 +30,6 @@ function OrderItem({
       }
     }
   };
-
-  useEffect(() => {
-    setSelect(false);
-  })
 
   return (
     <div

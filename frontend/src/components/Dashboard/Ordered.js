@@ -64,8 +64,8 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
       const Order = {"foods": orderedfoodList, "guest_id": guestId};
       
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-      const FOOD_ORDER_URL = `http://127.0.0.1:8000/food/orders/`;
+      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+      const FOOD_ORDER_URL = `http://api.pakshiresort.com/food/orders/`;
 
       axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {

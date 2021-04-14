@@ -132,12 +132,13 @@
             border-radius: 5px;
             cursor: pointer;
             transition: 0.4s;
-            background: var(--primary-color-light);
-            color: var(--primary-color);
+            background: var(--primary-color-2);
+            color: #fff;
             font-size: 14px;
             font-weight: bold;
+            transition: 0.3s;
             &:hover {
-              box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+              color: var(--primary-color-light);
             }
           }
         }

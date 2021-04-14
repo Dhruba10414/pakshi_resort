@@ -5,11 +5,13 @@
 
   &__heading {
     padding: 20vh 180px 10vh 180px;
+    @include media("<=desktop") { padding: 20vh 120px 10px 120px; }
     @include media("<=phone") { padding: 10vh 30px 10px 30px; }
     h1 {
       font-family: var(--primary-font);
       color: var(--primary-color);
       font-size: 3rem;
+      @include media("<=desktop")  {font-size: 2.4rem;}
       @include media("<=phone") { font-size: 22px; }
       div { overflow: hidden; }
     }
@@ -65,6 +67,7 @@
           font-size: 18px;
           line-height: 25px;
           margin-top: 15px;
+          @include media("<=desktop") { font-size: 17px; width: 95%;}
           @include media("<=phone") { width: 100%; font-size: 14px; text-align: justify; margin-top: 8px;}
         }
         img.img-tw {
@@ -73,12 +76,14 @@
           margin-top: 75px;
           @include media("<=phone") {width: 100%; margin-top: 20px; margin-left: 0;}
         }
-        img.landscape{
+        img.landscape, img.park{
             width: 65px;
             margin-left: 30%;
             margin-bottom: -35px;
+            @include media("<=desktop") { width: 55px; margin-left: 35%;}
             @include media("<=phone") {display: none;}
         }
+        img.park{@include media("<=desktop") { width: 55px; margin-left: 38%;}}
       }
       .honeymoon-image { text-align: right; @include media("<=phone") { text-align: left; }}
       .honeymoon-desc { 
@@ -87,7 +92,11 @@
           img{@include media("<=phone") { margin-bottom: 30px; }}
           @include media("<=phone") { text-align: left; }
         }
-      .honeymoon-desc{ img.honeymoon{width: 55px; margin-right: 30%; margin-bottom: -30px; @include media("<=phone") { display: none; }} }
+      .honeymoon-desc{ img.honeymoon{
+        width: 55px; margin-right: 30%; margin-bottom: -30px;
+        @include media("<=desktop") { width: 55px; margin-right: 36%;}
+        @include media("<=phone") { display: none; }}
+      }
     }
     img.img-th {
       position: absolute;
@@ -143,12 +152,14 @@
           font-size: 18px;
           line-height: 25px;
           margin-top: 15px;
+          @include media("<=desktop") { font-size: 17px; width: 90%;}
           @include media("<=phone") { font-size: 14px; text-align: justify; width: 100%; margin-top: 8px; align-items: inherit;}
         }
         img{
             width: 60px;
             margin-left: 30%;
             margin-bottom: -45px;
+            @include media("<=desktop") { width: 55px; margin-left: 35%;}
             @include media("<=phone") { display: none; }
         }
       }

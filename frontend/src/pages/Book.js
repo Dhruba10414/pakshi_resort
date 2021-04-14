@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
@@ -13,14 +13,13 @@ import ContentBox from "../components/StaffSection/ContentBox";
 function Book({clearUser}) {
   const [availableRooms, setAvailableRooms] = useState([]);
   const [availableRoomsByGroup, setAvailableRoomsByGroup] = useState([]);
-  const [roomToBooked, setRoomToBooked] = useState(null);
+  const [roomToBooked, setRoomToBooked] = useState([]);
   const [stayingTime, setStayingTime] = useState(null);
 
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [bookCardOn, setBookCardOn] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
 
   const history = useHistory();
 
@@ -40,8 +39,8 @@ function Book({clearUser}) {
     setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`});
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const ROOM_SEARCH_URL = `http://127.0.0.1:8000/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const ROOM_SEARCH_URL = `http://api.pakshiresort.com/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
@@ -50,10 +49,11 @@ function Book({clearUser}) {
       // search by list
       axios.get(ROOM_SEARCH_URL, Config)
       .then((res) => {
-        setAvailableRooms(res.data);
+        const filteredList = res.data.map(data => {return {...data, selected: false}});
+        setAvailableRooms(filteredList);
       })
       .catch((err) => {
-        setError("Something went wrong! Try again.");
+        console.log(err.message);
       });
       
       // search by group
@@ -63,12 +63,12 @@ function Book({clearUser}) {
         setLoading(false);
       })
       .catch((err) => {
-        setError("Something went wrong! Try again.");
+        console.log(err.message);
         setLoading(false);
       });
     })
     .catch((err) => {
-      setError(err.message);
+      console.log(err.message);
       localStorage.removeItem('user');
       localStorage.removeItem('refresh_token');
       clearUser();
@@ -80,8 +80,39 @@ function Book({clearUser}) {
 
   // SELECT A ROOM TO BOOK
   const selectRoomToBook = (roomData) => {
-    setRoomToBooked(roomData);
+    const newList = availableRooms.map(room => {
+      if(room.id === roomData.id){
+        return {...room, selected: true};
+      } else{
+        return room;
+      }
+    })
+    setAvailableRooms(newList);
+    setRoomToBooked([...roomToBooked, roomData]);
   };
+
+  //REMOVE ROOM FROM ROOM LISTS
+  const removeRoomToBook = (roomData) => {
+    const newList = availableRooms.map(room => {
+      if(room.id === roomData.id){
+        return {...room, selected: false};
+      } else{
+        return room;
+      }
+    })
+    const ul = roomToBooked.filter((room) => room.id !== roomData.id);
+    setAvailableRooms(newList);
+    setRoomToBooked(ul);
+  }
+
+  // CHECK WHETHER ROOM LIST IS EMPTY OR NOT?
+  const checkEmptyRoomList = () => {
+    if(roomToBooked.length > 0){
+      return true;
+    } else{
+      return false;
+    }
+  }
 
   // NOTIFY IF BOOKING SUCCESSFULLY CREATED
   const notify = () => {
@@ -93,24 +124,28 @@ function Book({clearUser}) {
   }
 
   // BOOK A ROOM FOR A GUEST
-  const bookARoomForGuest = (name, email, contact, address) => {
+  const bookRoomForGuest = (name, email, contact, address) => {
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const CREATE_GUEST = `http://127.0.0.1:8000/bookings/guests/`;
-    const CREATE_BOOKING = `http://127.0.0.1:8000/bookings/add/`
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const CREATE_GUEST = `http://api.pakshiresort.com/bookings/guests/`;
+    const CREATE_BOOKING = `http://api.pakshiresort.com/bookings/add/`
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const BodyForGuest = {"name": name, "email": email, "address": address, "contact": contact};
 
+        const rooms = roomToBooked.map(room => room.id);
+        console.log(rooms);
+
         // create a guest
         axios.post(CREATE_GUEST, BodyForGuest, Config)
         .then(res => {
+          const rooms = roomToBooked.map(room => room.id);
           const BodyForBooking = {
-            "room": roomToBooked.id,
+            "room": rooms,
             "guest": res.data.id,
             "from_": stayingTime.checkIn,
             "to_": stayingTime.checkOut
@@ -119,6 +154,7 @@ function Book({clearUser}) {
           axios.post(CREATE_BOOKING, BodyForBooking, Config)
           .then(() => {notify(); setLoading(false);})
           .catch(err => {console.log(err.message); setLoading(false);});
+          console.log(BodyForBooking);
         })
         .catch(err => {console.log(err.message); setLoading(false);})
       })
@@ -137,10 +173,6 @@ function Book({clearUser}) {
       {!bookCardOn ? (
         <div className="bookBox">
           <div className="schedule-info">
-            <div className="input-head">
-              <h2>BOOKING</h2>
-              <p>information</p>
-            </div>
             <SceduleSetup
               searchRoomUsingDate={searchRoomUsingDate}
               setSearched={setSearched}
@@ -152,7 +184,10 @@ function Book({clearUser}) {
             searched={searched}
             bookCardOn={bookCardOn}
             setBookCardOn={setBookCardOn}
+            bookedRoom={roomToBooked}
             selectRoomToBook={selectRoomToBook}
+            removeRoomToBook={removeRoomToBook}
+            checkEmptyRoomList={checkEmptyRoomList}
           />
           </div>
       ) : (
@@ -160,7 +195,7 @@ function Book({clearUser}) {
           roomData={roomToBooked}
           stayingTime={stayingTime}
           setBookCardOn={setBookCardOn}
-          bookARoomForGuest={bookARoomForGuest}
+          bookRoomForGuest={bookRoomForGuest}
           success={success}
           loading={loading}
          />

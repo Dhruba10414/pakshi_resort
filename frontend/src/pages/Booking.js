@@ -4,11 +4,10 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
 import { useHistory } from "react-router-dom";
-import {check} from '../assets/images/SVG';
+import {check, rsvg} from '../assets/images/SVG';
 
 // Component & Svg
 import Entry from "../components/Booking/Entry";
-import {rsvg} from '../assets/images/SVG';
 
 function Booking({clearUser}) {
   const [name, setName] = useState("");
@@ -33,8 +32,8 @@ function Booking({clearUser}) {
 
   useEffect(() => {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://127.0.0.1:8000/api/token/refresh/`;
-    const BOOKING_TABLE_URL = `http://127.0.0.1:8000/bookings/rooms/bookings/`;
+    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
+    const BOOKING_TABLE_URL = `http://api.pakshiresort.com/bookings/rooms/bookings/`;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
@@ -47,9 +46,7 @@ function Booking({clearUser}) {
     .catch(err => {
       console.log(err.message);
     })
-  }, []);
-
-  console.log(booking);
+  }, [success]);
 
   return (
     <ContentBox heading="Bookings">
@@ -102,8 +99,7 @@ function Booking({clearUser}) {
               check_in={entry.check_in}
               check_out={entry.check_out}
               book_on={entry.booked_on}
-              is_complete={entry.is_complete}
-              is_canceled={entry.is_canceled}
+              is_active={entry.is_active}
               notify={notify}
             />
           ))

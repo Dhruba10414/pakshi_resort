@@ -1,0 +1,87 @@
+.about {
+  width: 100%;
+  min-height: 100vh;
+  @include media("<=phone") { margin-bottom: 30px; }
+
+  &__heading {
+    padding: 20vh 180px 10vh 180px;
+    @include media("<=desktop") { padding: 20vh 120px 10px 120px; }
+    @include media("<=phone") { padding: 10vh 30px 10px 30px; }
+    h1 {
+      font-family: var(--primary-font);
+      color: var(--primary-color);
+      font-size: 3rem;
+      @include media("<=desktop") { font-size: 2.4rem; }
+      @include media("<=phone") { font-size: 22px; }
+      div { overflow: hidden; }
+    }
+  }
+
+  &__description {
+    min-height: 100vh;
+    width: 80%;
+    margin: auto;
+    position: relative;
+    @include media("<=phone") { margin-top: 30px; min-height: 90vh; }
+    
+    .desc-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .about-texts {
+        width: 49%;
+        padding: 50px 50px 0 0;
+        @include media("<=phone") { width: 100%; padding: 0;}
+        h2 {
+          width: 85%;
+          font-family: var(--quicksand-font);
+          font-size: 2rem;
+          font-weight: normal;
+          margin-bottom: 32px;
+          @include media("<=desktop") { font-size: 1.5rem; width: 95%; }
+          @include media("<=phone") { width: 100%; font-size: 22px; }
+        }
+        p {
+          width: 85%;
+          font-family: var(--quicksand-font);
+          font-size: 18px;
+          margin-bottom: 20px;
+          text-align: justify;
+          @include media("<=desktop") { font-size: 15px; }
+          @include media("<=phone") { width: 100%; font-size: 16px; }
+        }
+        h3 {
+          width: 85%;
+          margin-top: 50px;
+          font-family: WRITTEN2;
+          font-size: 3rem;
+          text-align: right;
+          line-height: 4rem;
+          font-weight: bold;
+          color: var(--primary-color-2);
+          @include media("<=phone") { width: 100%; margin-top: 10px; font-size: 1.5rem; }
+        }
+      }
+      .about-texts.history{
+          padding-top: 0;
+          align-self: center;
+      }
+      .about-images { 
+          width: 49%;
+          @include media("<=phone"){width: 100%;}
+          img { width: 100%;}
+          img.img-1{@include media("<=phone"){display: none;}}
+      }
+    }
+  }
+
+  &__drone {
+    width: 100%;
+    height: 90vh;
+    background: url('../../assets/images/View/drone-1.jpg') no-repeat center center / cover;
+    background-attachment: fixed;
+    margin-bottom: 20vh;
+    @include media("<=phone"){margin-bottom: 10vh;}
+  }
+}

@@ -4,7 +4,7 @@
     border-radius: 8px;
 
     .order-table{
-        height: 80vh;
+        height: 82vh;
         overflow-y: scroll;
         overflow-x: hidden;
         &::-webkit-scrollbar {display: none;}
@@ -126,9 +126,9 @@
         
         .status p {
           // width: 100%;
-          padding: 6px 16px;
+          padding: 5px 16px;
           border-radius: 20px;
-          font-size: 16px;
+          font-size: 14px;
           font-family: var(--quicksand-font);
           font-weight: bold;
           text-align: center;
@@ -170,7 +170,7 @@
     // ========================================================= BUTTON BOX ==============================================
     .btn-box{
         width: 100%;
-        height: calc(10vh - 10px);
+        height: calc(8vh - 10px);
         margin-top: 10px;
         display: flex;
         align-items: center;

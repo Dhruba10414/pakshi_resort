@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-import view7 from "../../assets/images/resort/view7.JPG";
-import view8 from "../../assets/images/resort/view8.JPG";
-import view9 from "../../assets/images/resort/view9.JPG";
+import food from "../../assets/images/Restaurent/food-1.jpg";
+import food2 from "../../assets/images/Restaurent/food-4.JPG";
+import restaurant from "../../assets/images/Restaurent/restaurent-8.JPG";
 
 function Eat() {
   return (
@@ -21,11 +21,11 @@ function Eat() {
 
       <div className="eat-images">
         <div className="img1">
-          <img src={view8} alt="" />
+          <img src={food} alt="" />
         </div>
         <div className="img2">
-          <img className="i-1" src={view9} alt="" />
-          <img className="i-2" src={view7} alt="" />
+          <img className="i-1" src={restaurant} alt="" />
+          <img className="i-2" src={food2} alt="" />
         </div>
       </div>
     </>

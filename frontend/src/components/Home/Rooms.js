@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import room1 from "../../assets/images/resort/room1.jpg";
-import room2 from "../../assets/images/resort/room2.jpg";
-import room3 from "../../assets/images/resort/room3.jpg";
+import room1 from "../../assets/images/Room/room-1.jpg";
+import room2 from "../../assets/images/Room/room-2.jpg";
+import room3 from "../../assets/images/Room/room-3.jpg";
 
 function Rooms() {
   return (
@@ -23,8 +23,8 @@ function Rooms() {
           <img src={room1} alt="" />
         </div>
         <div className="img2">
-          <img className="i-1" src={room3} alt="" />
-          <img className="i-2" src={room2} alt="" />
+          <img className="i-1" src={room2} alt="" />
+          <img className="i-2" src={room3} alt="" />
         </div>
       </div>
     </>
