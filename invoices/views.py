@@ -145,10 +145,11 @@ class ResortAnalytics(generics.GenericAPIView):
     serializer_class = AnalyticsSerializer
 
     def get(self, request, *args, **kwargs):
-        analytics = Bookings.objects.annotate(stayed=Datediff('check_out', 'check_in')).annotate(
-                        bill=ExpressionWrapper(F('stayed')*F('rate'), output_field=FloatField())
-                        ).annotate(month=TruncMonth('check_in')).values('month').annotate(
-                        income=Sum('bill'), bookings=Count('id'))
+        analytics = Bookings.objects.filter(is_canceled=False).annotate(stayed=Datediff(
+                        'check_out', 'check_in')).annotate(bill=ExpressionWrapper(
+                            F('stayed')*F('rate'), output_field=FloatField())).annotate(
+                                month=TruncMonth('check_in')).values('month').annotate(
+                                    income=Sum('bill'), bookings=Count('id'))
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 
