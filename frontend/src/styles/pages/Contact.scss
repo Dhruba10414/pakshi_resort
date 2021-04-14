@@ -67,6 +67,7 @@
     .image {
       width: 49%;
       @include media("<=phone") { width: 100%;}
+      span{width: 100%;}
       img{
         width: 100%;
       }

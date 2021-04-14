@@ -103,7 +103,8 @@
     }
     img.img-th {
       position: absolute;
-      top: 85vh;
+      // top: 85vh;
+      bottom: -35vh;
       width: 25vw;
       left: 15vw;
       @include media("<=phone") {

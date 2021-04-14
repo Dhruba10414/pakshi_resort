@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 // images
 import garden1 from "../../assets/images/View/garden-1.jpg";
@@ -39,7 +41,13 @@ function Facilities() {
         <div className="facilities__garden">
           <div className="first-step">
             <div className="garden-image">
-              <img className="img-on" src={garden2} alt="" />
+              {/* <img className="img-on" src={garden2} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={garden2}
+                className="img-on"
+              />
             </div>
             <div className="garden-desc">
               <img className="landscape" src={landscape} alt="" />
@@ -54,10 +62,22 @@ function Facilities() {
                 decision you have to make is whether to enjoy it all in the
                 saddle or on your own two feet.
               </p>
-              <img className="img-tw" src={garden1} alt="" />
+              {/* <img className="img-tw" src={garden1} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={garden1}
+                className="img-tw"
+              />
             </div>
           </div>
-          <img className="img-th" src={garden3} alt="" />
+          {/* <img className="img-th" src={garden3} alt="" /> */}
+          <LazyLoadImage
+            alt={""}
+            effect="blur"
+            src={garden3}
+            className="img-th"
+          />
         </div>
 
         {/* swiming pool */}
@@ -74,7 +94,8 @@ function Facilities() {
               </p>
             </div>
             <div className="pool-image">
-              <img src={pool1} alt="" />
+              {/* <img src={pool1} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur" src={pool1} />
             </div>
           </div>
         </div>
@@ -93,10 +114,22 @@ function Facilities() {
                 trace kitchen, king Size bed. You can spend your meorable time
                 with your sweetest partner in our Karni kunjo.
               </p>
-              <img className="img-tw" src={honeymoon2} alt="" />
+              {/* <img className="img-tw" src={honeymoon2} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={honeymoon2}
+                className="img-tw"
+              />
             </div>
             <div className="honeymoon-image">
-              <img className="img-on" src={honeymoon1} alt="" />
+              {/* <img className="img-on" src={honeymoon1} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={honeymoon1}
+                className="img-on"
+              />
             </div>
           </div>
         </div>
@@ -116,7 +149,8 @@ function Facilities() {
               </p>
             </div>
             <div className="pool-image">
-              <img src={indoor} alt="" />
+              {/* <img src={indoor} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur" src={indoor} />
             </div>
           </div>
         </div>
@@ -125,7 +159,13 @@ function Facilities() {
         <div className="facilities__garden">
           <div className="first-step">
             <div className="garden-image">
-              <img className="img-on" src={garden5} alt="" />
+              {/* <img className="img-on" src={garden5} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={garden5}
+                className="img-on"
+              />
             </div>
             <div className="garden-desc">
               <img className="park" src={park} alt="" />
@@ -140,10 +180,22 @@ function Facilities() {
                 decision you have to make is whether to enjoy it all in the
                 saddle or on your own two feet.
               </p>
-              <img className="img-tw" src={garden6} alt="" />
+              {/* <img className="img-tw" src={garden6} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={garden6}
+                className="img-tw"
+              />
             </div>
           </div>
-          <img className="img-th" src={garden7} alt="" />
+          {/* <img className="img-th" src={garden7} alt="" /> */}
+          <LazyLoadImage
+            alt={""}
+            effect="blur"
+            src={garden7}
+            className="img-th"
+          />
         </div>
       </div>
 

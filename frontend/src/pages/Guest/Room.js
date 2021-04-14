@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 //  Components
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
@@ -105,28 +107,35 @@ function Room() {
           <Slider {...settings} className="slider">
             {deco &&
               deluxCoupleImages.map((image, index) => (
-                <img key={index} src={image} alt="" />
+                // <img key={index} src={image} alt="" />
+                <LazyLoadImage alt={""} effect="blur" key={index} src={image} />
               ))}
             {dedo &&
               deluxDoubleImages.map((image, index) => (
-                <img key={index} src={image} alt="" />
+                // <img key={index} src={image} alt="" />
+                <LazyLoadImage alt={""} effect="blur" key={index} src={image} />
               ))}
             {detw &&
               deluxTwinImages.map((image, index) => (
-                <img key={index} src={image} alt="" />
+                // <img key={index} src={image} alt="" />
+                <LazyLoadImage alt={""} effect="blur" key={index} src={image} />
               ))}
           </Slider>
         </div>
 
         <div className="dRooms__short-descs">
           <div className="short-desc">
-            <img src={guestSVG} alt="" /> <p>2 GUEST</p>
+            {/* <img src={guestSVG} alt="" /> <p>2 GUEST</p> */}
+            <LazyLoadImage alt={""} effect="blur" src={guestSVG} />
           </div>
           <div className="short-desc">
-            <img src={areaSVG} alt="" /> <p>230 sqft</p>
+            {/* <img src={areaSVG} alt="" /> */}
+            <LazyLoadImage alt={""} effect="blur"  src={areaSVG} />
+             <p>230 sqft</p>
           </div>
           <div className="short-desc">
-            <img src={takaSVG} alt="" />{" "}
+            {/* <img src={takaSVG} alt="" />{" "} */}
+            <LazyLoadImage alt={""} effect="blur"  src={takaSVG} />
             <p>
               {deco ? "5,000" : dedo ? "5,000" : detw ? "7,000" : "10,000"}{" "}
               Tk/PER NIGHT
@@ -168,39 +177,48 @@ function Room() {
           <h2>Amenities</h2>
           <div className="amenities">
             <div className="amenitie">
-              <img src={keySVG} alt="" />
+              {/* <img src={keySVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={keySVG} />
               <p>24/7 room service</p>
             </div>
             <div className="amenitie">
-              <img src={cofeeSVG} alt="" />
+              {/* <img src={cofeeSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={cofeeSVG} />
               <p>Complementary tea/coffee</p>
             </div>
             <div className="amenitie">
-              <img src={breakfastSVG} alt="" />
+              {/* <img src={breakfastSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={breakfastSVG} />
               <p>Complementary breakfast</p>
             </div>
             <div className="amenitie">
-              <img src={poolSVG} alt="" />
+              {/* <img src={poolSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={poolSVG} />
               <p>Swimming Pool</p>
             </div>
             <div className="amenitie">
-              <img src={matSVG} alt="" />
+              {/* <img src={matSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={matSVG} />
               <p>Prayer Rug</p>
             </div>
             <div className="amenitie">
-              <img src={wifiSVG} alt="" />
+              {/* <img src={wifiSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={wifiSVG} />
               <p>Wifi</p>
             </div>
             <div className="amenitie">
-              <img src={tvSVG} alt="" />
+              {/* <img src={tvSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={tvSVG} />
               <p>Television</p>
             </div>
             <div className="amenitie">
-              <img src={sofaSVG} alt="" />
+              {/* <img src={sofaSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={sofaSVG} />
               <p>Sofa</p>
             </div>
             <div className="amenitie">
-              <img src={lockerSVG} alt="" />
+              {/* <img src={lockerSVG} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={lockerSVG} />
               <p>Personal reack</p>
             </div>
           </div>
@@ -211,7 +229,9 @@ function Room() {
           <div className="similarRooms">
             {!deco && (
               <div className="similarRooms__room">
-                <img src={dcouple1} alt="" />
+                {/* <img src={dcouple1} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur"  src={dcouple1} />
+
                 <h3>
                   <Link to="/room/delux-couple">Delux Couple bed</Link>
                 </h3>
@@ -224,7 +244,8 @@ function Room() {
 
             {!dedo && (
               <div className="similarRooms__room">
-                <img src={ddouble1} alt="" />
+                {/* <img src={ddouble1} alt="" /> */}
+                <LazyLoadImage alt={""} effect="blur"  src={ddouble1} />
                 <h3>
                   <Link to="/room/delux-double">Delux double bed</Link>
                 </h3>
@@ -237,7 +258,8 @@ function Room() {
 
             {!detw && (
               <div className="similarRooms__room">
-                <img src={dtween2} alt="" />
+                {/* <img src={dtween2} alt="" /> */}
+                <LazyLoadImage alt={""} effect="blur"  src={dtween2} />
                 <h3>
                   <Link to="/room/delux-twin">Delux twin bed</Link>
                 </h3>

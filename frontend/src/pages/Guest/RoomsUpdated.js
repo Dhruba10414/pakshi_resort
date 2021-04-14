@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+//Components
 import Navigation from "../../components/Navigation/Navigation";
 import Footer from "../../components/Footer";
-
 // Images
 import dcouple from "../../assets/images/Room/delux-couple/dc.jpg";
 import ddouble from "../../assets/images/Room/delux-double/dd2.jpg";
@@ -43,7 +45,8 @@ function RoomsUpdated() {
           {/* room - delux couple */}
           <div className="room">
             <div className="room__image">
-              <img src={dcouple} alt="" />
+              {/* <img src={dcouple} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur" src={dcouple} />
             </div>
             <div className="room__info">
               <h2>Deluxe Couple Bed</h2>
@@ -57,7 +60,8 @@ function RoomsUpdated() {
           {/* room - delux double */}
           <div className="room">
             <div className="room__image">
-              <img src={ddouble} alt="" />
+              {/* <img src={ddouble} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur" src={ddouble} />
             </div>
             <div className="room__info">
               <h2>Deluxe Double Bed</h2>
@@ -71,7 +75,8 @@ function RoomsUpdated() {
           {/* room - delux twin */}
           <div className="room">
             <div className="room__image">
-              <img src={dtween} alt="" />
+              {/* <img src={dtween} alt="" /> */}
+              <LazyLoadImage alt={""} effect="blur" src={dtween} />
             </div>
             <div className="room__info">
               <h2>Deluxe Twin Bed</h2>

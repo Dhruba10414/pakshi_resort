@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+// Images
 import restaurent from "../../assets/images/Restaurent/restaurent-4.jpg";
 import pool from "../../assets/images/Banner/resort2.jpg";
 import garden from "../../assets/images/View/garden-2.jpg";
@@ -31,8 +34,10 @@ function Features() {
     <>
       <div className="image">
         <div className="odiv"></div>
-        <img className="image-1" src={imageArray[back]} alt="" />
-        <img className="image-2" src={imageArray[front]} alt="" />
+        {/* <img className="image-1" src={imageArray[back]} alt="" /> */}
+        {/* <img className="image-2" src={imageArray[front]} alt="" /> */}
+        <LazyLoadImage alt={""} effect="blur" src={imageArray[back]} className="image-1" />
+        <LazyLoadImage alt={""} effect="blur" src={imageArray[front]} className="image-2" />
       </div>
       <div className="content">
         <p className="content-desc">We have these</p>
