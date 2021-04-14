@@ -18,7 +18,7 @@
         rgba(37, 78, 88, 0.3),
         rgba(17, 45, 50, 0.5)
       ),
-      url("../../assets/images/Logo/poster.png") no-repeat center center / cover;
+      url("../../assets/images/Logo/poster.jpg") no-repeat center center / cover;
     position: relative;
     @include media("<=phone") {
       width: 100%;
@@ -31,7 +31,7 @@
     width: 40%;
     min-height: 100vh;
     background: var(--primary-color);
-    padding: 100px 150px;
+    padding: 50px 50px 30px 50px;
     @include media("<=phone") {
       width: 100%;
       min-height: 100vh;
@@ -55,7 +55,7 @@
         width: 100%;
         font-family: var(--secondary-font);
         color: #fff;
-        font-size: 20px;
+        font-size: 17px;
         margin-bottom: 20px;
         margin-top: 20px;
         @include media("<=phone") {
@@ -65,7 +65,7 @@
       }
       a{
         display: block;
-        font-size: 20px;
+        font-size: 17px;
         position: relative;
         &:after{
           content: "";
@@ -158,6 +158,7 @@
   top: 40px;
   right: 50px;
   z-index: 30;
+  @include media("<=desktop") { top: 30px; }
 
   #pencet {
     display: flex;
@@ -168,7 +169,7 @@
 
     span {
       width: 2em;
-      height: 0.2em;
+      height: 3px;
       margin: 0.26em 0;
       display: block;
       transition: all 0.4s ease;

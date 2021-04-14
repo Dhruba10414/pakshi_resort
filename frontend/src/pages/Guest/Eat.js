@@ -24,8 +24,8 @@ function Eat() {
         {/* heading */}
         <div className="eatsDrinks__heading">
           <h1>
-            <div><span>We are popping the corks and laying the table for ultimate</span></div>
-            <div><span>fine dining experience.</span></div>
+            We are popping the corks and laying the table for ultimate fine
+            dining experience.
           </h1>
         </div>
 

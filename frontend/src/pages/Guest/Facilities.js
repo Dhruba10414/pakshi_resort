@@ -30,9 +30,9 @@ function Facilities() {
         {/* heading */}
         <div className="facilities__heading">
           <h1>
-            <div><span>Take a look inside the Pakshi resort. A charming, sniptious</span></div>
-            <div><span>place, a home from home. A great place to spend leisure</span></div>
-            <div><span>memorable time with your family and friends.</span></div>
+            Take a look inside the Pakshi resort. A charming, sniptious place, a
+            home from home. A great place to spend leisure memorable time with
+            your family and friends.
           </h1>
         </div>
         {/* garden */}
@@ -128,7 +128,7 @@ function Facilities() {
               <img className="img-on" src={garden5} alt="" />
             </div>
             <div className="garden-desc">
-              <img className="landscape" src={park} alt="" />
+              <img className="park" src={park} alt="" />
               <h3>Comfortable</h3>
               <h2>Garden Seating</h2>
               <p>

@@ -8,6 +8,9 @@
 
   &__heading {
     padding: 20vh 180px 10vh 180px;
+    @include media("<=desktop") {
+      padding: 20vh 120px 10px 120px;
+    }
     @include media("<=phone") {
       padding: 10vh 30px 10px 30px;
     }
@@ -15,12 +18,9 @@
       font-family: var(--primary-font);
       color: var(--primary-color);
       font-size: 3rem;
-      @include media("<=phone") {
-        font-size: 22px;
-      }
-      div {
-        overflow: hidden;
-      }
+      @include media("<=desktop") { font-size: 2.4rem; }
+      @include media("<=phone") { font-size: 20px; }
+      div { overflow: hidden; }
     }
   }
 
@@ -30,9 +30,8 @@
     margin: auto;
     margin-top: 100px;
     position: relative;
-    @include media("<=phone") {
-      margin-top: 30px;
-    }
+    @include media("<=desktop") { margin-top: 70px; }
+    @include media("<=phone") { margin-top: 30px; }
 
     .resturent-container {
       display: flex;
@@ -42,17 +41,11 @@
       .resturent-image {
         width: 48%;
         height: 80vh;
-        @include media("<=phone") {
-          width: 100%;
-          height: fit-content;
-        }
+        @include media("<=phone") { width: 100%; height: fit-content; }
         img {
           height: 80vh;
           width: 80%;
-          @include media("<=phone") {
-            width: 100%;
-            height: auto;
-          }
+          @include media("<=phone") { width: 100%; height: auto; }
         }
       }
 
@@ -60,27 +53,19 @@
         width: 48%;
         min-height: 60vh;
         padding-top: 50px;
-        @include media("<=phone") {
-          width: 100%;
-          padding-top: 25px;
-        }
+        @include media("<=phone") { width: 100%; padding-top: 25px; }
         h3 {
           font-family: var(--quicksand-font);
           font-size: 1.8rem;
           font-weight: normal;
           color: #444;
-          @include media("<=phone") {
-            font-size: 16px;
-          }
-        }
+          @include media("<=phone") { font-size: 16px; } }
         h2 {
           font-family: var(--primary-font);
           color: var(--primary-color);
           font-size: 3rem;
           font-weight: normal;
-          @include media("<=phone") {
-            font-size: 1.8rem;
-          }
+          @include media("<=phone") { font-size: 1.8rem; }
         }
         p {
           width: 80%;
@@ -88,6 +73,7 @@
           font-size: 18px;
           line-height: 25px;
           margin-top: 15px;
+          @include media("<=desktop") { font-size: 17px; width: 90%; }
           @include media("<=phone") {
             width: 100%;
             font-size: 14px;

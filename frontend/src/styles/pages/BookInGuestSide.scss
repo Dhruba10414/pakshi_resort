@@ -4,20 +4,16 @@
   min-height: 100vh;
   padding: 100px 200px;
   position: relative;
-  @include media("<=phone") {
-    margin-top: 8vh;
-    padding: 30px 20px;
-    overflow: hidden;
-  }
+  @include media("<=desktop")  {padding: 100px 100px;}
+  @include media("<=phone") { margin-top: 8vh; padding: 30px 20px; overflow: hidden; }
 
   .heading {
     h1 {
       font-family: var(--primary-font);
       font-size: 3rem;
       color: var(--primary-color);
-      @include media("<=phone") {
-        font-size: 22px;
-      }
+      @include media("<=desktop")  {font-size: 2.4rem;}
+      @include media("<=phone") { font-size: 22px; }
     }
   }
   h2 {
@@ -40,9 +36,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 30px;
-        @include media("<=phone") {
-          margin-bottom: 10px;
-        }
+        @include media("<=phone") { margin-bottom: 10px; }
 
         label {
           font-family: var(--quicksand-font);
@@ -59,10 +53,8 @@
           color: #444;
           outline: none;
           transition: 0.4s;
-          @include media("<=phone") {
-            padding: 10px 13px;
-            font-size: 14px;
-          }
+          @include media("<=desktop")  {padding: 13px 20px; font-size: 15px;}
+          @include media("<=phone") { padding: 10px 13px; font-size: 14px; }
           &:focus {
             border: 2px solid var(--primary-color-light);
           }
@@ -125,10 +117,8 @@
       &:not(:last-child) {
         margin-right: 15px;
       }
-      @include media("<=phone") {
-        width: 47%;
-        padding: 5px 13px;
-      }
+      @include media("<=desktop")  { padding: 6px 13px; }
+      @include media("<=phone") { width: 47%; padding: 5px 13px; }
     }
     .DateInput_input {
       @include media("<=phone") {
@@ -197,13 +187,9 @@
       color: #fff;
       cursor: pointer;
       transition: 0.3s;
-      &:hover {
-        background: var(--primary-color);
-      }
-      @include media("<=phone") {
-        padding: 10px 13px;
-        font-size: 15px;
-      }
+      &:hover { background: var(--primary-color); }
+      @include media("<=desktop")  {padding: 13px 20px; font-size: 16px;}
+      @include media("<=phone") { padding: 10px 13px; font-size: 15px; }
     }
     button.back {
       background: transparent;
@@ -357,17 +343,15 @@
     form {
       width: 59%;
       margin-top: 50px;
-      @include media("<=phone") {
-        width: 100%;
-      }
+      @include media("<=desktop")  {width: 49%;}
+      @include media("<=phone") { width: 100%; }
     }
     .instruction {
       margin-top: 50px;
       width: 39%;
       padding-left: 40px;
-      @include media("<=phone") {
-        display: none;
-      }
+      @include media("<=desktop")  {width: 49%;}
+      @include media("<=phone") { display: none; }
       h3 {
         font-family: var(--quicksand-font);
         text-transform: uppercase;
@@ -380,6 +364,7 @@
         font-size: 16px;
         margin-bottom: 15px;
         text-align: justify;
+        @include media("<=desktop") { font-size: 14.5px; }
       }
       ul {
         margin-left: 20px;
@@ -388,6 +373,7 @@
           font-size: 16px;
           margin-bottom: 15px;
           text-align: justify;
+          @include media("<=desktop") { font-size: 14.5px; }
         }
       }
     }
