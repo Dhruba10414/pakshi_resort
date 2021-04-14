@@ -8,7 +8,7 @@ import os
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # ----- ADDED BY MIZAN & BARIK. SHOULD BE REMOVED ------
-#BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'food',
     'invoices',
     'tickets',
+
 ]
 
 MIDDLEWARE = [
@@ -75,7 +76,7 @@ DATABASES = {
         'NAME': 'pakshiDB',
         'USER': 'pakshi',
         'PASSWORD': 'pu7890',
-        'HOST': 'https://api.pakshiresort.com',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
 
     }
