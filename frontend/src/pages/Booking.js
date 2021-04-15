@@ -5,7 +5,7 @@ import axios from "axios";
 import {api} from "../assets/URLS";
 // Component & Svg
 import Entry from "../components/Booking/Entry";
-import {check, rsvg} from '../assets/images/SVG';
+import {check, rsvg, searchSvg} from '../assets/images/SVG';
 import Loading from "../components/Loading";
 
 function Booking() {
@@ -38,36 +38,20 @@ function Booking() {
     .then((token) => {
       const Config = { headers: { Authorization: "Bearer " + token.data.access }};
       axios.get(BOOKING_TABLE_URL, Config)
-      .then((res) => {setBooking(res.data); setLoading(false);})
+      .then((res) => {setBooking(res.data); setLoading(false); console.log(res.data)})
       .catch(err => {setError("Something went wrong! Reload the page."); console.log(err.message); setLoading(false);})
     })
     .catch(err => {
       console.log(err.message);
     })
-  }, [success]);
+  }, []);
 
   return (
     <ContentBox heading="Bookings">
       <div className="bookingPage">
         <div className="search-field">
           <form onSubmit={searching}>
-            <div className="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-search"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </div>
+            <div className="icon">{searchSvg}</div>
             <input
               type="text"
               placeholder="Search by #name"
@@ -99,6 +83,7 @@ function Booking() {
               check_out={entry.check_out}
               book_on={entry.booked_on}
               is_active={entry.is_active}
+              is_cancel={entry.is_canceled}
               notify={notify}
             />
           ))

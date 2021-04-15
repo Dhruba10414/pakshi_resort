@@ -94,16 +94,16 @@
       color: var(--yellow-dark);
       background: var(--yellow);
     }
+    .status.canceled p{
+      color: var(--red-dark);
+      background: var(--red);
+    }
 
     .func {
       padding: 0;
-      p{
-        color: var(--green-dark);
-        svg{height: 16px;}
-      }
+      .btn-boxx{ width: 90%; padding: 0; display: flex; align-items: center; justify-content: space-between; }
       button {
-        width: 70%;
-        height: 6vh;
+        height: 5.5vh;
         border-radius: 10px;
         outline: none;
         border: none;
@@ -121,20 +121,34 @@
           width: 20px; height: 20px;
           border-radius: 50%;
           padding: 3px;
-          margin-right: 4px;
+          margin-right: 7px;
         }
       }
+
       button.disabled{
+        width: 90%;
         background: #cccc;
         color: gray;
         svg{background: gray; color: #ccc;}
       }
       button.checkin{
+        width: 48%;
+        padding: 0 15px;
         background: var(--yellow);
         color: var(--yellow-dark);
+        font-size: 12px;
         svg{background: var(--yellow-dark); color: #fff; }
       }
+      button.cancel{
+        width: 48%;
+        padding: 0 15px;
+        background: var(--red);
+        color: var(--red-dark);
+        font-size: 12px;
+        svg{background: var(--red-dark); color: #fff; }
+      }
       button.checkout{
+        width: 90%;
         background: var(--green);
         color: var(--green-dark);
         svg{background: var(--green-dark); color: #fff; }

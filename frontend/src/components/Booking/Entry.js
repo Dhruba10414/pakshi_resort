@@ -15,6 +15,7 @@ function Entry({
   check_out,
   book_on,
   is_active,
+  is_cancel,
   clearUser,
   notify,
 }) {
@@ -44,10 +45,9 @@ function Entry({
           setChecked(true);
         })
         .catch((err) => {
-          console.log(err.message);
+          console.log(err.error);
           setLoading(false);
         });
-        console.log(Body)
       })
       .catch((err) => {
         setLoading(false);
@@ -88,6 +88,7 @@ function Entry({
           });
       })
       .catch((err) => {
+        console.log(err.message);
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
@@ -95,6 +96,42 @@ function Entry({
         history.push("/staff/login");
       });
   };
+
+  //////////////////////////////////////////////////
+  // ================= (CANCEL BOOKING) =================
+  const cancelBooking = () => {
+    setLoading(true);
+
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CANCEL_URL = api.cancel_booking;
+
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+        const Body = { "booking": bookingId };
+        axios
+          .post(CANCEL_URL, Body, Config)
+          .then(() => {
+            notify();
+            setLoading(false);
+            setChecked(true);
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("refresh_token");
+        clearUser();
+        history.push("/staff/login");
+      });
+  }
 
   useEffect(() => {}, [checked]);
 
@@ -107,22 +144,30 @@ function Entry({
           checked
             ? "status active"
             : is_active
-            ? "status active"
-            : "status pending"
+              ? "status active"
+              : is_cancel
+                ? "status canceled" 
+                :"status pending"
         }
       >
-        <p>{checked ? "staying" : is_active ? "staying" : "pending"}</p>
+        <p>{checked ? "staying" : is_active ? "staying" : is_cancel ? "canceled" : "pending"}</p>
       </div>
       <div className="bookon">{book_on}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">
         {
-          checked || is_active 
-          ? ( <button className="checkout" onClick={() => checkedOutFunc(bookingId)}> {checkedIn} Check-Out</button>)
-          : !loading
-            ? (<button className="checkin" onClick={() => checkedInFunc(bookingId)}>{checkedIn} Check-in</button>)
-            : (<button className="disabled">{checkedIn} Loading.. </button>)
+          checked || is_cancel 
+          ? "/"
+          : checked || is_active 
+            ? ( <button className="checkout" onClick={checkedOutFunc}> {checkedIn} Check-Out</button>)
+            : !loading
+              ? (<div className="btn-boxx">
+                  <button className="checkin" onClick={checkedInFunc}>Check-in</button>
+                  <button className="cancel" onClick={cancelBooking}> Cancel</button>
+                </div>
+                )
+              : (<button className="disabled">{checkedIn} prcessing.. </button>)
         }
       </div>
     </div>

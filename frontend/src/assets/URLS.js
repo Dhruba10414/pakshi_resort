@@ -20,6 +20,7 @@ export const api = {
     booking_table: `${baseurl}/bookings/rooms/bookings/`,
     check_in: `${baseurl}/bookings/checkin/`,
     check_out: `${baseurl}/bookings/checkout/`,
+    cancel_booking: `${baseurl}/bookings/cancel/`,
 
     //food-related
     food_list: `${baseurl}/food/allfood/`,
