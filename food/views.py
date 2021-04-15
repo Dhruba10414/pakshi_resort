@@ -137,7 +137,7 @@ class OrderInvoiceView(generics.GenericAPIView):
 
 
 class FoodLogView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
     serializer_class=FoodOrderEmbededSerializer
 
     def get(self, request, *args, **kwargs):
