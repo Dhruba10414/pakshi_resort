@@ -163,8 +163,8 @@
     // ========================================================= EMPTY LIST ==============================================
     .empty-list{
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      img{ margin-top: 10vh; margin-bottom: 5vh; height: 20vh;}
-      div{width: fit-content; font-family: var(--quicksand-font); font-size: 2em;}
+      img{ margin-top: 10vh; margin-bottom: 5vh; height: 15vh;}
+      div{width: fit-content; font-family: var(--quicksand-font); font-size: 1.5rem;}
     }
     
     // ========================================================= BUTTON BOX ==============================================

@@ -20,7 +20,6 @@ from django.http import HttpResponse
 
 class FoodItemView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
-    permission_classes=[AllowAny]
     serializer_class = FoodItemSerilizer
 
     def get(self, request, *args, **kwargs):
@@ -79,7 +78,7 @@ class FoodOrderingView(generics.GenericAPIView):
         food_Type = request.query_params.get('food_type',None)
         date_in = request.query_params.get('date',None)
 
-        yesterday = date.today() - timedelta(days=30) #need to check 
+        yesterday = date.today() - timedelta(days=1) #need to check 
 
         if IsCancel:
             orders = FoodOrdering.objects.filter(time__gte=yesterday,isCancel=True).order_by('-time')
@@ -96,7 +95,7 @@ class FoodOrderingView(generics.GenericAPIView):
         return Response(serialzer_data.data,status=status.HTTP_200_OK)
    
     def post(self,request,*args,**kwargs):
-        food_id_and_quantity_list = request.data.get('foods', None)
+        food_id_and_quantity_list = request.data.get('foods',[])
         guest_id = request.data.get('guest_id', None)
         
        
@@ -138,7 +137,7 @@ class OrderInvoiceView(generics.GenericAPIView):
 
 
 class FoodLogView(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
     serializer_class=FoodOrderEmbededSerializer
 
     def get(self, request, *args, **kwargs):
@@ -167,7 +166,7 @@ class FoodLogView(generics.GenericAPIView):
                     q.order_price,
                     q.quantity,
                     q.bill,
-                    q.taken_by.name]
+                    q.taken_by.user_name]
             writer.writerow(row)
 
         return response

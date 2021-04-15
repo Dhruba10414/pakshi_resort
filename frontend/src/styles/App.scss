@@ -61,3 +61,19 @@ html {
   user-select: none;
   overscroll-behavior: none;
 }
+
+// GLOBAL STYLES
+.loading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img{width: 13%;}
+  h2{
+    margin-top: 20px;
+    font-family: var(--quicksand-font);
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--primary-colo-2);
+  }
+}

@@ -3,6 +3,7 @@ import AvailableRoom from "./AvailableRoom";
 // SVgs
 import search from "../../assets/images/View/svg/search.svg";
 import { rsvg } from "../../assets/images/SVG";
+import Loading from "../Loading";
 
 function RoomInfo({
   availableRooms,
@@ -11,7 +12,8 @@ function RoomInfo({
   setBookCardOn,
   selectRoomToBook,
   removeRoomToBook,
-  checkEmptyRoomList
+  checkEmptyRoomList,
+  loading
 }) {
   const [error, setError] = useState("");
 
@@ -43,7 +45,7 @@ function RoomInfo({
             <h2>Fill Checkin & Checkout date to view available rooms</h2>
           </div>
         </div>
-      ) : (
+      ) : !loading ? (
         <>
           <div className="afterSerch">
             {/* available rooms by name */}
@@ -81,7 +83,7 @@ function RoomInfo({
           </button>
           <small className="error">{error}</small>
         </>
-      )}
+      ) : <Loading height="50vh" width="100%" textSize="16px" space="6px" text="Finding available rooms" />}
     </div>
   );
 }

@@ -31,23 +31,24 @@ function Book({clearUser}) {
     setSearched(true);
     setBookCardOn(false);
 
+    // setup check-in check-out dates
     const sd = startDate.getDate();
     const sm = (startDate.getMonth() + 1).toString().padStart(2, "0");
     const sy = startDate.getFullYear();
     const ed = endDate.getDate();
     const em = (endDate.getMonth() + 1).toString().padStart(2, "0");
     const ey = endDate.getFullYear();
-
     setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`});
 
+    // specify api urls
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const ROOM_SEARCH_URL = `${api.available_rooms}?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
+    // api -call
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-      
       // search by list
       axios.get(ROOM_SEARCH_URL, Config)
       .then((res) => {
@@ -55,9 +56,9 @@ function Book({clearUser}) {
         setAvailableRooms(filteredList);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.message);
       });
-      
       // search by group
       axios.get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
       .then((res) => {
@@ -75,7 +76,6 @@ function Book({clearUser}) {
       localStorage.removeItem('refresh_token');
       clearUser();
       history.push("/staff/login");
-      setLoading(false);
       setLoading(false);
     });
   };
@@ -187,6 +187,7 @@ function Book({clearUser}) {
             selectRoomToBook={selectRoomToBook}
             removeRoomToBook={removeRoomToBook}
             checkEmptyRoomList={checkEmptyRoomList}
+            loading={loading}
           />
           </div>
       ) : (

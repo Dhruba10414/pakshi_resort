@@ -3,6 +3,7 @@ from bookings.models import Rooms, RoomType, Bookings, Guests
 from bookings.serializers import BookingSerializer
 from .models import Payments
 from django.contrib.auth import get_user_model
+from datetime import datetime
 
 class BookingWithBill(BookingSerializer):
     room_num = serializers.SerializerMethodField()
@@ -31,3 +32,13 @@ class PaymentsSerializer(serializers.ModelSerializer):
 class PaymentReceiveSerializer(PaymentsSerializer):
     guest = serializers.PrimaryKeyRelatedField(queryset=Guests.objects.all())
     received_by = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
+
+
+class AnalyticsSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+
+        return {
+            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'total_bookings': instance['bookings'],
+            'total_income': instance['income']
+        }

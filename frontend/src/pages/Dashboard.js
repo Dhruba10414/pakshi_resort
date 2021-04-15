@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { rsvg, searchSvg } from "../assets/images/SVG";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
-import {api} from "../assets/URLS";
-
+import axios from "axios";
+// api
+import { api } from "../assets/URLS";
 // compoents
 import ContentBox from "../components/StaffSection/ContentBox";
 import Room from "../components/Dashboard/Room";
 import FoodOrder from "../components/Dashboard/FoodOrder";
 import RoomDetails from "../components/Dashboard/RoomDetails";
-import axios from "axios";
 import Invoice from "../components/Dashboard/Invoice";
+import Loading from "../components/Loading";
+import { rsvg, searchSvg } from "../assets/images/SVG";
 
 function Dashboard({ clearUser }) {
   /* ----------------- V A R I A B L E S ----------------------- */
@@ -21,6 +22,7 @@ function Dashboard({ clearUser }) {
   const [room, setRoom] = useState("");
   const [desiredRoom, setDesiredRoom] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   // foor food Order
   const [openOrder, setOpenOrder] = useState(false);
   const [orderFor, setOrderFor] = useState({});
@@ -74,6 +76,7 @@ function Dashboard({ clearUser }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
@@ -86,9 +89,10 @@ function Dashboard({ clearUser }) {
         };
         // get rooms
         axios
-          .get( api.rooms, Config)
+          .get(api.rooms, Config)
           .then((res) => {
             setRoomList(res.data);
+            setLoading(false);
           })
           .catch((err) => {
             setError(err.message);
@@ -135,17 +139,26 @@ function Dashboard({ clearUser }) {
                 </div>
                 {/* table content */}
                 <div className="roomEntries">
-                  {roomList.map((room) => (
-                    <Room
-                      key={room.room_num}
-                      room_no={room.room_num}
-                      room_type={room.room_type}
-                      status={room.is_occupied}
-                      active_booking={room.active_booking}
-                      openFoodOrderModal={openFoodOrderModal}
-                      openDetailsModal={openDetailsModal}
+                  {!loading ? (
+                    roomList.map((room) => (
+                      <Room
+                        key={room.room_num}
+                        room_no={room.room_num}
+                        room_type={room.room_type}
+                        status={room.is_occupied}
+                        active_booking={room.active_booking}
+                        openFoodOrderModal={openFoodOrderModal}
+                        openDetailsModal={openDetailsModal}
+                      />
+                    ))
+                  ) : (
+                    <Loading
+                      height="80vh"
+                      width="100%"
+                      textSize="16px"
+                      space="4px"
                     />
-                  ))}
+                  )}
                 </div>
               </div>
             </div>

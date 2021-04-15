@@ -16,7 +16,8 @@ import ContentBox from "../components/StaffSection/ContentBox";
 import { rsvg, searchSvg, check, warning } from "../assets/images/SVG";
 import search from "../assets/images/View/svg/search-3.svg";
 //urls
-import {api} from "../assets/URLS"
+import { api } from "../assets/URLS";
+import Loading from "../components/Loading";
 
 function FoodOrders({
   clearUser,
@@ -33,9 +34,12 @@ function FoodOrders({
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [warnings, setWarnings] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [changed, setChange] = useState(false);
   const history = useHistory();
+
+  const [dataLoading, setDataLoading] = useState(false);
+  const [completeProcessLoading, setCompleteProcessLoading] = useState(false);
+  const [cancelProcessLoading, setCancelProcessLoading] = useState(false);
 
   const searchOperation = () => {
     // search functionality
@@ -55,7 +59,8 @@ function FoodOrders({
   // FOOD-ORDER COMPLETION
   const orderCompletion = () => {
     if (selectedFoods.length > 0) {
-      setLoading(true);
+      setCompleteProcessLoading(true);
+
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const COMPLETE_ORDER_LINK = api.food_order_complete;
@@ -75,15 +80,15 @@ function FoodOrders({
               setSelectedFoods([]);
               setChange(true);
               setConfirm(true);
-              setLoading(false);
+              setCompleteProcessLoading(false);
             })
             .catch((err) => {
               console.log(err.messafe);
-              setLoading(false);
+              setCompleteProcessLoading(false);
             });
         })
         .catch(() => {
-          setLoading(false);
+          setCompleteProcessLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");
           clearUser();
@@ -95,14 +100,16 @@ function FoodOrders({
   // FOOD-ORDER CANCELATION
   const orderCancelation = () => {
     if (selectedFoods.length > 0) {
-      setLoading(true);
+      setCancelProcessLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const CANCEL_ORDER_LINK = api.food_order_cancel;
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
 
           axios
             .post(CANCEL_ORDER_LINK, { order_id: selectedFoods }, Config)
@@ -111,17 +118,17 @@ function FoodOrders({
                 setCancel(false);
               }, 1500);
               setSelectedFoods([]);
-              setLoading(false);
               setChange(true);
               setCancel(true);
+              setCancelProcessLoading(false);
             })
             .catch((err) => {
               console.log(err.messafe);
-              setLoading(false);
+              setCancelProcessLoading(false);
             });
         })
         .catch(() => {
-          setLoading(false);
+          setCancelProcessLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");
           clearUser();
@@ -149,6 +156,7 @@ function FoodOrders({
   // FETCH FOOD ORDERS
   useEffect(() => {
     setChange(false);
+    setDataLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
@@ -164,9 +172,11 @@ function FoodOrders({
           .get(FOOD_ORDERS, Config)
           .then((res) => {
             saveOrderes(res.data);
+            setDataLoading(false);
           })
           .catch((err) => {
             console.log(err.message);
+            setDataLoading(false);
           });
       })
       .catch(() => {
@@ -174,6 +184,7 @@ function FoodOrders({
         localStorage.removeItem("refresh_token");
         clearUser();
         history.push("/staff/login");
+        setDataLoading(false);
       });
   }, [changed]);
 
@@ -200,37 +211,31 @@ function FoodOrders({
                 setFilterby("all");
               }}
             >
-              {" "}
-              All{" "}
+              All
             </div>
             <div
               className={filterby === "pe" ? "active" : ""}
               onClick={filterOrderListByPending}
             >
-              {" "}
-              Pending{" "}
+              Pending
             </div>
             <div
               className={filterby === "co" ? "active" : ""}
               onClick={filterOrderListByComplete}
             >
-              {" "}
-              Complete{" "}
+              Complete
             </div>
             <div
               className={filterby === "ca" ? "active" : ""}
               onClick={filterOrderListByCancel}
             >
-              {" "}
-              Cancel{" "}
+              Cancel
             </div>
 
             <div className={confirm ? "message success" : "message disabled"}>
-              {" "}
               <div>{check}</div> Order Completed!
             </div>
             <div className={warnings ? "message warning" : "message disabled"}>
-              {" "}
               <div>{warning}</div> Can't be selected!
             </div>
             <div className={cancel ? "message cancel" : "message disabled"}>
@@ -246,17 +251,17 @@ function FoodOrders({
             <div className="status">Status{rsvg}</div>
             <div className="quantity">Quantity{rsvg}</div>
           </div>
-          {(orders && orders.length === 0) ||
-          (filterby !== "all" &&
-            filteredOrders &&
-            filteredOrders.length === 0) ? (
-            <div className="empty-list">
-              <img src={search} alt="" />
-              <div>Food Orders are not available!</div>
-            </div>
-          ) : null}
-          {filterby !== "all"
-            ? filteredOrders &&
+          {!dataLoading ? (
+            (orders && orders.length === 0) ||
+            (filterby !== "all" &&
+              filteredOrders &&
+              filteredOrders.length === 0) ? (
+              <div className="empty-list">
+                <img src={search} alt="" />
+                <div>Not Available!</div>
+              </div>
+            ) : filterby !== "all" ? (
+              filteredOrders &&
               filteredOrders.map((order) => (
                 <OrderItem
                   key={order.id}
@@ -271,7 +276,8 @@ function FoodOrders({
                   setWarnings={setWarnings}
                 />
               ))
-            : orders &&
+            ) : (
+              orders &&
               orders.map((order) => (
                 <OrderItem
                   key={order.id}
@@ -285,10 +291,25 @@ function FoodOrders({
                   removeFoodItem={removeFoodItem}
                   setWarnings={setWarnings}
                 />
-              ))}
+              ))
+            )
+          ) : (
+            <Loading height="50vh" width="100%" textSize="16px" space="4px" />
+          )}
         </div>
+
         <div className="btn-box">
-          {!loading ? (
+          {completeProcessLoading ? (
+            <>
+              <button className="complete">Processing..</button>
+              <button className="cancel">Cancel</button>
+            </>
+          ) : cancelProcessLoading ? (
+            <>
+              <button className="complete">Complete</button>
+              <button className="cancel">Processing..</button>
+            </>
+          ) : (
             <>
               <button className="complete" onClick={orderCompletion}>
                 Complete
@@ -296,11 +317,6 @@ function FoodOrders({
               <button className="cancel" onClick={orderCancelation}>
                 Cancel
               </button>
-            </>
-          ) : (
-            <>
-              <button className="complete">Complete</button>
-              <button className="cancel">Cancel</button>
             </>
           )}
         </div>

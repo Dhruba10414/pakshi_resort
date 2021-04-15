@@ -7,46 +7,57 @@ import meal from "../../assets/images/StaffSection/meal.svg";
 // Component
 import FoodItem from "./FoodItem";
 import Ordered from "./Ordered";
+import Loading from "../Loading";
 // Redux
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 //urls
-import {api} from "../../assets/URLS";
+import { api } from "../../assets/URLS";
 
-function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
+function FoodOrder({ guestId, name, room, closeModal, clearUser }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
-  const [foodType, setFoodType] = useState("Breakfast");
+  const [foodType, setFoodType] = useState("Burger");
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   // FILTER FOOD BY TYPE
   const filterFood = (event) => {
     setFoodType(event.target.value);
-    const filteredFoodsByType = availabelFood.filter(food => food.food_type === event.target.value);
+    const filteredFoodsByType = availabelFood.filter(
+      (food) => food.food_type === event.target.value
+    );
     setFilteredFoods(filteredFoodsByType);
-  }
+  };
 
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
+    setLoading(true);
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const AVAILABLE_FOOD = api.food_list;
 
-    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
-        
-        axios.get(AVAILABLE_FOOD, Config)
-        .then(res => {
-          setAvailableFood(res.data);
-          const filteredFoodsByType = res.data.filter(food => food.food_type === "Breakfast");
-          setFilteredFoods(filteredFoodsByType);
-        })
-        .catch(err => {console.log(err.message)});
+        const Config = { headers: { Authorization: "Bearer " + token.data.access } };
+        axios
+          .get(AVAILABLE_FOOD, Config)
+          .then((res) => {
+            setAvailableFood(res.data);
+            const filteredFoodsByType = res.data.filter( (food) => food.food_type === "Burger" );
+            setFilteredFoods(filteredFoodsByType);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.log(err.message);
+          });
       })
       .catch(() => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('refresh_token');
+        setLoading(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("refresh_token");
         clearUser();
         history.push("/staff/login");
       });
@@ -57,23 +68,27 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
       {/* AVAILABLE FOODS */}
       <div className="available-foods">
         <div className="heading-container">
-          <div className="text-part"> <h3>Availabe</h3> <p>foods</p> </div>
+          <div className="text-part">
+            <h3>Availabe</h3> <p>foods</p>
+          </div>
           <div className="style-part">
-            <div className="style"> <img src={meal} alt="" /></div>
+            <div className="style">
+              <img src={meal} alt="" />
+            </div>
           </div>
 
           <form>
             <div className="input-container">
               <div className="input w-30">
                 <div className="select">
-                  <select name="role" id="role" value={foodType} onChange={filterFood}>
+                  <select name="role" id="role" value={foodType} onChange={filterFood} >
+                    <option value="Burger">Burger</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Chinese Platter">Chinese Platter</option>
                     <option value="Breakfast">Breakfast </option>
                     <option value="Lunch">Lunch</option>
                     <option value="Dinner">Dinner</option>
-                    <option value="Snacks">Snacks</option>
-                    <option value="Pizza">Pizza</option>
-                    <option value="Burger">Burger</option>
-                    <option value="Chinese Platter">Chinese Platter</option>
                   </select>
                 </div>
               </div>
@@ -87,8 +102,7 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
             <div className="price">Price{rsvg}</div>
             <div className="status"></div>
           </div>
-          {
-            filteredFoods && filteredFoods.map(food => (
+          {!loading ? filteredFoods && filteredFoods.map((food) => (
               <FoodItem
                 key={food.id}
                 id={food.id}
@@ -98,15 +112,17 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
                 available={food.available}
                 type={food.food_type}
               />
-            ))
-          }
+            )) : <Loading height="50vh" width="100%" textSize="15px" space="4px" text="Fetching Foods" />}
         </div>
       </div>
 
       {/* ORDERED FOODS */}
       <div className="foodOrdering">
         <div className="heading-content">
-          <div className="heading"> <h3>Food Order</h3> <p>for guest</p> </div>
+          <div className="heading">
+            {" "}
+            <h3>Food Order</h3> <p>for guest</p>{" "}
+          </div>
         </div>
         <Ordered
           guestId={guestId}
@@ -120,11 +136,15 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser}) {
 }
 
 const mapStateToProps = (state) => {
-  return { basket: state.food.basket, };
+  return { basket: state.food.basket };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {  clearUser: () => { dispatch(clearUser()); }};
+  return {
+    clearUser: () => {
+      dispatch(clearUser());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodOrder);

@@ -68,36 +68,20 @@
             display: flex;
             align-items: center;
             padding: 0 20px;
-            font-family: var(--secondary-font);
+            font-family: var(--quicksand-font);
             font-size: 16px;
           }
-          .no {
-            width: 15%;
-          }
-          .guest-name {
-            width: 30%;
-          }
-          .status {
-            width: 15%;
-          }
+          .no { width: 15%; }
+          .guest-name { width: 30%; }
+          .status { width: 15%; }
           .checkin,
-          .checkout {
-            width: 20%;
-          }
-          .food-order {
-            width: 20%;
-          }
+          .checkout { width: 20%; }
+          .food-order { width: 20%; }
           .status p {
-            width: 100%;
-            padding: 8px 16px;
-            border-radius: 5px;
             font-size: 16px;
-            font-family: var(--secondary-font);
+            font-family: var(--quicksand-font);
             font-weight: bold;
-            text-align: center;
-            svg {
-              height: 14px;
-            }
+            svg { height: 14px; }
           }
           .status.free p {
             color: var(--green-dark);

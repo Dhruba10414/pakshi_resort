@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
 import ContentBox from "../components/StaffSection/ContentBox";
 import axios from "axios";
-import { connect } from "react-redux";
-import { clearUser } from "../redux/user/userAction";
-import { useHistory } from "react-router-dom";
-import {check, rsvg} from '../assets/images/SVG';
 //urls
 import {api} from "../assets/URLS";
 // Component & Svg
 import Entry from "../components/Booking/Entry";
+import {check, rsvg} from '../assets/images/SVG';
+import Loading from "../components/Loading";
 
-function Booking({clearUser}) {
+function Booking() {
   const [name, setName] = useState("");
   const [booking, setBooking] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const history = useHistory();
 
   // SEARCH FUNCTIONALITY
   const searching = () => {
@@ -32,6 +29,7 @@ function Booking({clearUser}) {
   }
 
   useEffect(() => {
+    setLoading(true);
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const BOOKING_TABLE_URL = api.booking_table;
@@ -39,7 +37,6 @@ function Booking({clearUser}) {
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
       const Config = { headers: { Authorization: "Bearer " + token.data.access }};
-
       axios.get(BOOKING_TABLE_URL, Config)
       .then((res) => {setBooking(res.data); setLoading(false);})
       .catch(err => {setError("Something went wrong! Reload the page."); console.log(err.message); setLoading(false);})
@@ -91,6 +88,7 @@ function Booking({clearUser}) {
         </div>
 
         {
+          !loading ?
           booking && booking.map(entry => (
             <Entry 
               key={entry.id}
@@ -104,6 +102,7 @@ function Booking({clearUser}) {
               notify={notify}
             />
           ))
+          : <Loading height="60vh" width="100%" textSize="15px" space="6px" />
         }
         <div className={success ? "success-message" : "success-message disabled"}>
           <div>{ check }</div> Successfully Submitted!
@@ -113,9 +112,5 @@ function Booking({clearUser}) {
   );
 }
 
-// Redux actions
-const mapDispatchToProps = (dispatch) => {
-  return { clearUser: () => { dispatch(clearUser())} };
-};
 
-export default connect(null, mapDispatchToProps)(Booking);
+export default Booking;
