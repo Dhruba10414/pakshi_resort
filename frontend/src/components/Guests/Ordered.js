@@ -12,7 +12,7 @@ import checksvg from "../../assets/images/View/svg/check.svg"
 //urls
 import {api} from "../../assets/URLS";
 
-function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId, room }) {
+function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId }) {
   const [total, setTotal] = useState(0);
   const [changed, setChanged] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -139,7 +139,6 @@ function Ordered({ basket, removeFood, removeAllFoods, closeModal, name, guestId
       <div className="price-block">
         <div className="customer">
           <h3>Customer</h3>
-          <div className="data"><div className="label">Room :</div><div className="value"><p>{room}</p></div></div>
           <div className="data"><div className="label">Name :</div><div className="value">{name}</div></div>
         </div>
         <div className="price">

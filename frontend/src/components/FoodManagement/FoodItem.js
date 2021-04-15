@@ -6,7 +6,7 @@ function FoodItem({ id, type, name, desc, price, available, selectAfood }) {
         <div className="id">{id}</div>
       <div className="name">{name}</div>
       <div className="desc">{desc.length === 0 ? "........" : desc}</div>
-      <div className="price">{price}</div>
+      <div className="price">{price} ৳</div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import { clearUser } from "../../redux/user/userAction";
 //urls
 import { api } from "../../assets/URLS";
 
-function FoodOrder({ guestId, name, room, closeModal, clearUser }) {
+function FoodOrder({ guestId, name, closeModal, clearUser }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [foodType, setFoodType] = useState("Burger");
@@ -120,14 +120,12 @@ function FoodOrder({ guestId, name, room, closeModal, clearUser }) {
       <div className="foodOrdering">
         <div className="heading-content">
           <div className="heading">
-            {" "}
             <h3>Food Order</h3> <p>for guest</p>{" "}
           </div>
         </div>
         <Ordered
           guestId={guestId}
           name={name}
-          room={room}
           closeModal={closeModal}
         />
       </div>

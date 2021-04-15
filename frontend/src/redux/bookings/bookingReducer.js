@@ -18,10 +18,11 @@ const bookingReducer = (state = initialState, action) => {
         filteredBookings: action.bookings,
       };
     case RETURN_PENDING_BOOKINGS:
+      console.log(state.bookings)
       return {
         ...state,
         filteredBookings: state.bookings.filter((booking) => {
-          return booking.is_active === false;
+          return (booking.is_active === false && booking.is_canceled === false);
         }),
       };
     case RETURN_COMPLETED_BOOKINGS:

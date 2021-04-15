@@ -54,34 +54,13 @@ function SideNav({clearUser, is_staff }) {
   return (
     <div className="sideNav">
       <div className="basics">
-        <NavLink to="/staff/dashboard" exact activeClassName="active-link">
-          {" "}
-          {boxes} Dashboard
-        </NavLink>
-        <NavLink to="/staff/book" exact activeClassName="active-link">
-          {" "}
-          {calender} Book{" "}
-        </NavLink>
-        <NavLink to="/staff/booking" exact activeClassName="active-link">
-          {" "}
-          {activity} Bookings{" "}
-        </NavLink>
-        <NavLink to="/staff/guests" exact activeClassName="active-link">
-          {" "}
-          {users} Guests{" "}
-        </NavLink>
-        <NavLink to="/staff/foodorders" exact activeClassName="active-link">
-          {" "}
-          {cofeeSVG} Food Orders{" "}
-        </NavLink>
-        <NavLink to="/staff/park" exact activeClassName="active-link">
-          {" "}
-          {cloud} Park Visitors{" "}
-        </NavLink>
-        <NavLink to="/staff/admin/food" exact activeClassName="active-link">
-          {" "}
-          {pie} Food Management{" "}
-        </NavLink>
+        <NavLink to="/staff/dashboard" exact activeClassName="active-link">{boxes} Dashboard</NavLink>
+        <NavLink to="/staff/active-guests" exact activeClassName="active-link">{users} Guests</NavLink>
+        <NavLink to="/staff/book" exact activeClassName="active-link">{calender} Book</NavLink>
+        <NavLink to="/staff/booking" exact activeClassName="active-link">{activity} Bookings</NavLink>
+        <NavLink to="/staff/foodorders" exact activeClassName="active-link">{cofeeSVG} Food Orders</NavLink>
+        <NavLink to="/staff/park" exact activeClassName="active-link">{cloud} Park Visitors</NavLink>
+        <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         {is_staff ? (
           <>
             <NavLink
@@ -89,8 +68,7 @@ function SideNav({clearUser, is_staff }) {
               exact
               activeClassName="active-link"
             >
-              {" "}
-              {user} Staff Management{" "}
+              {user} Staff Management
             </NavLink>
           </>
         ) : null}

@@ -12,7 +12,7 @@
 @import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
-@import "./pages/Guests.scss";
+@import "./pages/ActiveGuests.scss";
 @import "./pages/Book.scss";
 @import "./pages/Booking.scss";
 @import "./pages/BookInGuestSide.scss";
@@ -41,9 +41,9 @@
 @import "./components/StaffsSection/StaffHeading.scss";
 @import "./components/Booking/RoomInfo.scss";
 @import "./components/Booking/BookingForm.scss";
-@import "./components//Dashboard/FoodOrder.scss";
-@import "./components//Dashboard/RoomDetails.scss";
-@import "./components//Dashboard/Invoice.scss";
+@import "./components/Guests/Invoice.scss";
+@import "./components/Dashboard/FoodOrder.scss";
+@import "./components/Dashboard/RoomDetails.scss";
 @import "./components/Footer.scss";
 
 // FOR ALL COMPONENTS

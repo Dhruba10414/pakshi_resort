@@ -8,7 +8,6 @@ import "./styles/App.scss";
 // Pages
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import Guests from "./pages/Guests";
 import FoodOrders from "./pages/FoodOrders";
 import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
@@ -27,6 +26,7 @@ import Sitemaps from "./pages/Guest/Sitemaps";
 import RoomsUpdated from "./pages/Guest/RoomsUpdated";
 import Room from "./pages/Guest/Room";
 import BookInGuestSide from "./pages/Guest/BookInGuestSide";
+import ActiveGuest from "./pages/ActiveGuest";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -60,9 +60,9 @@ function App({ setUser, isLogedIn }) {
         {/* STAFF SECTION */}
         <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
         <Route exact path="/staff/dashboard" render={() => isLogedIn ? <Dashboard /> : <Login /> } />
+        <Route exact path="/staff/active-guests" render={() => isLogedIn ? <ActiveGuest /> : <Login /> } />
         <Route exact path="/staff/book" render={() => isLogedIn ? <Book /> : <Login /> } />
         <Route exact path="/staff/booking" render={() => isLogedIn ? <Booking/> : <Login /> } />
-        <Route exact path="/staff/guests" render={() => isLogedIn ? <Guests /> : <Login /> } />
         <Route exact path="/staff/foodorders" render={() => isLogedIn ? <FoodOrders /> : <Login /> } />
         <Route exact path="/staff/park" render={() => isLogedIn ? <ParkVisitors /> : <Login /> } />
         <Route exact path="/staff/admin/staff" render={() => isLogedIn ? <Admin /> : <Login /> } />

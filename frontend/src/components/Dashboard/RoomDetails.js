@@ -8,7 +8,7 @@ import leaf from "../../assets/images/StaffSection/leafs.png";
 import card from "../../assets/images/StaffSection/card.svg";
 import { warning, x } from "../../assets/images/SVG";
 
-function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal, openInvoiceModal }) {
+function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal }) {
   const [guest , setGuest] = useState(null);
   const [error, setError] = useState("");
 
@@ -103,7 +103,6 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
               <div className="label">Payment Status</div>
               <div className="value warning">{warning} Due</div>
             </div>
-            <button onClick={openInvoiceModal}>Invoice</button>
           </div>
         </div>
         {/* Room Info */}

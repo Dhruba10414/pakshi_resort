@@ -36,31 +36,21 @@ const xSvg = (
   </svg>
 );
 
-function Room({
-  room_no,
-  room_type,
-  status,
-  active_booking,
-  openFoodOrderModal,
-  openDetailsModal,
-}) {
+function Room({ room_no, room_type, status, active_booking, openDetailsModal}) {
+  // OPEN ROOM DETAILS MODAL
+  const open = () => {
+    openDetailsModal(
+      active_booking.guest.id,
+      active_booking.guest.name,
+      active_booking.check_in,
+      active_booking.check_out,
+      room_no,
+      room_type
+    )
+  }
+
   return (
-    <div
-      className={status ? "aroom dim" : "aroom"}
-      onClick={
-        status
-          ? () =>
-              openDetailsModal(
-                active_booking.guest.id,
-                active_booking.guest.name,
-                active_booking.check_in,
-                active_booking.check_out,
-                room_no,
-                room_type
-              )
-          : null
-      }
-    >
+    <div className={status ? "aroom dim" : "aroom"} onClick={ status ? () => open() : null }>
       <div className="no">#{room_no}</div>
       <div className={status ? "status lock" : "status free"}>
         {status ? <p>{xSvg} Booked</p> : <p>{checkedSvg}Free</p>}
@@ -73,24 +63,6 @@ function Room({
       </div>
       <div className="checkout">
         {active_booking ? active_booking.check_out : "---"}
-      </div>
-
-      <div className="food-order">
-        {active_booking ? (
-          <button
-            onClick={() =>
-              openFoodOrderModal(
-                active_booking.guest.id,
-                active_booking.guest.name,
-                room_no
-              )
-            }
-          >
-            Order Food
-          </button>
-        ) : (
-          "---"
-        )}
       </div>
     </div>
   );
