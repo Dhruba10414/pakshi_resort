@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ContentBox from "../components/StaffSection/ContentBox";
 import axios from "axios";
+// redux
+import { connect } from "react-redux";
+import { saveBookings, filterByCompleted, filterByPending, } from "../redux/bookings/bookingAction";
 //urls
 import {api} from "../assets/URLS";
 // Component & Svg
@@ -8,9 +11,9 @@ import Entry from "../components/Booking/Entry";
 import {check, rsvg, searchSvg} from '../assets/images/SVG';
 import Loading from "../components/Loading";
 
-function Booking() {
+function Booking({bookings, filteredBookings, saveBookings, filterByCompleted, filterByPending}) {
   const [name, setName] = useState("");
-  const [booking, setBooking] = useState([]);
+  const [filterby, setFilterby] = useState("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -27,6 +30,17 @@ function Booking() {
     }, 2000)
     setSuccess(true);
   }
+  // FILTER BY COMPLETE
+  const filterOrderListByComplete = () => {
+    setFilterby("co");
+    filterByCompleted();
+  };
+  // FILTER PENDING ORDERS
+  const filterOrderListByPending = () => {
+    setFilterby("pe");
+    filterByPending();
+  };
+  
 
   useEffect(() => {
     setLoading(true);
@@ -38,13 +52,14 @@ function Booking() {
     .then((token) => {
       const Config = { headers: { Authorization: "Bearer " + token.data.access }};
       axios.get(BOOKING_TABLE_URL, Config)
-      .then((res) => {setBooking(res.data); setLoading(false); console.log(res.data)})
+      .then((res) => {saveBookings(res.data); setLoading(false); console.log(res.data)})
       .catch(err => {setError("Something went wrong! Reload the page."); console.log(err.message); setLoading(false);})
     })
     .catch(err => {
       console.log(err.message);
     })
   }, []);
+
 
   return (
     <ContentBox heading="Bookings">
@@ -61,6 +76,12 @@ function Booking() {
           </form>
         </div>
 
+        <div className="filter-by-type">
+          <div className={filterby === "all" ? "active" : ""} onClick={() => { setFilterby("all"); }}> All </div>
+          <div className={filterby === "pe" ? "active" : ""} onClick={filterOrderListByPending}> Pending</div>
+          <div className={filterby === "co" ? "active" : ""} onClick={filterOrderListByComplete}> Complete</div>
+        </div>
+
         <div className="table-heading">
           <div className="no">Room {rsvg}</div>
           <div className="guest-name">Guest Name{rsvg}</div>
@@ -73,7 +94,22 @@ function Booking() {
 
         {
           !loading ?
-          booking && booking.map(entry => (
+            filterby !== "all"
+            ? filteredBookings && filteredBookings.map(entry => (
+              <Entry 
+                key={entry.id}
+                bookingId={entry.id}
+                room={entry.room}
+                guest={entry.guest}
+                check_in={entry.check_in}
+                check_out={entry.check_out}
+                book_on={entry.booked_on}
+                is_active={entry.is_active}
+                is_cancel={entry.is_canceled}
+                notify={notify}
+              />
+            ))
+            : bookings && bookings.map(entry => (
             <Entry 
               key={entry.id}
               bookingId={entry.id}
@@ -97,5 +133,19 @@ function Booking() {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    bookings: state.bookings.bookings,
+    filteredBookings: state.bookings.filteredBookings,
+  };
+};
 
-export default Booking;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveBookings: (bookings) => { dispatch(saveBookings(bookings)); },
+    filterByCompleted: () => { dispatch(filterByCompleted()); },
+    filterByPending: () => { dispatch(filterByPending()); },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Booking);
