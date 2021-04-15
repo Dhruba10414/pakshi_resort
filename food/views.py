@@ -15,7 +15,8 @@ from django.db.models.aggregates import Sum
 from django.db.models.functions import Coalesce
 import csv
 from django.http import HttpResponse
-
+from datetime import datetime
+from django.utils import timezone
 
 
 class FoodItemView(generics.GenericAPIView):
@@ -112,7 +113,7 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 
                 new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price)
-                new_order.taken_by=request.user.id
+                new_order.taken_by=request.user
                 new_order.save()
                 
             return Response(data={'message :''Your order recieved Successfully'},status=status.HTTP_200_OK)
@@ -157,10 +158,11 @@ class FoodLogView(generics.GenericAPIView):
                             time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
                                 F('quantity'), output_field=FloatField()))
         
-        writer.writerow(['Guest', 'Guest Email' ,'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,
+                    datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
                     q.food.name,
                     q.food.food_type,
                     q.order_price,
