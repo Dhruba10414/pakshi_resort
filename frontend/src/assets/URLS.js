@@ -30,4 +30,8 @@ export const api = {
     food_orders: `${baseurl}/food/orders/`,
     food_order_complete: `${baseurl}/food/order/complete/`,
     food_order_cancel: `${baseurl}/food/order/cancel/`,
+
+    // payment
+    guest_invoice: `${baseurl}/invoices/resort-invoice/`,
+    food_invoice: `${baseurl}/food/invoice/`,
 }

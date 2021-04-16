@@ -1,81 +1,88 @@
-import React from "react";
-import { checked, rsvg } from "../../assets/images/SVG";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { api } from "../../assets/URLS";
+import StayingInfo from "../Invoice/StayingInfo";
+import StayingRooms from "../Invoice/StayingRooms";
+import BillAmounts from "../Invoice/BillAmounts";
+import CustomerDescription from "../Invoice/CustomerDescription";
+import OrderedFoodList from "../Invoice/OrderedFoodList";
 
-function Invoice() {
+function Invoice({ invoiceFor }) {
+  const [roomBills, setRoomBills] = useState([]);
+  const [orderedFoods, setOrderedFoods] = useState([]);
+  const [stayingInfo, setStayinhInfo] = useState({});
+
+  useEffect(() => {
+    console.log(invoiceFor);
+    const refresh_token = localStorage.getItem("refresh_token");
+
+    axios.post(api.refresh, { refresh: refresh_token }).then((token) => {
+      const Config = {
+        headers: { Authorization: "Bearer " + token.data.access },
+      };
+      // fetch room infos
+      axios
+        .get(`${api.guest_invoice}?guest=${invoiceFor.id}`, Config)
+        .then((res) => {
+          setRoomBills(res.data);
+          setStayinhInfo({
+            check_in: res.data[0].check_in,
+            check_out: res.data[0].check_out,
+            booked_on: res.data[0].booked_on,
+            booked_by: res.data[0].by_staff,
+            number_of_rooms: res.data.length,
+            stayed: res.data[0].stayed,
+          });
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+      // fetch food infos
+      axios
+        .get(`${api.food_invoice}?guest_id=${invoiceFor.id}`, Config)
+        .then((res) => {
+          setOrderedFoods(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    });
+  }, []);
+
   return (
     <div className="invoices">
       {/* ========== PAYMENT DETAILS ========== */}
       <div className="invoice">
         <div className="bill-amounts">
-          {/* bill */}
-          <div className="bill">
-            <div className="recieved">
-              <h3>TOTAL RECIEVED</h3>
-              <h2>
-                <span>৳</span>15,000
-              </h2>
-              <p>{checked} Completed</p>
-            </div>
-            <div className="details">
-              {/* room */}
-              <div className="detail room">
-                <div className="label">
-                  <div className="circle"></div>
-                  <h3>Room bill</h3>
-                </div>
-                <h3 className="tk">
-                  <span>৳</span>2,000
-                </h3>
-              </div>
-              {/* food */}
-              <div className="detail food">
-                <div className="label">
-                  <div className="circle"></div>
-                  <h3>Food bill</h3>
-                </div>
-                <h3 className="tk">
-                  <span>৳</span>2,000
-                </h3>
-              </div>
-            </div>
-          </div>
-          {/* description */}
-          <div className="description">kokoko</div>
+          <BillAmounts roomBills={roomBills} foodBills={orderedFoods} />
+          <CustomerDescription
+            name={invoiceFor.name}
+            address={invoiceFor.address}
+            phone={invoiceFor.phone}
+          />
         </div>
-
         <div className="table-block">
-          <h2>Ordered Foods</h2>
-          {/* table heading */}
-          <div className="table">
-            <div className="table-heading">
-              <div className="name">Name {rsvg}</div>
-              <div className="type">Type {rsvg}</div>
-              <div className="quantity">Quantity {rsvg}</div>
-              <div className="price">Price{rsvg}</div>
-              <div className="total">Price{rsvg}</div>
-            </div>
-            {/* -- */}
-            <div className="orderItem">
-              <div className="name">Porata</div>
-              <div className="type">Breakfast</div>
-              <div className="quantity">03</div>
-              <div className="price">15</div>
-              <div className="total">45</div>
-            </div>
-            <div className="orderItem">
-              <div className="name">Vuna Khichuri</div>
-              <div className="type">Lunch</div>
-              <div className="quantity">01</div>
-              <div className="price">150</div>
-              <div className="total">150</div>
-            </div>
-            
-          </div>
+          <OrderedFoodList orderedFoods={orderedFoods} />
         </div>
       </div>
 
       {/* ========== PAYMENT FUNC ========== */}
-      <div className="payment"></div>
+      <div className="payment">
+        <div className="rooms-info">
+          <h2>Staying Info</h2>
+          <StayingInfo
+            bookBy={stayingInfo.booked_by}
+            bookedOn={stayingInfo.booked_on}
+            checkIn={stayingInfo.check_in}
+            checkOut={stayingInfo.check_out}
+            NumberOfRooms={stayingInfo.number_of_rooms}
+            stayed={stayingInfo.stayed}
+          />
+          <h2>Staying rooms</h2>
+          <StayingRooms roomBills={roomBills} />
+          <button className="payforRooms">Pay for rooms</button>
+        </div>
+      </div>
     </div>
   );
 }

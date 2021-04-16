@@ -6,39 +6,61 @@
 
   // ==================================================== PAYMENT DETAILS ====================================================
   .invoice {
-    width: calc(65% - 10px);
+    width: calc(60% - 10px);
 
     // ----------  PAYMENT AMOUNT ------------
     .bill-amounts {
       display: flex;
       justify-content: space-between;
+      .bill {
+        width: calc(60% - 6px);
+      }
+      .description {
+        width: calc(40% - 6px);
+      }
+
       .bill,
       .description {
-        width: calc(50% - 6px);
         height: 16vh;
         background-color: #fff;
         border-radius: 8px;
       }
       .bill {
-        display: flex; justify-content: space-between;
+        display: flex;
+        justify-content: space-between;
         .recieved {
           width: 59%;
           padding: 10px 30px;
           font-family: var(--quicksand-font);
-          h3 { font-size: 14px; color: #ccc; }
-          h2 { font-size: 2.5rem; margin: 4px 0; color: #444; display: flex; align-items: flex-start;
-            span {font-size: 1.5rem;color: #ccc; margin-top: 5px; }
+          h3 {
+            font-size: 14px;
+            color: #ccc;
+          }
+          h2 {
+            font-size: 2.5rem;
+            margin: 4px 0;
+            color: #444;
+            display: flex;
+            align-items: flex-start;
+            span {
+              font-size: 1.5rem;
+              color: #ccc;
+              margin-top: 5px;
+            }
           }
           p {
             padding: 5px 10px;
             font-size: 14px;
+            font-weight: bold;
             background-color: var(--green);
             color: var(--green-dark);
             display: flex;
             align-items: center;
             border-radius: 10px;
             width: fit-content;
-            svg { height: 14px; }
+            svg {
+              height: 14px;
+            }
           }
         }
         .details {
@@ -48,48 +70,240 @@
           flex-direction: column;
           justify-content: space-between;
           .detail {
-              .label {
-                display: flex;
-                align-items: center;
-                h3{font-family: var(--quicksand-font); font-size: 12px;}
-                .circle{ width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+            .label {
+              display: flex;
+              align-items: center;
+              h3 {
+                font-family: var(--quicksand-font);
+                font-size: 12px;
               }
-              h3.tk{ font-size: 20px; font-weight: bold; color: #444; font-family: var(--quicksand-font); }
+              .circle {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 5px;
+              }
+            }
+            h3.tk {
+              font-size: 20px;
+              font-weight: bold;
+              color: #444;
+              font-family: var(--quicksand-font);
+            }
           }
-          .detail.room .label{color: var(--blue-dark);}
-          .detail.room .label .circle{background-color: var(--blue-dark);}
-          .detail.food .label{color: var(--yellow-dark);}
-          .detail.food .label .circle{background-color: var(--yellow-dark);}
+          .detail.room .label {
+            color: var(--blue-dark);
+          }
+          .detail.room .label .circle {
+            background-color: var(--blue-dark);
+          }
+          .detail.food .label {
+            color: var(--yellow-dark);
+          }
+          .detail.food .label .circle {
+            background-color: var(--yellow-dark);
+          }
+        }
+      }
+
+      .description {
+        padding: 10px 30px;
+        font-family: var(--quicksand-font);
+        h3 {
+          color: #ccc;
+          font-size: 14px;
+          text-transform: uppercase;
+        }
+        h2 {
+          font-size: 25px;
+          margin-top: 10px;
+        }
+        p {
+          font-size: 14px;
+          font-weight: bold;
+          color: #ccc;
+          span {
+            color: #666;
+          }
         }
       }
     }
 
     // ------------ FOOD ORDERS -------------
-    .table-block{
+    .table-block {
       height: calc(74vh - 30px);
       margin-top: 10px;
       padding: 25px;
       border-radius: 10px;
       background: #fff;
-      h2{
+      h2 {
         font-family: var(--quicksand-font);
         color: #444;
         font-size: 18px;
       }
 
-      .table{
+      .table {
         background: #fff;
         margin-top: 20px;
-        height: 62vh;
+        width: 100%;
+        height: 52vh;
         overflow-y: scroll;
         overflow-x: hidden;
         -ms-overflow-style: none;
         scrollbar-width: none;
-        &::-webkit-scrollbar { display: none; }
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        .table-heading,
+        .orderItem {
+          display: flex;
+          background: #fff;
+          div {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-family: var(--quicksand-font);
+            font-size: 16px;
+            border-bottom: 2px solid #f4f4f4;
+          }
+          .name {
+            width: 35%;
+          }
+          .type {
+            width: 20%;
+          }
+          .quantity {
+            width: 15%;
+          }
+          .price {
+            width: 10%;
+          }
+          .total {
+            width: 20%;
+          }
+        }
+        .table-heading {
+          position: sticky;
+          top: 0;
+          svg {
+            width: 12px;
+            transform: rotate(-45deg);
+            margin-left: 5px;
+          }
+          div {
+            height: 6vh;
+            font-weight: bold;
+            font-size: 14px;
+            color: gray;
+          }
+        }
+
+        .orderItem {
+          cursor: pointer;
+          div {
+            height: 6vh;
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .no {
+            svg {
+              height: 16px;
+              color: var(--blue-dark);
+            }
+            div {
+              width: 90%;
+              margin-left: auto;
+            }
+          }
+          &:hover {
+            background: #f4f4f4;
+          }
+        }
+      }
+
+      button.payforFood {
+        width: 40%;
+        margin-top: 10px;
+        padding: 15px 20px;
+        outline: none;
+        border: none;
+        background-color: var(--yellow-dark);
+        color: #fff;
+        font-family: var(--quicksand-font);
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // ==================================================== STAYING FUNC ====================================================
+  .payment {
+    width: 40%;
+    background-color: #fff;
+    padding: 20px 30px;
+    margin-left: 10px;
+    h2 {
+      margin: 10px 0 5px 0;
+      font-size: 18px;
+      color: #444;
+      font-family: var(--quicksand-font);
+    }
+
+    .stayingInfo {
+      margin-top: 20px;
+      margin-bottom: 40px;
+      .data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        font-family: var(--quicksand-font);
+
+        &__label {
+          width: 70%;
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          font-weight: bold;
+          color: gray;
+          svg {
+            height: 14px;
+            margin-right: 5px;
+          }
+        }
+        &__value {
+          width: 30%;
+        }
+        &__value.by p {
+          display: inline-block;
+          padding: 4px 15px;
+          font-weight: bold;
+          font-size: 14px;
+          border-radius: 10px;
+          background: var(--blue);
+          color: var(--blue-dark);
+        }
+      }
+    }
+
+    .stayingRooms {
+      margin-top: 20px;
+      margin-bottom: 32px;
+      width: 100%;
+      height: 36vh;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
       }
 
       .table-heading,
-      .orderItem {
+      .room-data {
         display: flex;
         background: #fff;
         div {
@@ -100,37 +314,59 @@
           font-size: 16px;
           border-bottom: 2px solid #f4f4f4;
         }
-        .name { width: 35%; }
-        .type { width: 20%; }
-        .quantity { width: 15%; }
-        .price { width: 10%; }
-        .total { width: 20%; }
+        .no {
+          width: 10%;
+        }
+        .type {
+          width: 60%;
+        }
+        .name {
+          width: 30%;
+        }
       }
 
       .table-heading {
         position: sticky;
         top: 0;
-        svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
-        div {height: 6vh; font-weight: bold; font-size: 14px; color: gray; }
-      }
-
-      .orderItem{
-        cursor: pointer;
-        div{height: 6vh; font-size: 14px; font-weight: 600;}
-        .no{
-            svg{height: 16px; color: var(--blue-dark);}
-            div{width: 90%; margin-left: auto; }
+        svg {
+          width: 12px;
+          transform: rotate(-45deg);
+          margin-left: 5px;
         }
-        &:hover{background: #f4f4f4;}
+        div {
+          height: 6vh;
+          font-weight: bold;
+          font-size: 14px;
+          color: gray;
+        }
       }
-      .orderItem.selected{background: #f7f7f7; color: gray;}
-    }
-  }
 
-  // ==================================================== PAYMENT FUNC ====================================================
-  .payment {
-    width: 35%;
-    background-color: #fff;
-    margin-left: 10px;
+      .room-data {
+        cursor: pointer;
+        div {
+          height: 6vh;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        &:hover {
+          background: #f4f4f4;
+        }
+      }
+    }
+
+    button.payforRooms {
+      width: 60%;
+      padding: 15px 30px;
+      border-radius: 5px;
+      background: var(--blue-dark);
+      color: #fff;
+      font-family: var(--quicksand-font);
+      font-weight: bold;
+      font-size: 15px;
+      text-transform: uppercase;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
   }
 }

@@ -15,6 +15,7 @@ function ActiveGuest() {
   const [openOrder, setOpenOrder] = useState(false);
   const [orderFor, setOrderFor] = useState({});
   const [openInvoice, setOpenInvoice] = useState(false);
+  const [invoiceFor, setInvoiceFor] = useState({});
 
   // SEARCH GUEST
   const searchGuest = () => {
@@ -25,9 +26,9 @@ function ActiveGuest() {
     setOpenOrder(true);
     setOrderFor({ id: id, name: name });
   };
-  const openInvoiceModal = (id, name) => {
+  const openInvoiceModal = (id, name, phone, address) => {
     setOpenInvoice(true);
-    setOrderFor({ id: id, name: name });
+    setInvoiceFor({ id: id, name: name, phone: phone, address: address });
   };
   // CLOSE MODAL
   const closeModal = () => {
@@ -41,14 +42,24 @@ function ActiveGuest() {
     axios
       .post(api.refresh, { refresh: refresh_token })
       .then((token) => {
-        const Config = { headers: { Authorization: "Bearer " + token.data.access } };
-        axios.get(api.guest_detail, Config).then((res) => {
-          setActiveGuests(res.data);
-          setLoading(false);
-        })
-        .catch(err => {console.log(err.messae); setLoading(false); });
+        const Config = {
+          headers: { Authorization: "Bearer " + token.data.access },
+        };
+        axios
+          .get(api.guest_detail, Config)
+          .then((res) => {
+            setActiveGuests(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err.messae);
+            setLoading(false);
+          });
       })
-      .catch(err => {console.log(err.messae); setLoading(false); });
+      .catch((err) => {
+        console.log(err.messae);
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -56,7 +67,7 @@ function ActiveGuest() {
       <div className="activeGuest">
         <div className="activeGuest-container">
           {openInvoice ? (
-            <Invoice />
+            <Invoice invoiceFor={invoiceFor} />
           ) : openOrder ? (
             <FoodOrder
               guestId={orderFor.id}
@@ -87,18 +98,26 @@ function ActiveGuest() {
                 </div>
 
                 {/* table content */}
-                {!loading
-                  ? activeGuests.map((guest) => (
+                {!loading ? (
+                  activeGuests.map((guest) => (
                     <Guest
+                      key={guest.id}
                       id={guest.id}
                       name={guest.name}
                       phone={guest.contact}
+                      address={guest.address}
                       openInvoiceModal={openInvoiceModal}
                       openFoodOrderModal={openFoodOrderModal}
                     />
                   ))
-                  : <Loading height="80vh" width="100%" textSize="16px" space="4px" />
-                }
+                ) : (
+                  <Loading
+                    height="80vh"
+                    width="100%"
+                    textSize="16px"
+                    space="4px"
+                  />
+                )}
               </div>
             </div>
           )}
