@@ -11,6 +11,7 @@
       line-height: 30px;
       margin-top: 30px;
       color: var(--primary-color);
+      @include media("<=desktop") { font-size: 2.5rem; }
     }
     p {
       font-family: WRITTEN;
@@ -23,12 +24,14 @@
   form {
     margin-top: 10px;
     width: 100%;
+    @include media("<=desktop") { margin: 0; }
     .input-container {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
+      @include media("<=desktop") {margin-bottom: 15px;}
 
       .input {
         width: 49%;
@@ -39,9 +42,11 @@
           font-size: 14px;
           color: gray;
           margin-bottom: 5px;
+          @include media("<=desktop") {font-size: 12px;}
         }
         input,
         select {
+          background: transparent;
           padding: 10px;
           border: 2px solid #ccc;
           border-radius: 5px;
@@ -51,8 +56,12 @@
           color: #444;
           outline: none;
           transition: 0.4s;
-          &:focus { border: 2px solid var(--primary-color-light);}
+          &:focus { 
+            border: 2px solid var(--primary-color-light);
+            @include media("<=desktop") {border: 1.5px solid var(--primary-color-light);}
+          }
           option { border: none; padding: 5px 10px; color: var(--primary-color); }
+          @include media("<=desktop") {font-size: 15px; font-weight: normal; border: 1.5px solid #ccc; }
         }
         select { appearance: none; outline: none; }
       }
@@ -101,6 +110,7 @@
         &:hover {
           color: var(--primary-color-light);
         }
+        @include media("<=desktop") {padding: 10px 0; font-size: 15px; }
       }
       button.disabled-btn{
         background-color: #ccc;
@@ -151,6 +161,7 @@
     margin-top: 10px;
     background-color: #fff;
     border-radius: 8px;
+    @include media("<=desktop") { width: 56%; }
 
     .available-foods {
       width: 100%;
@@ -169,6 +180,7 @@
         }
         -ms-overflow-style: none;
         scrollbar-width: none;
+        @include media("<=desktop") {height: 60vh;}
 
         .table-heading,
         .foodItem {
@@ -186,10 +198,13 @@
             font-size: 14px;
             color: #444;
           }
-          .name { width: 40%; }
-          .desc { width: 30%; }
-          .price { width: 15%; font-size: 16px; font-weight: bold;}
-          .id { width: 15%; }
+          .name { width: 50%; }
+          .desc { width: 15%; }
+          .price { 
+            width: 25%; font-size: 16px; font-weight: bold;
+            @include media("<=desktop") {font-size: 14px;}
+          }
+          .id { width: 10%; }
         }
         .table-heading {
           position: sticky;
@@ -215,14 +230,20 @@
       margin-left: 10px;
       background: #fff;
       border-radius: 8px;
+      @include media("<=desktop") { width: calc(44% - 10px); }
       form{
         margin-top: 40px;
         padding: 30px 50px;
-        input{padding: 15px;}
+        input{padding: 15px; @include media("<=desktop") {padding: 10px; font-size: 14.5;}}
         h3{
           display: block; font-family: var(--quicksand-font); color: #444; font-size: 15px; margin-bottom: 15px;
-          &:not(:first-child){ margin-top: 50px;}
+          &:not(:first-child){
+            margin-top: 50px;
+            @include media("<=desktop") {margin-top: 30px;}
+          }
+          @include media("<=desktop") {margin-bottom: 10px;}
         }
+        @include media("<=desktop") { margin-top: 20px; padding: 10px 30px; }
       }
   }
 
@@ -234,6 +255,7 @@
     background: var(--primary-color-2);
     border-radius: 8px;
     position: relative;
+    @include media("<=desktop") { width: calc(44% - 10px); }
     .heading h3{ color: #fff; }
     img{ position: absolute; }
     img.img-1{
@@ -296,6 +318,7 @@
     border-radius: 8px;
     margin-top: 10px;
     margin-left: 10px;
+    @include media("<=desktop") { width: calc(44% - 10px); }
     form{
       margin-top: 40px;
       padding: 30px 50px;
