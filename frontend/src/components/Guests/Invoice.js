@@ -6,16 +6,17 @@ import StayingRooms from "../Invoice/StayingRooms";
 import BillAmounts from "../Invoice/BillAmounts";
 import CustomerDescription from "../Invoice/CustomerDescription";
 import OrderedFoodList from "../Invoice/OrderedFoodList";
+import Loading from "../../components/Loading";
 
 function Invoice({ invoiceFor }) {
   const [roomBills, setRoomBills] = useState([]);
   const [orderedFoods, setOrderedFoods] = useState([]);
   const [stayingInfo, setStayinhInfo] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(invoiceFor);
+    setLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
-
     axios.post(api.refresh, { refresh: refresh_token }).then((token) => {
       const Config = {
         headers: { Authorization: "Bearer " + token.data.access },
@@ -42,9 +43,11 @@ function Invoice({ invoiceFor }) {
         .get(`${api.food_invoice}?guest_id=${invoiceFor.id}`, Config)
         .then((res) => {
           setOrderedFoods(res.data);
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err.message);
+          setLoading(false);
         });
     });
   }, []);
@@ -52,36 +55,48 @@ function Invoice({ invoiceFor }) {
   return (
     <div className="invoices">
       {/* ========== PAYMENT DETAILS ========== */}
-      <div className="invoice">
-        <div className="bill-amounts">
-          <BillAmounts roomBills={roomBills} foodBills={orderedFoods} />
-          <CustomerDescription
-            name={invoiceFor.name}
-            address={invoiceFor.address}
-            phone={invoiceFor.phone}
-          />
+      {!loading ? (
+        <div className="invoice">
+          <div className="bill-amounts">
+            <BillAmounts roomBills={roomBills} foodBills={orderedFoods} />
+            <CustomerDescription
+              name={invoiceFor.name}
+              address={invoiceFor.address}
+              phone={invoiceFor.phone}
+            />
+          </div>
+          <div className="table-block">
+            <OrderedFoodList
+              orderedFoods={orderedFoods}
+              roomBills={roomBills}
+              invoiceFor={invoiceFor}
+            />
+          </div>
         </div>
-        <div className="table-block">
-          <OrderedFoodList orderedFoods={orderedFoods} />
-        </div>
-      </div>
+      ) : (
+        <Loading height="80vh" width="100%" textSize="16px" space="4px" />
+      )}
 
       {/* ========== PAYMENT FUNC ========== */}
       <div className="payment">
-        <div className="rooms-info">
-          <h2>Staying Info</h2>
-          <StayingInfo
-            bookBy={stayingInfo.booked_by}
-            bookedOn={stayingInfo.booked_on}
-            checkIn={stayingInfo.check_in}
-            checkOut={stayingInfo.check_out}
-            NumberOfRooms={stayingInfo.number_of_rooms}
-            stayed={stayingInfo.stayed}
-          />
-          <h2>Staying rooms</h2>
-          <StayingRooms roomBills={roomBills} />
-          <button className="payforRooms">Pay for rooms</button>
-        </div>
+        {!loading ? (
+          <div className="rooms-info">
+            <h2>Staying Info</h2>
+            <StayingInfo
+              bookBy={stayingInfo.booked_by}
+              bookedOn={stayingInfo.booked_on}
+              checkIn={stayingInfo.check_in}
+              checkOut={stayingInfo.check_out}
+              NumberOfRooms={stayingInfo.number_of_rooms}
+              stayed={stayingInfo.stayed}
+            />
+            <h2>Staying rooms</h2>
+            <StayingRooms roomBills={roomBills} />
+            <button className="payforRooms">Pay for rooms</button>
+          </div>
+        ) : (
+          <Loading height="80vh" width="100%" textSize="16px" space="4px" />
+        )}
       </div>
     </div>
   );

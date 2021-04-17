@@ -1,7 +1,8 @@
 import React from "react";
 import { rsvg } from "../../assets/images/SVG";
+import InvoiceButton from "./pdf/InvoiceButton";
 
-function OrderedFoodList({ orderedFoods }) {
+function OrderedFoodList({ orderedFoods, roomBills, invoiceFor }) {
   return (
     <>
       <h2>Ordered Foods</h2>
@@ -16,7 +17,7 @@ function OrderedFoodList({ orderedFoods }) {
 
         {orderedFoods &&
           orderedFoods.map((food) => (
-            <div className="orderItem">
+            <div className="orderItem" key={food.id}>
               <div className="name">{food.food.name}</div>
               <div className="type">{food.food.food_type}</div>
               <div className="quantity">{food.quantity}</div>
@@ -25,7 +26,14 @@ function OrderedFoodList({ orderedFoods }) {
             </div>
           ))}
       </div>
-      <button className="payforFood">Pay for Foods</button>
+      <div className="button-box">
+        <button className="payforFood">Pay for Foods</button>
+        <InvoiceButton
+          orderedFoods={orderedFoods}
+          roomBills={roomBills}
+          invoiceFor={invoiceFor}
+        />
+      </div>
     </>
   );
 }
