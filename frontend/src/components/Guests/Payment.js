@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
-import gsap from "gsap";
+import React, { useState } from "react";
+import { check } from "../../assets/images/SVG";
 
-function Payment({ closePaymentModal, PaymentFor }) {
+function Payment({ closePaymentModal, invoiceForRestaurent, invoiceForRoom, success }) {
   const [type, setType] = useState("RB");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
 
   const makeABill = () => {
-      if(amount){
-        console.log(amount, type);
-      } else{
-          setError("Required amount fields!")
+    if (amount) {
+      if (type === "RB") {
+        invoiceForRoom(amount);
+      } else if(type === "RT"){
+        invoiceForRestaurent(amount);
       }
+    } else {
+      setError("Required amount fields!");
+    }
   };
 
   return (
@@ -53,6 +57,7 @@ function Payment({ closePaymentModal, PaymentFor }) {
             <input
               type="text"
               value={amount}
+              placeholder="0"
               onChange={(e) => setAmount(e.target.value)}
             />
           </div>
@@ -60,11 +65,19 @@ function Payment({ closePaymentModal, PaymentFor }) {
       </form>
 
       <div className="button-box">
-        <button className="cancel" onClick={closePaymentModal}>Cancel</button>
-        <button className="submit" onClick={makeABill}>Sumbmit</button>
+        <button className="cancel" onClick={closePaymentModal}>
+          Cancel
+        </button>
+        <button className="submit" onClick={makeABill}>
+          Sumbmit
+        </button>
       </div>
 
       <small>{error}</small>
+
+      <div className={success ? "success-message" : "success-message disabled"}>
+        <div>{check}</div> Successfully Updated!
+      </div>
     </div>
   );
 }

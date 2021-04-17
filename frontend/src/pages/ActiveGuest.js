@@ -67,7 +67,7 @@ function ActiveGuest() {
       <div className="activeGuest">
         <div className="activeGuest-container">
           {openInvoice ? (
-            <Invoice invoiceFor={invoiceFor} />
+            <Invoice invoiceFor={invoiceFor} setOpenInvoice={setOpenInvoice} />
           ) : openOrder ? (
             <FoodOrder
               guestId={orderFor.id}

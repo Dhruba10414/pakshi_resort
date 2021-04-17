@@ -4,27 +4,19 @@
   display: flex;
   justify-content: space-between;
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ==================================================== PAYMENT DETAILS ====================================================
   .invoice {
     width: calc(60% - 10px);
 
-    // ----------  PAYMENT AMOUNT ------------
+    // -------------- bill -------------
     .bill-amounts {
       display: flex;
       justify-content: space-between;
-      .bill {
-        width: calc(60% - 6px);
-      }
-      .description {
-        width: calc(40% - 6px);
-      }
+      .bill { width: calc(50% - 6px); }
+      .description { width: calc(40% - 6px); }
 
-      .bill,
-      .description {
-        height: 16vh;
-        background-color: #fff;
-        border-radius: 8px;
-      }
+      .bill, .description { height: 16vh; background-color: #fff; border-radius: 8px; }
       .bill {
         display: flex;
         justify-content: space-between;
@@ -32,36 +24,27 @@
           width: 59%;
           padding: 10px 30px;
           font-family: var(--quicksand-font);
-          h3 {
-            font-size: 14px;
-            color: #ccc;
-          }
+          h3 { font-size: 14px; color: #ccc; }
           h2 {
             font-size: 2.5rem;
             margin: 4px 0;
             color: #444;
             display: flex;
             align-items: flex-start;
-            span {
-              font-size: 1.5rem;
-              color: #ccc;
-              margin-top: 5px;
-            }
+            span { font-size: 1.5rem; color: #ccc; margin-top: 5px; }
           }
           p {
-            padding: 5px 10px;
+            padding: 5px 15px;
             font-size: 14px;
             font-weight: bold;
-            background-color: var(--green);
-            color: var(--green-dark);
             display: flex;
             align-items: center;
             border-radius: 10px;
             width: fit-content;
-            svg {
-              height: 14px;
-            }
+            svg { height: 14px; margin-left: -5px; }
           }
+          p.com { background-color: var(--green); color: var(--green-dark); }
+          p.due { background-color: var(--yellow); color: var(--yellow-dark); }
         }
         .details {
           width: 29%;
@@ -73,75 +56,36 @@
             .label {
               display: flex;
               align-items: center;
-              h3 {
-                font-family: var(--quicksand-font);
-                font-size: 12px;
-              }
-              .circle {
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                margin-right: 5px;
-              }
+              h3 { font-family: var(--quicksand-font); font-size: 12px; }
+              .circle { width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
             }
-            h3.tk {
-              font-size: 20px;
-              font-weight: bold;
-              color: #444;
-              font-family: var(--quicksand-font);
-            }
+            h3.tk { font-size: 20px; font-weight: bold; color: #444; font-family: var(--quicksand-font); }
           }
-          .detail.room .label {
-            color: var(--blue-dark);
-          }
-          .detail.room .label .circle {
-            background-color: var(--blue-dark);
-          }
-          .detail.food .label {
-            color: var(--yellow-dark);
-          }
-          .detail.food .label .circle {
-            background-color: var(--yellow-dark);
-          }
+          .detail.room .label { color: var(--blue-dark); }
+          .detail.room .label .circle { background-color: var(--blue-dark); }
+          .detail.food .label { color: var(--yellow-dark); }
+          .detail.food .label .circle { background-color: var(--yellow-dark); }
         }
       }
 
       .description {
         padding: 10px 30px;
         font-family: var(--quicksand-font);
-        h3 {
-          color: #ccc;
-          font-size: 14px;
-          text-transform: uppercase;
-        }
-        h2 {
-          font-size: 25px;
-          margin-top: 10px;
-        }
-        p {
-          font-size: 14px;
-          font-weight: bold;
-          color: #ccc;
-          span {
-            color: #666;
-          }
-        }
+        h3 { color: #ccc; font-size: 14px; text-transform: uppercase; }
+        h2 { font-size: 25px; margin-top: 10px; }
+        p { font-size: 14px; font-weight: bold; color: #ccc; span { color: #666; } }
       }
     }
 
-    // ------------ FOOD ORDERS -------------
+    // -------- table--------
     .table-block {
       height: calc(74vh - 30px);
       margin-top: 10px;
       padding: 25px;
       border-radius: 10px;
       background: #fff;
-      h2 {
-        font-family: var(--quicksand-font);
-        color: #444;
-        font-size: 18px;
-      }
-
+      
+      h2 { font-family: var(--quicksand-font); color: #444; font-size: 18px; }
       .table {
         background: #fff;
         margin-top: 20px;
@@ -156,135 +100,113 @@
         }
         .table-heading,
         .orderItem {
-          display: flex;
-          background: #fff;
+          display: flex; background: #fff;
           div {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            font-family: var(--quicksand-font);
-            font-size: 16px;
+            display: flex; align-items: center; padding: 0 20px;
+            font-family: var(--quicksand-font); font-size: 16px;
             border-bottom: 2px solid #f4f4f4;
           }
-          .name {
-            width: 35%;
-          }
-          .type {
-            width: 20%;
-          }
-          .quantity {
-            width: 15%;
-          }
-          .price {
-            width: 10%;
-          }
-          .total {
-            width: 20%;
-          }
+          .name { width: 35%; }
+          .type { width: 20%; }
+          .quantity { width: 15%; }
+          .price { width: 10%; }
+          .total { width: 20%; }
         }
-        .table-heading {
-          position: sticky;
-          top: 0;
-          svg {
-            width: 12px;
-            transform: rotate(-45deg);
-            margin-left: 5px;
-          }
-          div {
-            height: 6vh;
-            font-weight: bold;
-            font-size: 14px;
-            color: gray;
-          }
+        .table-heading { position: sticky; top: 0;
+          svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
+          div { height: 6vh; font-weight: bold; font-size: 14px; color: gray; }
         }
 
         .orderItem {
           cursor: pointer;
-          div {
-            height: 6vh;
-            font-size: 14px;
-            font-weight: 600;
-          }
-          .no {
-            svg {
-              height: 16px;
-              color: var(--blue-dark);
-            }
-            div {
-              width: 90%;
-              margin-left: auto;
-            }
-          }
-          &:hover {
-            background: #f4f4f4;
-          }
+          div { height: 6vh; font-size: 14px; font-weight: 600; }
+          .no { svg { height: 16px; color: var(--blue-dark); } div { width: 90%; margin-left: auto; } }
+          &:hover { background: #f4f4f4; }
         }
       }
 
-      button.payforFood {
-        width: 40%;
-        margin-top: 10px;
-        padding: 15px 20px;
-        outline: none;
-        border: none;
-        background-color: var(--yellow-dark);
-        color: #fff;
-        font-family: var(--quicksand-font);
-        font-size: 16px;
+      // --------- bottom part ----------
+      .button-box {
+        display: flex;
+        align-items: center;
+        button {
+          width: 20%;
+          margin-right: 10px;
+          padding: 15px 20px;
+          outline: none;
+          border: none;
+          font-family: var(--quicksand-font);
+          font-size: 15px;
+          font-weight: bold;
+          text-transform: uppercase;
+          border-radius: 5px;
+          cursor: pointer;
+          color: gray;
+          transition: 0.4s;
+          &:hover{ color: #000;}
+        }
+        button.saveInvoice{
+          width: fit-content;
+          background: var(--yellow-dark);
+          color: #fff;
+          padding: 15px 50px;
+        }
+      }
+      .success-message{
+        position: absolute;
+        bottom: 7vh;
+        right: 35vw;
+        background-color: var(--yellow);
+        color: var(--yellow-dark);
         font-weight: bold;
-        text-transform: uppercase;
-        border-radius: 5px;
-        cursor: pointer;
+        font-family: var(--quicksand-font);
+        padding: 10px 20px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        div{
+          width: 30px; height: 30px;
+          border-radius: 50%; border: 2px solid var(--yellow-dark);
+          margin-right: 10px; display: flex; align-items: center;
+          justify-content: center;
+        }
+        opacity: 1;
+        margin-left: 0;
+        transition: 0.5s;
+      }
+      .success-message.disabled{
+        margin-right: -30px;
+        opacity: 0;
       }
     }
   }
 
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ==================================================== STAYING FUNC ====================================================
   .payment {
     width: 40%;
     background-color: #fff;
     padding: 20px 30px;
     margin-left: 10px;
-    h2 {
-      margin: 10px 0 5px 0;
-      font-size: 18px;
-      color: #444;
-      font-family: var(--quicksand-font);
-    }
+    h2 { margin: 10px 0 5px 0; font-size: 18px; color: #444; font-family: var(--quicksand-font); }
 
     .stayingInfo {
       margin-top: 20px;
       margin-bottom: 40px;
       .data {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-        font-family: var(--quicksand-font);
+        display: flex; justify-content: space-between; align-items: center;
+        margin-top: 10px; font-family: var(--quicksand-font);
 
         &__label {
-          width: 70%;
-          display: flex;
-          align-items: center;
-          font-size: 13px;
-          font-weight: bold;
-          color: gray;
-          svg {
-            height: 14px;
-            margin-right: 5px;
-          }
+          width: 70%; display: flex; align-items: center; font-size: 13px;
+          font-weight: bold; color: gray; svg { height: 14px; margin-right: 5px; }
         }
-        &__value {
-          width: 30%;
-        }
+        &__value { width: 30%; }
         &__value.by p {
-          display: inline-block;
-          padding: 4px 15px;
-          font-weight: bold;
-          font-size: 14px;
-          border-radius: 10px;
-          background: var(--blue);
-          color: var(--blue-dark);
+          display: inline-block; padding: 4px 15px; font-weight: bold; font-size: 14px;
+          border-radius: 10px; background: var(--blue); color: var(--blue-dark);
         }
       }
     }
@@ -304,53 +226,26 @@
 
       .table-heading,
       .room-data {
-        display: flex;
-        background: #fff;
+        display: flex; background: #fff;
         div {
-          display: flex;
-          align-items: center;
-          padding: 0 20px;
-          font-family: var(--quicksand-font);
-          font-size: 16px;
-          border-bottom: 2px solid #f4f4f4;
+          display: flex; align-items: center;
+          padding: 0 20px; font-family: var(--quicksand-font);
+          font-size: 16px; border-bottom: 2px solid #f4f4f4;
         }
-        .no {
-          width: 10%;
-        }
-        .type {
-          width: 60%;
-        }
-        .name {
-          width: 30%;
-        }
+        .no { width: 10%; }
+        .type {width: 60%;}
+        .name {width: 30%;}
       }
 
       .table-heading {
-        position: sticky;
-        top: 0;
-        svg {
-          width: 12px;
-          transform: rotate(-45deg);
-          margin-left: 5px;
-        }
-        div {
-          height: 6vh;
-          font-weight: bold;
-          font-size: 14px;
-          color: gray;
-        }
+        position: sticky; top: 0;
+        svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
+        div { height: 6vh; font-weight: bold; font-size: 14px; color: gray; }
       }
 
-      .room-data {
-        cursor: pointer;
-        div {
-          height: 6vh;
-          font-size: 14px;
-          font-weight: 600;
-        }
-        &:hover {
-          background: #f4f4f4;
-        }
+      .room-data { cursor: pointer;
+        div { height: 6vh; font-size: 14px; font-weight: 600; }
+        &:hover { background: #f4f4f4; }
       }
     }
 

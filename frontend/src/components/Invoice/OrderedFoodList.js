@@ -1,8 +1,23 @@
-import React from "react";
-import { rsvg } from "../../assets/images/SVG";
+import React, { useState } from "react";
+import { rsvg, warning } from "../../assets/images/SVG";
 import InvoiceButton from "./pdf/InvoiceButton";
 
-function OrderedFoodList({ orderedFoods, roomBills, invoiceFor }) {
+function OrderedFoodList({
+  orderedFoods,
+  roomBills,
+  invoiceFor,
+  setOpenInvoice,
+  fbill,
+  rbill,
+}) {
+  const [warning, setWarning] = useState(false);
+  const showWarning = () => {
+    setTimeout(() => {
+      setWarning(false);
+    }, 2000);
+    setWarning(true);
+  };
+  
   return (
     <>
       <h2>Ordered Foods</h2>
@@ -27,11 +42,18 @@ function OrderedFoodList({ orderedFoods, roomBills, invoiceFor }) {
           ))}
       </div>
       <div className="button-box">
-        <InvoiceButton
-          orderedFoods={orderedFoods}
-          roomBills={roomBills}
-          invoiceFor={invoiceFor}
-        />
+        <button onClick={() => setOpenInvoice(false)}>Cancel</button>
+        {fbill.total + rbill.due === 0 ? (
+          <InvoiceButton
+            orderedFoods={orderedFoods}
+            roomBills={roomBills}
+            invoiceFor={invoiceFor}
+          />
+        ) : <button className="saveInvoice" onClick={showWarning}>Save Invoice</button>}
+      </div>
+
+      <div className={warning ? "success-message" : "success-message disabled"}>
+        <div>{warning}</div> Payment is not completed yet!
       </div>
     </>
   );

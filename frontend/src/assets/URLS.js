@@ -35,4 +35,6 @@ export const api = {
     guest_invoice: `${baseurl}/invoices/resort-invoice/`,
     food_invoice: `${baseurl}/food/invoice/`,
     invoice_room_summary: `${baseurl}/invoices/resort-short-invoice/`,
+    invoice_food_summry: `${baseurl}/food/invoice-summary/`,
+    payment_recieve: `${baseurl}/invoices/payments/`,
 }

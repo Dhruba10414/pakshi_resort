@@ -131,14 +131,44 @@ form {
     }
     button.cancel {
       width: 29%;
-      border: 2px solid var(--red-dark);
-      color: var(--red-dark);
-      background: none;
+      color: gray;
+      transition: 0.4s;
+      &:hover{
+        color: #000;
+      }
     }
   }
 
   small {
     color: red;
     font-size: 16px;
+  }
+
+  .success-message{
+    position: absolute;
+    bottom: 5vh;
+    right: 4vw;
+    background-color: var(--green);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-family: var(--quicksand-font);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    div{
+      width: 30px; height: 30px;
+      border-radius: 50%; border: 2px solid var(--green-dark);
+      margin-right: 10px; display: flex; align-items: center;
+      justify-content: center;
+    }
+    opacity: 1;
+    margin-left: 0;
+    transition: 0.5s;
+  }
+  .success-message.disabled{
+    margin-right: -30px;
+    opacity: 0;
   }
 }

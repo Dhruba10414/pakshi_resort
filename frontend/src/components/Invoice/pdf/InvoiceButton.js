@@ -14,7 +14,6 @@ function InvoiceButton({ roomBills, orderedFoods, invoiceFor }) {
       }
       fileName={`invoice.pdf`}
       style={{
-        width: "100%",
         textDecoration: "none",
         padding: "15px 50px",
         color: "#fff",
