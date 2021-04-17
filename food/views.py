@@ -2,6 +2,7 @@
 from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
+from invoices.models import Payments
 from .serializers import FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbededSerializer,FoodOrderEmbededSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated
@@ -124,7 +125,7 @@ class OrderInvoiceView(generics.GenericAPIView):
     serializer_class=FoodOrderEmbededSerializer
 
     def get(self,request,*args,**kwargs):
-        guest_no = request.data.get('guest_id',None)
+        guest_no = request.query_params.get('guest_id',None)
 
         try:
             order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False,isComplete=True)
@@ -171,3 +172,28 @@ class FoodLogView(generics.GenericAPIView):
             writer.writerow(row)
 
         return response
+
+
+
+class OrderInvoiceSummuryView(generics.GenericAPIView):
+ 
+    def get(self, request, *args, **kwargs):
+        guest = request.query_params.get('guest', None)
+
+        if guest is not None:
+            bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField()))
+            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
+
+            payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
+            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
+            
+            summury = {
+                'total_bills': total_bill,
+                'total_paid': total_paid,
+                'due': total_bill - total_paid
+            }
+            
+            return Response(data=summury, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
