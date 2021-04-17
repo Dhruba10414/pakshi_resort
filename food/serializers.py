@@ -41,3 +41,12 @@ class FoodOrderEmbededSerializer(serializers.ModelSerializer):
         return (obj.order_price*obj.quantity)
 
 
+    
+class FoodAnalyticsSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+
+        return {
+            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'total_bookings': instance['orders'],
+            'total_income': instance['income']
+        }

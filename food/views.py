@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
 from invoices.models import Payments
-from .serializers import FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbededSerializer,FoodOrderEmbededSerializer
+from .serializers import FoodAnalyticsSerializer,FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbededSerializer,FoodOrderEmbededSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated
 from datetime import date, datetime, timedelta
@@ -12,8 +12,9 @@ from django.db.models.functions import Extract
 from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 
-from django.db.models.aggregates import Sum
-from django.db.models.functions import Coalesce
+from django.db.models.aggregates import Sum,Count
+
+from django.db.models.functions import Coalesce,TruncMonth
 import csv
 from django.http import HttpResponse
 
@@ -176,7 +177,8 @@ class FoodLogView(generics.GenericAPIView):
 
 
 class OrderInvoiceSummuryView(generics.GenericAPIView):
- 
+    
+    permission_classes=[AllowAny,]
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
 
@@ -197,3 +199,16 @@ class OrderInvoiceSummuryView(generics.GenericAPIView):
             return Response(data=summury, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class FoodAnalyticsView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class = FoodAnalyticsSerializer
+
+    def get(self, request, *args, **kwargs):
+        analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'), orders=Count('id'))
+
+        analytics_serialized = self.get_serializer(analytics, many=True)
+
+        return Response(analytics_serialized.data, status=status.HTTP_200_OK)
