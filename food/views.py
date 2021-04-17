@@ -177,8 +177,6 @@ class FoodLogView(generics.GenericAPIView):
 
 
 class OrderInvoiceSummuryView(generics.GenericAPIView):
-    
-    permission_classes=[AllowAny,]
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
 
