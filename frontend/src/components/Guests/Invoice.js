@@ -7,15 +7,36 @@ import BillAmounts from "../Invoice/BillAmounts";
 import CustomerDescription from "../Invoice/CustomerDescription";
 import OrderedFoodList from "../Invoice/OrderedFoodList";
 import Loading from "../../components/Loading";
+import Payment from "./Payment";
+
+import {openPaymentModalAnim, closePaymentModalAnim} from "../../animations/InvoiceAnim";
 
 function Invoice({ invoiceFor }) {
   const [roomBills, setRoomBills] = useState([]);
   const [orderedFoods, setOrderedFoods] = useState([]);
   const [stayingInfo, setStayinhInfo] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [billSummary, setBillSummary] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  // INVOICE FOR ROOMS
+  const invoiceForRoom = () => {
+  };
+
+  // INVOICE FOR RESTAURENT
+  const invoiceForRestaurent = () => {};
+
+  // OPEN PAYMENT MODAL
+  const paymentModalController = (el) => {
+    openPaymentModalAnim();
+  };
+
+  const controlLoading = () => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }
 
   useEffect(() => {
-    setLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
     axios.post(api.refresh, { refresh: refresh_token }).then((token) => {
       const Config = {
@@ -43,62 +64,80 @@ function Invoice({ invoiceFor }) {
         .get(`${api.food_invoice}?guest_id=${invoiceFor.id}`, Config)
         .then((res) => {
           setOrderedFoods(res.data);
-          setLoading(false);
         })
         .catch((err) => {
           console.log(err.message);
-          setLoading(false);
+        });
+      // fetch billInfos
+      axios
+        .get(`${api.invoice_room_summary}?guest=${invoiceFor.id}`, Config)
+        .then((res) => {
+          setBillSummary(res.data);
+          controlLoading()
+        })
+        .catch((err) => {
+          console.log(err.message);
+          controlLoading()
         });
     });
   }, []);
 
   return (
-    <div className="invoices">
-      {/* ========== PAYMENT DETAILS ========== */}
-      {!loading ? (
-        <div className="invoice">
-          <div className="bill-amounts">
-            <BillAmounts roomBills={roomBills} foodBills={orderedFoods} />
-            <CustomerDescription
-              name={invoiceFor.name}
-              address={invoiceFor.address}
-              phone={invoiceFor.phone}
-            />
-          </div>
-          <div className="table-block">
-            <OrderedFoodList
-              orderedFoods={orderedFoods}
-              roomBills={roomBills}
-              invoiceFor={invoiceFor}
-            />
-          </div>
-        </div>
-      ) : (
-        <Loading height="80vh" width="100%" textSize="16px" space="4px" />
-      )}
-
-      {/* ========== PAYMENT FUNC ========== */}
-      <div className="payment">
+    <>
+      <div className="invoices">
+        {/* ========== PAYMENT DETAILS ========== */}
         {!loading ? (
-          <div className="rooms-info">
-            <h2>Staying Info</h2>
-            <StayingInfo
-              bookBy={stayingInfo.booked_by}
-              bookedOn={stayingInfo.booked_on}
-              checkIn={stayingInfo.check_in}
-              checkOut={stayingInfo.check_out}
-              NumberOfRooms={stayingInfo.number_of_rooms}
-              stayed={stayingInfo.stayed}
-            />
-            <h2>Staying rooms</h2>
-            <StayingRooms roomBills={roomBills} />
-            <button className="payforRooms">Pay for rooms</button>
+          <div className="invoice">
+            <div className="bill-amounts">
+              <BillAmounts roomBills={roomBills} foodBills={orderedFoods} />
+              <CustomerDescription
+                name={invoiceFor.name}
+                address={invoiceFor.address}
+                phone={invoiceFor.phone}
+              />
+            </div>
+            <div className="table-block">
+              <OrderedFoodList
+                orderedFoods={orderedFoods}
+                roomBills={roomBills}
+                invoiceFor={invoiceFor}
+                paymentModalController={paymentModalController}
+              />
+            </div>
           </div>
         ) : (
-          <Loading height="80vh" width="100%" textSize="16px" space="4px" />
+          <Loading height="80vh" width="60%" textSize="16px" space="4px" />
         )}
+
+        {/* ========== PAYMENT FUNC ========== */}
+        <div className="payment">
+          {!loading ? (
+            <div className="rooms-info">
+              <h2>Staying Info</h2>
+              <StayingInfo
+                bookBy={stayingInfo.booked_by}
+                bookedOn={stayingInfo.booked_on}
+                checkIn={stayingInfo.check_in}
+                checkOut={stayingInfo.check_out}
+                NumberOfRooms={stayingInfo.number_of_rooms}
+                stayed={stayingInfo.stayed}
+              />
+              <h2>Staying rooms</h2>
+              <StayingRooms roomBills={roomBills} />
+              <button className="payforRooms" onClick={paymentModalController}>
+                Pay for rooms
+              </button>
+            </div>
+          ) : (
+            <Loading height="80vh" width="100%" textSize="16px" space="4px" />
+          )}
+        </div>
       </div>
-    </div>
+
+        <Payment
+          closePaymentModal={closePaymentModalAnim}
+        />
+    </>
   );
 }
 

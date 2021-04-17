@@ -27,7 +27,6 @@ function OrderedFoodList({ orderedFoods, roomBills, invoiceFor }) {
           ))}
       </div>
       <div className="button-box">
-        <button className="payforFood">Pay for Foods</button>
         <InvoiceButton
           orderedFoods={orderedFoods}
           roomBills={roomBills}

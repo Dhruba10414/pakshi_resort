@@ -40,7 +40,7 @@ function InvoiceForRoom({ roomBills }) {
       </View>
       {roomBills &&
         roomBills.map((data) => (
-          <View style={styles.container}>
+          <View style={styles.container} key={data.id}>
             <Text style={styles.no}>#{data.room_num}</Text>
             <Text style={styles.type}>{data.room_type}</Text>
             <Text style={styles.days}>

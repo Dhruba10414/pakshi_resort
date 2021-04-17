@@ -14,14 +14,18 @@ function InvoiceButton({ roomBills, orderedFoods, invoiceFor }) {
       }
       fileName={`invoice.pdf`}
       style={{
+        width: "100%",
         textDecoration: "none",
-        padding: "10px",
-        color: "#4a4a4a",
-        backgroundColor: "#f2f2f2",
-        border: "1px solid #4a4a4a",
+        padding: "15px 50px",
+        color: "#fff",
+        backgroundColor: "#F2A922",
+        borderRadius: "5px",
+        textTransform: "uppercase",
+        fontWeight: "bold",
+        fontSize: "15px",
       }}
     >
-      Download
+      Save Invoice
     </PDFDownloadLink>
   );
 }

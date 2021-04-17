@@ -39,7 +39,7 @@ function InvoiceForFoods({ orderedFoods }) {
       </View>
       {orderedFoods &&
         orderedFoods.map((data) => (
-          <View style={styles.container}>
+          <View style={styles.container} key={data.id}>
             <Text style={styles.name}>{data.food.name}</Text>
             <Text style={styles.quantity}>{data.quantity}</Text>
             <Text style={styles.price}>{data.food.price}</Text>
