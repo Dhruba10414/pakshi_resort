@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { check } from "../../assets/images/SVG";
 
-function Payment({ closePaymentModal, invoiceForRestaurent, invoiceForRoom, success }) {
+function Payment({ closePaymentModal, makePaymentForGuest, success, loading }) {
   const [type, setType] = useState("RB");
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
 
   const makeABill = () => {
     if (amount) {
-      if (type === "RB") {
-        invoiceForRoom(amount);
-      } else if(type === "RT"){
-        invoiceForRestaurent(amount);
-      }
+      makePaymentForGuest(amount, type);
+      setAmount("");
+      setType("RB");
     } else {
       setError("Required amount fields!");
     }
@@ -45,7 +43,7 @@ function Payment({ closePaymentModal, invoiceForRestaurent, invoiceForRoom, succ
                 onChange={(e) => setType(e.target.value)}
               >
                 <option value="RB">Room </option>
-                <option value="RP">Foods</option>
+                <option value="RT">Foods</option>
                 <option value="PT">Park Ticket</option>
               </select>
             </div>
@@ -68,9 +66,11 @@ function Payment({ closePaymentModal, invoiceForRestaurent, invoiceForRoom, succ
         <button className="cancel" onClick={closePaymentModal}>
           Cancel
         </button>
-        <button className="submit" onClick={makeABill}>
-          Sumbmit
-        </button>
+        {
+          !loading 
+          ? <button className="submit" onClick={makeABill}> Sumbmit </button>
+          : <button className="submit"> Processing... </button>
+        }
       </div>
 
       <small>{error}</small>

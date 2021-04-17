@@ -21,32 +21,61 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
   const [roombillSummary, setRoomBillSummary] = useState({});
   const [foodbillSummary, setFoodBillSummary] = useState({});
   const [loading, setLoading] = useState(true);
+  const [submissionLoading, setSubmissionLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  // UPDATE UI DATA
+  const updateUiData = (amount, type) => {
+    if(type === "RB"){
+      const bill = {
+        ...roombillSummary,
+        total_paid: roombillSummary.total_paid + parseInt(amount),
+        due: roombillSummary.due - parseInt(amount)
+      }
+      setRoomBillSummary(bill);
+    } else if(type === "RT"){
+      const bill = {
+        ...foodbillSummary,
+        total_paid: foodbillSummary.total_paid + parseInt(amount),
+        due: foodbillSummary.due - parseInt(amount)
+      }
+      setFoodBillSummary(bill);
+    }
+  }
 
   // INVOICE FOR ROOMS
-  const invoiceForRoom = (amount ) => {
-    console.log(amount, invoiceFor.id);
-    notify();
-  };
-
-  // INVOICE FOR RESTAURENT
-  const invoiceForRestaurent = (amount) => {
-    console.log(amount, invoiceFor.id);
-  };
+  const makePaymentForGuest = (amount, type ) => {
+    setSubmissionLoading(true);
+    const refresh_token = localStorage.getItem("refresh_token");
+    
+    axios
+    .post(api.refresh, { refresh: refresh_token })
+    .then((token) => {
+      const Config = { headers: { Authorization: "Bearer " + token.data.access }}; 
+      const Body = {"guest": invoiceFor.id, "amount": amount, "notes": "/", "paid_for": type};
+      
+      axios
+      .post(api.payment_recieve, Body, Config)
+      .then(res => {
+        console.log(res.data);
+        setSubmissionLoading(false);
+        updateUiData(amount, type);
+        notify();
+      })
+      .catch(err => {
+        setSubmissionLoading(false);
+        console.log(err.message)
+      })
+    })
+    .catch(err => { console.log(err.message); setSubmissionLoading(false) });
+  }
 
    // NOTIFY IF FOOD UPDATED SUCCESSFULLY
    const notify = () => {
     setTimeout(() => {
       setSuccess(false);
     }, 2000);
-
     setSuccess(true);
-  };
-
-  // OPEN PAYMENT MODAL
-  const paymentModalController = (el) => {
-    openPaymentModalAnim();
   };
 
   // CONTROL LOADING TO PREVENT DATA LEAKGAE
@@ -61,8 +90,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
     const refresh_token = localStorage.getItem("refresh_token");
     axios.post(api.refresh, { refresh: refresh_token }).then((token) => {
       const Config = {
-        headers: { Authorization: "Bearer " + token.data.access },
-      };
+        headers: { Authorization: "Bearer " + token.data.access }};
       // fetch room infos
       axios
         .get(`${api.guest_invoice}?guest=${invoiceFor.id}`, Config)
@@ -89,24 +117,16 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         .catch((err) => {
           console.log(err.message);
         });
-      // fetch billInfos
+      // fetch billInfos (rooms)
       axios
         .get(`${api.invoice_room_summary}?guest=${invoiceFor.id}`, Config)
-        .then((res) => {
-          setRoomBillSummary(res.data);
-          console.log(res.data);
-          controlLoading();
-        })
-        .catch((err) => {
-          console.log(err.message);
-          controlLoading();
-        });
-
+        .then((res) => { setRoomBillSummary(res.data); })
+        .catch((err) => { console.log(err.message); });
+      // fetch billInfos (foods)
       axios
         .get(`${api.invoice_food_summry}?guest=${invoiceFor.id}`, Config)
         .then((res) => {
           setFoodBillSummary(res.data);
-          console.log(res.data);
           controlLoading();
         })
         .catch((err) => {
@@ -161,7 +181,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
               />
               <h2>Staying rooms</h2>
               <StayingRooms roomBills={roomBills} />
-              <button className="payforRooms" onClick={paymentModalController}>
+              <button className="payforRooms" onClick={openPaymentModalAnim}>
                 Pay for rooms
               </button>
             </div>
@@ -174,8 +194,8 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
       <Payment
         success={success}
         closePaymentModal={closePaymentModalAnim}
-        invoiceForRoom={invoiceForRoom}
-        invoiceForRestaurent={invoiceForRestaurent}
+        makePaymentForGuest={makePaymentForGuest}
+        loading={submissionLoading}
       />
     </>
   );
