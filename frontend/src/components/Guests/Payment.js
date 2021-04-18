@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import { check } from "../../assets/images/SVG";
 
-function Payment({ closePaymentModal, makePaymentForGuest, success, loading }) {
+function Payment({
+  closePaymentModal,
+  makePaymentForGuest,
+  success,
+  loading,
+  fbill,
+  rbill,
+}) {
   const [type, setType] = useState("RB");
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
 
   const makeABill = () => {
     if (amount) {
-      makePaymentForGuest(amount, type);
-      setAmount("");
-      setType("RB");
+      if(amount === '0'){
+        setError("Amount shouldn't be '0' !");
+      } else if(type === "RT" && amount > fbill.due){
+        setError("Amount shouldn't be greater than the due!");
+      } else if(type === "RB" && amount > rbill.due){
+        setError("Amount shouldn't be greater than the due!");
+      } else{
+        makePaymentForGuest(amount, type);
+        setAmount("");
+        setType("RB");
+      }
     } else {
       setError("Required amount fields!");
     }
@@ -66,11 +81,14 @@ function Payment({ closePaymentModal, makePaymentForGuest, success, loading }) {
         <button className="cancel" onClick={closePaymentModal}>
           Cancel
         </button>
-        {
-          !loading 
-          ? <button className="submit" onClick={makeABill}> Sumbmit </button>
-          : <button className="submit"> Processing... </button>
-        }
+        {!loading ? (
+          <button className="submit" onClick={makeABill}>
+            {" "}
+            Sumbmit{" "}
+          </button>
+        ) : (
+          <button className="submit"> Processing... </button>
+        )}
       </div>
 
       <small>{error}</small>

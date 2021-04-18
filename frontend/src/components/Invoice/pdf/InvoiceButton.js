@@ -12,12 +12,12 @@ function InvoiceButton({ roomBills, orderedFoods, invoiceFor }) {
           invoiceFor={invoiceFor}
         />
       }
-      fileName={`invoice.pdf`}
+      fileName={`invoice-${invoiceFor.id}.pdf`}
       style={{
         textDecoration: "none",
-        padding: "15px 50px",
+        padding: "12px 50px",
         color: "#fff",
-        backgroundColor: "#F2A922",
+        backgroundColor: "#2BD9A8",
         borderRadius: "5px",
         textTransform: "uppercase",
         fontWeight: "bold",

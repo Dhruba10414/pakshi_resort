@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { rsvg, warning } from "../../assets/images/SVG";
+import { rsvg } from "../../assets/images/SVG";
 import InvoiceButton from "./pdf/InvoiceButton";
 
 function OrderedFoodList({
@@ -42,8 +42,8 @@ function OrderedFoodList({
           ))}
       </div>
       <div className="button-box">
-        <button onClick={() => setOpenInvoice(false)}>Cancel</button>
-        {fbill.total + rbill.due === 0 ? (
+        <button onClick={() => setOpenInvoice(false)}>Back</button>
+        {fbill.due + rbill.due === 0 ? (
           <InvoiceButton
             orderedFoods={orderedFoods}
             roomBills={roomBills}

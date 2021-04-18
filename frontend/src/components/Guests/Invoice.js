@@ -57,7 +57,6 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
       axios
       .post(api.payment_recieve, Body, Config)
       .then(res => {
-        console.log(res.data);
         setSubmissionLoading(false);
         updateUiData(amount, type);
         notify();
@@ -196,6 +195,8 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         closePaymentModal={closePaymentModalAnim}
         makePaymentForGuest={makePaymentForGuest}
         loading={submissionLoading}
+        fbill={foodbillSummary}
+        rbill={roombillSummary}
       />
     </>
   );
