@@ -74,11 +74,11 @@
             @include media("<=desktop") { height: 7vh; font-size: 15px; }
           }
           .no { width: 15%; }
-          .guest-name { width: 30%; }
+          .cottage { width: 10%; }
+          .guest-name { width: 40%; }
           .status { width: 15%; }
           .checkin,
           .checkout { width: 20%; }
-          .food-order { width: 20%; }
           .status p {
             font-size: 16px;
             font-family: var(--quicksand-font);
@@ -86,12 +86,24 @@
             svg { height: 14px; }
             @include media("<=desktop") { font-size: 14px; }
           }
-          .status.free p {
-            color: var(--green-dark);
+          .status.free p { color: var(--green-dark); }
+          .status.lock p { color: var(--red-dark); }
+          .cottage p{
+            height: 35px;
+            width: 35px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            font-weight: bold;
+            @include media("<=desktop") { font-size: 14px; height: 25px; width: 25px; }
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
           }
-          .status.lock p {
-            color: var(--red-dark);
-          }
+          .cottage.one p { background: var(--blue-dark); }
+          .cottage.two p { background: #f26430 ; }
+          .cottage.three p { background: #a0bf5e; }
+          .cottage.four p { background: #683fbf; }
+          .cottage.five p { background: var(--green-dark) }
         }
 
         // Table Heading

@@ -55,7 +55,7 @@ function Dashboard({ clearUser }) {
         // get rooms
         axios
           .get(api.rooms, Config)
-          .then((res) => { setRoomList(res.data); setLoading(false); })
+          .then((res) => { setRoomList(res.data); setLoading(false); console.log(res.data) })
           .catch((err) => { setError(err.message); });
       })
       .catch((err) => {
@@ -91,11 +91,11 @@ function Dashboard({ clearUser }) {
                 {/* table heading */}
                 <div className="table-heading">
                   <div className="no">Room {rsvg}</div>
+                  <div className="cottage">Cottage{rsvg}</div>
                   <div className="status">Status {rsvg}</div>
                   <div className="guest-name">Guest Name{rsvg}</div>
                   <div className="checkin">Check In{rsvg}</div>
                   <div className="checkout">Check Out{rsvg}</div>
-                  <div className="food-order">Order Food{rsvg}</div>
                 </div>
                 {/* table content */}
                 <div className="roomEntries">
@@ -105,6 +105,7 @@ function Dashboard({ clearUser }) {
                         key={room.room_num}
                         room_no={room.room_num}
                         room_type={room.room_type}
+                        cottage_num={room.cottage_num}
                         status={room.is_occupied}
                         active_booking={room.active_booking}
                         openDetailsModal={openDetailsModal}

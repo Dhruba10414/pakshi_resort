@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const checkedSvg = (
   <svg
@@ -36,7 +36,8 @@ const xSvg = (
   </svg>
 );
 
-function Room({ room_no, room_type, status, active_booking, openDetailsModal}) {
+function Room({ room_no, room_type, cottage_num, status, active_booking, openDetailsModal}) {
+  const [classes, setClasses] = useState("cottage");
   // OPEN ROOM DETAILS MODAL
   const open = () => {
     openDetailsModal(
@@ -49,18 +50,42 @@ function Room({ room_no, room_type, status, active_booking, openDetailsModal}) {
     )
   }
 
+  useEffect(() => {
+    if(cottage_num === 1){
+      setClasses("cottage one");
+    } else if(cottage_num === 2){
+      setClasses("cottage two");
+    }
+    else if(cottage_num === 3){
+      setClasses("cottage three");
+    }
+    else if(cottage_num === 4){
+      setClasses("cottage four");
+    } else{
+      setClasses("cottage five");
+    }
+  })
+
   return (
     <div className={status ? "aroom dim" : "aroom"} onClick={ status ? () => open() : null }>
       <div className="no">#{room_no}</div>
+      
+      <div className={classes}>
+        <p>{cottage_num}</p>
+      </div>
+
       <div className={status ? "status lock" : "status free"}>
         {status ? <p>{xSvg} Booked</p> : <p>{checkedSvg}Free</p>}
       </div>
+      
       <div className="guest-name">
         {active_booking ? active_booking.guest.name : "---"}
       </div>
+      
       <div className="checkin">
         {active_booking ? active_booking.check_in : "---"}
       </div>
+      
       <div className="checkout">
         {active_booking ? active_booking.check_out : "---"}
       </div>
