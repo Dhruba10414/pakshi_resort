@@ -136,6 +136,7 @@
       display: block;
       margin-top: -10px;
       margin-bottom: 10px;
+      @include media("<=desktop") { margin-bottom: 0; }
     }
     button {
       padding: 15px 35px;
@@ -233,6 +234,7 @@
       color: var(--primary-color);
       margin-bottom: 10px;
       font-size: 20px;
+      @include media("<=desktop") { font-size: 16px; }
     }
 
     .list-container {
@@ -280,7 +282,7 @@
               border-right: 2px solid #f4f4f4;
             }
           }
-          .name { width: 50%; }
+          .name { width: 50%; @include media("<=desktop") { font-size: 14px; }}
           .role { width: 20%; }
           .role.a p{
             display: inline-block;
@@ -297,12 +299,14 @@
             padding: 5px 10px;
             font-weight: bold;
             border-radius: 5px;
+            @include media("<=desktop") { font-size: 14px; }
           }
           .status {
             width: 20%;
             display: flex;
             align-items: center;
             font-weight: bold;
+            @include media("<=desktop") { font-size: 14px; }
             svg {
               height: 14px;
               margin-left: 5px;
@@ -359,6 +363,7 @@
               border-radius: 5px;
               cursor: pointer;
               transition: 0.4s;
+              @include media("<=desktop") { font-size: 14.5px; }
               &:hover{
                 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
               }
@@ -368,6 +373,7 @@
             opacity: 1;
             height: 21vh;
             padding: 20px;
+            @include media("<=desktop") { height: 25vh; }
           }
         }
       }

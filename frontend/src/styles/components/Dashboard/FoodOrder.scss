@@ -14,7 +14,10 @@
         height: fit content;
         .heading {
           text-align: center;
-          h3 { font-family: var(--quicksand-font); font-size: 3rem; line-height: 20px; color: var(--primary-color); }
+          h3 { 
+            font-family: var(--quicksand-font); font-size: 3rem; line-height: 20px; color: var(--primary-color); 
+            @include media("<=desktop") { font-size: 2.5rem; }
+          }
           p { font-family: WRITTEN; font-size: 5rem; color: var(--primary-color-light); line-height: 30px; }
         }
       }
@@ -34,7 +37,10 @@
         .table-heading,
         .ofood {
           display: flex;
-          div { height: 7vh; display: flex; align-items: center; font-family: var(--secondary-font); font-size: 16px; }
+          div { 
+            height: 7vh; display: flex; align-items: center; font-family: var(--secondary-font); font-size: 16px; 
+            @include media("<=desktop") { font-size: 14px; font-weight: normal; }
+          }
           .price { width: 25%; padding: 0 10px 0 26px; }
           .name { width: 55%; padding: 0 20px; }
           .quantity { width: 20%; padding: 0 10px;}
@@ -57,7 +63,10 @@
           border-radius: 5px;
           .quantity{
             justify-content: space-between;
-            div{ padding: 0; display: flex; justify-content: center; align-items: center; }
+            div{ 
+              padding: 0; display: flex; justify-content: center; align-items: center; 
+              @include media("<=desktop") { font-size: 13px; font-weight: normal; }
+            }
             .btn{
               width: 30px; height: 30px; border-radius: 5px;
               background: var(--primary-color-light); color: var(--primary-color);
@@ -73,7 +82,9 @@
         img.check {height: 30%; width: auto;}
         h2.empty-head{ 
           font-family: var(--quicksand-font); text-align: center; font-size: 20px; font-weight: normal;
-          position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);}
+          position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%);
+          @include media("<=desktop") { font-size: 15px; bottom: 20%}
+        }
       }
 
       .price-block{
@@ -85,12 +96,20 @@
         margin-top: 15px;
         border-radius: 8px;
         display: flex;
+        @include media("<=desktop") { padding: 14px; margin-top: 10px; }
         .customer{
           width: 60%;
-          h3{font-family: var(--quicksand-font); font-size: 16px; margin-bottom: 10px;}
+          h3{
+            font-family: var(--quicksand-font); font-size: 16px; margin-bottom: 10px;
+            @include media("<=desktop") { font-size: 14px; line-height: 14px;}
+          }
           .data{display: flex; align-items: center;}
-          .label{ width: 24%; font-weight: bold; font-size: 14px; color: gray; }
-          .value{ width: 76%; font-weight: normal; color: #444; }          
+          .label{ width: 24%; font-weight: bold; font-size: 14px; color: gray; 
+            @include media("<=desktop") { font-size: 12px; line-height: 13px;}
+          }
+          .value{ width: 76%; font-weight: normal; color: #444; 
+            @include media("<=desktop") { font-size: 12px; line-height: 13px;}
+          }          
           // .value p{background-color: var(--yellow); color: var(--yellow-dark); font-weight: bold; border-radius: 10px;}
         }
         .price{
@@ -100,13 +119,20 @@
           justify-content: space-between;
           align-items: flex-end;
           h1, h3{ display: block; font-family: var(--quicksand-font); }
-          h1{ font-size: 3rem; line-height: 2.5rem; font-weight: normal; color: var(--primary-color-light); span{font-size: 2.3rem;} }
-          h3{font-size: 16px; color: gray; span{margin-left: 10px; color: #444; font-size: 18px;}}
+          h1{ 
+            font-size: 3rem; line-height: 2.5rem; font-weight: normal; color: var(--primary-color-light); span{font-size: 2.3rem;} 
+            @include media("<=desktop") { font-size: 2.5px; line-height: 2rem; }
+          }
+          h3{
+            font-size: 16px; color: gray;
+            span{margin-left: 10px; color: #444; font-size: 18px; @include media("<=desktop") { font-size: 16px; }}
+            @include media("<=desktop") { font-size: 14px; }
+          }
         }
       }
 
       // button box
-      .btn-box{display: flex; margin-top: 30px;}
+      .btn-box{display: flex; margin-top: 30px; @include media("<=desktop") { margin-top: 15px; }}
       button {
         width: 25%;
         padding: 15px 0;
@@ -124,6 +150,7 @@
         &:hover {
           color: var(--primary-color-light);
         }
+        @include media("<=desktop") { font-size: 14px; padding: 10px 0; }
       }
       button.back-btn{
         margin-right: 20px;
@@ -139,7 +166,9 @@
         &:hover{
           color: var(--primary-color-light);
           border: 2px solid var(--primary-color-light);
+          @include media("<=desktop") { border: 1.5px solid var(--primary-color-light); }
         }
+        @include media("<=desktop") { border: 1.5px solid var(--primary-color); }
       }
       button.disabled-btn{
         background-color: #ccc;
@@ -168,6 +197,7 @@
             font-size: 3rem;
             line-height: 20px;
             color: var(--primary-color);
+            @include media("<=desktop") { font-size: 2.5rem; }
           }
           p {
             font-family: WRITTEN;
@@ -193,7 +223,10 @@
             img { width: 100%; position: absolute; bottom: -50px; right: -20px; }
           }
         }
-        form { position: absolute; bottom: 0; left: 25px; }
+        form { 
+          position: absolute; bottom: 0; left: 25px; 
+          @include media("<=desktop") { left: 15px; }
+        }
       }
       // ------------------ available food table -------------------------
       .availabel-table {
@@ -222,17 +255,18 @@
             font-size: 14px;
             font-weight: bold;
             color: #444;
+            @include media("<=desktop") { font-weight: normal; font-size: 13px; }
 
           }
           .name { width: 40%; }
           .desc { width: 30%; }
-          .price { width: 15%; font-size: 16px; }
-          .status { width: 15%; svg{height: 18px;}}
+          .price { width: 15%; font-size: 16px; @include media("<=desktop") { font-size: 14px; }}
+          .status { width: 15%; svg{height: 18px; @include media("<=desktop") { height: 16px; }}}
         }
         .table-heading {
           position: sticky; top: 0; background: #fff;
           svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
-          div { font-weight: bold; font-size: 14px; color: gray; }
+          div { font-weight: bold; color: gray; }
         }
         .foodItem{ 
             transition: 0.4s; margin-bottom: 3px; &:hover{ background: #dfdfe1; }
@@ -273,6 +307,7 @@
             font-family: var(--quicksand-font);
             font-weight: bold;
             transition: 0.4s;
+            background-color: transparent;
             &:focus { border: 2px solid var(--primary-color);}
             option { border: none; padding: 5px 10px; color: var(--primary-color); }
           }

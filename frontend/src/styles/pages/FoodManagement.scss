@@ -161,7 +161,7 @@
     margin-top: 10px;
     background-color: #fff;
     border-radius: 8px;
-    @include media("<=desktop") { width: 56%; }
+    // @include media("<=desktop") { width: 56%; }
 
     .available-foods {
       width: 100%;
@@ -230,7 +230,7 @@
       margin-left: 10px;
       background: #fff;
       border-radius: 8px;
-      @include media("<=desktop") { width: calc(44% - 10px); }
+      // @include media("<=desktop") { width: calc(44% - 10px); }
       form{
         margin-top: 40px;
         padding: 30px 50px;
@@ -255,7 +255,7 @@
     background: var(--primary-color-2);
     border-radius: 8px;
     position: relative;
-    @include media("<=desktop") { width: calc(44% - 10px); }
+    // @include media("<=desktop") { width: calc(44% - 10px); }
     .heading h3{ color: #fff; }
     img{ position: absolute; }
     img.img-1{
@@ -318,11 +318,11 @@
     border-radius: 8px;
     margin-top: 10px;
     margin-left: 10px;
-    @include media("<=desktop") { width: calc(44% - 10px); }
+    // @include media("<=desktop") { width: calc(44% - 10px); }
     form{
       margin-top: 40px;
       padding: 30px 50px;
-      input{padding: 15px;}
+      input{padding: 15px; @include media("<=desktop") { padding: 10px; font-size: 14px; }}
       h3{
         display: block; font-family: var(--quicksand-font); color: #444; font-size: 15px; margin-bottom: 15px;
         &:not(:first-child){ margin-top: 50px;}
