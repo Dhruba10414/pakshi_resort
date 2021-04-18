@@ -1,0 +1,389 @@
+.bookingrequests {
+  width: 100%;
+  height: calc(88vh + 5px);
+  margin-top: 10px;
+  background: #fff;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  position: relative;
+
+  // ============================================ SEARCH FIELD ==============================
+  .search-field {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background: var(--body-background-color);
+    form {
+      width: 100%;
+      margin: 0 10px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      input {
+        width: 80%;
+        padding: 5px;
+        font-size: 14px;
+        outline: none;
+        border: none;
+        background: transparent;
+      }
+      .icon {
+        height: 40px;
+        padding: 5px 10px;
+        background: transparent;
+        svg {
+          width: 18px;
+          color: gray;
+        }
+      }
+    }
+  }
+
+  // ================================= TABLE HEADING AND CONTENTS COMMON STYLES ===================================
+  .table-heading,
+  .entry {
+    display: flex;
+    background: #fff;
+    border-bottom: 3px solid #f4f4f4;
+    div {
+      height: 8vh;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-family: var(--quicksand-font);
+      font-size: 16px;
+      @include media("<=desktop") {
+        height: 7vh;
+        font-size: 15px;
+      }
+    }
+    .guest-name {
+      width: 20%;
+    }
+    .cell {
+      width: 15%;
+    }
+    .checkin,
+    .checkout {
+      width: 15%;
+    }
+    .type {
+      width: 30%;
+    }
+    .amount {
+      width: 5%;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  // ================================================= TABLE HEADING ONLY ==========================================
+  .table-heading {
+    position: sticky;
+    top: 50px;
+    svg {
+      width: 12px;
+      transform: rotate(-45deg);
+      margin-left: 5px;
+    }
+    div {
+      font-weight: bold;
+      font-size: 14px;
+      color: gray;
+    }
+  }
+  .entry {
+    transition: 0.4s;
+    &:hover {
+      background: #f4f4f4;
+    }
+  }
+  .entry.staying {
+    cursor: pointer;
+  }
+
+  // ================================================= TABLE HEADING ONLY ==========================================
+  .entry {
+    .amount p {
+      padding: 4px 10px;
+      border-radius: 10px;
+      color: var(--green-dark);
+      background: var(--green);
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}
+
+// ================================================= VIEW REQUEST ==========================================
+.viewrequest {
+  width: 100%;
+  height: calc(90vh - 10px);
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  .guest-information {
+    width: 30%;
+    border-radius: 8px;
+  }
+  .activities {
+    width: calc(70% - 10px);
+    background: #fff;
+    border-radius: 8px;
+  }
+  h3 {
+    font-size: 17px;
+    font-family: var(--quicksand-font);
+    text-transform: uppercase;
+    color: gray;
+  }
+
+  // ================================================= GUEST INFORMATION ==========================================
+  .guest-information {
+    h2.name {
+      font-family: var(--quicksand-font);
+      font-size: 1.4rem;
+      margin-top: 10px;
+      line-height: 1.8rem;
+      color: #444;
+    }
+    p {
+      font-family: var(--quicksand-font);
+      font-size: 16px;
+      color: #444;
+    }
+    .guest {
+      height: 43%;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    .infos {
+      height: calc(57% - 10px);
+      background: #fff;
+      padding: 2rem;
+      margin-top: 10px;
+      border-radius: 8px;
+      .data-box-2 {
+        margin-top: 2.5rem;
+      }
+    }
+    .data {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      &__logo {
+        width: 30px;
+        height: 30px;
+        background: #ccc;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        svg {
+          height: 14px;
+          stroke-width: 3;
+        }
+      }
+      &__value {
+        h4 {
+          color: gray;
+          font-size: 14px;
+          font-family: var(--quicksand-font);
+        }
+        p {
+          font-size: 15px;
+        }
+      }
+    }
+    .data.address .data__logo {
+      background: var(--blue-dark);
+      color: #fff;
+    }
+    .data.phone .data__logo {
+      background: var(--green-dark);
+      color: #fff;
+    }
+    .data.email .data__logo {
+      background: var(--red-dark);
+      color: #fff;
+    }
+    .data.bookon .data__logo {
+      background: #f2ac29;
+      color: #fff;
+    }
+    .data.checkin .data__logo {
+      background: #f26430;
+      color: #fff;
+    }
+    .data.checkout .data__logo {
+      background: #683fbf;
+      color: #fff;
+    }
+    .data.roomnum .data__logo {
+      background: #731251;
+      color: #fff;
+    }
+    .data.roomtype .data__logo {
+      background: #a0bf5e;
+      color: #fff;
+    }
+    .data.bookon .data__value h4 {
+      color: #f2ac29;
+    }
+    .data.checkin .data__value h4 {
+      color: #f26430;
+    }
+    .data.checkout .data__value h4 {
+      color: #683fbf;
+    }
+    .data.address .data__value h4 {
+      color: var(--blue-dark);
+    }
+    .data.phone .data__value h4 {
+      color: var(--green-dark);
+    }
+    .data.email .data__value h4 {
+      color: var(--red-dark);
+    }
+    .data.roomnum .data__value h4 {
+      color: #731251;
+    }
+    .data.roomtype .data__value h4 {
+      color: #a0bf5e;
+    }
+  }
+
+  // ================================================= ACTIVITIES ==========================================
+  .activities {
+    padding: 2rem;
+
+    // ================================================= OPTIONS ==========================================
+    .options {
+      width: 100%;
+      height: 180px;
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: -20px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: transparent;
+      .option {
+        width: 150px;
+        height: 150px;
+        background: #fff;
+        // border: 2px solid #ccc;
+        // box-shadow: 0 0 5px rgba(0,0,0,0.4);
+        margin-right: 20px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.5s;
+        cursor: pointer;
+        font-family: var(--quicksand-font);
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #444;
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+        .logo {
+          margin-bottom: 10px;
+        }
+      }
+      .option.confirm {
+        background: #04bf7b;
+        color: #fff;
+      }
+      .option.cancel {
+        background: #f26430;
+        color: #fff;
+      }
+      .option.edit {
+        background: #3061f2;
+        color: #fff;
+      }
+    }
+
+    // ================================================= WORK ==========================================
+    .work {
+      width: 100%;
+      min-height: 46vh;
+      margin-top: 20px;
+      border-radius: 8px;
+      background: #f6f6f6;
+
+      .notava {
+        width: 100%;
+        height: 45vh;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        p, h4{ font-family: var(--quicksand-font); }
+        h4{ font-size: 18px; margin-top: 10px; color: #444;}
+        h4 span{ 
+          padding: 4px 10px; border-radius: 5px;
+          text-transform: uppercase; color: var(--primary-color-light); 
+        }
+        img{ height: 20vh; }
+      }
+      .ava {
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        .ava-room {
+          width: 100px;
+          height: 100px;
+          margin-right: 20px;
+          margin-bottom: 20px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+          cursor: pointer;
+          transition: 0.3;
+          &:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+          }
+          .heading {
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            background: #f7f7f7;
+            border-radius: 8px 8px 0 0;
+            font-family: var(--quicksand-font);
+            text-transform: uppercase;
+            padding: 4px 0;
+          }
+          .value {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: var(--quicksand-font);
+            color: #444;
+          }
+        }
+      }
+    }
+  }
+}

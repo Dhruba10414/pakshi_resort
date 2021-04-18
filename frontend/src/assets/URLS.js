@@ -13,11 +13,12 @@ export const api = {
     rooms: `${baseurl}/bookings/rooms/`,
 
     // bookings - related
+    create_guest: `${baseurl}/bookings/guests/`,
     guest_detail: `${baseurl}/bookings/guests/`,
     available_rooms: `${baseurl}/bookings/rooms/available/`,
-    create_guest: `${baseurl}/bookings/guests/`,
     make_booking: `${baseurl}/bookings/add/`,
     booking_table: `${baseurl}/bookings/rooms/bookings/`,
+    requested_booking_table: `${baseurl}/bookings/guest_requests/`,
     check_in: `${baseurl}/bookings/checkin/`,
     check_out: `${baseurl}/bookings/checkout/`,
     cancel_booking: `${baseurl}/bookings/cancel/`,
