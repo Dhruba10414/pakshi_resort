@@ -4,7 +4,7 @@ import { api } from "../assets/URLS";
 // Components & Svgs
 import ContentBox from "../components/StaffSection/ContentBox";
 import RequestTable from "../components/BookingRequests/RequestTable";
-import ViewRequest from "../components/BookingRequests/ViewRequest";
+import ViewRequest from "../components/BookingRequests/View/ViewRequest";
 
 function BookingRequests() {
   const [requests, setRequests] = useState([]);

@@ -336,14 +336,13 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        p, h4{ font-family: var(--quicksand-font); }
-        h4{ font-size: 18px; margin-top: 10px; color: #444;}
-        h4 span{ 
-          padding: 4px 10px; border-radius: 5px;
-          text-transform: uppercase; color: var(--primary-color-light); 
+        h4{
+          font-size: 25px; margin-top: 10px; color: var(--green-dark);
+          font-family: var(--quicksand-font); text-transform: uppercase; letter-spacing: 2px;
         }
         img{ height: 20vh; }
       }
+      .notava.alarm{ h4{color: #f26430;}};
       .ava {
         padding: 2rem;
         display: flex;
@@ -358,9 +357,8 @@
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
           cursor: pointer;
           transition: 0.3;
-          &:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-          }
+          &:hover { box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); }
+          position: relative;
           .heading {
             width: 100%;
             height: 30px;
@@ -383,7 +381,55 @@
             color: #444;
           }
         }
+        .ava-room.selected{
+          border: 2px solid var(--green-dark);
+        }
+      }
+    }
+
+    // edit - mode
+    .edit{
+      padding: 2rem;
+      h3{
+        font-size: 14px;
       }
     }
   }
+}
+
+// ================================================= SUCCESS MESSAGE ==========================================
+.message{
+  position: absolute;
+  top: 12vh;
+  left: 52vw;
+  font-weight: bold;
+  font-family: var(--quicksand-font);
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  div{
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    margin-right: 10px; display: flex; align-items: center;
+    justify-content: center;
+  }
+  opacity: 1;
+  margin-left: 0;
+  transition: 0.5s;
+}
+.message.success{
+  background-color: var(--green);
+  color: var(--green-dark);
+  div{ border: 2px solid var(--green-dark); }
+}
+.message.warning{
+  background-color: var(--yellow);
+  color: var(--yellow-dark);
+  div{ border: 2px solid var(--yellow-dark); }
+}
+.message.disabled{
+  margin-left: 30px;
+  opacity: 0;
 }

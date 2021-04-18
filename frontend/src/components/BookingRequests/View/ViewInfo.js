@@ -8,7 +8,7 @@ import {
     location,
     hash,
     type,
-  } from "../../assets/images/SVG";
+  } from "../../../assets/images/SVG";
 
 function ViewInfo({viewFor}) {
     return (
