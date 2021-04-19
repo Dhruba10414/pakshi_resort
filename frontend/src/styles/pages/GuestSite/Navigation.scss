@@ -18,7 +18,7 @@
         rgba(37, 78, 88, 0.3),
         rgba(17, 45, 50, 0.5)
       ),
-      url("../../assets/images/Logo/poster.jpg") no-repeat center center / cover;
+      url("../../../assets/images/Logo/poster.jpg") no-repeat center center / cover;
     position: relative;
     @include media("<=phone") {
       width: 100%;

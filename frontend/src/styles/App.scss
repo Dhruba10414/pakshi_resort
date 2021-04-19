@@ -9,7 +9,6 @@
 
 // SCSS FOR PAGES
 @import "./pages/PageNotfound.scss";
-@import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
 @import "./pages/ActiveGuests.scss";
@@ -19,18 +18,20 @@
 @import "./pages/FoodOrders.scss";
 @import "./pages/FoodManagement.scss";
 @import "./pages/Admin.scss";
+@import "./pages/Ticket.scss";
 
-@import "./pages/Home.scss";
-@import "./pages/Rooms.scss";
-@import "./pages/Room.scss";
-@import "./pages/Facilities.scss";
-@import "./pages/Eat.scss";
-@import "./pages/About.scss";
-@import "./pages/Contact.scss";
-@import "./pages/Privacy.scss";
-@import "./pages/Sitemaps.scss";
-@import "./pages/BookInGuestSide.scss";
-@import "./pages/BookByGuest.scss";
+@import "./pages/GuestSite/Navigation.scss";
+@import "./pages/GuestSite/Home.scss";
+@import "./pages/GuestSite/Rooms.scss";
+@import "./pages/GuestSite/Room.scss";
+@import "./pages/GuestSite/Facilities.scss";
+@import "./pages/GuestSite/Eat.scss";
+@import "./pages/GuestSite/About.scss";
+@import "./pages/GuestSite/Contact.scss";
+@import "./pages/GuestSite/Privacy.scss";
+@import "./pages/GuestSite/Sitemaps.scss";
+@import "./pages/GuestSite/BookInGuestSide.scss";
+@import "./pages/GuestSite/BookByGuest.scss";
 
 
 // SCSS FOR COMPONENTS

@@ -8,6 +8,7 @@ import Invoice from "../components/Guests/Invoice";
 import FoodOrder from "../components/Guests/FoodOrder";
 import Loading from "../components/Loading";
 import search from "../assets/images/View/svg/search-3.svg";
+import Ticket from "../components/Guests/Ticket";
 
 function ActiveGuest() {
   const [guest, setGuest] = useState("");
@@ -17,6 +18,8 @@ function ActiveGuest() {
   const [orderFor, setOrderFor] = useState({});
   const [openInvoice, setOpenInvoice] = useState(false);
   const [invoiceFor, setInvoiceFor] = useState({});
+  const [openTicket, setOpenTicket] = useState(false);
+  const [ticketFor, setTicketFor] = useState({});
 
   // SEARCH GUEST
   const searchGuest = () => {
@@ -31,6 +34,10 @@ function ActiveGuest() {
     setOpenInvoice(true);
     setInvoiceFor({ id: id, name: name, phone: phone, address: address });
   };
+  const openTicketModal = (id) => {
+    setOpenTicket(true);
+    setTicketFor({id: id});
+  }
   // CLOSE MODAL
   const closeModal = () => {
     setOpenOrder(false);
@@ -69,7 +76,9 @@ function ActiveGuest() {
         <div className="activeGuest-container">
           {openInvoice ? (
             <Invoice invoiceFor={invoiceFor} setOpenInvoice={setOpenInvoice} />
-          ) : openOrder ? (
+          ) : openTicket
+            ? <Ticket ticketFor={ticketFor} setOpenTicket={setOpenTicket} />
+            : openOrder ? (
             <FoodOrder
               guestId={orderFor.id}
               name={orderFor.name}
@@ -110,6 +119,7 @@ function ActiveGuest() {
                         address={guest.address}
                         openInvoiceModal={openInvoiceModal}
                         openFoodOrderModal={openFoodOrderModal}
+                        openTicketModal={openTicketModal}
                       />
                     ))
                   ) : (
