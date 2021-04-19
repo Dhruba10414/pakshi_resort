@@ -140,7 +140,7 @@ function Book({clearUser}) {
         const BodyForGuest = {"name": name, "email": email, "address": address, "contact": contact};
 
         // create a guest
-        axios.post(CREATE_GUEST, BodyForGuest, Config)
+        axios.post(CREATE_GUEST, BodyForGuest)
         .then(res => {
           const rooms = roomToBooked.map(room => room.id);
           const BodyForBooking = {

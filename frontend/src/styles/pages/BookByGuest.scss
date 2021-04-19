@@ -1,0 +1,70 @@
+.book-in-by-guest {
+  min-height: 100vh;
+  padding: 150px 200px;
+  .heading {
+    h1 {
+      font-family: var(--primary-font);
+      font-size: 3rem;
+      color: var(--primary-color);
+      @include media("<=desktop") {
+        font-size: 2.4rem;
+      }
+      @include media("<=phone") {
+        font-size: 22px;
+      }
+    }
+  }
+
+  // ROOM AND DATE
+  .roomanddate {
+    margin-top: 70px;
+    h1 {
+      font-family: var(--primary-font);
+      font-weight: normal;
+      font-size: 2rem;
+      text-transform: uppercase;
+      color: #444;
+      margin-bottom: 10px;
+      span {
+        font-size: 3.5rem;
+        color: var(--primary-color-light);
+        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: var(--primary-color-light);
+      }
+    }
+
+    .rooms{
+      width: 70%;
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .room{
+        width: 31%;
+        margin-bottom: 40px;
+        min-height: 10vh;
+        background-color: rgba(223, 219, 211, 0.2);
+        box-shadow: 0 0 10px rgba(223, 219, 211, 1);
+        padding: 20px;
+        cursor: pointer;
+        transition: 0.5s;
+        &:hover{
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        h3{
+          color: #444;
+          font-family: var(--quicksand-font);
+          font-size: 16px;
+        }
+        p{
+          font-size: 14px;
+          color: var(--primary-color-2);
+          font-weight: bold;
+          font-family: var(--quicksand-font);
+          span{font-size: 14px; color: gray;}
+        }
+      }
+    }
+  }
+}

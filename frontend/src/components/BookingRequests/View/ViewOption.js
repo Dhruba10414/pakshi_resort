@@ -42,12 +42,37 @@ function ViewOption({
     if (selectedroom.length !== viewFor.info.numberOfRooms) {
       warningNotify();
     } else {
-      successNotify();
-      setOk(1);
-      console.log(viewFor.guest.guestId);
-      console.log(selectedroom);
-      console.log(viewFor.info.checkin);
-      console.log(viewFor.info.checkout);
+      setprocessLoading(true);
+      setConfirming(true);
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const MAKE_BOOKING = api.make_booking;
+
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+          const BodyForBooking = {
+            "room": selectedroom,
+            "guest": viewFor.guest.guestId,
+            "from_": viewFor.info.checkin,
+            "to_": viewFor.info.checkout
+          };
+
+          axios
+            .post(MAKE_BOOKING, BodyForBooking, Config)
+            .then(() => {
+              setprocessLoading(false);
+              setConfirming(false);
+              successNotify();
+              setOk(1);
+            })
+            .catch((err) => {
+              console.log(err.message);
+              setprocessLoading(false);
+              setConfirming(false);
+            });
+        });
     }
   };
 
@@ -60,30 +85,31 @@ function ViewOption({
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const DELETE_GUEST = api.delete_fraud_guest;
 
-    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-    .then((token) => {
-      const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-      const Body = { guest: viewFor.guest.guestId };
-      console.log(Config);
-      axios.delete(DELETE_GUEST, Body, Config)
-      .then(() => {
-        console.log(Body);
-        setprocessLoading(false);
-        setCanceling(false);
-        setOk(2);
-        cancelNotify();
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        axios
+          .delete(DELETE_GUEST, {
+            headers: { Authorization: "Bearer " + token.data.access },
+            data: { guest: viewFor.guest.guestId },
+          })
+          .then(() => {
+            setprocessLoading(false);
+            setCanceling(false);
+            setOk(2);
+            cancelNotify();
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setprocessLoading(false);
+            setCanceling(false);
+          });
       })
       .catch((err) => {
         console.log(err.message);
         setprocessLoading(false);
         setCanceling(false);
       });
-    })
-    .catch((err) => {
-      console.log(err.message);
-      setprocessLoading(false);
-      setCanceling(false);
-    })
   };
 
   return (
@@ -99,7 +125,7 @@ function ViewOption({
         ) : (
           <div className="option confirm">
             <div className="logo">{checked}</div>
-            <div>{confirming ? "Processing.." : "Confirm" }</div>
+            <div>{confirming ? "Processing.." : "Confirm"}</div>
           </div>
         )}
         {!processloading ? (
@@ -110,7 +136,7 @@ function ViewOption({
         ) : (
           <div className="option cancel">
             <div className="logo">{x}</div>
-            <div>{canceling ? "Processing.." : "Cancel" }</div>
+            <div>{canceling ? "Processing.." : "Cancel"}</div>
           </div>
         )}
         {!processloading ? (

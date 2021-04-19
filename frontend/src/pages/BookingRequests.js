@@ -45,7 +45,7 @@ function BookingRequests() {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [openModal]);
 
   return (
     <ContentBox heading="Booking Requests">
