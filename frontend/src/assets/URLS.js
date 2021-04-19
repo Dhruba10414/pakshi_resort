@@ -13,17 +13,18 @@ export const api = {
     rooms: `${baseurl}/bookings/rooms/`,
 
     // bookings - related
-    create_guest: `${baseurl}/bookings/guests/`,
-    guest_detail: `${baseurl}/bookings/guests/`,
-    available_rooms: `${baseurl}/bookings/rooms/available/`,
-    make_booking: `${baseurl}/bookings/add/`,
-    booking_table: `${baseurl}/bookings/rooms/bookings/`,
-    requested_booking_table: `${baseurl}/bookings/guest_requests/`,
-    check_in: `${baseurl}/bookings/checkin/`,
-    check_out: `${baseurl}/bookings/checkout/`,
-    cancel_booking: `${baseurl}/bookings/cancel/`,
-    request_for_booking: `${baseurl}/bookings/guest_requests/add/`,
-    delete_fraud_guest: `${baseurl}/bookings/guests/frauds/`,
+    create_guest: `${baseurl}/bookings/guests/`, //post
+    guest_detail: `${baseurl}/bookings/guests/`, // get
+    available_rooms: `${baseurl}/bookings/rooms/available/`, //get
+    make_booking: `${baseurl}/bookings/add/`, // post
+    booking_table: `${baseurl}/bookings/rooms/bookings/`, // get
+    requested_booking_table: `${baseurl}/bookings/guest_requests/`, // get
+    check_in: `${baseurl}/bookings/checkin/`, // post
+    check_out: `${baseurl}/bookings/checkout/`, // post
+    cancel_booking: `${baseurl}/bookings/cancel/`, // post
+    request_for_booking: `${baseurl}/bookings/guest_requests/add/`, // post
+    delete_fraud_guest: `${baseurl}/bookings/guests/frauds/`, //delete
+    accept_booking_request: `${baseurl}/bookings/guest_requests/`, //post
 
     //food-related
     food_list: `${baseurl}/food/allfood/`,

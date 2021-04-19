@@ -33,10 +33,10 @@ function BookInGuestSide() {
       }
       console.log(Body);
       axios.post(api.request_for_booking, Body)
-      .then(() => {console.log("Success"); setLoading(true); })
+      .then(() => {console.log("Success"); setLoading(false); })
       .catch((err) => {console.log(err.message); setLoading(false); });
      })
-    .catch(err => {console.log(err.message); setLoading(true);});
+    .catch(err => {console.log(err.message); setLoading(false);});
   };
 
   // FETCH ROOMS TYPE WITH PRICE

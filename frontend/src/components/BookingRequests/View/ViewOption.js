@@ -46,21 +46,19 @@ function ViewOption({
       setConfirming(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
-      const MAKE_BOOKING = api.make_booking;
+      const REQUEST_ACCEPT = api.accept_booking_request;
 
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {headers: { Authorization: "Bearer " + token.data.access }};
           const BodyForBooking = {
-            "room": selectedroom,
-            "guest": viewFor.guest.guestId,
-            "from_": viewFor.info.checkin,
-            "to_": viewFor.info.checkout
+            "id": viewFor.id,
+            "rooms": selectedroom,
           };
 
           axios
-            .post(MAKE_BOOKING, BodyForBooking, Config)
+            .post(REQUEST_ACCEPT, BodyForBooking, Config)
             .then(() => {
               setprocessLoading(false);
               setConfirming(false);

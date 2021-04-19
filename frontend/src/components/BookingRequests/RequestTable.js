@@ -41,6 +41,7 @@ function RequestTable({ loading, requests, viewRequest }) {
           requests.map((request) => (
             <Entry
               key={request.id}
+              requestId={request.id}
               guestId={request.guest.id}
               guestName={request.guest.name}
               guestPhone={request.guest.contact}

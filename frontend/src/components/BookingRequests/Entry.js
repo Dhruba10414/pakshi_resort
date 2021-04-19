@@ -1,6 +1,7 @@
 import React from "react";
 
 function Entry({
+  requestId,
   guestId,
   guestName,
   guestPhone,
@@ -18,7 +19,7 @@ function Entry({
   const openBookModal = () => {
     const guestData = {guestId, guestName, guestPhone, guestEmail, guestAddress,}
     const bookingData = {roomType, checkin, checkout, requestedOn, numberOfRooms}
-    const data = {guest: guestData, info: bookingData}
+    const data = {id: requestId, guest: guestData, info: bookingData}
     viewRequest(data);
   };
 
