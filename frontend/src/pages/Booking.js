@@ -10,6 +10,7 @@ import { api } from "../assets/URLS";
 import Entry from "../components/Booking/Entry";
 import Loading from "../components/Loading";
 import { check, rsvg, searchSvg } from "../assets/images/SVG";
+import search from "../assets/images/View/svg/search-3.svg";
 
 function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, filterByPending}) {
   const [name, setName] = useState("");
@@ -101,24 +102,26 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
           <div className="func">Confirm{rsvg}</div>
         </div>
         {/* table entries */}
-        {!loading ? (
-          filterby !== "all" ? (
-            filteredBookings &&
-            filteredBookings.map((entry) => (
-              <Entry
-                key={entry.id}
-                bookingId={entry.id}
-                room={entry.room}
-                guest={entry.guest}
-                check_in={entry.check_in}
-                check_out={entry.check_out}
-                book_on={entry.booked_on}
-                is_active={entry.is_active}
-                is_cancel={entry.is_canceled}
-                notify={notify}
-              />
-            ))
-          ) : (
+        {!loading
+          ? bookings.length > 0
+            ? filterby !== "all"
+              ? 
+              filteredBookings &&
+              filteredBookings.map((entry) => (
+                <Entry
+                  key={entry.id}
+                  bookingId={entry.id}
+                  room={entry.room}
+                  guest={entry.guest}
+                  check_in={entry.check_in}
+                  check_out={entry.check_out}
+                  book_on={entry.booked_on}
+                  is_active={entry.is_active}
+                  is_cancel={entry.is_canceled}
+                  notify={notify}
+                />
+              ))
+            : 
             bookings &&
             bookings.map((entry) => (
               <Entry
@@ -134,10 +137,13 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
                 notify={notify}
               />
             ))
-          )
-        ) : (
-          <Loading height="60vh" width="100%" textSize="15px" space="6px" />
-        )}
+          : <div className="empty">
+            <img src={search} alt="" />
+            <h2>Not available</h2>
+          </div>
+
+        :  <Loading height="60vh" width="100%" textSize="15px" space="6px" />
+      }
         {/* success message */}
         <div className={success ? "success-message" : "success-message disabled"}>
           <div>{check}</div> Successfully Submitted!

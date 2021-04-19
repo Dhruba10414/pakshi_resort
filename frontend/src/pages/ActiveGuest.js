@@ -7,6 +7,7 @@ import { api } from "../assets/URLS";
 import Invoice from "../components/Guests/Invoice";
 import FoodOrder from "../components/Guests/FoodOrder";
 import Loading from "../components/Loading";
+import search from "../assets/images/View/svg/search-3.svg";
 
 function ActiveGuest() {
   const [guest, setGuest] = useState("");
@@ -99,17 +100,24 @@ function ActiveGuest() {
 
                 {/* table content */}
                 {!loading ? (
-                  activeGuests.map((guest) => (
-                    <Guest
-                      key={guest.id}
-                      id={guest.id}
-                      name={guest.name}
-                      phone={guest.contact}
-                      address={guest.address}
-                      openInvoiceModal={openInvoiceModal}
-                      openFoodOrderModal={openFoodOrderModal}
-                    />
-                  ))
+                  activeGuests.length > 0 ? (
+                    activeGuests.map((guest) => (
+                      <Guest
+                        key={guest.id}
+                        id={guest.id}
+                        name={guest.name}
+                        phone={guest.contact}
+                        address={guest.address}
+                        openInvoiceModal={openInvoiceModal}
+                        openFoodOrderModal={openFoodOrderModal}
+                      />
+                    ))
+                  ) : (
+                    <div className="empty">
+                      <img src={search} alt="" />
+                      <h2>Not available</h2>
+                    </div>
+                  )
                 ) : (
                   <Loading
                     height="80vh"

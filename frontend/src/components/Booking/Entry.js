@@ -35,10 +35,9 @@ function Entry({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
-        const Body = { booking: bookingId };
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+        const Body = { "booking": bookingId };
+        console.log(Body);
 
         axios
           .post(CHECK_IN_URL, Body, Config)
@@ -48,7 +47,7 @@ function Entry({
             setChecked(true);
           })
           .catch((err) => {
-            console.log(err.error);
+            console.log(err.message);
             setLoading(false);
           });
       })
@@ -112,10 +111,9 @@ function Entry({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { booking: bookingId };
+        
         axios
           .post(CANCEL_URL, Body, Config)
           .then(() => {
