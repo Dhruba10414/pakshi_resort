@@ -3,7 +3,11 @@ import ContentBox from "../components/StaffSection/ContentBox";
 import axios from "axios";
 // redux
 import { connect } from "react-redux";
-import { saveBookings, filterByCompleted, filterByPending} from "../redux/bookings/bookingAction";
+import {
+  saveBookings,
+  filterByCompleted,
+  filterByPending,
+} from "../redux/bookings/bookingAction";
 //urls
 import { api } from "../assets/URLS";
 // Component & Svg
@@ -12,24 +16,47 @@ import Loading from "../components/Loading";
 import { check, rsvg, searchSvg } from "../assets/images/SVG";
 import search from "../assets/images/View/svg/search-3.svg";
 
-function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, filterByPending}) {
+function Booking({
+  bookings,
+  filteredBookings,
+  saveBookings,
+  filterByCompleted,
+  filterByPending,
+}) {
   const [name, setName] = useState("");
   const [filterby, setFilterby] = useState("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [checkout, setCheckout] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+  const [canceled, setCanceled] = useState(false);
 
   // SEARCH FUNCTIONALITY
   const searching = () => {
     console.log(name);
   };
   // NOTIFY IF CHECK-IN SUCCESSFULLY DONE
-  const notify = () => {
+  const notifyforCheckout = () => {
     setTimeout(() => {
-      setSuccess(false);
+      setCheckout(false);
     }, 2000);
-    setSuccess(true);
+    setCheckout(true);
   };
+  // NOTIFY IF CHECK-IN SUCCESSFULLY DONE
+  const notifyForConfirm = () => {
+    setTimeout(() => {
+      setConfirmed(false);
+    }, 2000);
+    setConfirmed(true);
+  };
+  // NOTIFY IF CANCELATION SUCCESSFULLY DONE
+  const notifyForCancel = () => {
+    setTimeout(() => {
+      setCanceled(false);
+    }, 2000);
+    setCanceled(true);
+  };
+
   // FILTER BY COMPLETE
   const filterOrderListByComplete = () => {
     setFilterby("co");
@@ -87,9 +114,28 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
         </div>
         {/* filter options */}
         <div className="filter-by-type">
-          <div className={filterby === "all" ? "active" : ""} onClick={() => { setFilterby("all"); }}>All</div>
-          <div className={filterby === "pe" ? "active" : ""} onClick={filterOrderListByPending}> Pending </div>
-          <div className={filterby === "co" ? "active" : ""} onClick={filterOrderListByComplete}> Staying </div>
+          <div
+            className={filterby === "all" ? "active" : ""}
+            onClick={() => {
+              setFilterby("all");
+            }}
+          >
+            All
+          </div>
+          <div
+            className={filterby === "pe" ? "active" : ""}
+            onClick={filterOrderListByPending}
+          >
+            {" "}
+            Pending{" "}
+          </div>
+          <div
+            className={filterby === "co" ? "active" : ""}
+            onClick={filterOrderListByComplete}
+          >
+            {" "}
+            Staying{" "}
+          </div>
         </div>
         {/* table heading */}
         <div className="table-heading">
@@ -102,10 +148,9 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
           <div className="func">Confirm{rsvg}</div>
         </div>
         {/* table entries */}
-        {!loading
-          ? bookings.length > 0
-            ? filterby !== "all"
-              ? 
+        {!loading ? (
+          filterby !== "all" ? (
+            filteredBookings.length > 0 ? (
               filteredBookings &&
               filteredBookings.map((entry) => (
                 <Entry
@@ -118,10 +163,18 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
                   book_on={entry.booked_on}
                   is_active={entry.is_active}
                   is_cancel={entry.is_canceled}
-                  notify={notify}
+                  notifyforCheckout={notifyforCheckout}
+                  notifyForCancel={notifyForCancel}
+                  notifyForConfirm={notifyForConfirm}
                 />
               ))
-            : 
+            ) : (
+              <div className="empty">
+                <img src={search} alt="" />
+                <h2>Not available</h2>
+              </div>
+            )
+          ) : bookings.length > 0 ? (
             bookings &&
             bookings.map((entry) => (
               <Entry
@@ -133,20 +186,29 @@ function Booking({ bookings, filteredBookings, saveBookings, filterByCompleted, 
                 check_out={entry.check_out}
                 book_on={entry.booked_on}
                 is_active={entry.is_active}
-                is_cancel={entry.is_canceled}
-                notify={notify}
+                notifyforCheckout={notifyforCheckout}
+                notifyForCancel={notifyForCancel}
+                notifyForConfirm={notifyForConfirm}
               />
             ))
-          : <div className="empty">
-            <img src={search} alt="" />
-            <h2>Not available</h2>
-          </div>
-
-        :  <Loading height="60vh" width="100%" textSize="15px" space="6px" />
-      }
+          ) : (
+            <div className="empty">
+              <img src={search} alt="" />
+              <h2>Not available</h2>
+            </div>
+          )
+        ) : (
+          <Loading height="60vh" width="100%" textSize="15px" space="6px" />
+        )}
         {/* success message */}
-        <div className={success ? "success-message" : "success-message disabled"}>
-          <div>{check}</div> Successfully Submitted!
+        <div className={confirmed ? "message confirm" : "message confirm disabled"}>
+          <div>{check}</div> Successfully Confirmed!
+        </div>
+        <div className={canceled ? "message cancel" : "message cancel disabled"}> 
+          <div>{check}</div> Successfully Canceled!
+        </div>
+        <div className={checkout ? "message confirm" : "message confirm disabled"}> 
+          <div>{check}</div> Checkout Successfull!
         </div>
       </div>
     </ContentBox>

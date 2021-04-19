@@ -233,13 +233,13 @@ function FoodOrders({
               Cancel
             </div>
 
-            <div className={confirm ? "message success" : "message disabled"}>
+            <div className={confirm ? "messages success" : "messages disabled"}>
               <div>{check}</div> Order Completed!
             </div>
-            <div className={warnings ? "message warning" : "message disabled"}>
+            <div className={warnings ? "messages warning" : "messages disabled"}>
               <div>{warning}</div> Can't be selected!
             </div>
-            <div className={cancel ? "message cancel" : "message disabled"}>
+            <div className={cancel ? "messages cancel" : "messages disabled"}>
               <div>{warning}</div> Order Canceled!
             </div>
           </div>

@@ -15,11 +15,15 @@ function Entry({
   check_out,
   book_on,
   is_active,
-  is_cancel,
   clearUser,
-  notify,
+  notifyforCheckout,
+  notifyForCancel,
+  notifyForConfirm
 }) {
-  const [checked, setChecked] = useState(false);
+
+  const [checkFoConfirm, setCheckForConfirm] = useState(false);
+  const [checkFoCancel, setCheckForCancel] = useState(false);
+  const [checkForCheckout, setCheckForCheckout] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -42,9 +46,9 @@ function Entry({
         axios
           .post(CHECK_IN_URL, Body, Config)
           .then(() => {
-            notify();
+            notifyForConfirm();
             setLoading(false);
-            setChecked(true);
+            setCheckForConfirm(true);
           })
           .catch((err) => {
             console.log(err.message);
@@ -80,9 +84,10 @@ function Entry({
         axios
           .post(CHECK_OUT_URL, Body, Config)
           .then(() => {
-            notify();
+            notifyforCheckout();
             setLoading(false);
-            setChecked(true);
+            setCheckForConfirm(false);
+            setCheckForCheckout(true);
           })
           .catch((err) => {
             console.log(err.message);
@@ -117,9 +122,9 @@ function Entry({
         axios
           .post(CANCEL_URL, Body, Config)
           .then(() => {
-            notify();
+            notifyForCancel();
             setLoading(false);
-            setChecked(true);
+            setCheckForCancel(true);
           })
           .catch((err) => {
             console.log(err.message);
@@ -136,7 +141,7 @@ function Entry({
       });
   };
 
-  useEffect(() => {}, [checked]);
+  useEffect(() => {}, [checkForCheckout, checkFoCancel, checkFoConfirm]);
 
   return (
     <div className="entry">
@@ -144,41 +149,51 @@ function Entry({
       <div className="guest-name">{guest}</div>
       <div
         className={
-          checked
+          checkFoConfirm
             ? "status active"
-            : is_active
-            ? "status active"
-            : is_cancel
-            ? "status canceled"
-            : "status pending"
+            : checkFoCancel
+              ? "status canceled"
+              : is_active
+              ? "status active"
+              : "status pending"
         }
       >
         <p>
-          {checked
+          {checkFoConfirm
             ? "staying"
-            : is_active
-            ? "staying"
-            : is_cancel
-            ? "canceled"
-            : "pending"}
+            :  checkFoCancel
+                ? "canceled"
+                : checkForCheckout
+                ? "leaved"
+                : is_active
+                  ? "staying"
+                  : "pending"
+            }
         </p>
       </div>
       <div className="bookon">{book_on}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">
-        {checked || is_cancel ? (
-          "/"
-        ) : checked || is_active ? (
-          <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
-        ) : !loading ? (
-          <div className="btn-boxx">
-            <button className="checkin" onClick={checkedInFunc}>Check-in</button>
-            <button className="cancel" onClick={cancelBooking}>Cancel</button>
-          </div>
-        ) : (
-          <button className="disabled">{checkedIn} prcessing.. </button>
-        )}
+        {
+          checkFoConfirm
+          ? !loading
+            ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
+            : <button className="disabled">{checkedIn} prcessing.. </button>
+          : checkFoCancel || checkForCheckout
+            ? "/"
+            : is_active
+              ? !loading 
+                ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
+                : <button className="disabled">{checkedIn} prcessing.. </button>
+              : !loading 
+                ? ( <div className="btn-boxx">
+                    <button className="checkin" onClick={checkedInFunc}>Check-in</button>
+                    <button className="cancel" onClick={cancelBooking}>Cancel</button>
+                  </div>
+                )
+                : <button className="disabled">{checkedIn} prcessing.. </button>
+        }
       </div>
     </div>
   );

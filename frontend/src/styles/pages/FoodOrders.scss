@@ -66,9 +66,10 @@
           color: var(--green-dark);
           &::after{width: 100%;}
         }
-        .message{
+
+        .messages{
           position: absolute;
-          bottom: 10px;
+          bottom: 20px;
           right: 20px;
           font-weight: bold;
           font-family: var(--quicksand-font);
@@ -77,6 +78,7 @@
           display: flex;
           align-items: center;
           font-size: 14px;
+          z-index: 10;
           div{
             width: 30px; height: 30px;
             border-radius: 50%;
@@ -87,19 +89,19 @@
           margin-left: 0;
           transition: 0.5s;
         }
-        .message.success{ 
+        .messages.success{ 
           background-color: var(--green); color: var(--green-dark);
           div{border: 2px solid var(--green-dark); svg{color: var(--green-dark);}}
         }
-        .message.warning{ 
+        .messages.warning{ 
           background-color: var(--yellow); color: var(--yellow-dark);
           div{border: none; svg{color: var(--yellow-dark);}}
         }
-        .message.cancel{
+        .messages.cancel{
           background-color: var(--red); color: var(--red-dark);
           div{border: none; svg{color: var(--red-dark);}}
         }
-        .message.disabled{
+        .messages.disabled{
           margin-right: -30px;
           opacity: 0;
         }

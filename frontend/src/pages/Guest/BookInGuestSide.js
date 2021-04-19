@@ -20,6 +20,7 @@ function BookInGuestSide() {
   // MAKE A BOOKING
   const makeBooking = () => {
     // create a guest first
+    setLoading(true);
     axios.post(api.create_guest, guest)
     .then((res) => { 
       // send booking request using gues.id
@@ -30,11 +31,12 @@ function BookInGuestSide() {
         "check_in": info.checkin,
         "check_out": info.checkout
       }
-      axios.post("https://api.pakshiresort.com/bookings/guest_requests/add/", Body)
-      .then(() => {console.log("Success")})
-      .catch((err) => {console.log(err.message)});
+      console.log(Body);
+      axios.post(api.request_for_booking, Body)
+      .then(() => {console.log("Success"); setLoading(true); })
+      .catch((err) => {console.log(err.message); setLoading(false); });
      })
-    .catch(err => {console.log(err.message)});
+    .catch(err => {console.log(err.message); setLoading(true);});
   };
 
   // FETCH ROOMS TYPE WITH PRICE

@@ -191,12 +191,10 @@
     h2{ font-family: var(--quicksand-font); font-weight: normal; text-transform: uppercase; }
   }
 
-  .success-message{
+  .message{
     position: absolute;
     top: 0;
     right: 40px;
-    background-color: var(--green);
-    color: var(--green-dark);
     font-weight: bold;
     font-family: var(--quicksand-font);
     padding: 10px 20px;
@@ -206,7 +204,6 @@
     font-size: 14px;
     div{
       width: 30px; height: 30px;
-      border-radius: 50%; border: 2px solid var(--green-dark);
       margin-right: 10px; display: flex; align-items: center;
       justify-content: center;
     }
@@ -214,8 +211,16 @@
     margin-left: 0;
     transition: 0.5s;
   }
-  .success-message.disabled{
+  .message.disabled{
     margin-right: 50px;
     opacity: 0;
+  }
+  .message.confirm{ 
+    background-color: var(--green); color: var(--green-dark);
+    div{border: 2px solid var(--green-dark);}
+  }
+  .message.cancel{
+    background-color: var(--red); color: var(--red-dark);
+    div{border: 2px solid var(--red-dark);}
   }
 }
