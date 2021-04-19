@@ -153,7 +153,6 @@ function Book({clearUser}) {
           axios.post(CREATE_BOOKING, BodyForBooking, Config)
           .then(() => {notify(); setLoading(false);})
           .catch(err => {console.log(err.message); setLoading(false);});
-          console.log(BodyForBooking);
         })
         .catch(err => {console.log(err.message); setLoading(false);})
       })

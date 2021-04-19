@@ -2,20 +2,29 @@ import React, { useState } from "react";
 import { checked, pencil, x } from "../../../assets/images/SVG";
 import check from "../../../assets/images/View/svg/cheklist-complete.svg";
 import alarm from "../../../assets/images/View/svg/alarm.svg";
+import signal from "../../../assets/images/View/svg/signal.svg";
 import Loading from "../../Loading";
 import AvailableRoom from "./AvailableRoom";
 import EditInfo from "./EditInfo";
+import axios from "axios";
+import { api } from "../../../assets/URLS";
 
 function ViewOption({
   loading,
   availableroom,
   viewFor,
+  roomData,
   successNotify,
   warningNotify,
+  cancelNotify,
+  setAvailableRoom,
 }) {
   const [selectedroom, setSelectedRoom] = useState([]);
   const [ok, setOk] = useState(0);
   const [state, setState] = useState(false);
+  const [processloading, setprocessLoading] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const [canceling, setCanceling] = useState(false);
 
   // SELECT ROOM
   const selectRoom = (id) => {
@@ -44,25 +53,77 @@ function ViewOption({
 
   // CANCEL BOOKING
   const cancelbooking = () => {
-    setOk(2);
-  }
+    setprocessLoading(true);
+    setCanceling(true);
+
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const DELETE_GUEST = api.delete_fraud_guest;
+
+    axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+    .then((token) => {
+      const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+      const Body = { guest: viewFor.guest.guestId };
+      console.log(Config);
+      axios.delete(DELETE_GUEST, Body, Config)
+      .then(() => {
+        console.log(Body);
+        setprocessLoading(false);
+        setCanceling(false);
+        setOk(2);
+        cancelNotify();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setprocessLoading(false);
+        setCanceling(false);
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      setprocessLoading(false);
+      setCanceling(false);
+    })
+  };
 
   return (
     <div className="activities">
+      {/* ---------------- options ------------- */}
       <h3>Options</h3>
       <div className="options">
-        <div className="option confirm" onClick={makeAbooking}>
-          <div className="logo">{checked}</div>
-          <div>Confirm</div>
-        </div>
-        <div className="option cancel" onClick={cancelbooking}>
-          <div className="logo">{x}</div>
-          <div>Cancel</div>
-        </div>
-        <div className="option edit" onClick={() => setState(true)}>
-          <div className="logo">{pencil}</div>
-          <div>Edit</div>
-        </div>
+        {!processloading ? (
+          <div className="option confirm" onClick={makeAbooking}>
+            <div className="logo">{checked}</div>
+            <div>Confirm</div>
+          </div>
+        ) : (
+          <div className="option confirm">
+            <div className="logo">{checked}</div>
+            <div>{confirming ? "Processing.." : "Confirm" }</div>
+          </div>
+        )}
+        {!processloading ? (
+          <div className="option cancel" onClick={cancelbooking}>
+            <div className="logo">{x}</div>
+            <div>Cancel</div>
+          </div>
+        ) : (
+          <div className="option cancel">
+            <div className="logo">{x}</div>
+            <div>{canceling ? "Processing.." : "Cancel" }</div>
+          </div>
+        )}
+        {!processloading ? (
+          <div className="option edit" onClick={() => setState(true)}>
+            <div className="logo">{pencil}</div>
+            <div>Edit</div>
+          </div>
+        ) : (
+          <div className="option edit">
+            <div className="logo">{pencil}</div>
+            <div>Edit</div>
+          </div>
+        )}
       </div>
 
       {/* ---------------- activities ------------- */}
@@ -70,11 +131,11 @@ function ViewOption({
       <div className="work">
         {!loading ? (
           // if it is not edit mode
-          !state ?
+          !state ? (
             // if booking is not completed yet
-            ok === 0 ?
-            // if room is available
-              availableroom.length > 0 ?
+            ok === 0 ? (
+              // if room is available
+              availableroom.length > 0 ? (
                 <div className="ava">
                   {availableroom.map((room) => (
                     <AvailableRoom
@@ -85,20 +146,33 @@ function ViewOption({
                     />
                   ))}
                 </div>
-              : <div className="notava">No room is available</div>
-            : ok === 1
-              ? <div className="notava">
+              ) : (
+                <div className="notava notfound">
+                  <img src={signal} alt="" />
+                  <h4>Not available!</h4>
+                </div>
+              )
+            ) : ok === 1 ? (
+              <div className="notava">
                 <img src={check} alt="" />
                 <h4> Booking Complete </h4>
               </div>
-              : <div className="notava alarm">
+            ) : (
+              <div className="notava alarm">
                 <img src={alarm} alt="" />
                 <h4> Booking Canceled! </h4>
-                <button onClick={() => setOk(0)}>Go Back</button>
               </div>
-
-          // edit mode
-          : <EditInfo />
+            )
+          ) : (
+            // edit mode
+            <EditInfo
+              viewFor={viewFor}
+              roomData={roomData}
+              setAvailableRoom={setAvailableRoom}
+              setState={setState}
+              setSelectedRoom={setSelectedRoom}
+            />
+          )
         ) : (
           <Loading
             width="100%"

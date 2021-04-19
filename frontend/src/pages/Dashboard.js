@@ -55,7 +55,7 @@ function Dashboard({ clearUser }) {
         // get rooms
         axios
           .get(api.rooms, Config)
-          .then((res) => { setRoomList(res.data); setLoading(false); console.log(res.data) })
+          .then((res) => { setRoomList(res.data); setLoading(false); })
           .catch((err) => { setError(err.message); });
       })
       .catch((err) => {

@@ -56,7 +56,7 @@ function BookingRequests() {
           viewRequest={viewRequest}
         />
       ) : (
-        <ViewRequest viewFor={viewFor} />
+        <ViewRequest viewFor={viewFor} setOpenModal={setOpenModal} />
       )}
     </ContentBox>
   );

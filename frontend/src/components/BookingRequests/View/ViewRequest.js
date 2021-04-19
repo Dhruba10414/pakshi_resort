@@ -15,16 +15,19 @@ const room_types = [
   "Karni Kunjo Honeymoon Suit ",
 ];
 
-function ViewRequest({ viewFor }) {
+function ViewRequest({ viewFor, setOpenModal }) {
   const [loading, setLoading] = useState(false);
   const [availableroom, setAvailableRoom] = useState(false);
-  const [warning, setWarning] = useState(false);
+  const [roomData, setRoomData] = useState(false);
+  const [cancel, setCancel] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   // NOTIFY FOR SUCCESS
   const successNotify = () => {
     setTimeout(() => {
       setSuccess(false);
+      setOpenModal(false);
     }, 2500);
     setSuccess(true);
   }
@@ -35,6 +38,15 @@ function ViewRequest({ viewFor }) {
       setWarning(false);
     }, 2500);
     setWarning(true);
+  }
+
+  // NOTIFY FOR CANCEL
+  const cancelNotify = () => {
+    setTimeout(() => {
+      setCancel(false);
+      setOpenModal(false);
+    }, 3000);
+    setCancel(true);
   }
 
   // FIND AVAILABLE ROOMS
@@ -71,6 +83,7 @@ function ViewRequest({ viewFor }) {
           .get(AVAILABLITY_CHECK, Config)
           .then((res) => {
             findAvailableRooms(res.data);
+            setRoomData(res.data);
             setLoading(false);
           })
           .catch((err) => {
@@ -87,8 +100,11 @@ function ViewRequest({ viewFor }) {
           availableroom={availableroom}
           loading={loading}
           viewFor={viewFor}
+          roomData={roomData}
           successNotify={successNotify}
           warningNotify={warningNotify}
+          cancelNotify={cancelNotify}
+          setAvailableRoom={setAvailableRoom}
         />
         <ViewInfo viewFor={viewFor} />
       </div>
@@ -98,6 +114,9 @@ function ViewRequest({ viewFor }) {
       </div>
       <div className={warning ? "warning message" : "warning message disabled"}>
         <div>!</div> Number of selected rooms mismatched!
+      </div>
+      <div className={cancel ? "cancel message" : "cancel message disabled"}>
+        <div>!</div> Successfully Canceled!
       </div>
     </>
   );
