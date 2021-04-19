@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div style="text-align: center; background-color: #59ab6f;">
+            <img src="cid:logo" alt="logo" width="100" height="100" align="left">
+            <h1>Pakshi Resort</h1>
+            <h4>Booking Cancelation</h4>
+        </div>
+        <br>
+        <div>
+            <h2>Dear {{ booking.guest.name }},</h2><br>
+            <p>Sorry to be bearer of bad news, your room reservation have been canceled. We apologize for any discomfort experience you might have with us.<br>
+                Your following room reservation has been canceled.
+            </p>
+            <table align="center">
+                <tr style="background-color: #59ab6f;">
+                    <th>Room No</th>
+                    <th>Room Category</th>
+                    <th>Check In Date</th>
+                    <th>Check Out Date</th>
+                </tr>
+
+                <tr>
+                    <th>{{ booking.room.room_num }}</th>
+                    <th>{{ booking.room.room_type.room_type }}</th>
+                    <th>{{ booking.check_in }}</th>
+                    <th>{{ booking.check_out }}</th>
+                </tr>
+
+            </table>
+
+            <h4>Best Wishes and Regards</h4>
+            <h3>Pakshi Resort</h3>
+
+            <p>This is an automated email for booking cancelation. For any inconvience please contact with us.</p>
+        </div>
+        <div style="text-align: left; background-color: #59ab6f; padding: 2;">
+            <h4>For any query, Call 01730706252 or 01730706257</h4>
+            <h5>You can visit our <a href="https://pakshiresort.com">website.</a></h5>
+            <h3>Pakshi Resort Ltd.</h3>
+            <p>Khankashorif Road, Pakshi <br>
+            Ishwardi Z6006, Pabna, Rajshahi.</p>
+        </div>
+    </body>
+</html>

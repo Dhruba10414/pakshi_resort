@@ -88,7 +88,7 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
                                 F('stayed'), output_field=FloatField()))
             total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
 
-            payments = Payments.objects.filter(guest__id=guest)
+            payments = Payments.objects.filter(guest__id=guest, paid_for='RB')
             total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
             
             summury = {
