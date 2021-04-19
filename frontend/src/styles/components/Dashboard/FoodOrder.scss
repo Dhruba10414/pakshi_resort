@@ -121,7 +121,7 @@
           h1, h3{ display: block; font-family: var(--quicksand-font); }
           h1{ 
             font-size: 3rem; line-height: 2.5rem; font-weight: normal; color: var(--primary-color-light); span{font-size: 2.3rem;} 
-            @include media("<=desktop") { font-size: 2.5px; line-height: 2rem; }
+            @include media("<=desktop") { font-size: 2rem; line-height: 2rem; }
           }
           h3{
             font-size: 16px; color: gray;

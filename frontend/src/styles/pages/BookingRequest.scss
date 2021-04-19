@@ -154,6 +154,9 @@
     font-family: var(--quicksand-font);
     text-transform: uppercase;
     color: gray;
+    @include media("<=desktop") {
+      font-size: 13px;
+     }
   }
 
   // ================================================= GUEST INFORMATION ==========================================
@@ -164,17 +167,27 @@
       margin-top: 10px;
       line-height: 1.8rem;
       color: #444;
+      @include media("<=desktop") {
+        line-height: 1.4rem;
+       }
     }
     p {
       font-family: var(--quicksand-font);
       font-size: 16px;
       color: #444;
+      @include media("<=desktop") {
+        font-size: 13.5px;
+       }
     }
     .guest {
       height: 43%;
       background: #fff;
       padding: 2rem;
       border-radius: 8px;
+      @include media("<=desktop") {
+        padding: 1.2rem;
+        height: 40%;
+       }
     }
 
     .infos {
@@ -185,12 +198,15 @@
       border-radius: 8px;
       .data-box-2 {
         margin-top: 2.5rem;
+        @include media("<=desktop") { height: 63%; margin-top: 1.2rem; }
       }
+      @include media("<=desktop") { padding: 1.2rem; }
     }
     .data {
       margin-top: 15px;
       display: flex;
       align-items: center;
+      @include media("<=desktop") { margin-top: 12.5px; }
       &__logo {
         width: 30px;
         height: 30px;
@@ -210,9 +226,11 @@
           color: gray;
           font-size: 14px;
           font-family: var(--quicksand-font);
+          @include media("<=desktop") { font-size: 13.5px; }
         }
         p {
           font-size: 15px;
+          @include media("<=desktop") { font-size: 12.5px; }
         }
       }
     }
@@ -290,12 +308,15 @@
       align-items: center;
       overflow: hidden;
       background: transparent;
+      @include media("<=desktop") {
+        height: 120px;
+        margin-top: 13px;
+       }
+
       .option {
         width: 150px;
         height: 150px;
         background: #fff;
-        // border: 2px solid #ccc;
-        // box-shadow: 0 0 5px rgba(0,0,0,0.4);
         margin-right: 20px;
         border-radius: 8px;
         display: flex;
@@ -310,6 +331,10 @@
         font-weight: bold;
         letter-spacing: 2px;
         color: #444;
+        @include media("<=desktop") {
+          height: 110px;
+          width: 110px;
+         }
         &:hover {
           transform: scale(1.05);
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -339,6 +364,9 @@
       margin-top: 20px;
       border-radius: 8px;
       background: #f6f6f6;
+      @include media("<=desktop") {
+        margin-top: 13px;
+       }
 
       .notava {
         width: 100%;
@@ -356,10 +384,12 @@
       }
       .notava.alarm{ h4{color: #f26430;}};
       .notava.notfound{ h4{color: #3061f2;}};
+
       .ava {
         padding: 2rem;
         display: flex;
         flex-wrap: wrap;
+        @include media("<=desktop") { padding: 1.2rem;}
         .ava-room {
           width: 100px;
           height: 100px;
@@ -367,11 +397,16 @@
           margin-bottom: 20px;
           background: #fff;
           border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
           cursor: pointer;
           transition: 0.3;
-          &:hover { box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); }
-          position: relative;
+          &:hover { box-shadow: 0 0 5px rgba(0, 0, 0, 0.7); }
+          @include media("<=desktop") {
+            height: 70px;
+            width: 70px;
+            border-radius: 6px;
+          }
+
           .heading {
             width: 100%;
             height: 30px;
@@ -381,6 +416,11 @@
             font-family: var(--quicksand-font);
             text-transform: uppercase;
             padding: 4px 0;
+            @include media("<=desktop") {
+              height: 21px;
+              border-radius: 6px 6px 0 0;
+              font-size: 13px;
+            } 
           }
           .value {
             width: 100%;
@@ -392,10 +432,15 @@
             font-weight: bold;
             font-family: var(--quicksand-font);
             color: #444;
+            @include media("<=desktop") {
+              height: 49px;
+              font-size: 17px;
+            }
           }
         }
         .ava-room.selected{
           border: 2px solid var(--green-dark);
+          box-shadow: none;
         }
       }
     }
@@ -405,13 +450,15 @@
       width: 100%;
       height: 46vh;
       padding: 2rem;
-      h3{ font-size: 14px; }
+      h3{ font-size: 14px; @include media("<=desktop") { font-size: 13px; }}
+      @include media("<=desktop") { padding: 1.4rem; }
       .room-ttypes{
         width: 100%;
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        @include media("<=desktop") { margin-top: 13px; justify-content: flex-start; }
         .ttype{ 
           width: 49%; margin-bottom: 15px;
           padding: 20px; background: #fff;
@@ -419,18 +466,22 @@
           display: flex; align-items: center;
           box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
           transition: 0.4s;
-          &:hover{
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+          @include media("<=desktop") { 
+            width: 32%; padding: 14px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+            margin-right: 6px;
           }
+          &:hover{ box-shadow: 0 0 8px rgba(0, 0, 0, 0.7); }
           .number{
             margin-right: 10px;
             font-family: var(--quicksand-font);
             font-weight: bold;
             font-size: 2rem;
+            @include media("<=desktop") { font-size: 1.4rem; margin-right: 6px; }
           }
           .name{
             font-family: var(--quicksand-font);
             font-size: 17px; color: #444;
+            @include media("<=desktop") { font-size: 13px; }
           }
         }
       }
