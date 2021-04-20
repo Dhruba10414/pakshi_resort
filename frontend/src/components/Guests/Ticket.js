@@ -1,21 +1,50 @@
 import React, { useState } from "react";
+import axios from "axios";
 import ticketImage from "../../assets/images/View/ticket.png";
-import { mail, phone, location, x, plus, minus } from "../../assets/images/SVG";
+import { mail, phone, location, plus, minus } from "../../assets/images/SVG";
+import { api } from "../../assets/URLS";
+import checksvg from "../../assets/images/View/svg/check.svg";
 
 function Ticket({ ticketFor, setOpenTicket }) {
   const [numberOfTicket, setNumberOfTicket] = useState(1);
+  const [success, setSucces] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState("")
 
-//   INCRESE ITEM
-const decrease = () => {
-    if(numberOfTicket > 1){
-        setNumberOfTicket(numberOfTicket - 1);
+  //   INCRESE ITEM
+  const decrease = () => {
+    if (numberOfTicket > 1) {
+      setNumberOfTicket(numberOfTicket - 1);
     }
-}
-  
+  };
+
   const buyTicket = () => {
-      console.log(ticketFor);
-      console.log(numberOfTicket);
-  }
+    setLoading(true);
+
+    // setup neccessary urls
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const BUY_TICKET = api.buy_ticket;
+
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+        const Body = { 
+          "bought_by": ticketFor.id,
+          "num_tickets": numberOfTicket,
+          "ticket_for": 1
+        };
+
+        axios.post(BUY_TICKET, Body, Config)
+        .then((res) => {
+          console.log(res.data);
+          setSucces(true);
+          setLoading(false);
+        })
+        .catch(err => {console.log(err.message); setLoading(false);})
+      });
+  };
 
   return (
     <div className="ticket">
@@ -46,9 +75,29 @@ const decrease = () => {
             </div>
           </div>
         </div>
+
+        {success ? (
+          <div className="success-message">
+            <img src={checksvg} /> <h1>Successfull</h1>{" "}
+          </div>
+        ) : null}
+
         <div className="btn-box">
-            <button onClick={() => setOpenTicket(false)}>Cancel</button>
-            <button className="buy" onClick={buyTicket}>Buy ( {numberOfTicket} ) Ticket</button>
+          {!loading ? (
+            <>
+              <button onClick={() => setOpenTicket(false)}>Cancel</button>
+              <button className="buy" onClick={buyTicket}>
+                Buy ( {numberOfTicket} ) Ticket
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => setOpenTicket(false)}>Cancel</button>
+              <button className="loading" onClick={buyTicket}>
+                Processing...
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -61,7 +110,8 @@ const decrease = () => {
           <div className="price">
             <h2>TOTAL FEE</h2>
             <h1>
-              {50 * numberOfTicket}<span>৳</span>
+              {50 * numberOfTicket}
+              <span>৳</span>
             </h1>
           </div>
         </div>
@@ -74,9 +124,18 @@ const decrease = () => {
               <div className="name">Entry Fee</div>
               <div className="price">50 ৳</div>
               <div className="option">
-                  <div className="inc" onClick={() => setNumberOfTicket(numberOfTicket + 1)}> {plus} </div>
-                  <div className="val"> {numberOfTicket} </div>
-                  <div className="dec" onClick={decrease}> {minus} </div>
+                <div
+                  className="inc"
+                  onClick={() => setNumberOfTicket(numberOfTicket + 1)}
+                >
+                  {" "}
+                  {plus}{" "}
+                </div>
+                <div className="val"> {numberOfTicket} </div>
+                <div className="dec" onClick={decrease}>
+                  {" "}
+                  {minus}{" "}
+                </div>
               </div>
             </div>
             <div className="service">

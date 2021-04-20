@@ -81,6 +81,20 @@
       color: #fff;
     }
 
+    .success-message{
+      position: absolute;
+      width: 100%;
+      height: 36vh;
+      left: 0;
+      bottom: 15vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      img{ height: 50%; margin-bottom: 20px;}
+      h1{ font-size: 18px; text-transform: uppercase; color: var(--green-dark);}
+    }
+
     .btn-box{
       padding: 0 2rem;
       width: 100%;
@@ -114,6 +128,10 @@
         &:hover{
           color: var(--primary-color-light);
         }
+      }
+      button.loading{
+        width: calc(60% - 10px); background: #ccc; color: gray;
+        margin-left: 10px; &:hover{ color: var(--primary-color-light); }
       }
     }
   }
