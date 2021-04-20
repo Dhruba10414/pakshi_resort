@@ -46,7 +46,10 @@ const decrease = () => {
             </div>
           </div>
         </div>
-        <button onClick={buyTicket}>Buy ( {numberOfTicket} ) Ticket</button>
+        <div className="btn-box">
+            <button onClick={() => setOpenTicket(false)}>Cancel</button>
+            <button className="buy" onClick={buyTicket}>Buy ( {numberOfTicket} ) Ticket</button>
+        </div>
       </div>
 
       {/* ///////////////////////////////////////////////////////////////////// */}

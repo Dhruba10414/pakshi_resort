@@ -81,25 +81,39 @@
       color: #fff;
     }
 
-    button {
-      width: calc(100% - 4rem);
-      border: none;
-      outline: none;
-      padding: 20px 30px;
-      font-size: 15px;
-      font-weight: bold;
-      font-family: var(--quicksand-font);
+    .btn-box{
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
       position: absolute;
       bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
-      border-radius: 5px;
-      background: var(--primary-color);
-      color: #fff;
-      text-transform: uppercase;
-      cursor: pointer;
-      &:hover{
-        color: var(--primary-color-light);
+      @include media("<=desktop") { padding: 0 1.2rem; }
+      button {
+        width: 40%;
+        border: none;
+        outline: none;
+        padding: 20px 30px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: var(--quicksand-font);
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #444;
+        transition: 0.4s;
+        &:hover{ background-color: #d3d4d3; }
+        @include media("<=desktop") { padding: 12px; }
+      }
+      button.buy{
+        width: calc(60% - 10px);
+        background: var(--primary-color);
+        color: #fff;
+        margin-left: 10px;
+        &:hover{
+          color: var(--primary-color-light);
+        }
       }
     }
   }
@@ -132,9 +146,11 @@
         width: 50%;
         min-height: 30vh;
         padding: 2.5rem 4rem;
+        @include media("<=desktop") { padding: 2.5rem 3rem; }
         h2 {
           font-family: var(--quicksand-font);
           letter-spacing: 2px;
+          @include media("<=desktop") { font-size: 1.5rem; }
         }
         h1 {
           font-family: var(--quicksand-font);
@@ -144,11 +160,13 @@
           align-items: flex-start;
           letter-spacing: -4px;
           color: var(--primary-color);
+          @include media("<=desktop") { font-size: 3.5rem; line-height: 3.5rem; }
           span {
             font-size: 2rem;
             line-height: 2rem;
             margin-top: 10px;
             color: #ccc;
+            @include media("<=desktop") { font-size: 1.5rem; line-height: 1.5rem; }
           }
         }
       }
@@ -182,6 +200,11 @@
           font-size: 16px;
           cursor: pointer;
           transition: 0.4s;
+          @include media("<=desktop") {
+            padding: 11px;
+            font-size: 14px;
+            border-left: 13px solid #ccc;
+          }
           .option { width: 20%; display: flex; }
           .price { width: 30%; }
           .name { width: 50%; }
@@ -200,6 +223,7 @@
         .service.selected {
           background-color: var(--green);
           border-left: 20px solid var(--green-dark);
+          @include media("<=desktop") {border-left: 13px solid var(--green-dark);}
           div {
             color: var(--green-dark);
             font-weight: bold;
