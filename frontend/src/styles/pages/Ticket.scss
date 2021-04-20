@@ -85,7 +85,7 @@
       width: calc(100% - 4rem);
       border: none;
       outline: none;
-      padding: 15px 30px;
+      padding: 20px 30px;
       font-size: 15px;
       font-weight: bold;
       font-family: var(--quicksand-font);
@@ -98,6 +98,9 @@
       color: #fff;
       text-transform: uppercase;
       cursor: pointer;
+      &:hover{
+        color: var(--primary-color-light);
+      }
     }
   }
 

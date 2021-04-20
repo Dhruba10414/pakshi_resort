@@ -13,7 +13,7 @@ const decrease = () => {
 }
   
   const buyTicket = () => {
-      console.log(ticketFor.id);
+      console.log(ticketFor);
       console.log(numberOfTicket);
   }
 
@@ -23,26 +23,26 @@ const decrease = () => {
         {/* ///////////////////////////////////////////////////////////////////// */}
         <div className="top-part">
           <h3>Ticket for</h3>
-          <h1>Mizanur Rahman</h1>
+          <h1>{ticketFor.name}</h1>
           <div className="data address">
             <div className="data__logo">{location}</div>
             <div className="data__value">
               <h4>Address</h4>
-              <p>Khandar, Bogra</p>
+              <p>{ticketFor.address}</p>
             </div>
           </div>
           <div className="data phone">
             <div className="data__logo">{phone}</div>
             <div className="data__value">
               <h4>Contact</h4>
-              <p>01727926560</p>
+              <p>{ticketFor.phone}</p>
             </div>
           </div>
           <div className="data email">
             <div className="data__logo">{mail}</div>
             <div className="data__value">
               <h4>Email</h4>
-              <p>mr926560@gmail.com</p>
+              <p>{ticketFor.email}</p>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ const decrease = () => {
         </div>
 
         <div className="services">
-          <h3>OTHER FACILITIES</h3>
+          <h3>FACILITIES</h3>
 
           <div className="service-table">
             <div className="service selected">

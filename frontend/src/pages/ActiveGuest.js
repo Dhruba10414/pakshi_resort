@@ -34,9 +34,9 @@ function ActiveGuest() {
     setOpenInvoice(true);
     setInvoiceFor({ id: id, name: name, phone: phone, address: address });
   };
-  const openTicketModal = (id) => {
+  const openTicketModal = (id, name, phone, address, email) => {
     setOpenTicket(true);
-    setTicketFor({id: id});
+    setTicketFor({id, name, phone, address, email});
   }
   // CLOSE MODAL
   const closeModal = () => {
@@ -117,6 +117,7 @@ function ActiveGuest() {
                         name={guest.name}
                         phone={guest.contact}
                         address={guest.address}
+                        email={guest.email}
                         openInvoiceModal={openInvoiceModal}
                         openFoodOrderModal={openFoodOrderModal}
                         openTicketModal={openTicketModal}
