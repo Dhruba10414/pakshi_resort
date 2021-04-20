@@ -16,9 +16,10 @@ function Staff({
   setActive,
 }) {
   const [loading, setLoading] = useState(false);
+
+  console.log(name, is_staff);
   
   const disableUser = () => {
-    console.log(typeof(id));
     setLoading(true);
     
     // get users access token
