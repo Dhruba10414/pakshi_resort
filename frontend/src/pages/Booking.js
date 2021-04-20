@@ -13,7 +13,7 @@ import { api } from "../assets/URLS";
 // Component & Svg
 import Entry from "../components/Booking/Entry";
 import Loading from "../components/Loading";
-import { check, rsvg, searchSvg } from "../assets/images/SVG";
+import { check, rsvg, searchSvg, x } from "../assets/images/SVG";
 import search from "../assets/images/View/svg/search-3.svg";
 
 function Booking({
@@ -26,10 +26,10 @@ function Booking({
   const [name, setName] = useState("");
   const [filterby, setFilterby] = useState("all");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [checkout, setCheckout] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [canceled, setCanceled] = useState(false);
+  const [error, setError] = useState(false);
 
   // SEARCH FUNCTIONALITY
   const searching = () => {
@@ -56,6 +56,13 @@ function Booking({
     }, 2000);
     setCanceled(true);
   };
+  // NOTIFY IF ERROR
+  const notifyForError = () => {
+    setTimeout(() => {
+      setError(false)
+    }, 2000);
+    setError(true);
+  }
 
   // FILTER BY COMPLETE
   const filterOrderListByComplete = () => {
@@ -87,7 +94,6 @@ function Booking({
             setLoading(false);
           })
           .catch((err) => {
-            setError("Something went wrong! Reload the page.");
             console.log(err.message);
             setLoading(false);
           });
@@ -114,28 +120,9 @@ function Booking({
         </div>
         {/* filter options */}
         <div className="filter-by-type">
-          <div
-            className={filterby === "all" ? "active" : ""}
-            onClick={() => {
-              setFilterby("all");
-            }}
-          >
-            All
-          </div>
-          <div
-            className={filterby === "pe" ? "active" : ""}
-            onClick={filterOrderListByPending}
-          >
-            {" "}
-            Pending{" "}
-          </div>
-          <div
-            className={filterby === "co" ? "active" : ""}
-            onClick={filterOrderListByComplete}
-          >
-            {" "}
-            Staying{" "}
-          </div>
+          <div className={filterby === "all" ? "active" : ""} onClick={() => {setFilterby("all");}}>All</div>
+          <div className={filterby === "pe" ? "active" : ""}onClick={filterOrderListByPending}>Pending</div>
+          <div className={filterby === "co" ? "active" : ""} onClick={filterOrderListByComplete}>Staying</div>
         </div>
         {/* table heading */}
         <div className="table-heading">
@@ -166,6 +153,7 @@ function Booking({
                   notifyforCheckout={notifyforCheckout}
                   notifyForCancel={notifyForCancel}
                   notifyForConfirm={notifyForConfirm}
+                  notifyForError={notifyForError}
                 />
               ))
             ) : (
@@ -189,6 +177,7 @@ function Booking({
                 notifyforCheckout={notifyforCheckout}
                 notifyForCancel={notifyForCancel}
                 notifyForConfirm={notifyForConfirm}
+                notifyForError={notifyForError}
               />
             ))
           ) : (
@@ -209,6 +198,9 @@ function Booking({
         </div>
         <div className={checkout ? "message confirm" : "message confirm disabled"}> 
           <div>{check}</div> Checkout Successfull!
+        </div>
+        <div className={error ? "message error" : "message error disabled"}> 
+          <div>{x}</div> Can't Check-in Today!
         </div>
       </div>
     </ContentBox>

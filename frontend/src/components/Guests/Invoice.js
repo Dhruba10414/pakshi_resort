@@ -169,6 +169,12 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         <div className="payment">
           {!loading ? (
             <div className="rooms-info">
+              <h2>Invoice for</h2>
+              <CustomerDescription
+                name={invoiceFor.name}
+                address={invoiceFor.address}
+                phone={invoiceFor.phone}
+              />
               <h2>Staying Info</h2>
               <StayingInfo
                 bookBy={stayingInfo.booked_by}
@@ -180,9 +186,8 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
               />
               <h2>Staying rooms</h2>
               <StayingRooms roomBills={roomBills} />
-              <button className="payforRooms" onClick={openPaymentModalAnim}>
-                Pay for rooms
-              </button>
+
+              <button className="payment-btn" onClick={openPaymentModalAnim}> Payment </button>
             </div>
           ) : (
             <Loading height="80vh" width="100%" textSize="16px" space="4px" text="Fetching Data" />

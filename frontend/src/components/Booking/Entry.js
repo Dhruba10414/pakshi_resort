@@ -18,7 +18,8 @@ function Entry({
   clearUser,
   notifyforCheckout,
   notifyForCancel,
-  notifyForConfirm
+  notifyForConfirm,
+  notifyForError
 }) {
 
   const [checkFoConfirm, setCheckForConfirm] = useState(false);
@@ -26,6 +27,21 @@ function Entry({
   const [checkForCheckout, setCheckForCheckout] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  const checkDateAndCheckIn = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const year = date.getFullYear();
+    const today = `${day}-${month}-${year}`;
+    
+    if(today !== check_in){
+      notifyForError();
+    } else{
+      checkedInFunc();
+    }
+    
+  }
 
   //////////////////////////////////////////////////
   // ================= (CHECK IN) =================
@@ -41,7 +57,6 @@ function Entry({
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { "booking": bookingId };
-        console.log(Body);
 
         axios
           .post(CHECK_IN_URL, Body, Config)
@@ -188,7 +203,7 @@ function Entry({
                 : <button className="disabled">{checkedIn} prcessing.. </button>
               : !loading 
                 ? ( <div className="btn-boxx">
-                    <button className="checkin" onClick={checkedInFunc}>Check-in</button>
+                    <button className="checkin" onClick={checkDateAndCheckIn}>Check-in</button>
                     <button className="cancel" onClick={cancelBooking}>Cancel</button>
                   </div>
                 )

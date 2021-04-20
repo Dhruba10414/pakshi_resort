@@ -73,14 +73,6 @@
           .detail.food .label .circle { background-color: var(--yellow-dark); }
         }
       }
-
-      .description {
-        padding: 10px 30px;
-        font-family: var(--quicksand-font);
-        h3 { color: #ccc; font-size: 14px; text-transform: uppercase; }
-        h2 { font-size: 25px; margin-top: 10px; }
-        p { font-size: 14px; font-weight: bold; color: #ccc; span { color: #666; } }
-      }
     }
 
     // -------- table--------
@@ -214,9 +206,16 @@
       margin: 10px 0 5px 0; font-size: 18px; color: #444; font-family: var(--quicksand-font); 
       @include media("<=desktop") { font-size: 15px; }
     }
+    .description {
+      margin-bottom: 40px; margin-top: 10px;
+      font-family: var(--quicksand-font);
+      h2 { font-size: 25px; margin-top: -5px; }
+      p { font-size: 14px; font-weight: bold; color: #ccc; span { color: #666; } }
+      @include media("<=desktop") { margin-bottom: 28px; }
+    }
 
     .stayingInfo {
-      margin-top: 20px;
+      margin-top: 10px;
       margin-bottom: 40px;
       @include media("<=desktop") { margin-bottom: 28px; }
       .data {
@@ -238,10 +237,10 @@
     }
 
     .stayingRooms {
-      margin-top: 20px;
+      margin-top: 10px;
       margin-bottom: 32px;
       width: 100%;
-      height: 36vh;
+      height: 25vh;
       overflow-y: scroll;
       overflow-x: hidden;
       -ms-overflow-style: none;
@@ -249,7 +248,7 @@
       &::-webkit-scrollbar {
         display: none;
       }
-      @include media("<=desktop") { height: 30vh; }
+      @include media("<=desktop") { height: 20vh; }
 
       .table-heading,
       .room-data {
@@ -279,8 +278,8 @@
       }
     }
 
-    button.payforRooms {
-      width: 60%;
+    button.payment-btn {
+      width: 100%;
       padding: 15px 30px;
       border-radius: 5px;
       background: var(--blue-dark);

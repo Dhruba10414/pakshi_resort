@@ -27,7 +27,7 @@ function OrderedFoodList({
           <div className="type">Type {rsvg}</div>
           <div className="quantity">Quantity {rsvg}</div>
           <div className="price">Price{rsvg}</div>
-          <div className="total">Price{rsvg}</div>
+          <div className="total">Total{rsvg}</div>
         </div>
 
         {orderedFoods &&

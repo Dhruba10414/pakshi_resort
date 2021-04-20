@@ -11,10 +11,10 @@ function StayingInfo({ bookBy, bookedOn, checkIn, checkOut, NumberOfRooms, staye
           {NumberOfRooms > 1 ? " rooms" : " room"}
         </div>
       </div>
-      <div className="data">
+      {/* <div className="data">
         <div className="data__label">{calender} Booking date</div>
         <div className="data__value">{bookedOn}</div>
-      </div>
+      </div> */}
       <div className="data">
         <div className="data__label">{checked} Check-in</div>
         <div className="data__value">{checkIn}</div>

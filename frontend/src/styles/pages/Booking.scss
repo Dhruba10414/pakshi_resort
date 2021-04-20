@@ -223,4 +223,8 @@
     background-color: var(--red); color: var(--red-dark);
     div{border: 2px solid var(--red-dark);}
   }
+  .message.error{
+    background-color: var(--yellow); color: var(--yellow-dark);
+    div{border: 2px solid var(--yellow-dark);}
+  }
 }
