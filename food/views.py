@@ -129,7 +129,7 @@ class OrderInvoiceView(generics.GenericAPIView):
         guest_no = request.query_params.get('guest_id',None)
 
         try:
-            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False,isComplete=True)
+            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False)
             serializer_data=self.get_serializer(order_list,many=True)
             return Response(data=serializer_data.data,status=status.HTTP_200_OK)
 
