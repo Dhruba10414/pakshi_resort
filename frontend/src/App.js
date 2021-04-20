@@ -9,7 +9,6 @@ import "./styles/App.scss";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import FoodOrders from "./pages/FoodOrders";
-import ParkVisitors from "./pages/ParkVisitors";
 import Book from "./pages/Book";
 import Booking from "./pages/Booking";
 import Admin from "./pages/Admin";
@@ -71,7 +70,6 @@ function App({ setUser, isLogedIn }) {
           <Route exact path="/staff/booking" render={() => isLogedIn ? <Booking/> : <Login /> } />
           <Route exact path="/staff/booking-request" render={() => isLogedIn ? <BookingRequests /> : <Login /> } />
           <Route exact path="/staff/foodorders" render={() => isLogedIn ? <FoodOrders /> : <Login /> } />
-          <Route exact path="/staff/park" render={() => isLogedIn ? <ParkVisitors /> : <Login /> } />
           <Route exact path="/staff/admin/staff" render={() => isLogedIn ? <Admin /> : <Login /> } />
           <Route exact path="/staff/admin/food" render={() => isLogedIn ? <FoodManagement /> : <Login /> } />
           <Route exact path="/staff/admin/statics" render={() => isLogedIn ? <Statics /> : <Login /> } />

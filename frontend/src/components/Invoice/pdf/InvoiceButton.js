@@ -2,7 +2,7 @@ import React from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "./Invoice";
 
-function InvoiceButton({ roomBills, orderedFoods, invoiceFor }) {
+function InvoiceButton({ roomBills, orderedFoods, invoiceFor, stayingInfo, fbill, rbill }) {
   return (
     <PDFDownloadLink
       document={
@@ -10,6 +10,9 @@ function InvoiceButton({ roomBills, orderedFoods, invoiceFor }) {
           roomBills={roomBills}
           orderedFoods={orderedFoods}
           invoiceFor={invoiceFor}
+          stayingInfo={stayingInfo}
+          fbill={fbill}
+          rbill={rbill}
         />
       }
       fileName={`invoice-${invoiceFor.id}.pdf`}

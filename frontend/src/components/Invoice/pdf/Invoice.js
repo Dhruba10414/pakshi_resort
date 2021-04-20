@@ -10,18 +10,19 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 1.5,
     flexDirection: "column",
+    padding: "1in 0.6in"
   },
 });
 
-function Invoice({roomBills, orderedFoods, invoiceFor}) {
+function Invoice({roomBills, orderedFoods, invoiceFor, stayingInfo, fbill, rbill}) {
   useEffect(() => {}, [roomBills]);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <InvoiceHeading />
-        <InvoiceFor invoiceFor={invoiceFor} />
-        <InvoiceForRoom roomBills={roomBills} />
-        <InvoiceForFoods orderedFoods={orderedFoods} />
+        <InvoiceFor invoiceFor={invoiceFor} stayingInfo={stayingInfo} />
+        <InvoiceForRoom roomBills={roomBills} rbill={rbill} />
+        <InvoiceForFoods orderedFoods={orderedFoods} fbill={fbill} />
       </Page>
     </Document>
   );

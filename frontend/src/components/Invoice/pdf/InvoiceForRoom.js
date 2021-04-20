@@ -3,7 +3,6 @@ import React from "react";
 
 const styles = StyleSheet.create({
   table: {
-    padding: "0 30px",
     marginBottom: "40px",
   },
   h3: {
@@ -24,9 +23,12 @@ const styles = StyleSheet.create({
   type: { width: "60%" },
   days: { width: "10%" },
   amount: { width: "15%" },
+  total: { width: "15%"},
+  totalHeading: { width: "85%" },
+  totalBill: {background: "#000", height: 40, color: "#444", padding: "5px 0"}
 });
 
-function InvoiceForRoom({ roomBills }) {
+function InvoiceForRoom({ roomBills, rbill }) {
   return (
     <View style={styles.table}>
       <View>
@@ -49,6 +51,11 @@ function InvoiceForRoom({ roomBills }) {
             <Text style={styles.amount}>{data.rate}</Text>
           </View>
         ))}
+
+        <View style={styles.container}>
+          <Text style={styles.totalHeading}>TOTAL</Text>
+          <Text style={styles.total}>{rbill.total_bills}</Text>
+        </View>
     </View>
   );
 }

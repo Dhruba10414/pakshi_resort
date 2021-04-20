@@ -62,12 +62,11 @@ function SideNav({clearUser, is_staff }) {
         <NavLink to="/staff/booking" exact activeClassName="active-link">{activity} Bookings</NavLink>
         <NavLink to="/staff/booking-request" exact activeClassName="active-link">{arrowDown} Booking Request</NavLink>
         <NavLink to="/staff/foodorders" exact activeClassName="active-link">{cofeeSVG} Food Orders</NavLink>
-        <NavLink to="/staff/park" exact activeClassName="active-link">{cloud} Park Visitors</NavLink>
         <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         {is_staff ? (
           <>
             <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
-            <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statics </NavLink>
+            <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statistics </NavLink>
           </>
         ) : null}
       </div>

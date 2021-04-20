@@ -155,6 +155,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
                 orderedFoods={orderedFoods}
                 roomBills={roomBills}
                 invoiceFor={invoiceFor}
+                stayingInfo={stayingInfo}
                 setOpenInvoice={setOpenInvoice}
                 fbill={foodbillSummary}
                 rbill={roombillSummary}

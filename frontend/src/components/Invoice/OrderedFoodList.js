@@ -6,6 +6,7 @@ function OrderedFoodList({
   orderedFoods,
   roomBills,
   invoiceFor,
+  stayingInfo,
   setOpenInvoice,
   fbill,
   rbill,
@@ -17,6 +18,8 @@ function OrderedFoodList({
     }, 2000);
     setWarning(true);
   };
+
+  console.log(rbill);
   
   return (
     <>
@@ -48,6 +51,9 @@ function OrderedFoodList({
             orderedFoods={orderedFoods}
             roomBills={roomBills}
             invoiceFor={invoiceFor}
+            stayingInfo={stayingInfo}
+            fbill={fbill}
+            rbill={rbill}
           />
         ) : <button className="saveInvoice" onClick={showWarning}>Save Invoice</button>}
       </div>
