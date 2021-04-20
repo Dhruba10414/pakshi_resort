@@ -5,6 +5,7 @@ from rest_framework import generics
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from rest_framework.exceptions import AuthenticationFailed
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):

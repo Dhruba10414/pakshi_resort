@@ -2,7 +2,7 @@ from rest_framework import serializers
 from food.models import FoodItem,FoodOrdering
 from bookings.serializers import GuestSerializer
 from staff.serializers import UserSerializer
-
+from datetime import datetime
 
 class FoodItemSerilizer(serializers.ModelSerializer):
     class Meta:
