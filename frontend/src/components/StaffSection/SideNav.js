@@ -18,6 +18,7 @@ import {
   cofeeSVG,
   activity,
   arrowDown,
+  barchart,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -65,13 +66,8 @@ function SideNav({clearUser, is_staff }) {
         <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         {is_staff ? (
           <>
-            <NavLink
-              to="/staff/admin/staff"
-              exact
-              activeClassName="active-link"
-            >
-              {user} Staff Management
-            </NavLink>
+            <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
+            <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statics </NavLink>
           </>
         ) : null}
       </div>
