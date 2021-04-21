@@ -35,39 +35,51 @@ function Statics() {
   const [startYear, setStartYear] = useState("");
   const [endMonth, setEndMont] = useState(1);
   const [endYear, setEndYear] = useState("");
+  const [error, setError] = useState("");
 
-  // DOWNLOAD ROOM BOOKING LOG AS CSV
-  const DownloadLogAsCsv = () => {
-    setProcessLoading(true);
-    
-    let url, filename;
-    if(state === 0){
-      url = api.resort_csv;
-      filename = `resortLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
-    } else if(state === 1){
-      url = api.food_csv;
-      filename = `foodLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
-    } else {
-      url = api.ticket_csv;
-      filename = `ticketLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+  // VVALIDATION CHECK
+  const validationCheck = () => {
+    if(startYear && endYear){
+      return true;
+    } else{
+      setError("Required all fields!");
+      return false;
     }
-    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = api.refresh;
-    const GET_CSV = `${url}?month_start=${startMonth}&year_start=${startYear}&month_end=${endMonth}&year_end=${endYear}`
-
-    axios
-    .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-    .then((token) => { const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+  }
+  
+  // DOWNLOAD ROOM BOOKING LOG AS CSV
+  const DownloadLogAsCsv = () => {    
+    if(validationCheck()){
+      setProcessLoading(true);
+      let url, filename;
+      if(state === 0){
+        url = api.resort_csv;
+        filename = `resortLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+      } else if(state === 1){
+        url = api.food_csv;
+        filename = `foodLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+      } else {
+        url = api.ticket_csv;
+        filename = `ticketLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+      }
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const GET_CSV = `${url}?month_start=${startMonth}&year_start=${startYear}&month_end=${endMonth}&year_end=${endYear}`
 
       axios
-      .get(GET_CSV, Config)
-      .then((res) => {
-        setProcessLoading(false);
-        FileDownload(res.data, filename);
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => { const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+
+        axios
+        .get(GET_CSV, Config)
+        .then((res) => {
+          setProcessLoading(false);
+          FileDownload(res.data, filename);
+        })
+        .catch((err) => { console.log(err.message); setProcessLoading(false); });    
       })
-      .catch((err) => { console.log(err.message); setProcessLoading(false); });    
-    })
-    .catch((err) => {setProcessLoading(false); console.log(err.message); })
+      .catch((err) => {setProcessLoading(false); console.log(err.message); })
+    }
   };
 
   
@@ -130,13 +142,13 @@ function Statics() {
         </div>
         <div className="info">
           <div className="button-container">
-            <button className="rooms" onClick={() => setState(0)}>
+            <button className="rooms" onClick={() => {setState(0); setError("");}}>
               Room
             </button>
-            <button className="foods" onClick={() => setState(1)}>
+            <button className="foods" onClick={() => {setState(1); setError(""); }}>
               Food
             </button>
-            <button className="tickets" onClick={() => setState(2)}>
+            <button className="tickets" onClick={() => {setState(2); setError(""); }}>
               Ticket
             </button>
           </div>
@@ -209,6 +221,7 @@ function Statics() {
                 : <button className="yellow-btn" onClick={DownloadLogAsCsv}> Download CSV </button>
             : <button>Downloading...</button>
           }
+          <small>{error}</small>
         </div>
       </div>
     </ContentBox>

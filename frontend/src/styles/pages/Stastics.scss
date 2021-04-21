@@ -112,5 +112,10 @@
             color: var(--yellow-dark);
             &:hover{ background-color: var(--yellow-dark); color: #fff; }
         }
+        small{
+            color: red;
+            font-size: 14px;
+            margin-left: 25px;
+        }
     }
 }
