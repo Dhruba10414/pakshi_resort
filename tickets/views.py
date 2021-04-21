@@ -98,14 +98,13 @@ class TicketsLog(GenericAPIView):
         tickets = Tickets.objects.filter(issued_date__month__gte=month_from, issued_date__year__gte=year_from, 
                             issued_date__month__lte=month_to, issued_date__year__lte=year_to)
 
-        writer.writerow(['Guest', 'Guest Email', 'Ticket For Service', 'Price', 'Number Of Tickets', 'Ticket Bought On', 'Ticket Issued Date', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Ticket For Service', 'Price', 'Number Of Tickets', 'Ticket Bought On', 'Registed By'])
         for tick in tickets:
             row = [tick.bought_by.name,
                     tick.bought_by.email,
                     tick.ticket_for.name,
                     tick.ticket_tariff,
                     tick.num_tickets,
-                    datetime.strftime(tick.issued_on, format="%d-%m-%Y %I:%M %p"),
                     datetime.strftime(tick.issued_date, format="%d-%m-%Y")]
             writer.writerow(row)
 
