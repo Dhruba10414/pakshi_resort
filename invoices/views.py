@@ -124,7 +124,7 @@ class ResortLog(generics.GenericAPIView):
                             ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField()))
         
-        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Guest leaved', 'Canceled', 'Completed', 'Nights Stayed', 'Cost per Night', 'Bill', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,
@@ -132,8 +132,12 @@ class ResortLog(generics.GenericAPIView):
                     datetime.strftime(q.booked_on, format="%d-%m-%Y"), 
                     datetime.strftime(q.check_in, format="%d-%m-%Y"), 
                     datetime.strftime(q.check_out, format="%d-%m-%Y"),
+                    datetime.strftime(q.leaved_on, format="%d-%m-%Y") if q.leaved_on else "nil",
+                    q.is_canceled,
+                    q.is_complete,
                     q.stayed,
-                    q.bill, 
+                    q.rate,
+                    q.bill if not q.is_canceled else "NaN", 
                     q.by_staff.user_name]
             writer.writerow(row)
 
@@ -149,7 +153,7 @@ class ResortAnalytics(generics.GenericAPIView):
                         'check_out', 'check_in')).annotate(bill=ExpressionWrapper(
                             F('stayed')*F('rate'), output_field=FloatField())).annotate(
                                 month=TruncMonth('check_in')).values('month').annotate(
-                                    income=Sum('bill'), bookings=Count('id'))
+                                    income=Sum('bill'), bookings=Count('id')).order_by('month')[:12]
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 

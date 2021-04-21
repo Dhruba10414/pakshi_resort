@@ -211,6 +211,7 @@ class CheckOut(generics.GenericAPIView):
                 room.save()
                 booking.is_complete = True
                 booking.is_active = False
+                booking.leaved_on = date.today()
                 booking.save()
                 guest = booking.guest
                 still_staying = Bookings.objects.filter(guest=guest, is_active=True).exclude(id=booking.id).exists()
