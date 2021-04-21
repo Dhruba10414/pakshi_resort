@@ -168,7 +168,7 @@ class FoodLogView(generics.GenericAPIView):
                     q.food.food_type,
                     q.order_price,
                     q.quantity,
-                    q.bill,
+                    q.bill if not q.isCancel else "NaN" ,
                     q.taken_by.user_name]
             writer.writerow(row)
 
@@ -205,7 +205,7 @@ class FoodAnalyticsView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
-        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'), orders=Count('id'))
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'), orders=Count('id')).order_by('month')[:12]
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 

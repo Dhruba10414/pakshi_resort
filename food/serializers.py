@@ -46,7 +46,8 @@ class FoodAnalyticsSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
 
         return {
-            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'month': instance['month'].month,
+            'year': instance['month'].year,
             'total_bookings': instance['orders'],
             'total_income': instance['income']
         }
