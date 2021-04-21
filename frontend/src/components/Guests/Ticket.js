@@ -11,7 +11,7 @@ function Ticket({ ticketFor, setOpenTicket }) {
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState("")
 
-  //   INCRESE ITEM
+  //   DECREASE ITEM
   const decrease = () => {
     if (numberOfTicket > 1) {
       setNumberOfTicket(numberOfTicket - 1);
@@ -21,7 +21,6 @@ function Ticket({ ticketFor, setOpenTicket }) {
   const buyTicket = () => {
     setLoading(true);
 
-    // setup neccessary urls
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const BUY_TICKET = api.buy_ticket;
@@ -30,17 +29,25 @@ function Ticket({ ticketFor, setOpenTicket }) {
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+
+        const date = new Date();
+        const day = date.getDate();
+        const month = (date.getMonth() + 1).toString().padStart(2, "0")
+        const year = date.getFullYear();
+        const today = `${day}-${month}-${year}`;
+
         const Body = { 
           "bought_by": ticketFor.id,
+          "issued_date": today,
           "num_tickets": numberOfTicket,
           "ticket_for": 1
         };
 
         axios.post(BUY_TICKET, Body, Config)
         .then((res) => {
-          console.log(res.data);
           setSucces(true);
           setLoading(false);
+          setNumberOfTicket(1);
         })
         .catch(err => {console.log(err.message); setLoading(false);})
       });
