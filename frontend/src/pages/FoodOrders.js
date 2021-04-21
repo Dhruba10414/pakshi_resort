@@ -173,7 +173,6 @@ function FoodOrders({
           .then((res) => {
             saveOrderes(res.data);
             setDataLoading(false);
-            console.log(res.data);
           })
           .catch((err) => {
             console.log(err.message);

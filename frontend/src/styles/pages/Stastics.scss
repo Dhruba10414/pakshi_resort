@@ -45,6 +45,10 @@
                 font-size: 16px;
                 color: #444;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                @include media("<=desktop") { height: 10vh; width: 20%; font-size: 12.5px; }
             }
             button.foods{ 
                 background-color: var(--green); color: var(--green-dark);
@@ -68,6 +72,7 @@
             color: #444;
             text-transform: uppercase;
             margin-top: 25px;
+            @include media("<=desktop") { font-size: 16px; }
         }
         p{
             width: 80%;
@@ -79,7 +84,8 @@
             margin-top: 30px;
             h3{ font-size: 15px; color: gray; margin-bottom: 10px;}
             input, select{
-                padding: 20px; border-radius: 5px; 
+                padding: 20px; border-radius: 5px;
+                @include media("<=desktop") { padding: 10px; }
                 &:focus{
                     border: 2px solid #ccc;
                 }
@@ -96,6 +102,8 @@
             font-family: var(--quicksand-font);
             cursor: pointer;
             transition: 0.4s;
+            text-transform: uppercase;
+            @include media("<=desktop") { padding: 10px 40px; font-size: 13px; }
         }
         button.blue-btn{
             background-color: var(--blue);

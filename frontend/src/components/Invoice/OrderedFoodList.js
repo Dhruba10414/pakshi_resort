@@ -18,8 +18,6 @@ function OrderedFoodList({
     }, 2000);
     setWarning(true);
   };
-
-  console.log(rbill);
   
   return (
     <>

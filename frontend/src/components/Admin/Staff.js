@@ -16,8 +16,6 @@ function Staff({
   setActive,
 }) {
   const [loading, setLoading] = useState(false);
-
-  console.log(name, is_staff);
   
   const disableUser = () => {
     setLoading(true);
