@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
+//urls
+import {api} from "../../assets/URLS";
 
 // Assets
 import {
@@ -15,6 +17,8 @@ import {
   users,
   cofeeSVG,
   activity,
+  arrowDown,
+  barchart,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -24,13 +28,12 @@ function SideNav({clearUser, is_staff }) {
     // clear token from local storage
     localStorage.removeItem("user");
     localStorage.removeItem("refresh_token");
-    clearUser();
     history.push("/staff/login");
 
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://api.pakshiresort.com/api/token/refresh/", {
+      .post(api.refresh, {
         refresh: refresh_token,
       })
       .then((token) => {
@@ -40,7 +43,7 @@ function SideNav({clearUser, is_staff }) {
         const Body = { refresh: JSON.stringify(refresh_token) };
         // logout and clear refresh token and user fro local storage
         axios
-          .post("http://api.pakshiresort.com/api/logout/", Body, Config)
+          .post(api.logout, Body, Config)
           .then(() => {
             localStorage.removeItem("user");
             localStorage.removeItem("refresh_token");
@@ -53,60 +56,24 @@ function SideNav({clearUser, is_staff }) {
   return (
     <div className="sideNav">
       <div className="basics">
-        <NavLink to="/staff/dashboard" exact activeClassName="active-link">
-          {" "}
-          {boxes} Dashboard
-        </NavLink>
-        <NavLink to="/staff/book" exact activeClassName="active-link">
-          {" "}
-          {calender} Book{" "}
-        </NavLink>
-        <NavLink to="/staff/booking" exact activeClassName="active-link">
-          {" "}
-          {activity} Bookings{" "}
-        </NavLink>
-        <NavLink to="/staff/guests" exact activeClassName="active-link">
-          {" "}
-          {users} Guests{" "}
-        </NavLink>
-        <NavLink to="/staff/foodorders" exact activeClassName="active-link">
-          {" "}
-          {cofeeSVG} Food Orders{" "}
-        </NavLink>
-        <NavLink to="/staff/park" exact activeClassName="active-link">
-          {" "}
-          {cloud} Park Visitors{" "}
-        </NavLink>
-        <NavLink to="/staff/admin/food" exact activeClassName="active-link">
-          {" "}
-          {pie} Food Management{" "}
-        </NavLink>
+        <NavLink to="/staff/dashboard" exact activeClassName="active-link">{boxes} Dashboard</NavLink>
+        <NavLink to="/staff/active-guests" exact activeClassName="active-link">{users} Guests</NavLink>
+        <NavLink to="/staff/book" exact activeClassName="active-link">{calender} Book</NavLink>
+        <NavLink to="/staff/booking" exact activeClassName="active-link">{activity} Bookings</NavLink>
+        <NavLink to="/staff/booking-request" exact activeClassName="active-link">{arrowDown} Booking Request</NavLink>
+        <NavLink to="/staff/foodorders" exact activeClassName="active-link">{cofeeSVG} Food Orders</NavLink>
+        <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         {is_staff ? (
           <>
-            <NavLink
-              to="/staff/admin/staff"
-              exact
-              activeClassName="active-link"
-            >
-              {" "}
-              {user} Staff Management{" "}
-            </NavLink>
+            <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
+            <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statistics </NavLink>
           </>
         ) : null}
       </div>
       <div className="additional">
-        <Link to="/staff/login" onClick={LogoutFunctionality}>
-          {" "}
-          {logout} Logout{" "}
-        </Link>
-        <NavLink to="/" exact activeClassName="active-link">
-          {" "}
-          {settings} Settings{" "}
-        </NavLink>
-        <NavLink to="/" exact activeClassName="active-link">
-          {" "}
-          {help} Help{" "}
-        </NavLink>
+        <Link to="/staff/login" onClick={LogoutFunctionality}> {logout} Logout</Link>
+        <NavLink to="/" exact activeClassName="active-link"> {settings} Settings</NavLink>
+        <NavLink to="/" exact activeClassName="active-link"> {help} Help</NavLink>
       </div>
     </div>
   );

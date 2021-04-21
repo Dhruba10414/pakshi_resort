@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { user, phone, mail, x, smile, sad } from "../../assets/images/SVG";
+import { user, phone, mail, x, smile, sad, users } from "../../assets/images/SVG";
+//urls
+import {api} from "../../assets/URLS";
 
 function Staff({
   id,
   name,
   status,
-  role,
   is_staff,
   email,
   contact,
@@ -17,18 +18,17 @@ function Staff({
   const [loading, setLoading] = useState(false);
   
   const disableUser = () => {
-    console.log(typeof(id));
     setLoading(true);
     
     // get users access token
     const refresh_token = localStorage.getItem("refresh_token");
-    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
+    axios.post(api.refresh, {refresh: refresh_token,})
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = {"id": id+1};
         
         // remove user
-        axios.put("http://api.pakshiresort.com/api/remove/", Body, Config)
+        axios.put(api.disable_user, Body, Config)
         .then(() => {
           setLoading(false);
         })

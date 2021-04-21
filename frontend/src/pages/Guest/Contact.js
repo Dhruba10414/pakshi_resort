@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 // Components
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
@@ -35,7 +37,8 @@ function Contact() {
             </div>
           </div>
           <div className="image">
-            <img src={drone} alt="" />
+            {/* <img src={drone} alt="" /> */}
+            <LazyLoadImage alt={""} effect="blur" src={drone} />
           </div>
         </div>
       </div>

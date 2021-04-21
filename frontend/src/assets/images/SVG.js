@@ -88,6 +88,24 @@ export const arrowLeftCherovon = (
   </svg>
 );
 
+export const arrowDown = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-arrow-down"
+  >
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <polyline points="19 12 12 19 5 12"></polyline>
+  </svg>
+);
+
 export const user = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -345,6 +363,81 @@ export const mail = (
   >
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
     <polyline points="22,6 12,13 2,6"></polyline>
+  </svg>
+);
+
+export const location = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-map-pin"
+  >
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+    <circle cx="12" cy="10" r="3"></circle>
+  </svg>
+);
+
+export const hash = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-hash"
+  >
+    <line x1="4" y1="9" x2="20" y2="9"></line>
+    <line x1="4" y1="15" x2="20" y2="15"></line>
+    <line x1="10" y1="3" x2="8" y2="21"></line>
+    <line x1="16" y1="3" x2="14" y2="21"></line>
+  </svg>
+);
+
+export const type = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-type"
+  >
+    <polyline points="4 7 4 4 20 4 20 7"></polyline>
+    <line x1="9" y1="20" x2="15" y2="20"></line>
+    <line x1="12" y1="4" x2="12" y2="20"></line>
+  </svg>
+);
+
+export const pencil = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-edit-3"
+  >
+    <path d="M12 20h9"></path>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
   </svg>
 );
 
@@ -653,5 +746,76 @@ export const checkSquare = (
   >
     <polyline points="9 11 12 14 22 4"></polyline>
     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+  </svg>
+);
+
+export const column = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-columns"
+  >
+    <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
+  </svg>
+);
+
+export const minus = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-minus"
+  >
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+);
+
+export const plus = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-plus"
+  >
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+);
+
+export const barchart = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="feather feather-bar-chart-2"
+  >
+    <line x1="18" y1="20" x2="18" y2="10"></line>
+    <line x1="12" y1="20" x2="12" y2="4"></line>
+    <line x1="6" y1="20" x2="6" y2="14"></line>
   </svg>
 );

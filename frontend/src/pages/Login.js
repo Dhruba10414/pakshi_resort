@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { LoginAnim } from "../animations/LoginAnim";
 import axios from "axios";
+import {api} from "../assets/URLS";
 
 // Assets
 import staff1 from "../assets/images/Login/staff1.jpg";
@@ -43,12 +44,12 @@ function Login() {
       setLoading(true);
       //   --> http://127.0.0.1:8000/api/users/
       axios
-        .post("http://api.pakshiresort.com/api/token/", { email, password,})
+        .post(api.login, { email, password,})
         .then((token) => {
           // config
           const yourConfig = { headers: { Authorization: "Bearer " + token.data.access } }
           // get user
-          axios.get("http://api.pakshiresort.com/api/user/", yourConfig)
+          axios.get(api.get_user, yourConfig)
           .then(user => {
             setLoading(false);
             saveToLocalStorage(JSON.stringify(user.data), token.data.refresh)

@@ -1,0 +1,35 @@
+.notfound{
+    width: 100%;
+    min-height: 100vh;
+    padding: 180px 200px;
+    text-align: center;
+    img{ height: 15vh; margin-bottom: 40px;}
+    h1{
+        font-family: var(--primary-font);
+        color: var(--primary-color);
+        font-size: 4rem;
+        font-weight: normal;
+    }
+    p{
+        width: 40%; margin: auto; margin-top: 10px;
+        font-family: var(--quicksand-font);
+        font-size: 18px;
+    }
+    a{
+        display: inline-block;
+        margin-top: 30px;
+        text-decoration: none;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        padding: 20px 50px;
+        transition: 0.4s;
+        &:hover{
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+    }
+}

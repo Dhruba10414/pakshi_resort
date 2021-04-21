@@ -15,7 +15,7 @@
     .input-head {
       h2 {
         font-size: 18px;
-        font-family: var(--secondary-font);
+        font-family: var(--quicksand-font);
       }
       p {
         font-family: WRITTEN;
@@ -29,6 +29,7 @@
     // ----------- GENERAL INFO ------------
     .bookingGeneral {
       margin-top: 40px;
+      @include media("<=desktop") { margin-top: 12px; }
       .labels {
         width: 100%;
         display: flex;
@@ -36,7 +37,7 @@
           width: 45%;
           margin-left: 5px;
           font-size: 12px;
-          font-family: var(--secondary-font);
+          font-family: var(--quicksand-font);
           color: gray;
         }
       }
@@ -83,7 +84,7 @@
         display: none;
       }
       .CalendarMonth_caption {
-        font-family: var(--secondary-font);
+        font-family: var(--quicksand-font);
       }
       button.DateRangePickerInput_clearDates {
         background: var(--primary-color);
@@ -102,10 +103,12 @@
         display: inline-block;
         margin-top: 20px;
         padding: 15px 45px;
-        font-family: var(--secondary-font);
+        font-family: var(--quicksand-font);
         border-radius: 5px;
         cursor: pointer;
         transition: 0.4s;
+        font-weight: bold;
+        @include media("<=desktop") { padding: 12px 30px; margin-top: 14px; font-size: 15px; }
       }
       .apply {
         background: var(--primary-color-2);

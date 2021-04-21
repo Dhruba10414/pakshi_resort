@@ -13,11 +13,13 @@
     .heading {
       padding: 40px 40px 0 40px;
       text-align: center;
+      @include media("<=desktop") {padding: 25px 25px 0 25px; }
       h3 {
         font-family: var(--quicksand-font);
         font-size: 3rem;
         line-height: 40px;
         color: var(--primary-color);
+        @include media("<=desktop") {font-size: 2.5rem;}
       }
       p {
         font-family: WRITTEN;
@@ -29,12 +31,15 @@
     form {
       width: 100%;
       padding: 0 40px;
+      @include media("<=desktop") {margin-top: -15px;}
       h3 {
         margin-top: 40px;
         margin-bottom: 15px;
         font-family: var(--quicksand-font);
-        font-size: 16px;
+        font-size: 15px;
+        text-transform: uppercase;
         color: #444;
+        @include media("<=desktop") {font-size: 12px; margin-top: 25px;}
       }
       .input-container {
         width: 100%;
@@ -42,6 +47,7 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 20px;
+        @include media("<=desktop") {margin-bottom: 15px;}
 
         .input {
           width: 49%;
@@ -52,17 +58,21 @@
             font-size: 14px;
             color: gray;
             margin-bottom: 5px;
+            @include media("<=desktop") {font-size: 12px;}
           }
           input,
           select {
             padding: 10px;
-            border: 2px solid var(--primary-color-light);
+            border: 2px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
             font-family: var(--quicksand-font);
             transition: 0.4s;
+            background-color: transparent;
+            @include media("<=desktop") {font-size: 14.5px; border: 1.5px solid #ccc;}
             &:focus {
-              border: 2px solid var(--primary-color);
+              border: 2px solid var(--primary-color-light);
+              @include media("<=desktop") {border: 1.5px solid var(--primary-color-light);}
             }
             option {
               border: none;
@@ -126,6 +136,7 @@
       display: block;
       margin-top: -10px;
       margin-bottom: 10px;
+      @include media("<=desktop") { margin-bottom: 0; }
     }
     button {
       padding: 15px 35px;
@@ -139,6 +150,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: 0.3s;
+      @include media("<=desktop") { padding: 10px 30px; font-size: 15px; }
       &:hover {
         color: var(--primary-color-light);
       }
@@ -193,6 +205,8 @@
           font-size: 3rem;
           line-height: 20px;
           color: var(--primary-color);
+          @include media("<=desktop") { font-size: 2.5rem; }
+          
         }
         p {
           font-family: WRITTEN;
@@ -220,6 +234,7 @@
       color: var(--primary-color);
       margin-bottom: 10px;
       font-size: 20px;
+      @include media("<=desktop") { font-size: 16px; }
     }
 
     .list-container {
@@ -231,6 +246,7 @@
       &::-webkit-scrollbar { display: none; }
       -ms-overflow-style: none;
       scrollbar-width: none;
+      @include media("<=desktop") { height: 60vh; }
       
       .table-heading{
         display: flex;
@@ -252,6 +268,7 @@
 
       .accordion{
         width: 100%;
+        height: fit-content;
         &__heading {
           width: 100%;
           display: flex;
@@ -265,7 +282,7 @@
               border-right: 2px solid #f4f4f4;
             }
           }
-          .name { width: 50%; }
+          .name { width: 50%; @include media("<=desktop") { font-size: 14px; }}
           .role { width: 20%; }
           .role.a p{
             display: inline-block;
@@ -282,12 +299,14 @@
             padding: 5px 10px;
             font-weight: bold;
             border-radius: 5px;
+            @include media("<=desktop") { font-size: 14px; }
           }
           .status {
             width: 20%;
             display: flex;
             align-items: center;
             font-weight: bold;
+            @include media("<=desktop") { font-size: 14px; }
             svg {
               height: 14px;
               margin-left: 5px;
@@ -304,11 +323,6 @@
             svg { transform: rotate(-45deg); height: 16px; transition: 0.5s; } }
           }
           .button.rotate { svg { transform: rotate(0) scale(1.5); }
-        }
-        &__heading.active{
-          // background: var(--primary-color);
-          // color: #fff;
-          // font-weight: bold;
         }
         &__content {
           overflow: hidden;
@@ -349,6 +363,7 @@
               border-radius: 5px;
               cursor: pointer;
               transition: 0.4s;
+              @include media("<=desktop") { font-size: 14.5px; }
               &:hover{
                 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
               }
@@ -358,6 +373,7 @@
             opacity: 1;
             height: 21vh;
             padding: 20px;
+            @include media("<=desktop") { height: 25vh; }
           }
         }
       }

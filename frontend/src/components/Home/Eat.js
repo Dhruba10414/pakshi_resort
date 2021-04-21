@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import food from "../../assets/images/Restaurent/food-1.jpg";
 import food2 from "../../assets/images/Restaurent/food-4.JPG";
 import restaurant from "../../assets/images/Restaurent/restaurent-8.JPG";
@@ -21,11 +22,14 @@ function Eat() {
 
       <div className="eat-images">
         <div className="img1">
-          <img src={food} alt="" />
+          {/* <img src={food} alt="" /> */}
+          <LazyLoadImage alt={""} effect="blur" src={food} />
         </div>
         <div className="img2">
-          <img className="i-1" src={restaurant} alt="" />
-          <img className="i-2" src={food2} alt="" />
+          {/* <img className="-1" src={restaurant} alt="" /> */}
+          <div className="imageContainer-1"><LazyLoadImage alt={""} effect="blur" src={restaurant}/></div>
+          {/* <img className="i-2" src={food2} alt="" /> */}
+          <div className="imageContainer-2"><LazyLoadImage alt={""} effect="blur" src={food2}/></div>
         </div>
       </div>
     </>

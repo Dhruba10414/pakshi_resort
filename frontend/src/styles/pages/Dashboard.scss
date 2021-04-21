@@ -63,48 +63,47 @@
           display: flex;
           background: #fff;
           border-bottom: 3px solid #f4f4f4;
+          @include media("<=desktop") { border-bottom: 2px solid #f4f4f4; }
           div {
             height: 8vh;
             display: flex;
             align-items: center;
             padding: 0 20px;
-            font-family: var(--secondary-font);
+            font-family: var(--quicksand-font);
             font-size: 16px;
+            @include media("<=desktop") { height: 7vh; font-size: 15px; }
           }
-          .no {
-            width: 15%;
-          }
-          .guest-name {
-            width: 30%;
-          }
-          .status {
-            width: 15%;
-          }
+          .no { width: 15%; }
+          .cottage { width: 10%; }
+          .guest-name { width: 40%; }
+          .status { width: 15%; }
           .checkin,
-          .checkout {
-            width: 20%;
-          }
-          .food-order {
-            width: 20%;
-          }
+          .checkout { width: 20%; }
           .status p {
-            width: 100%;
-            padding: 8px 16px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            font-weight: bold;
+            svg { height: 14px; }
+            @include media("<=desktop") { font-size: 14px; }
+          }
+          .status.free p { color: var(--green-dark); }
+          .status.lock p { color: var(--red-dark); }
+          .cottage p{
+            height: 35px;
+            width: 35px;
             border-radius: 5px;
             font-size: 16px;
-            font-family: var(--secondary-font);
+            font-family: var(--quicksand-font);
             font-weight: bold;
-            text-align: center;
-            svg {
-              height: 14px;
-            }
+            @include media("<=desktop") { font-size: 14px; height: 25px; width: 25px; }
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
           }
-          .status.free p {
-            color: var(--green-dark);
-          }
-          .status.lock p {
-            color: var(--red-dark);
-          }
+          .cottage.one p { background: var(--blue-dark); }
+          .cottage.two p { background: #f26430 ; }
+          .cottage.three p { background: #a0bf5e; }
+          .cottage.four p { background: #683fbf; }
+          .cottage.five p { background: var(--green-dark) }
         }
 
         // Table Heading
@@ -118,30 +117,10 @@
           }
           div {
             font-weight: bold;
-            font-size: 14px;
             color: gray;
           }
         }
 
-        // Table Entrys
-        .aroom {
-          .food-order button {
-            padding: 10px;
-            outline: none;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.4s;
-            background: var(--primary-color-2);
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.3s;
-            &:hover {
-              color: var(--primary-color-light);
-            }
-          }
-        }
         .dim {
           background: #f7f7f8;
           border-left: 4px solid #dfdfe1;

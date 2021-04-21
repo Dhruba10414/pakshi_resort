@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { check } from "../../assets/images/SVG";
+//urls
+import {api} from "../../assets/URLS";
 
 function Registration() {
   const [name, setName] = useState("");
@@ -81,22 +83,23 @@ function Registration() {
       setLoading(true);
       const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
-    axios.post("http://api.pakshiresort.com/api/token/refresh/", {refresh: refresh_token,})
+    axios.post(api.refresh, {refresh: refresh_token,})
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { "email": email, "password": password, "user_name": name, "contact": phone, "gender": gender, "role": role}
         
         // Create users
-        axios.post("http://api.pakshiresort.com/api/signup/", Body, Config)
-        .then(() => {
-          clearFields();
-          setLoading(false);
-          notify();
-        })
-        .catch(err => {
-          console.log(err.message);
-          setLoading(false);
-        })
+        // axios.post(api.register_user, Body, Config)
+        // .then(() => {
+        //   clearFields();
+        //   setLoading(false);
+        //   notify();
+        // })
+        // .catch(err => {
+        //   console.log(err.message);
+        //   setLoading(false);
+        // })
+        console.log(Body);
       });
     }
   };

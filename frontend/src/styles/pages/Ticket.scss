@@ -1,0 +1,268 @@
+.ticket {
+  width: 100%;
+  height: calc(90vh - 20px);
+  display: flex;
+  justify-content: space-between;
+  h3 {
+    font-family: var(--quicksand-font);
+    font-size: 18px;
+    color: gray;
+    text-transform: uppercase;
+    @include media("<=desktop") {
+      font-size: 13px;
+    }
+  }
+
+  &__calculation {
+    width: 49%;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 2rem;
+    position: relative;
+    @include media("<=desktop") {
+      padding: 1.2rem;
+    }
+    h1 {
+      font-family: var(--quicksand-font);
+      font-size: 1.8rem;
+      color: #444;
+      @include media("<=desktop") {
+        font-size: 1.3rem;
+      }
+    }
+    .data {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      @include media("<=desktop") {
+        margin-top: 12.5px;
+      }
+      &__logo {
+        width: 30px;
+        height: 30px;
+        background: #ccc;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        svg {
+          height: 14px;
+          stroke-width: 3;
+        }
+      }
+      &__value {
+        h4 {
+          color: gray;
+          font-size: 14px;
+          font-family: var(--quicksand-font);
+          @include media("<=desktop") {
+            font-size: 13.5px;
+          }
+        }
+        p {
+          font-size: 15px;
+          @include media("<=desktop") {
+            font-size: 12.5px;
+          }
+        }
+      }
+    }
+    .data.address .data__logo {
+      background: var(--blue-dark);
+      color: #fff;
+    }
+    .data.phone .data__logo {
+      background: var(--green-dark);
+      color: #fff;
+    }
+    .data.email .data__logo {
+      background: var(--red-dark);
+      color: #fff;
+    }
+
+    .success-message{
+      position: absolute;
+      width: 100%;
+      height: 36vh;
+      left: 0;
+      bottom: 15vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      img{ height: 50%; margin-bottom: 20px;}
+      h1{ font-size: 18px; text-transform: uppercase; color: var(--green-dark);}
+    }
+
+    .btn-box{
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      @include media("<=desktop") { padding: 0 1.2rem; }
+      button {
+        width: 40%;
+        border: none;
+        outline: none;
+        padding: 20px 30px;
+        font-size: 15px;
+        font-weight: bold;
+        font-family: var(--quicksand-font);
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #444;
+        transition: 0.4s;
+        &:hover{ background-color: #d3d4d3; }
+        @include media("<=desktop") { padding: 12px; }
+      }
+      button.buy{
+        width: calc(60% - 10px);
+        background: var(--primary-color);
+        color: #fff;
+        margin-left: 10px;
+        &:hover{
+          color: var(--primary-color-light);
+        }
+      }
+      button.loading{
+        width: calc(60% - 10px); background: #ccc; color: gray;
+        margin-left: 10px; &:hover{ color: var(--primary-color-light); }
+      }
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  &__options {
+    width: calc(51% - 10px);
+    margin-left: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+
+    .heading-part {
+      display: flex;
+      .image-block {
+        width: 50%;
+        height: 30vh;
+        background-color: var(--primary-color);
+        border-radius: 0 0 50px 0;
+        position: relative;
+        img {
+          position: absolute;
+          top: 3vh;
+          left: 3vh;
+          width: 47vh;
+          transform: rotate(-45deg);
+        }
+      }
+      .price {
+        width: 50%;
+        min-height: 30vh;
+        padding: 2.5rem 4rem;
+        @include media("<=desktop") { padding: 2.5rem 3rem; }
+        h2 {
+          font-family: var(--quicksand-font);
+          letter-spacing: 2px;
+          @include media("<=desktop") { font-size: 1.5rem; }
+        }
+        h1 {
+          font-family: var(--quicksand-font);
+          font-size: 5rem;
+          line-height: 5rem;
+          display: flex;
+          align-items: flex-start;
+          letter-spacing: -4px;
+          color: var(--primary-color);
+          @include media("<=desktop") { font-size: 3.5rem; line-height: 3.5rem; }
+          span {
+            font-size: 2rem;
+            line-height: 2rem;
+            margin-top: 10px;
+            color: #ccc;
+            @include media("<=desktop") { font-size: 1.5rem; line-height: 1.5rem; }
+          }
+        }
+      }
+    }
+
+    .services {
+      margin-top: 20px;
+      padding: 2rem;
+      .service-table {
+        height: calc(45vh - 15px);
+        margin-top: 15px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        position: relative;
+
+        .service {
+          width: 98%;
+          margin: auto;
+          display: flex;
+          margin-bottom: 8px;
+          padding: 15px;
+          border-left: 20px solid #ccc;
+          background-color: #f7f7f7;
+          border-radius: 5px;
+          font-family: var(--quicksand-font);
+          font-size: 16px;
+          cursor: pointer;
+          transition: 0.4s;
+          @include media("<=desktop") {
+            padding: 11px;
+            font-size: 14px;
+            border-left: 13px solid #ccc;
+          }
+          .option { width: 20%; display: flex; }
+          .price { width: 30%; }
+          .name { width: 50%; }
+          &:hover { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+        }
+        .service.heading {
+          padding: 5px 0;
+          position: sticky;
+          top: 0;
+          border: none;
+          background-color: #fff;
+          text-transform: uppercase;
+          color: gray;
+          font-family: var(--quicksand-font);
+        }
+        .service.selected {
+          background-color: var(--green);
+          border-left: 20px solid var(--green-dark);
+          @include media("<=desktop") {border-left: 13px solid var(--green-dark);}
+          div {
+            color: var(--green-dark);
+            font-weight: bold;
+          }
+          div.option .inc, div.option .dec{ 
+              background: var(--green-dark);
+              border: none;
+              svg{ color: #fff; }
+            }
+        }
+        .service .option{
+            div{
+                width: 30px; height: 30px; margin-right: 6px; border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+            }
+            div.inc, div.dec{ 
+                border: 2px solid #999;
+                svg{ height: 16px; color: #999; }
+            }
+        }
+      }
+    }
+  }
+}

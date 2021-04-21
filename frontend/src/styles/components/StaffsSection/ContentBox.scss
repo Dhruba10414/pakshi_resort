@@ -21,11 +21,13 @@
       color: var(--primary-color-light);
       margin-bottom: 20px;
       padding: 0 40px;
-      font-family: var(--secondary-font);
+      font-family: var(--quicksand-font);
       font-size: 18px;
+      @include media("<=desktop") { font-size: 15px; margin-bottom: 12px; }
       svg {
         margin-right: 5px;
         height: 16px;
+        @include media("<=desktop") { height: 13px; }
       }
       &:hover{color: #ccc;}
     }
@@ -33,7 +35,7 @@
       color: #fff;
       border-left: 2px solid #fff;
     }
-    .basics {
+    .basics, .additional {
       padding: 40px 0;
     }
   }

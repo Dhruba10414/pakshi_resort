@@ -72,6 +72,7 @@ class RoomGuestEmbededSerializer(RoomOccupiedSerializer):
         fields = ['id', 'room_num', 'room_type', 'cottage_num', 'is_occupied', 'active_booking']
 
 class GuestSerializer(serializers.ModelSerializer):
+    is_staying = serializers.BooleanField(read_only=True)
     class Meta:
         model = Guests
         fields = '__all__'

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import staffsAvatar from "../../assets/images/StaffSection/stafflist.svg";
+import Loading from "../Loading";
 import Staff from "./Staff";
 
-function Staffs({ stafflist }) {
+function Staffs({ stafflist, loading }) {
   const [active, setActive] = useState("");
 
   return (
@@ -26,21 +27,24 @@ function Staffs({ stafflist }) {
           <div className="status">Status</div>
         </div>
 
-        {stafflist.map((staff, index) => (
+        {!loading ? 
+        stafflist.map((staff, index) => (
           <Staff
             key={index}
             id={index}
             name={staff.user_name}
             status={staff.is_active}
             role={staff.role}
-            is_staff={staff.is_active}
+            is_staff={staff.is_staff}
             email={staff.email}
             contact={staff.contact}
             gender={staff.gender}
             active={active}
             setActive={setActive}
           />
-        ))}
+        ))
+        : <Loading height="50vh" width="100%" textSize="14px" space="4px" text="fetching staff list" />
+      }
       </div>
     </div>
   );

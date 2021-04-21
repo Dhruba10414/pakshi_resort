@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAdminUser
 from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 from .db_tools import Datediff
-from django.db.models.aggregates import Sum
-from django.db.models.functions import Coalesce
+from django.db.models.aggregates import Sum, Count
+from django.db.models.functions import Coalesce, TruncMonth
 import csv
 from django.http import HttpResponse
 from datetime import datetime, date
@@ -103,7 +103,6 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
 
 
 class ResortLog(generics.GenericAPIView):
-    serializer_class = BookingSerializer
     permission_classes = [IsAdminUser, ]
 
     def get(self, request, *args, **kwargs):
@@ -125,7 +124,7 @@ class ResortLog(generics.GenericAPIView):
                             ).annotate(bill=ExpressionWrapper(F('rate')*
                             F('stayed'), output_field=FloatField()))
         
-        writer.writerow(['Guest', 'Guest Email' 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Nights Stayed', 'Bill', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,
@@ -139,3 +138,19 @@ class ResortLog(generics.GenericAPIView):
             writer.writerow(row)
 
         return response
+
+
+class ResortAnalytics(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class = AnalyticsSerializer
+
+    def get(self, request, *args, **kwargs):
+        analytics = Bookings.objects.filter(is_canceled=False).annotate(stayed=Datediff(
+                        'check_out', 'check_in')).annotate(bill=ExpressionWrapper(
+                            F('stayed')*F('rate'), output_field=FloatField())).annotate(
+                                month=TruncMonth('check_in')).values('month').annotate(
+                                    income=Sum('bill'), bookings=Count('id'))
+
+        analytics_serialized = self.get_serializer(analytics, many=True)
+
+        return Response(analytics_serialized.data, status=status.HTTP_200_OK)

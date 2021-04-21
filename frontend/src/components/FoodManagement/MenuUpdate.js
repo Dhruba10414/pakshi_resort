@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { check } from "../../assets/images/SVG";
+//urls
+import {api} from "../../assets/URLS";
 
 function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
   const [id, setId] = useState("");
@@ -39,8 +41,8 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
     if (requiredValidaion()) {
       setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-      const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-      const UPDATE_FOOD_LINK = `http://api.pakshiresort.com/food/update/${id}/`;
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const UPDATE_FOOD_LINK = `${api.food_update}${id}/`;
 
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })

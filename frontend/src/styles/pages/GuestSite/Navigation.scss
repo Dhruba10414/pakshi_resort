@@ -1,0 +1,196 @@
+.navigation {
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -100vw;
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 20;
+  overflow: hidden;
+
+  &__primary {
+    width: 60%;
+    min-height: 100vh;
+    background: linear-gradient(
+        0deg,
+        rgba(37, 78, 88, 0.3),
+        rgba(17, 45, 50, 0.5)
+      ),
+      url("../../../assets/images/Logo/poster.jpg") no-repeat center center / cover;
+    position: relative;
+    @include media("<=phone") {
+      width: 100%;
+      min-height: 0;
+      height: 0;
+    }
+  }
+
+  &__secondary {
+    width: 40%;
+    min-height: 100vh;
+    background: var(--primary-color);
+    padding: 50px 50px 30px 50px;
+    @include media("<=phone") {
+      width: 100%;
+      min-height: 100vh;
+      padding: 30px;
+    }
+    .content {
+      margin-bottom: 100px;
+      @include media("<=phone") {
+        margin-bottom: 60px;
+      }
+    }
+
+    .find-us{
+      width: 100%;
+      h3{
+        font-family: var(--secondary-font);
+        color: #fff;
+        font-size: 1rem;
+      }
+      p{
+        width: 100%;
+        font-family: var(--secondary-font);
+        color: #fff;
+        font-size: 17px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        @include media("<=phone") {
+          width: 80%;
+          font-size: 12px;
+        }
+      }
+      a{
+        display: block;
+        font-size: 17px;
+        position: relative;
+        &:after{
+          content: "";
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 120px;
+          height: 2px;
+          background: #fff;
+          transition: 0.3s;
+          @include media("<=phone") {
+            width: 100px;
+            height: 1px;
+          }
+        }
+        @include media("<=phone") {
+          font-size: 16px;
+        }
+        &:hover{
+          color: var(--secondary-color);
+        }
+      }
+    }
+
+    .phone-link {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+
+      .link {
+        margin-left: 30px;
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 15px;
+        font-family: var(--secondary-font);
+        font-weight: bold;
+        line-height: 15px;
+        &:hover{
+          color: var(--secondary-color);
+        }
+
+        @include media("<=phone") {
+          margin-left: 10px;
+          width: 40px;
+          height: 40px;
+          background: var(--primary-color-light);
+          color: var(--primary-color);
+          border-radius: 50%;
+          justify-content: center;
+        }
+        span{ @include media("<=phone") {display: none;} }
+        svg { margin-right: 5px; height: 15px; @include media("<=phone") {margin-right: 0;} }
+      }
+      a{margin-top: 20px; @include media("<=phone") {margin-top: 10px;} }
+    }
+  }
+
+  .navigation__primary,
+  .navigation__secondary {
+    a {
+      text-decoration: none;
+      display: flex;
+      color: #fff;
+      margin-bottom: 15px;
+      @include media("<=phone") {
+        margin-bottom: 10px;
+      }
+
+      .index {
+        margin-right: 40px;
+        font-size: 18px;
+        font-family: var(--secondary-font);
+        @include media("<=phone") {
+        }
+      }
+      .name {
+        font-family: var(--primary-font);
+        font-size: 2rem;
+        @include media("<=phone") {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+.nav-button {
+  position: fixed;
+  top: 40px;
+  right: 50px;
+  z-index: 30;
+  @include media("<=desktop") { top: 30px; }
+
+  #pencet {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.4s ease;
+
+    span {
+      width: 2em;
+      height: 3px;
+      margin: 0.26em 0;
+      display: block;
+      transition: all 0.4s ease;
+      transform-origin: 0 0;
+      @include media("<=phone") {
+        width: 1.5em;
+        height: 0.18em;
+        margin: 0.13em 0;
+      }
+    }
+  }
+
+  .Diam span:nth-child(1) {
+    transform: translate3d(0, 50%, 0) rotate(20deg);
+  }
+
+  .Diam span:nth-child(2) {
+    transform: translate3d(0, 50%, 0) rotate(-20deg);
+  }
+  @include media("<=phone") {
+    top: 25px;
+    right: 20px;
+  }
+}

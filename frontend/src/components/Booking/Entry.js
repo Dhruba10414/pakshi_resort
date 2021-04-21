@@ -3,7 +3,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { clearUser } from "../../redux/user/userAction";
 import { useHistory } from "react-router-dom";
-import { checkedIn, lock } from "../../assets/images/SVG";
+import { checkedIn } from "../../assets/images/SVG";
+//urls
+import { api } from "../../assets/URLS";
 
 function Entry({
   bookingId,
@@ -14,11 +16,31 @@ function Entry({
   book_on,
   is_active,
   clearUser,
-  notify,
+  notifyforCheckout,
+  notifyForCancel,
+  notifyForConfirm,
+  notifyForError
 }) {
-  const [checked, setChecked] = useState(false);
+
+  const [checkFoConfirm, setCheckForConfirm] = useState(false);
+  const [checkFoCancel, setCheckForCancel] = useState(false);
+  const [checkForCheckout, setCheckForCheckout] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  const checkDateAndCheckIn = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const year = date.getFullYear();
+    const today = `${day}-${month}-${year}`;
+    
+    if(today !== check_in){
+      notifyForError();
+    } else{
+      checkedInFunc();
+    }
+  }
 
   //////////////////////////////////////////////////
   // ================= (CHECK IN) =================
@@ -26,8 +48,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CHECK_IN_URL = `http://api.pakshiresort.com/bookings/checkin/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CHECK_IN_URL = api.check_in;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
@@ -35,17 +57,17 @@ function Entry({
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { "booking": bookingId };
 
-        axios.post(CHECK_IN_URL, Body, Config)
-        .then(() => {
-          notify();
-          setLoading(false);
-          setChecked(true);
-        })
-        .catch((err) => {
-          console.log(err.message);
-          setLoading(false);
-        });
-        console.log(Body)
+        axios
+          .post(CHECK_IN_URL, Body, Config)
+          .then(() => {
+            notifyForConfirm();
+            setLoading(false);
+            setCheckForConfirm(true);
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setLoading(false);
+          });
       })
       .catch((err) => {
         setLoading(false);
@@ -62,8 +84,8 @@ function Entry({
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CHECK_OUT_URL = `http://api.pakshiresort.com/bookings/checkout/`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CHECK_OUT_URL = api.check_out;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
@@ -71,14 +93,15 @@ function Entry({
         const Config = {
           headers: { Authorization: "Bearer " + token.data.access },
         };
-        const Body = { "booking": bookingId };
+        const Body = { booking: bookingId };
 
         axios
           .post(CHECK_OUT_URL, Body, Config)
           .then(() => {
-            notify();
+            notifyforCheckout();
             setLoading(false);
-            setChecked(true);
+            setCheckForConfirm(false);
+            setCheckForCheckout(true);
           })
           .catch((err) => {
             console.log(err.message);
@@ -86,6 +109,7 @@ function Entry({
           });
       })
       .catch((err) => {
+        console.log(err.message);
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
@@ -94,7 +118,44 @@ function Entry({
       });
   };
 
-  useEffect(() => {}, [checked]);
+  //////////////////////////////////////////////////
+  // ================= (CANCEL BOOKING) =================
+  const cancelBooking = () => {
+    setLoading(true);
+
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CANCEL_URL = api.cancel_booking;
+
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+        const Body = { booking: bookingId };
+        
+        axios
+          .post(CANCEL_URL, Body, Config)
+          .then(() => {
+            notifyForCancel();
+            setLoading(false);
+            setCheckForCancel(true);
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("refresh_token");
+        clearUser();
+        history.push("/staff/login");
+      });
+  };
+
+  useEffect(() => {}, [checkForCheckout, checkFoCancel, checkFoConfirm]);
 
   return (
     <div className="entry">
@@ -102,25 +163,50 @@ function Entry({
       <div className="guest-name">{guest}</div>
       <div
         className={
-          checked
+          checkFoConfirm
             ? "status active"
-            : is_active
-            ? "status active"
-            : "status pending"
+            : checkFoCancel
+              ? "status canceled"
+              : is_active
+              ? "status active"
+              : "status pending"
         }
       >
-        <p>{checked ? "staying" : is_active ? "staying" : "pending"}</p>
+        <p>
+          {checkFoConfirm
+            ? "staying"
+            :  checkFoCancel
+                ? "canceled"
+                : checkForCheckout
+                ? "leaved"
+                : is_active
+                  ? "staying"
+                  : "pending"
+            }
+        </p>
       </div>
       <div className="bookon">{book_on}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">
         {
-          checked || is_active 
-          ? ( <button className="checkout" onClick={() => checkedOutFunc(bookingId)}> {checkedIn} Check-Out</button>)
-          : !loading
-            ? (<button className="checkin" onClick={() => checkedInFunc(bookingId)}>{checkedIn} Check-in</button>)
-            : (<button className="disabled">{checkedIn} Loading.. </button>)
+          checkFoConfirm
+          ? !loading
+            ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
+            : <button className="disabled">{checkedIn} prcessing.. </button>
+          : checkFoCancel || checkForCheckout
+            ? "/"
+            : is_active
+              ? !loading 
+                ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
+                : <button className="disabled">{checkedIn} prcessing.. </button>
+              : !loading 
+                ? ( <div className="btn-boxx">
+                    <button className="checkin" onClick={checkDateAndCheckIn}>Check-in</button>
+                    <button className="cancel" onClick={cancelBooking}>Cancel</button>
+                  </div>
+                )
+                : <button className="disabled">{checkedIn} prcessing.. </button>
         }
       </div>
     </div>

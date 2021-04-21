@@ -79,10 +79,10 @@ class Room_BookingsListView(generics.GenericAPIView):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
             bookings = Bookings.objects.filter(check_out__gte=date.today(), 
-                                                is_complete=False).order_by('check_in')
+                                                is_complete=False, is_canceled=False).order_by('check_in')
         else:
             bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), 
-                                                is_complete=False).order_by('check_in')
+                                                is_complete=False, is_canceled=False).order_by('check_in')
         serialized = self.get_serializer(bookings, many=True)
 
         return Response(serialized.data, status=status.HTTP_200_OK)
@@ -101,7 +101,9 @@ class GuestDetail(generics.GenericAPIView):
             return Response(guest_serialized.data, status=status.HTTP_200_OK)
 
         except Guests.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            guests = Guests.objects.filter(is_staying=True)
+            guests_serialized = self.get_serializer(guests, many=True)
+            return Response(guests_serialized.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         new_guest = self.get_serializer(data=request.data)
@@ -145,9 +147,9 @@ class RoomSearch(generics.GenericAPIView):
             }
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        existing_bookings = Bookings.objects.filter(
-                (Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
-                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date))
+        existing_bookings = Bookings.objects.filter(Q(is_canceled=False), Q(is_complete=False),
+                ((Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
+                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date)))
             )
         
         available_rooms = Rooms.objects.exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True)))
@@ -206,16 +208,15 @@ class CheckOut(generics.GenericAPIView):
                 room = booking.room
                 room.active_booking = None
                 room.save()
+                booking.is_complete = True
+                booking.is_active = False
+                booking.save()
                 guest = booking.guest
-                still_staying = Bookings.objects.filter(guest=guest, is_complete=False).exists()
+                still_staying = Bookings.objects.filter(guest=guest, is_active=True).exclude(id=booking.id).exists()
                 if not still_staying:
                     guest.is_staying = False
                     guest.save()
                 
-                booking.is_complete = True
-                booking.is_active = False
-                booking.save()
-            
             return Response(status=status.HTTP_200_OK)
         
         except Bookings.DoesNotExist:
@@ -267,6 +268,35 @@ class BookingRequestView(generics.GenericAPIView):
                 return Response(status=status.HTTP_404_NOT_FOUND)
             
         return Response(pendings_seri.data, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        req_id = request.data.get('id', None)
+        rooms = request.data.get('rooms', None)
+
+        if not isinstance(rooms, list) or req_id is None:
+            return Response({"error": "Invalid Input"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            booking_req = BookingRequest.objects.get(id=req_id)
+            booked = []
+
+            for room_id in rooms:
+                new_booking = add_new_booking(room_id, booking_req.guest.id, request.user.id,
+                                            booking_req.check_in, booking_req.check_out)
+                if new_booking:
+                    booked.append(new_booking)
+            
+            booking_req.has_confirmed = True
+            booking_req.save()
+            
+            booking_req = BookingRequestSerializer(booking_req)
+            booked_rooms = BookingSerializer(booked, many=True)
+            
+            return Response({"Status": booking_req.data,
+                            "Room Booked": booked_rooms.data}, status=status.HTTP_201_CREATED)
+        
+        except BookingRequest.DoesNotExist:
+            return Response({"error": "Invalid Id"}, status=status.HTTP_404_NOT_FOUND) 
 
     def delete(self, request, *args, **kwargs):
         req_id = request.data.get("id", None)

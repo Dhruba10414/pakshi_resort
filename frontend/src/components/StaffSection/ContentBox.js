@@ -7,7 +7,7 @@ import SideNav from "./SideNav";
 import StaffHeading from "./StaffHeading";
 
 // Main Function
-function ContentBox({ currentUser, clearUser, children, heading }) {
+function ContentBox({ currentUser, children, heading }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {

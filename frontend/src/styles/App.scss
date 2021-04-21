@@ -9,26 +9,31 @@
 
 // SCSS FOR PAGES
 @import "./pages/PageNotfound.scss";
-@import "./pages/Navigation.scss";
 @import "./pages/Login.scss";
 @import "./pages/Dashboard.scss";
-@import "./pages/Guests.scss";
+@import "./pages/ActiveGuests.scss";
 @import "./pages/Book.scss";
 @import "./pages/Booking.scss";
-@import "./pages/BookInGuestSide.scss";
+@import "./pages/BookingRequest.scss";
 @import "./pages/FoodOrders.scss";
 @import "./pages/FoodManagement.scss";
 @import "./pages/Admin.scss";
+@import "./pages/Ticket.scss";
+@import "./pages/Stastics.scss";
 
-@import "./pages/Home.scss";
-@import "./pages/Rooms.scss";
-@import "./pages/Room.scss";
-@import "./pages/Facilities.scss";
-@import "./pages/Eat.scss";
-@import "./pages/About.scss";
-@import "./pages/Contact.scss";
-@import "./pages/Privacy.scss";
-@import "./pages/Sitemaps.scss";
+@import "./pages/GuestSite/Navigation.scss";
+@import "./pages/GuestSite/Home.scss";
+@import "./pages/GuestSite/Rooms.scss";
+@import "./pages/GuestSite/Room.scss";
+@import "./pages/GuestSite/Facilities.scss";
+@import "./pages/GuestSite/Eat.scss";
+@import "./pages/GuestSite/About.scss";
+@import "./pages/GuestSite/Contact.scss";
+@import "./pages/GuestSite/Privacy.scss";
+@import "./pages/GuestSite/Sitemaps.scss";
+@import "./pages/GuestSite/BookInGuestSide.scss";
+@import "./pages/GuestSite/BookByGuest.scss";
+@import "./pages/Notfound.scss";
 
 
 // SCSS FOR COMPONENTS
@@ -41,9 +46,10 @@
 @import "./components/StaffsSection/StaffHeading.scss";
 @import "./components/Booking/RoomInfo.scss";
 @import "./components/Booking/BookingForm.scss";
-@import "./components//Dashboard/FoodOrder.scss";
-@import "./components//Dashboard/RoomDetails.scss";
-@import "./components//Dashboard/Invoice.scss";
+@import "./components/Guests/Invoice.scss";
+@import "./components/Guests/PaymentModal.scss";
+@import "./components/Dashboard/FoodOrder.scss";
+@import "./components/Dashboard/RoomDetails.scss";
 @import "./components/Footer.scss";
 
 // FOR ALL COMPONENTS
@@ -60,4 +66,20 @@ html {
   visibility: hidden;
   user-select: none;
   overscroll-behavior: none;
+}
+
+// GLOBAL STYLES
+.loading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img{width: 13%;}
+  h2{
+    margin-top: 20px;
+    font-family: var(--quicksand-font);
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--primary-colo-2);
+  }
 }

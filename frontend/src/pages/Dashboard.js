@@ -1,65 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { rsvg, searchSvg } from "../assets/images/SVG";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
-
+import axios from "axios";
+// api
+import { api } from "../assets/URLS";
 // compoents
 import ContentBox from "../components/StaffSection/ContentBox";
 import Room from "../components/Dashboard/Room";
-import FoodOrder from "../components/Dashboard/FoodOrder";
 import RoomDetails from "../components/Dashboard/RoomDetails";
-import axios from "axios";
-import Invoice from "../components/Dashboard/Invoice";
+import Loading from "../components/Loading";
+import { rsvg, searchSvg } from "../assets/images/SVG";
 
 function Dashboard({ clearUser }) {
   /* ----------------- V A R I A B L E S ----------------------- */
-  // for room list shoen in dashboard
   const [roomList, setRoomList] = useState([]);
-  // for search a room
   const [room, setRoom] = useState("");
   const [desiredRoom, setDesiredRoom] = useState(null);
   const [error, setError] = useState("");
-  // foor food Order
-  const [openOrder, setOpenOrder] = useState(false);
-  const [orderFor, setOrderFor] = useState({});
-  // for view room details
+  const [loading, setLoading] = useState(false);
   const [openRoomDetails, setOpenRoomDetails] = useState(false);
   const [details, setDetails] = useState({});
-  // for view invoice
-  const [openInvoice, setOpenInvoice] = useState(false);
-  const [invoiceInfo, setInvoiceInfo] = useState({});
-
   const history = useHistory();
 
   /* ----------------- F U N C T I O N S ----------------------- */
-  // OPEN FOOD ORDER MODAL
-  const openFoodOrderModal = (id, name, room_no) => {
-    setOpenOrder(true);
-    setOrderFor({ id: id, name: name, room_no: room_no });
-  };
-  // OPEN FOOD ORDER MODAL
-  const openDetailsModal = (
-    id,
-    name,
-    check_in,
-    check_out,
-    room_no,
-    room_type
-  ) => {
+  // OPEN DETAIL MODAL
+  const openDetailsModal = ( id, name, check_in, check_out, room_no, room_type ) => {
     setOpenRoomDetails(true);
     setDetails({ id, name, check_in, check_out, room_no, room_type });
   };
-  // OPEN INVOICE MODAL
-  const openInvoiceModal = (guestId, roomNo) => {
-    setOpenInvoice(true);
-    setInvoiceInfo({ guestId, roomNo });
-  };
   // CLOSE MODAL
   const closeModal = () => {
-    setOpenOrder(false);
     setOpenRoomDetails(false);
-    setOpenInvoice(false);
   };
   // SEARCH A SPECIFIC ROOM
   const searchRoom = (event) => {
@@ -73,25 +45,18 @@ function Dashboard({ clearUser }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post("http://api.pakshiresort.com/api/token/refresh/", {
-        refresh: refresh_token,
-      })
+      .post(api.refresh, { refresh: refresh_token })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = { headers: { Authorization: "Bearer " + token.data.access } };
         // get rooms
         axios
-          .get("http://api.pakshiresort.com/bookings/rooms/", Config)
-          .then((res) => {
-            setRoomList(res.data);
-          })
-          .catch((err) => {
-            setError(err.message);
-          });
+          .get(api.rooms, Config)
+          .then((res) => { setRoomList(res.data); setLoading(false); })
+          .catch((err) => { setError(err.message); });
       })
       .catch((err) => {
         //auth error
@@ -108,7 +73,7 @@ function Dashboard({ clearUser }) {
       <div className="dashboard">
         <div className="dashboard-container">
           {/* ============== ROOMS TABLE ============== */}
-          {!openOrder && !openRoomDetails && !openInvoice ? (
+          {!openRoomDetails ? (
             <div className="room-table-container">
               <div className="room-table">
                 {/* search field */}
@@ -126,37 +91,37 @@ function Dashboard({ clearUser }) {
                 {/* table heading */}
                 <div className="table-heading">
                   <div className="no">Room {rsvg}</div>
+                  <div className="cottage">Cottage{rsvg}</div>
                   <div className="status">Status {rsvg}</div>
                   <div className="guest-name">Guest Name{rsvg}</div>
                   <div className="checkin">Check In{rsvg}</div>
                   <div className="checkout">Check Out{rsvg}</div>
-                  <div className="food-order">Order Food{rsvg}</div>
                 </div>
                 {/* table content */}
                 <div className="roomEntries">
-                  {roomList.map((room) => (
-                    <Room
-                      key={room.room_num}
-                      room_no={room.room_num}
-                      room_type={room.room_type}
-                      status={room.is_occupied}
-                      active_booking={room.active_booking}
-                      openFoodOrderModal={openFoodOrderModal}
-                      openDetailsModal={openDetailsModal}
+                  {!loading ? (
+                    roomList.map((room) => (
+                      <Room
+                        key={room.room_num}
+                        room_no={room.room_num}
+                        room_type={room.room_type}
+                        cottage_num={room.cottage_num}
+                        status={room.is_occupied}
+                        active_booking={room.active_booking}
+                        openDetailsModal={openDetailsModal}
+                      />
+                    ))
+                  ) : (
+                    <Loading
+                      height="80vh"
+                      width="100%"
+                      textSize="16px"
+                      space="4px"
                     />
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
-          ) : openOrder ? (
-            <FoodOrder
-              guestId={orderFor.id}
-              name={orderFor.name}
-              room={orderFor.room_no}
-              closeModal={closeModal}
-            />
-          ) : openInvoice ? (
-            <Invoice />
           ) : (
             <RoomDetails
               id={details.id}
@@ -166,7 +131,6 @@ function Dashboard({ clearUser }) {
               checkIn={details.check_in}
               checkOut={details.check_out}
               closeModal={closeModal}
-              openInvoiceModal={openInvoiceModal}
             />
           )}
 

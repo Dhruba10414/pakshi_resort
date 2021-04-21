@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Services, Tickets
 from bookings.models import Guests
 from django.contrib.auth import get_user_model
-from datetime import date
+from datetime import date, datetime
 
 class ServicesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,3 +49,14 @@ class TicketReadOnlySerializer(serializers.ModelSerializer):
 
 class TicketWithTotalPrice(TicketReadOnlySerializer):
     total_price = serializers.FloatField()
+
+
+class SellsAnalyticsSerializer(serializers.BaseSerializer):
+
+    def to_representation(self, instance):
+
+        return {
+            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'total_sells': instance['sold'],
+            'total_income': instance['income']
+        }

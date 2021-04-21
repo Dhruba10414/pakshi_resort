@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
+//urls
+import {api} from "../assets/URLS";
 
 // Components
 import BookingForm from "../components/Book/BookingForm";
@@ -29,23 +31,24 @@ function Book({clearUser}) {
     setSearched(true);
     setBookCardOn(false);
 
+    // setup check-in check-out dates
     const sd = startDate.getDate();
     const sm = (startDate.getMonth() + 1).toString().padStart(2, "0");
     const sy = startDate.getFullYear();
     const ed = endDate.getDate();
     const em = (endDate.getMonth() + 1).toString().padStart(2, "0");
     const ey = endDate.getFullYear();
-
     setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`});
 
+    // specify api urls
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const ROOM_SEARCH_URL = `http://api.pakshiresort.com/bookings/rooms/available/?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const ROOM_SEARCH_URL = `${api.available_rooms}?check_in=${sd}-${sm}-${sy}&check_out=${ed}-${em}-${ey}`;
 
+    // api -call
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-      
       // search by list
       axios.get(ROOM_SEARCH_URL, Config)
       .then((res) => {
@@ -53,9 +56,9 @@ function Book({clearUser}) {
         setAvailableRooms(filteredList);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.message);
       });
-      
       // search by group
       axios.get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
       .then((res) => {
@@ -73,7 +76,6 @@ function Book({clearUser}) {
       localStorage.removeItem('refresh_token');
       clearUser();
       history.push("/staff/login");
-      setLoading(false);
       setLoading(false);
     });
   };
@@ -128,20 +130,17 @@ function Book({clearUser}) {
     setLoading(true);
 
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = `http://api.pakshiresort.com/api/token/refresh/`;
-    const CREATE_GUEST = `http://api.pakshiresort.com/bookings/guests/`;
-    const CREATE_BOOKING = `http://api.pakshiresort.com/bookings/add/`
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const CREATE_GUEST = api.create_guest;
+    const CREATE_BOOKING = api.make_booking;
 
     axios.post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const BodyForGuest = {"name": name, "email": email, "address": address, "contact": contact};
 
-        const rooms = roomToBooked.map(room => room.id);
-        console.log(rooms);
-
         // create a guest
-        axios.post(CREATE_GUEST, BodyForGuest, Config)
+        axios.post(CREATE_GUEST, BodyForGuest,)
         .then(res => {
           const rooms = roomToBooked.map(room => room.id);
           const BodyForBooking = {
@@ -154,7 +153,6 @@ function Book({clearUser}) {
           axios.post(CREATE_BOOKING, BodyForBooking, Config)
           .then(() => {notify(); setLoading(false);})
           .catch(err => {console.log(err.message); setLoading(false);});
-          console.log(BodyForBooking);
         })
         .catch(err => {console.log(err.message); setLoading(false);})
       })
@@ -188,6 +186,7 @@ function Book({clearUser}) {
             selectRoomToBook={selectRoomToBook}
             removeRoomToBook={removeRoomToBook}
             checkEmptyRoomList={checkEmptyRoomList}
+            loading={loading}
           />
           </div>
       ) : (

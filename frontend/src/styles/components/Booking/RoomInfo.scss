@@ -5,6 +5,7 @@
   height: 52vh;
   border: 2px solid #ccc;
   border-radius: 8px;
+  @include media("<=desktop") { height: 53vh; }
   .beforeSearch,
   .afterSerch,
   .serchFailed {
@@ -20,8 +21,7 @@
       width: 30%;
       margin-top: -50px;
       font-size: 14px;
-      font-family: var(--secondary-font);
-      text-align: center;
+      h2{font-family: var(--quicksand-font); text-align: center; font-weight: 500;}
       img {
         width: 100%;
       }
@@ -29,8 +29,10 @@
   }
 
   .afterSerch {
+    height: 50vh;
     display: flex;
     padding: 0 !important;
+    overflow: hidden;
     .availavleRoomTable {
       width: 70%;
       height: 50vh;
@@ -39,6 +41,7 @@
       &::-webkit-scrollbar { display: none; }
       -ms-overflow-style: none;
       scrollbar-width: none;
+      @include media("<=desktop") { height: 52vh; }
 
       .table-heading, 
       .available-room {
@@ -50,14 +53,14 @@
           display: flex;
           align-items: center;
           padding: 0 20px;
-          font-family: var(--secondary-font);
           font-size: 16px;
           font-family: var(--quicksand-font);
+          @include media("<=desktop") { font-size: 15px; }
         }
-        .icon{width: 5%; svg{color: var(--green-dark); transform: scale(5);}}
+        .icon{width: 10%; svg{color: var(--green-dark); transform: scale(1); }}
         .id{width: 15%;}
         .type{width: 50%;}
-        .no{ width: 30%; }
+        .no{ width: 25%; }
       }
       .available-room{
         cursor: pointer;
@@ -86,7 +89,7 @@
 
     .availableRoomGroup{
       width: 29%;
-      height: calc(50vh - 5px);
+      height: 50vh;
       margin-left: 5px;
       padding-bottom: 10px;
       border-radius: 8px;
@@ -96,6 +99,7 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       background-color: #f4f4f4;
+      
 
       .head{
         padding: 20px;
@@ -107,6 +111,7 @@
         color: var(--primary-color);
         background: #f4f4f4;
         text-transform: uppercase;
+        @include media("<=desktop") { font-size: 12.5px; }
       }
       
       .data{
@@ -116,13 +121,17 @@
         margin-bottom: 10px;
         margin-left: 20px;
         margin-right: 20px;
-        padding: 10px 10px 10px 20px;
+        padding: 9px 9px 9px 20px;
         font-size: 16px;
         background-color: #fff;
         border-radius: 8px;
+        @include media("<=desktop") { 
+          margin-bottom: 8px; margin-left: 10px; margin-right: 10px;
+          border-radius: 5px; padding: 4px 4px 4px 18px;
+        }
 
         .logo{width: 10%; svg{color: var(--blue-dark);}}
-        .type{width: 80%; font-weight: bold; color: #444; }
+        .type{width: 80%; font-weight: bold; color: #444; font-size: 14px; }
         .value{
           width: 20%;
           display: flex;
@@ -135,6 +144,7 @@
             display: flex; justify-content: center; align-items: center;
             color: var(--primary-color);
             border-radius: 10px;
+            @include media("<=desktop") { height: 32px; width: 32px; }
           }
         }
       }
@@ -154,6 +164,8 @@
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    margin-top: 15px;
+    @include media("<=desktop") { font-size: 15px; padding: 12px 30px; margin-top: 16px; }
     &:hover{
       color: var(--primary-color-light);
     }
@@ -164,5 +176,6 @@
     font-size: 18px;
     margin-left: 30px;
     font-family: var(--quicksand-font);
+    @include media("<=desktop") { margin-top: 15px; }
   }
 }

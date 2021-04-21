@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 // Components
 import Footer from "../Footer";
 import Eat from "./Eat";
@@ -21,7 +23,7 @@ function HomeContent() {
 
   useEffect(() => {
     HomeAnim();
-    setImageArray([ resort3, resort1, resort2]);
+    setImageArray([resort3, resort1, resort2]);
   }, []);
 
   const settings = {
@@ -35,11 +37,14 @@ function HomeContent() {
     speed: 1000,
     arrows: false,
     dotsClass: "slick-dots slick-thumb",
-    customPaging: (i) => {return (
+    customPaging: (i) => {
+      return (
         <div className="custom-dots">
           <img src={imageArray[i]} />
+          {/* <LazyLoadImage alt={""} effect="blur" src={imageArray[i]} /> */}
         </div>
-      );},
+      );
+    },
   };
 
   return (
@@ -52,7 +57,10 @@ function HomeContent() {
           </div>
           <div className="home-image">
             <Slider {...settings} className="slider">
-              { imageArray.map((image, index) => (<img key={index} src={image} alt="" />)) }
+              {imageArray.map((image, index) => (
+                // <img key={index} src={image} alt="" />
+                <LazyLoadImage key={index} alt={""} effect="blur" src={image} />
+              ))}
             </Slider>
           </div>
         </div>
@@ -70,14 +78,23 @@ function HomeContent() {
             <p>We provide you these</p>
             <h2>FEATURES</h2>
           </div>
-          <div className="features"><Features /></div>
+          <div className="features">
+            <Features />
+          </div>
         </div>
 
-        <div className="home__rooms"><Rooms /></div>
-        <div className="home__park"><Park /></div>
-        <div className="home__eat"><Eat /></div>
-        <div className="home__events"><Meeting /></div>
-
+        <div className="home__rooms">
+          <Rooms />
+        </div>
+        <div className="home__park">
+          <Park />
+        </div>
+        <div className="home__eat">
+          <Eat />
+        </div>
+        <div className="home__events">
+          <Meeting />
+        </div>
       </div>
       <Footer />
       <Navigation />
@@ -86,4 +103,3 @@ function HomeContent() {
 }
 
 export default HomeContent;
-
