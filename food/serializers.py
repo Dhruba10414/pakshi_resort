@@ -2,7 +2,7 @@ from rest_framework import serializers
 from food.models import FoodItem,FoodOrdering
 from bookings.serializers import GuestSerializer
 from staff.serializers import UserSerializer
-
+from datetime import datetime
 
 class FoodItemSerilizer(serializers.ModelSerializer):
     class Meta:
@@ -29,15 +29,24 @@ class OrderItemEmbededSerializer(serializers.ModelSerializer):
 class FoodOrderEmbededSerializer(serializers.ModelSerializer):
     food = FoodItemSerilizer(read_only=True)
     taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
-    guest = serializers.PrimaryKeyRelatedField(read_only=True)
+    guest =  GuestSerializer(read_only=True) 
     time = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
     total=serializers.SerializerMethodField()
 
     class Meta:
         model=FoodOrdering
-        fields=['id','food','quantity','time','taken_by','guest','order_price','total']
+        fields=['id','food','isComplete','isCancel','quantity','time','taken_by','guest','order_price','total']
     
     def get_total(self,obj):
         return (obj.order_price*obj.quantity)
 
 
+    
+class FoodAnalyticsSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+
+        return {
+            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'total_bookings': instance['orders'],
+            'total_income': instance['income']
+        }
