@@ -8,7 +8,7 @@ from django.conf import settings
 class ConformationEmailDelivery(threading.Thread):
     def __init__(self, guest, bookings):
         reciever = guest.email
-        subject = 'Booking Confirmation'
+        subject = 'Room Reservation Confirmed'
         html_content = render_to_string('confirmation.html', {'guest': guest, 'bookings': bookings})
         text_content = 'To view this email enable HTML rendering in your email viewer'
         message = EmailMultiAlternatives(subject, text_content, to=[reciever])
@@ -32,7 +32,7 @@ class ConformationEmailDelivery(threading.Thread):
 class CancelationEmailDelivery(threading.Thread):
     def __init__(self, booking):
         reciever = booking.guest.email
-        subject = 'Booking Cancelation'
+        subject = 'Room Reservation Canceled'
         html_content = render_to_string('cancelation.html', {'booking': booking})
         text_content = 'To view this email enable HTML rendering in your email viewer'
         message = EmailMultiAlternatives(subject, text_content, to=[reciever])
