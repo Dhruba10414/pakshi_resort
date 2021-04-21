@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {Link} from "react-router-dom"
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 // Components
@@ -47,6 +48,8 @@ function Eat() {
                 Indian food menu according to your taste and desire.
               </p>
               <LazyLoadImage alt={""} effect="blur" src={eat2} className="img-tw" />
+              <Link className="menu-btn" to="/files/pakshi-food.pdf" target="_blank" download>View our foods</Link>
+              {/* <button className="menu-btn">View our foods</button> */}
               {/* <img className="img-tw" src={eat2} alt="" /> */}
             </div>
           </div>
