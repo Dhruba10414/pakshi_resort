@@ -39,11 +39,19 @@ export const api = {
     // ticket-related
     buy_ticket: `${baseurl}/tickets/sells/`, //post
 
-
     // payment
     guest_invoice: `${baseurl}/invoices/resort-invoice/`, // get
     food_invoice: `${baseurl}/food/invoice/`, // get
     invoice_room_summary: `${baseurl}/invoices/resort-short-invoice/`, // get
     invoice_food_summry: `${baseurl}/food/invoice-summary/`, // get
     payment_recieve: `${baseurl}/invoices/payments/`, // post
+
+    // stastics
+    resort_stastics: `${baseurl}/invoices/analytics/`, // get
+    ticket_stastics: `${baseurl}/tickets/analytics/`, // get
+    food_stastics: `${baseurl}/food/analytics/`, // get
+    resort_csv: `${baseurl}/invoices/resort-logs/`, // get
+    ticket_csv: `${baseurl}/tickets/logs/`, //get
+    food_csv: `${baseurl}/`,
+
 }
