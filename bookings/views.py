@@ -8,7 +8,7 @@ from django.db import transaction
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly, AdminWriteOrReadOnly
-from .utils import ConformationEmailDelivery, CancelationEmailDelivery, ReservationEmailDelivery
+from .utils import ConformationEmailDelivery, CancelationEmailDelivery
 
 
 class RoomCategoryView(generics.GenericAPIView):
@@ -325,7 +325,6 @@ class AddNewBookingRequestView(generics.GenericAPIView):
         booking_request.is_valid(raise_exception=True)
         booking_request.save()
 
-        ReservationEmailDelivery(booking_request).start()
         return Response(booking_request.data, status=status.HTTP_201_CREATED)
 
 

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Rooms, RoomType, Bookings, Guests, BookingRequest
 from datetime import date
-
+from .utils import ReservationEmailDelivery
 
 class RoomTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -116,4 +116,5 @@ class BookingRequestWriteSerializer(BookingRequestSerializer):
         requested_booking.guest = guest
         requested_booking.save()
 
+        ReservationEmailDelivery(requested_booking).start()
         return requested_booking
