@@ -8,6 +8,7 @@ from django.db import transaction
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .helpers import convert_to_date, room_available, add_new_booking
 from pakshi_resort.permissions import AdminWriteOrAuthenticatedReadOnly, AdminWriteOrReadOnly
+from .utils import ConformationEmailDelivery, CancelationEmailDelivery
 
 
 class RoomCategoryView(generics.GenericAPIView):
@@ -210,6 +211,7 @@ class CheckOut(generics.GenericAPIView):
                 room.save()
                 booking.is_complete = True
                 booking.is_active = False
+                booking.leaved_on = date.today()
                 booking.save()
                 guest = booking.guest
                 still_staying = Bookings.objects.filter(guest=guest, is_active=True).exclude(id=booking.id).exists()
@@ -234,22 +236,26 @@ class BookRooms(generics.GenericAPIView):
 
         if from_ is None or to_ is None or not isinstance(rooms, list) or guest_id is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+            
+        try:
+            guest = Guests.objects.get(id=guest_id)
+            from_date = convert_to_date(from_)
+            to_date = convert_to_date(to_)
+            booked = []
+            
+            for room_id in rooms:
+                new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
+                if new_booking:
+                    booked.append(new_booking)
+            
+            booking_info = self.get_serializer(booked, many=True)
+            if len(booked) > 0:
+                ConformationEmailDelivery(guest, booked).start()
+            
+            return Response(booking_info.data, status=status.HTTP_201_CREATED)
         
-        if not Guests.objects.filter(id=guest_id).exists():
+        except Guests.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        from_date = convert_to_date(from_)
-        to_date = convert_to_date(to_)
-        booked = []
-        
-        for room_id in rooms:
-            new_booking = add_new_booking(room_id, guest_id, request.user.id, from_date, to_date)
-            if new_booking:
-                booked.append(new_booking)
-        
-        booking_info = self.get_serializer(booked, many=True)
-        
-        return Response(booking_info.data, status=status.HTTP_201_CREATED)
 
 
 class BookingRequestView(generics.GenericAPIView):
@@ -289,6 +295,7 @@ class BookingRequestView(generics.GenericAPIView):
             booking_req.has_confirmed = True
             booking_req.save()
             
+            ConformationEmailDelivery(booking_req.guest, booked).start()
             booking_req = BookingRequestSerializer(booking_req)
             booked_rooms = BookingSerializer(booked, many=True)
             
@@ -352,6 +359,8 @@ class CancelBooking(generics.GenericAPIView):
                 return Response({"error": "Can not cancel an active booking"}, status=status.HTTP_400_BAD_REQUEST)
             booking.is_canceled = True
             booking.save()
+            
+            CancelationEmailDelivery(booking).start()
             return Response(status=status.HTTP_200_OK)
 
         except Bookings.DoesNotExist:

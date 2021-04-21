@@ -32,6 +32,7 @@ class Bookings(models.Model):
     is_complete = models.BooleanField(default=False)
     is_canceled = models.BooleanField(default=False)
     rate = models.FloatField(default=4000)
+    leaved_on = models.DateField(null=True)
     by_staff = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='staff_booked', null=True)
 
 

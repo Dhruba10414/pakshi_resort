@@ -15,7 +15,7 @@ def room_available(room_id, from_, to_):
                                             (
                                                 (Q(check_in__gte=from_) & Q(check_in__lt=to_)) |
                                                 (Q(check_out__gt=from_) & Q(check_out__lt=to_))
-                                            )).exclude(is_canceled=True).exists()
+                                            )).exclude(Q(is_canceled=True) | Q(is_complete=True)).exists()
     
     return not is_available
                                 

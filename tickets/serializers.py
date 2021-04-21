@@ -13,11 +13,10 @@ class ServicesSerializer(serializers.ModelSerializer):
 class TicketWriteSerializer(serializers.ModelSerializer):
     bought_by = serializers.PrimaryKeyRelatedField(queryset=Guests.objects.all())
     ticket_for = serializers.PrimaryKeyRelatedField(queryset=Services.objects.all())
-    issued_date = serializers.DateField(format="%d-%m-%Y", input_formats=("%d-%m-%Y", ))
 
     class Meta:
         model = Tickets
-        fields = ['bought_by', 'issued_date', 'num_tickets', 'ticket_for']
+        fields = ['bought_by', 'num_tickets', 'ticket_for']
 
     def create(self, validated_data):
         service = validated_data.pop('ticket_for')
@@ -29,16 +28,15 @@ class TicketWriteSerializer(serializers.ModelSerializer):
 
         return ticket
 
-    def validate_issued_date(self, value):
-        if value < date.today():
-            raise serializers.ValidationError("Can't buy tickets for a past date")
+    def validate(self, data):
+        if not data['bought_by'].is_staying:
+            raise serializers.ValidationError("Guest not staying right now can not buy tickets")
 
         return value
 
 
 class TicketReadOnlySerializer(serializers.ModelSerializer):
-    issued_on = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p")
-    issued_date = serializers.DateField(format="%d-%m-%Y", input_formats=("%d-%m-%Y", ))
+    issued_date = serializers.DateField(format="%d-%m-%Y", read_only=True)
     bought_by = serializers.SlugRelatedField(slug_field='name', read_only=True)
     registered_by = serializers.SlugRelatedField(slug_field='user_name', read_only=True)
     ticket_for = serializers.SlugRelatedField(slug_field='name', read_only=True)
@@ -56,7 +54,8 @@ class SellsAnalyticsSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
 
         return {
-            'month': datetime.strftime(instance['month'], "%b %Y"),
+            'month': instance['month'].month,
+            'year': instance['month'].year,
             'total_sells': instance['sold'],
             'total_income': instance['income']
         }
