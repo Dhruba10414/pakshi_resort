@@ -8,9 +8,16 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/
 """
 
 import os
+import dotenv
+
+dotenv.load_dotenv(
+        os.path.join(os.path.dirname('__file__'), '.env')
+    )
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pakshi_resort.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pakshi_resort.settings.development')
+if os.getenv('DJANGO_SETTINGS_MODULE'):
+        os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE')
 
 application = get_wsgi_application()
