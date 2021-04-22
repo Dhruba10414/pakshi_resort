@@ -30,6 +30,7 @@ import BookingRequests from "./pages/BookingRequests";
 import BookByGuest from "./pages/Guest/BookByGuest";
 import Statics from "./pages/Statics";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -64,6 +65,7 @@ function App({ setUser, isLogedIn }) {
 
           {/* STAFF SECTION */}
           <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
+          <Route exact path="/staff/forget-password" render={() => !isLogedIn ? <SetPasswordPage/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
           <Route exact path="/staff/dashboard" render={() => isLogedIn ? <Dashboard /> : <Login /> } />
           <Route exact path="/staff/active-guests" render={() => isLogedIn ? <ActiveGuest /> : <Login /> } />
           <Route exact path="/staff/book" render={() => isLogedIn ? <Book /> : <Login /> } />

@@ -145,7 +145,7 @@ function Login() {
               ? <button type="button" onClick={LoginFunctionality}>Login</button>
               : <button type="button" className="loading">Loading...</button>
             }
-            <Link to="/">Forgot password?</Link>
+            <Link to="/staff/forget-password">Forgot password?</Link>
           </form>
         </div>
       </div>
