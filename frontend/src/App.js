@@ -56,8 +56,8 @@ function App({ setUser, isLogedIn }) {
           <Route exact path="/room/delux-couple" component={Room} />
           <Route exact path="/room/delux-double" component={Room} />
           <Route exact path="/room/delux-twin" component={Room} />
-          <Route exact path="/booking" component={BookInGuestSide} />
-          {/* <Route exact path="/booking" component={BookByGuest} /> */}
+          {/* <Route exact path="/booking" component={BookInGuestSide} /> */}
+          <Route exact path="/booking" component={BookByGuest} />
           <Route exact path="/eat-drink" component={Eat} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/privacy-policy" component={Privacy} />
