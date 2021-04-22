@@ -13,8 +13,9 @@ def convert_to_date(date_string, f="%d-%m-%Y"):
 def room_available(room_id, from_, to_):
     is_available = Bookings.objects.filter(Q(room__id=room_id),
                                             (
-                                                (Q(check_in__gte=from_) & Q(check_in__lt=to_)) |
-                                                (Q(check_out__gt=from_) & Q(check_out__lt=to_))
+                                                (Q(check_in__lte=from_) & Q(check_out__gt=from_)) |
+                                                (Q(check_in__lt=to_) & Q(check_out__gte=to_)) |
+                                                (Q(check_in__gt=from_) & Q(check_out__lt=to_))
                                             )).exclude(Q(is_canceled=True) | Q(is_complete=True)).exists()
     
     return not is_available

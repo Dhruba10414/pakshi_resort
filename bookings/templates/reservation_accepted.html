@@ -18,8 +18,8 @@
             <tr>
                 <td style="font-size: x-large; padding: 20px 20px 20px 20px;" >
                     <b>Dear {{ reservation.guest.name }},</b><br>
-                    <p style="font-size: medium;">Sorry to be bearer of bad news, your room reservation have been canceled. We apologize for any discomfort experience you might have with us<br>
-                        <b>Your following room reservation has been canceled.</b>
+                    <p style="font-size: medium;">Thank you for choosing to stay with Pakshi Resort. We have recieved your reservation order. Our staff will communicate with you as soon as possible to confirm your reservation. We are looking forward to welcome you in our resort. Our professional and friendly staff are committed to ensure your stay is both enjoyable and comfortable.<br>
+                        <b>You have ordered for following room reservation:</b>
                     </p>
                 </td>
             </tr>
@@ -27,24 +27,27 @@
                 <td style="padding: 0 20px  0 20px;">  
                     <table border="1" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                         <tr style="background-color: #59ab6f;">
-                            <th>Room No</th>
-                            <th>Room Category</th>
-                            <th>Check In Date</th>
-                            <th>Check Out Date</th>
+                            <th><b>Room Category</b></th>
+                            <th><b>Check In Date</b></th>
+                            <th><b>Check Out Date</b></th>
+                            <th><b>Cost Per Night</b></th>
+                            <th><b>Number of Rooms</b></th>
                         </tr>
                         
                         <tr>
-                            <th>{{ booking.room.room_num }}</th>
-                            <th>{{ booking.room.room_type.room_type }}</th>
-                            <th>{{ booking.check_in }}</th>
-                            <th>{{ booking.check_out }}</th>
-                        </tr>        
+                            <th>{{ reservation.room_type.room_type }}</th>
+                            <th>{{ reservation.check_in }}</th>
+                            <th>{{ reservation.check_out }}</th>
+                            <th>{{ reservation.room_type.tariff }}</th>
+                            <th>{{ reservation.num_of_rooms }}</th>
+                        </tr>
                         
                     </table>
                 </td>
             </tr>
             <tr>
                 <td style="padding: 0 0 10px 10px; margin-left: 1;"> 
+                    <p><b>Your reservation order is in processing state. Our staff will communicate with you and confirm your reservation. After reservation successfully confirmed we will notify you through email with your booked room numbers.</b></p>
                     <p style="font-size: large;">Best Wishes and Regards</p>
                     <p style="font-size: larger;"><b>Pakshi Resort Ltd.</b></p>
 
