@@ -47,25 +47,13 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+          
           let Body = {};
           if (desc.length > 0) {
-            Body = {
-              name: name,
-              description: desc,
-              price: price,
-              available: true,
-              food_type: type,
-            };
+            Body = { "name": name, "description": desc, "price": price, "available": available, "food_type": type, };
           } else {
-            Body = {
-              name: name,
-              price: price,
-              available: true,
-              food_type: type,
-            };
+            Body = { "name": name, "price": price, "available": available, "food_type": type, };
           }
 
           axios
@@ -91,6 +79,7 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
   };
 
   useEffect(() => {
+    console.log(selectedFood)
     setId(selectedFood.id);
     setName(selectedFood.name);
     setType(selectedFood.type);
@@ -123,10 +112,7 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value="B">Breakfast </option>
-                <option value="L">Lunch</option>
-                <option value="D">Dinner</option>
-                <option value="S">Snacks</option>
+                {selectedFood.foodTypes.map(type => (<option key={type} value={type}>{type}</option>))}
               </select>
             </div>
           </div>

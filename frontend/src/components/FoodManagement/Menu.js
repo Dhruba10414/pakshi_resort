@@ -8,13 +8,14 @@ import { clearUser } from "../../redux/user/userAction";
 import FoodItem from "./FoodItem";
 import Loading from "../Loading";
 // Svg
-import { rsvg } from "../../assets/images/SVG";
+import { rsvg, type } from "../../assets/images/SVG";
 //urls
 import {api} from "../../assets/URLS";
 
 function Menu({ clearUser, selectAfood, changed }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
+  const [foodTypes, setFoodTypes] = useState([]);
   const [foodType, setFoodType] = useState("Burger");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -27,6 +28,17 @@ function Menu({ clearUser, selectAfood, changed }) {
     );
     setFilteredFoods(filteredFoodsByType);
   };
+
+  // FILTER FOOD TYPES
+  const filterFoodTypes = (foods) => {
+    const types = [];
+    foods.map((food) => {
+      if(!types.includes(food.food_type)){
+        types.push(food.food_type);
+      }
+    });
+    setFoodTypes(types)
+  }
 
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
@@ -49,6 +61,7 @@ function Menu({ clearUser, selectAfood, changed }) {
             setAvailableFood(res.data);
             const filteredFoodsByType = res.data.filter((food) => food.food_type === "Burger");
             setFilteredFoods(filteredFoodsByType);
+            filterFoodTypes(res.data);
             setLoading(false);
           })
           .catch((err) => {
@@ -84,13 +97,7 @@ function Menu({ clearUser, selectAfood, changed }) {
                   value={foodType}
                   onChange={filterFood}
                 >
-                  <option value="Burger">Burger</option>
-                  <option value="Pizza">Pizza</option>
-                  <option value="Snacks">Snacks</option>
-                  <option value="Chinese Platter">Chinese Platter</option>
-                  <option value="Breakfast">Breakfast </option>
-                  <option value="Lunch">Lunch</option>
-                  <option value="Dinner">Dinner</option>
+                  { foodTypes.map((type) => (<option key={type} value={type}>{type}</option>))}
                 </select>
               </div>
             </div>
@@ -114,6 +121,7 @@ function Menu({ clearUser, selectAfood, changed }) {
                 available={food.available}
                 type={food.food_type}
                 selectAfood={selectAfood}
+                foodTypes={foodTypes}
               />
             ))
           : <Loading height="50vh" width="100%" textSize="15px" space="4px" text="Fetching Foods" />}

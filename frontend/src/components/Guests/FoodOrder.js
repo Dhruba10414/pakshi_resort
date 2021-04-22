@@ -17,6 +17,7 @@ import { api } from "../../assets/URLS";
 function FoodOrder({ guestId, name, closeModal, clearUser }) {
   const [availabelFood, setAvailableFood] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
+  const [foodTypes, setFoodTypes] = useState([]);
   const [foodType, setFoodType] = useState("Burger");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -29,6 +30,17 @@ function FoodOrder({ guestId, name, closeModal, clearUser }) {
     );
     setFilteredFoods(filteredFoodsByType);
   };
+
+  // FILTER FOOD TYPES
+  const filterFoodTypes = (foods) => {
+    const types = [];
+    foods.map((food) => {
+      if(!types.includes(food.food_type)){
+        types.push(food.food_type);
+      }
+    });
+    setFoodTypes(types)
+  }
 
   // GET FOOD LIST AND FILTER IT BY CURRENT TYPE
   useEffect(() => {
@@ -47,6 +59,7 @@ function FoodOrder({ guestId, name, closeModal, clearUser }) {
             setAvailableFood(res.data);
             const filteredFoodsByType = res.data.filter( (food) => food.food_type === "Burger" );
             setFilteredFoods(filteredFoodsByType);
+            filterFoodTypes(res.data);
             setLoading(false);
           })
           .catch((err) => {
@@ -82,13 +95,7 @@ function FoodOrder({ guestId, name, closeModal, clearUser }) {
               <div className="input w-30">
                 <div className="select">
                   <select name="role" id="role" value={foodType} onChange={filterFood} >
-                    <option value="Burger">Burger</option>
-                    <option value="Pizza">Pizza</option>
-                    <option value="Snacks">Snacks</option>
-                    <option value="Chinese Platter">Chinese Platter</option>
-                    <option value="Breakfast">Breakfast </option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
+                    { foodTypes.map((type) => (<option key={type} value={type}>{type}</option>))}
                   </select>
                 </div>
               </div>

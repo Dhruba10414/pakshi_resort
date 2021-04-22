@@ -16,7 +16,7 @@ function FoodManagement(props) {
   const [changed, setChanged] = useState(false);
 
   // SELECT A FOOD FOR UPDATE
-  const selectAfood = (id, type, name, desc, price, available) => {
+  const selectAfood = (id, type, name, desc, price, available, foodTypes) => {
     setAddFood(false);
     setSelectedFood({
       id: id,
@@ -25,6 +25,7 @@ function FoodManagement(props) {
       desc: desc,
       price: price,
       available: available,
+      foodTypes: foodTypes
     });
   };
 
