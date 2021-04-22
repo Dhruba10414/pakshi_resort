@@ -132,10 +132,6 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookRoomForGuest, s
               ))}
             </div>
           </div>
-          <div className="data">
-            <div className="label">Room type :</div>
-            <div className="value">{roomData.room_type}</div>
-          </div>
         </div>
         <div className="additional-data">
           <h3 className="s">{clock} Staying Information</h3>

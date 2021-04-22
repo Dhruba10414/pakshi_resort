@@ -176,11 +176,11 @@
             @include media("<=desktop") { font-size: 5rem; line-height: 5.5rem; letter-spacing: -2px; }
           }
           p {
-            font-family: var(--secondary-font);
+            font-family: var(--quicksand-font);
             color: var(--primary-color);
             font-weight: bold;
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             letter-spacing: -1px;
             @include media("<=desktop") { font-size: 20px; }
           }
@@ -247,8 +247,15 @@
             }
             .value.warning {
               border-radius: 5px;
-              color: #f29f05;
+              color: var(--yellow-dark);
               font-weight: bold;
+              font-size: 15px;
+            }
+            .value.success {
+              border-radius: 5px;
+              color: var(--green-dark);
+              font-weight: bold;
+              font-size: 15px;
             }
           }
           button {

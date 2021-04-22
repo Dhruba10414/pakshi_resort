@@ -1,33 +1,46 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import Loading from "../Loading";
 // urls
 import {api} from "../../assets/URLS";
 // assets
 import guestSvg from "../../assets/images/StaffSection/guest.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
 import card from "../../assets/images/StaffSection/card.svg";
-import { warning, x } from "../../assets/images/SVG";
+import { checked, warning, x } from "../../assets/images/SVG";
 
 function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeModal }) {
   const [guest , setGuest] = useState(null);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [bill, setBill] = useState({});
 
   useEffect(() => {
+    setLoading(true)
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios.post(api.refresh, {refresh: refresh_token,})
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-      // get rooms
+      
+      // fetch billInfos (rooms)
+      axios.get(`${api.invoice_room_summary}?guest=${id}`, Config)
+      .then((res) => { setBill(res.data); console.log(res.data) })
+      .catch((err) => { console.log(err.message); });
+      
+      // get guest info
       axios.get(`${api.guest_detail}?guest=${id}`, Config)
-      .then((res) => { setGuest(res.data); console.log(res.data)})
-      .catch((err) => { setError(err.message);});
+      .then((res) => { setGuest(res.data); setLoading(false);})
+      .catch((err) => { setLoading(false);});    
     })
-    .catch((err) => { setError(err.message);})
+    .catch((err) => { console.log(err.messae); setLoading(false);})
   }, []);
 
   return (
-    <div className="roomDetails">
+    <>
+    {
+      !loading
+      ? (
+        <div className="roomDetails">
       <div className="roomDetails__guest">
         <div className="image-container">
           <img src={leaf} className="leaf-image" alt="" />
@@ -97,11 +110,15 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
             </div>
             <div className="calc">
               <div className="label">Total Bills</div>
-              <div className="value">2400 &#x9f3;</div>
+              <div className="value">{bill.total_bills} &#x9f3;</div>
             </div>
             <div className="calc">
               <div className="label">Payment Status</div>
-              <div className="value warning">{warning} Due</div>
+              {
+                bill.due === 0
+                ? <div className="value success">{checked} Paid</div>
+                : <div className="value warning">{warning} Due</div>
+              }
             </div>
           </div>
         </div>
@@ -118,6 +135,10 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
         </div>
       </div>
     </div>
+      )
+      : <Loading width="100%" height="90vh" textSize="15px" />
+    }
+    </>
   );
 }
 
