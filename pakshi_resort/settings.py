@@ -114,8 +114,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+DOMAIN = 'pakshiresort.com'
+SITE_NAME = 'pakshiresort'
+
+
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'staff/reset-password/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
 }
 
