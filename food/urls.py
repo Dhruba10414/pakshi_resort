@@ -14,5 +14,5 @@ urlpatterns = [
     path('invoice/',OrderInvoiceView.as_view(),name='Invoice_list'),
     path('food-log/',FoodLogView.as_view(),name='food-log-csv'),
     path('invoice-summary/',OrderInvoiceSummuryView.as_view(),name='food-invoice-summary'),
-    path('analytics/',FoodAnalyticsView.as_view(),name = 'food-Analytics')
+    path('analytics/',FoodAnalyticsView.as_view(),name = 'food-Analytics'),
 ]

@@ -1,4 +1,3 @@
-
 from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
@@ -13,7 +12,6 @@ from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 
 from django.db.models.aggregates import Sum,Count
-
 from django.db.models.functions import Coalesce,TruncMonth
 import csv
 from django.http import HttpResponse
@@ -175,9 +173,8 @@ class FoodLogView(generics.GenericAPIView):
 
         return response
 
-
-
 class OrderInvoiceSummuryView(generics.GenericAPIView):
+ 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
 

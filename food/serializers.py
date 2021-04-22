@@ -29,25 +29,23 @@ class OrderItemEmbededSerializer(serializers.ModelSerializer):
 class FoodOrderEmbededSerializer(serializers.ModelSerializer):
     food = FoodItemSerilizer(read_only=True)
     taken_by = serializers.PrimaryKeyRelatedField(read_only=True)
-    guest =  GuestSerializer(read_only=True) 
+    guest = GuestSerializer(read_only=True)
     time = serializers.DateTimeField(format="%d-%m-%Y %I:%M %p", read_only=True)
     total=serializers.SerializerMethodField()
 
     class Meta:
         model=FoodOrdering
-        fields=['id','food','isComplete','isCancel','quantity','time','taken_by','guest','order_price','total']
+        fields=['id','food','quantity','time','taken_by', 'isComplete', 'isCancel', 'guest','order_price','total']
     
     def get_total(self,obj):
         return (obj.order_price*obj.quantity)
 
-
-    
 class FoodAnalyticsSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
 
         return {
             'month': instance['month'].month,
             'year': instance['month'].year,
-            'total_bookings': instance['orders'],
+            'total_food_orders': instance['orders'],
             'total_income': instance['income']
         }

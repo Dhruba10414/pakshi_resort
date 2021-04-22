@@ -1,4 +1,3 @@
-
 from rest_framework import serializers
 from staff.models import User
 from rest_framework import generics
