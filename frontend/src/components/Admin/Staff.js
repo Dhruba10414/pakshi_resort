@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { user, phone, mail, x, smile, sad, users } from "../../assets/images/SVG";
+import { user, phone, mail, x, smile, sad } from "../../assets/images/SVG";
+import { connect } from "react-redux";
 //urls
-import {api} from "../../assets/URLS";
+import { api } from "../../assets/URLS";
 
 function Staff({
   id,
@@ -14,32 +15,35 @@ function Staff({
   gender,
   active,
   setActive,
+  currentUser,
+  notify
 }) {
   const [loading, setLoading] = useState(false);
-  
+
   const disableUser = () => {
-    setLoading(true);
-    
-    // get users access token
-    const refresh_token = localStorage.getItem("refresh_token");
-    axios.post(api.refresh, {refresh: refresh_token,})
-      .then((token) => {
-        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
-        const Body = {"id": id+1};
-        
-        // remove user
-        axios.put(api.disable_user, Body, Config)
-        .then(() => {
-          setLoading(false);
+    if (JSON.parse(currentUser).id !== id) {
+      // get users access token
+      setLoading(true);
+      const refresh_token = localStorage.getItem("refresh_token");
+      axios
+        .post(api.refresh, { refresh: refresh_token })
+        .then((token) => {
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
+          const Body = { id: id };
+
+          // remove user
+          axios
+          .put(api.disable_user, Body, Config)
+          .then(() => { setLoading(false);})
+          .catch((err) => { setLoading(false)})
         })
-        .catch((err) => {
-          setLoading(false);
-        })
-      })
-      .catch(err => {
-        console.log(err.message);
-        setLoading(false);
-      })
+        .catch((err) => { console.log(err.message); setLoading(false);
+        });
+    } else {
+      notify();
+    }
   };
 
   return (
@@ -77,18 +81,23 @@ function Staff({
             <div className="label">{user} Gender</div>
             <div className="value">{gender === "M" ? "Male" : "Female"}</div>
           </div>
-          {
-            status 
-            ?
-              !loading
-                ? <button onClick={disableUser}>Disable</button>
-                : <button>Processing</button>
-            : null
-          }
+          {status ? (
+            !loading ? (
+              <button onClick={disableUser}>Disable</button>
+            ) : (
+              <button>Processing</button>
+            )
+          ) : null}
         </div>
       </div>
     </div>
   );
 }
 
-export default Staff;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, null)(Staff);

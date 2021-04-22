@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import staffsAvatar from "../../assets/images/StaffSection/stafflist.svg";
+import { x } from "../../assets/images/SVG";
 import Loading from "../Loading";
 import Staff from "./Staff";
 
 function Staffs({ stafflist, loading }) {
   const [active, setActive] = useState("");
+  const [warning, setWarning] = useState(false);
+
+  const notify = () => {
+    setTimeout(() => {
+      setWarning(false);
+    }, 3000);
+    setWarning(true);
+  }
 
   return (
     <div className="stafflist">
@@ -28,10 +37,10 @@ function Staffs({ stafflist, loading }) {
         </div>
 
         {!loading ? 
-        stafflist.map((staff, index) => (
+        stafflist.map((staff) => (
           <Staff
-            key={index}
-            id={index}
+            key={staff.id}
+            id={staff.id}
             name={staff.user_name}
             status={staff.is_active}
             role={staff.role}
@@ -41,10 +50,14 @@ function Staffs({ stafflist, loading }) {
             gender={staff.gender}
             active={active}
             setActive={setActive}
+            notify={notify}
           />
         ))
         : <Loading height="50vh" width="100%" textSize="14px" space="4px" text="fetching staff list" />
       }
+      </div>
+      <div className={warning ? "message warning" : "message warning disabled"}>
+        <div>{x}</div> User Can't disable Himself!
       </div>
     </div>
   );
