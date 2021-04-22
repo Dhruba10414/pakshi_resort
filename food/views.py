@@ -1,4 +1,3 @@
-
 from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
@@ -13,11 +12,11 @@ from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 
 from django.db.models.aggregates import Sum,Count
-
 from django.db.models.functions import Coalesce,TruncMonth
 import csv
 from django.http import HttpResponse
-
+from datetime import datetime
+from django.utils import timezone
 
 
 class FoodItemView(generics.GenericAPIView):
@@ -159,7 +158,7 @@ class FoodLogView(generics.GenericAPIView):
                             time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
                                 F('quantity'), output_field=FloatField()))
         
-        writer.writerow(['Guest', 'Guest Email','Order Time' ,'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,
@@ -174,9 +173,8 @@ class FoodLogView(generics.GenericAPIView):
 
         return response
 
-
-
 class OrderInvoiceSummuryView(generics.GenericAPIView):
+ 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
 

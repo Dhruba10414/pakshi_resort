@@ -1,4 +1,3 @@
-
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
@@ -9,17 +8,6 @@ from rest_framework import viewsets
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from staff.models import User
 
-#####
-from .renderers import UserRenderer
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.contrib.sites.shortcuts import get_current_site
-from django.urls import reverse
-from .utils import Util
-from django.shortcuts import redirect
-from django.http import HttpResponsePermanentRedirect
-####
 
 
 class UserRegistrationView(CreateAPIView):
@@ -38,7 +26,6 @@ class UserRegistrationView(CreateAPIView):
 
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
-    permission_classes = (IsAuthenticated,) ###IsAuthenticated
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -48,7 +35,6 @@ class LogoutAPIView(generics.GenericAPIView):
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
-    permission_classes = (IsAuthenticated,) ###IsAuthenticated
     serializer_class = ChangePasswordSerializer
     
 
@@ -86,7 +72,6 @@ class StaffLeaved(generics.GenericAPIView):
 
 
 class UserView(generics.GenericAPIView):
-    permission_classes=(IsAuthenticated,)
     serializer_class = UserSerializer
 
     def get(self, req, *args, **kwargs):
