@@ -31,7 +31,6 @@ function BookInGuestSide() {
         "check_in": info.checkin,
         "check_out": info.checkout
       }
-      console.log(Body);
       axios.post(api.request_for_booking, Body)
       .then(() => {console.log("Success"); setLoading(false); })
       .catch((err) => {console.log(err.message); setLoading(false); });

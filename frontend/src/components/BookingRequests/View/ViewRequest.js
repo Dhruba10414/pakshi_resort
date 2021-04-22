@@ -51,6 +51,8 @@ function ViewRequest({ viewFor, setOpenModal }) {
 
   // FIND AVAILABLE ROOMS
   const findAvailableRooms = (rooms) => {
+    console.log(viewFor.info.checkin);
+    console.log(rooms);
     // determine requested room type
     let roomtype;
     room_types.map((type, index) => {

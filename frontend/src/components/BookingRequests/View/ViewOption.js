@@ -171,9 +171,9 @@ function ViewOption({
                   ))}
                 </div>
               ) : (
-                <div className="notava notfound">
+                <div className="notava">
                   <img src={signal} alt="" />
-                  <h4>Not available!</h4>
+                  <h4 style={{color: "var(--yellow-dark)"}}>Not available!</h4>
                 </div>
               )
             ) : ok === 1 ? (
