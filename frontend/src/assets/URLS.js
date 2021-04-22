@@ -1,12 +1,14 @@
 const baseurl = "https://api.pakshiresort.com"
 export const api = {    
     // auth-related
+    get_all_users: `${baseurl}/api/users/`, // get
+    get_user: `${baseurl}/api/user/`, // get
     refresh: `${baseurl}/api/token/refresh/`, // post
     login: `${baseurl}/api/token/`, // post
     logout: `${baseurl}/api/logout/`, // post
-    get_all_users: `${baseurl}/api/users/`, // get
-    get_user: `${baseurl}/api/user/`, // get
     register_user: `${baseurl}/api/signup/`, // post
+    send_reset_mail: `${baseurl}/auth/users/reset_password/`, // post
+    reset_password: `${baseurl}/auth/users/reset_password_confirm/`, // post
     disable_user: `${baseurl}/api/remove/`, // put
     
     // room-related

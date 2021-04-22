@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
+import axios from 'axios';
+import { api } from "../assets/URLS";
 
 // Assets
 import staff1 from "../assets/images/Login/staff1.jpg";
@@ -27,8 +29,10 @@ function ForgotPassword() {
 
   const sendMail = () => {
     if (email) {
-      console.log(email);
-      setSuccess(true);
+      setLoading(true);
+      axios.post(api.send_reset_mail, {"email": email})
+      .then(res => {setSuccess(true); setLoading(false);})
+      .catch(err => {console.log(err.message); setLoading(false);} );
     } else {
       setError("All fields required!");
     }
@@ -80,7 +84,7 @@ function ForgotPassword() {
           </div>
         ) : (
           <div className="content confirmation">
-            <img className="confirmationImage" src={snedemail} alt />
+            <img className="confirmationImage" src={snedemail} alt="" />
             <p>
               Thank you! You will get a email to reset your password. Please
               check your email and follow the instruction.

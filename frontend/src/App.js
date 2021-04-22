@@ -31,6 +31,7 @@ import BookByGuest from "./pages/Guest/BookByGuest";
 import Statics from "./pages/Statics";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
+import SetPasswordPage from "./pages/SetPasswordPage";
 
 function App({ setUser, isLogedIn }) {
   // const location = useLocation();
@@ -56,8 +57,8 @@ function App({ setUser, isLogedIn }) {
           <Route exact path="/room/delux-couple" component={Room} />
           <Route exact path="/room/delux-double" component={Room} />
           <Route exact path="/room/delux-twin" component={Room} />
-          {/* <Route exact path="/booking" component={BookInGuestSide} /> */}
-          <Route exact path="/booking" component={BookByGuest} />
+          <Route exact path="/booking" component={BookInGuestSide} />
+          {/* <Route exact path="/booking" component={BookByGuest} /> */}
           <Route exact path="/eat-drink" component={Eat} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/privacy-policy" component={Privacy} />
@@ -66,6 +67,7 @@ function App({ setUser, isLogedIn }) {
           {/* STAFF SECTION */}
           <Route exact path="/staff/login" render={() => !isLogedIn ? <Login/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
           <Route exact path="/staff/forget-password" render={() => !isLogedIn ? <ForgotPassword/> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
+          <Route exact path="/staff/reset-password/:uid/:token" render={() => !isLogedIn ? <SetPasswordPage /> : <Redirect to={{ pathname: '/staff/dashboard' }}/>} />
           <Route exact path="/staff/dashboard" render={() => isLogedIn ? <Dashboard /> : <Login /> } />
           <Route exact path="/staff/active-guests" render={() => isLogedIn ? <ActiveGuest /> : <Login /> } />
           <Route exact path="/staff/book" render={() => isLogedIn ? <Book /> : <Login /> } />

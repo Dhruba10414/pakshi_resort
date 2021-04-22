@@ -89,17 +89,16 @@ function Registration() {
         const Body = { "email": email, "password": password, "user_name": name, "contact": phone, "gender": gender, "role": role}
         
         // Create users
-        // axios.post(api.register_user, Body, Config)
-        // .then(() => {
-        //   clearFields();
-        //   setLoading(false);
-        //   notify();
-        // })
-        // .catch(err => {
-        //   console.log(err.message);
-        //   setLoading(false);
-        // })
-        console.log(Body);
+        axios.post(api.register_user, Body, Config)
+        .then(() => {
+          clearFields();
+          setLoading(false);
+          notify();
+        })
+        .catch(err => {
+          console.log(err.message);
+          setLoading(false);
+        })
       });
     }
   };
