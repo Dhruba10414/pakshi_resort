@@ -148,10 +148,11 @@ class RoomSearch(generics.GenericAPIView):
             }
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        existing_bookings = Bookings.objects.filter(Q(is_canceled=False), Q(is_complete=False),
-                ((Q(check_in__gte=check_in_date) & Q(check_in__lt=check_out_date)) |
-                (Q(check_out__gt=check_in_date) & Q(check_out__lt=check_out_date)))
-            )
+        existing_bookings = Bookings.objects.filter(
+                (Q(check_in__lte=check_in_date) & Q(check_out__gt=check_in_date)) |
+                (Q(check_in__lt=check_out_date) & Q(check_out__gte=check_out_date)) |
+                (Q(check_in__gt=check_in_date) & Q(check_out__lt=check_out_date))
+            ).exclude(Q(is_canceled=True) | Q(is_complete=True))
         
         available_rooms = Rooms.objects.exclude(id__in=Subquery(existing_bookings.values_list('room__id', flat=True)))
         if as_group:
