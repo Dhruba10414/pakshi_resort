@@ -1,48 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <div style="width: 700px; align-content: center;">
-        <div style="text-align: center; background-color: #59ab6f;">
-            <img src="cid:logo" alt="logo" width="100" height="100" align="left">
-            <h1>Pakshi Resort</h1>
-            <h4>Room Reservation Order Receieved</h4>
-        </div>
-        <br>
-        <div>
-            <h2>Dear {{ reservation.guest.name }},</h2><br>
-            <p>Thank you for choosing to stay with Pakshi Resort. We have recieved your reservation order. Our staff will communicate with you as soon as possible to confirm your reservation. We are looking forward to welcome you in our resort. Our professional and friendly staff are committed to ensure your stay is both enjoyable and comfortable.<br>
-                <b>You have ordered for following room reservation</b>
-            </p>
-            <table align="center">
-                <tr style="background-color: #59ab6f;">
-                    <th>Room Category</th>
-                    <th>Check In Date</th>
-                    <th>Check Out Date</th>
-                    <th>Cost Per Night</th>
-                    <th>Number of Rooms</th>
-                </tr>
-                
-                <tr>
-                    <th>{{ reservation.room_type.room_type }}</th>
-                    <th>{{ reservation.check_in }}</th>
-                    <th>{{ reservation.check_out }}</th>
-                    <th>{{ reservation.room_type.tariff }}</th>
-                    <th>{{ reservation.num_of_rooms }}</th>
-                </tr>
-                
-            </table>
-            <b>Your reservation order is in processing state. Our staff will communicate with you and confirm your reservation. After reservation successfully confirmed we will notify you through email with your booked room numbers.</b>
-            <h3>Best Wishes and Regards</h3>
-            <h4>Pakshi Resort Ltd.</h4>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Pakshi Resort</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body style="margin: 0; padding: 0;">
+        <table role="presentation" border="1" cellpadding="0" cellspacing="0" width="600" align="center" style="border-collapse: collapse;">
+            <tr style="background-color: #59ab6f;">
+                <td style="padding: 0 10px 0 10px;">
+                    <div style="text-align: center;">
+                        <p style="font-size: xx-large;"><b>Pakshi Resort</b></p>
+                        <img src="cid:logo" alt="pakshi resortlogo" width="120" height="120" align="left">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: x-large; padding: 20px 20px 20px 20px;" >
+                    <b>Dear {{ reservation.guest.name }},</b><br>
+                    <p style="font-size: medium;">Thank you for choosing to stay with Pakshi Resort. We have recieved your reservation order. Our staff will communicate with you as soon as possible to confirm your reservation. We are looking forward to welcome you in our resort. Our professional and friendly staff are committed to ensure your stay is both enjoyable and comfortable.<br>
+                        <b>You have ordered for following room reservation:</b>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 20px  0 20px;">  
+                    <table border="1" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+                        <tr style="background-color: #59ab6f;">
+                            <th><b>Room Category</b></th>
+                            <th><b>Check In Date</b></th>
+                            <th><b>Check Out Date</b></th>
+                            <th><b>Cost Per Night</b></th>
+                            <th><b>Number of Rooms</b></th>
+                        </tr>
+                        
+                        <tr>
+                            <th>{{ reservation.room_type.room_type }}</th>
+                            <th>{{ reservation.check_in }}</th>
+                            <th>{{ reservation.check_out }}</th>
+                            <th>{{ reservation.room_type.tariff }}</th>
+                            <th>{{ reservation.num_of_rooms }}</th>
+                        </tr>
+                        
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 10px 10px; margin-left: 1;"> 
+                    <p><b>Your reservation order is in processing state. Our staff will communicate with you and confirm your reservation. After reservation successfully confirmed we will notify you through email with your booked room numbers.</b></p>
+                    <p style="font-size: large;">Best Wishes and Regards</p>
+                    <p style="font-size: larger;"><b>Pakshi Resort Ltd.</b></p>
 
-            <p>For any inconvience please contact with us.</p>
-        </div>
-        <div style="text-align: left; background-color: #59ab6f; padding: 2;">
-            <h4>For Query, Contact <b>+8801730706252</b> or <b>+8801730706257</b></h4>
-            <h3>Pakshi Resort Ltd.</h3>
-            <p>Khankashorif Road, Pakshi <br>
-            Ishwardi Z6006, Pabna, Rajshahi.</p>
-        </div>
-        </div>
+                    <p>For any inconvience please contact with us.</p>
+                </td>
+            </tr>
+            <tr style="background-color: #59ab6f">
+                <td style="padding: 0 20px 20px 20px; margin-left: 1;">
+                    <div style="text-align: left; padding: 2;">
+                        <p style="font-size: medium;">For Query, Contact <b>+8801730706252</b> or <b>+8801730706257</b></p>
+                        <p style="font-size: larger;">Pakshi Resort Ltd.</p>
+                        <p>Khankashorif Road, Pakshi <br>
+                        Ishwardi Z6006, Pabna, Rajshahi.</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </body>
 </html>
