@@ -18,4 +18,5 @@ urlpatterns = [
    path('bookings/', include('bookings.urls')),
    path('invoices/', include('invoices.urls')),
    path('tickets/', include('tickets.urls')),
+   path('auth/', include('djoser.urls')),
 ]

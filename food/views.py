@@ -2,7 +2,8 @@
 from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
-from .serializers import FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbededSerializer,FoodOrderEmbededSerializer
+from invoices.models import Payments
+from .serializers import FoodAnalyticsSerializer,FoodItemSerilizer,FoodOrderingSerializer,OrderItemEmbededSerializer,FoodOrderEmbededSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated
 from datetime import date, datetime, timedelta
@@ -11,8 +12,9 @@ from django.db.models.functions import Extract
 from django.db.models import F, ExpressionWrapper, Q
 from django.db.models import DurationField, FloatField, IntegerField
 
-from django.db.models.aggregates import Sum
-from django.db.models.functions import Coalesce
+from django.db.models.aggregates import Sum,Count
+
+from django.db.models.functions import Coalesce,TruncMonth
 import csv
 from django.http import HttpResponse
 from datetime import datetime
@@ -125,10 +127,10 @@ class OrderInvoiceView(generics.GenericAPIView):
     serializer_class=FoodOrderEmbededSerializer
 
     def get(self,request,*args,**kwargs):
-        guest_no = request.data.get('guest_id',None)
+        guest_no = request.query_params.get('guest_id',None)
 
         try:
-            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False,isComplete=True)
+            order_list = FoodOrdering.objects.filter(guest_id=guest_no,isCancel=False)
             serializer_data=self.get_serializer(order_list,many=True)
             return Response(data=serializer_data.data,status=status.HTTP_200_OK)
 
@@ -167,8 +169,45 @@ class FoodLogView(generics.GenericAPIView):
                     q.food.food_type,
                     q.order_price,
                     q.quantity,
-                    q.bill,
+                    q.bill if not q.isCancel else "NaN" ,
                     q.taken_by.user_name]
             writer.writerow(row)
 
         return response
+
+
+
+class OrderInvoiceSummuryView(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        guest = request.query_params.get('guest', None)
+
+        if guest is not None:
+            bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField()))
+            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
+
+            payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
+            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
+            
+            summury = {
+                'total_bills': total_bill,
+                'total_paid': total_paid,
+                'due': total_bill - total_paid
+            }
+            
+            return Response(data=summury, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class FoodAnalyticsView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class = FoodAnalyticsSerializer
+
+    def get(self, request, *args, **kwargs):
+        analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'), orders=Count('id')).order_by('month')[:12]
+
+        analytics_serialized = self.get_serializer(analytics, many=True)
+
+        return Response(analytics_serialized.data, status=status.HTTP_200_OK)
