@@ -54,6 +54,6 @@ export const api = {
     food_stastics: `${baseurl}/food/analytics/`, // get
     resort_csv: `${baseurl}/invoices/resort-logs/`, // get
     ticket_csv: `${baseurl}/tickets/logs/`, //get
-    food_csv: `${baseurl}/`,
+    food_csv: `${baseurl}/food/food-log/`, // get
 
 }

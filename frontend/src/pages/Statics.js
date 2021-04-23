@@ -50,6 +50,7 @@ function Statics() {
   // DOWNLOAD ROOM BOOKING LOG AS CSV
   const DownloadLogAsCsv = () => {    
     if(validationCheck()){
+      setError("");
       setProcessLoading(true);
       let url, filename;
       if(state === 0){
@@ -113,6 +114,7 @@ function Statics() {
         .then((res) => { setTicketStastics(res.data); setLoading(false); })
         .catch((err) => { console.log(err.message); setLoading(false); });
       })
+      
       .catch((err) => {
         setLoading(false);
         console.log(err.message);
