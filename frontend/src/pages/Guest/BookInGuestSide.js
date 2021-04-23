@@ -41,7 +41,7 @@ function BookInGuestSide() {
   // FETCH ROOMS TYPE WITH PRICE
   useEffect(() => {
     axios
-      .get("http://api.pakshiresort.com/bookings/room-type/")
+      .get("https://api.pakshiresort.com/bookings/room-type/")
       .then((res) => {
         setRoomTypeWithPrice(res.data);
       })

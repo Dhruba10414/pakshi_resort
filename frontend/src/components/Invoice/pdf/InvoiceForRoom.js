@@ -57,13 +57,13 @@ function InvoiceForRoom({ roomBills, rbill }) {
             <Text style={styles.days}>
               {data.stayed} {data.stayed > 1 ? "days" : "day"}
             </Text>
-            <Text style={styles.amount}>{data.rate}tk</Text>
+            <Text style={styles.amount}>{data.rate}</Text>
           </View>
         ))}
 
         <View style={styles.lastContainer}>
           <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.totalBill}>{rbill.total_bills}tk</Text>
+          <Text style={styles.totalBill}>{rbill.total_bills}</Text>
         </View>
     </View>
   );

@@ -54,12 +54,12 @@ function InvoiceForFoods({ orderedFoods, fbill }) {
             <Text style={styles.name}>{data.food.name}</Text>
             <Text style={styles.quantity}>{data.quantity}</Text>
             <Text style={styles.price}>{data.food.price}</Text>
-            <Text style={styles.total}>{data.total}tk</Text>
+            <Text style={styles.total}>{data.total}</Text>
           </View>
         ))}
        <View style={styles.lastContainer}>
           <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.totalBill}>{fbill.total_bills}tk</Text>
+          <Text style={styles.totalBill}>{fbill.total_bills}</Text>
         </View>
     </View>
   );
