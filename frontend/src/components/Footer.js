@@ -59,7 +59,7 @@ function Footer() {
         </div>
         <div className="copyright">
           <div>© Copyright 2021 Pakshi Resort LTD</div>
-          <div>Made by <span>Frezio</span></div>
+          {/* <div>Made by <span>Frezio</span></div> */}
         </div>
       </div>
     </div>
