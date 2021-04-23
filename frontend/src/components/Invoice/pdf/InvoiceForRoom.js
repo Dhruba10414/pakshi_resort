@@ -19,13 +19,22 @@ const styles = StyleSheet.create({
     height: 40,
     flexGrow: 1,
   },
+  lastContainer: {
+    flexDirection: "row",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+    alignItems: "center",
+    height: 40,
+    flexGrow: 1,
+    backgroundColor: "#f7f7f7"
+  },
   no: { width: "15%" },
-  type: { width: "60%" },
+  type: { width: "50%" },
   days: { width: "10%" },
-  amount: { width: "15%" },
+  amount: { width: "25%" },
   total: { width: "15%"},
-  totalHeading: { width: "85%" },
-  totalBill: {background: "#000", height: 40, color: "#444", padding: "5px 0"}
+  totalHeading: { width: "75%", padding: "0 10px" },
+  totalBill: {height: 40, color: "#000", padding: "5px 0"}
 });
 
 function InvoiceForRoom({ roomBills, rbill }) {
@@ -48,13 +57,13 @@ function InvoiceForRoom({ roomBills, rbill }) {
             <Text style={styles.days}>
               {data.stayed} {data.stayed > 1 ? "days" : "day"}
             </Text>
-            <Text style={styles.amount}>{data.rate}</Text>
+            <Text style={styles.amount}>{data.rate}tk</Text>
           </View>
         ))}
 
-        <View style={styles.container}>
+        <View style={styles.lastContainer}>
           <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.total}>{rbill.total_bills}</Text>
+          <Text style={styles.totalBill}>{rbill.total_bills}tk</Text>
         </View>
     </View>
   );

@@ -22,7 +22,11 @@ function Invoice({roomBills, orderedFoods, invoiceFor, stayingInfo, fbill, rbill
         <InvoiceHeading />
         <InvoiceFor invoiceFor={invoiceFor} stayingInfo={stayingInfo} />
         <InvoiceForRoom roomBills={roomBills} rbill={rbill} />
-        <InvoiceForFoods orderedFoods={orderedFoods} fbill={fbill} />
+        {
+          orderedFoods.length > 0
+          ? <InvoiceForFoods orderedFoods={orderedFoods} fbill={fbill} />
+          : null
+        }
       </Page>
     </Document>
   );
