@@ -171,7 +171,7 @@ function Statics() {
                     onChange={(e) => setStartMonth(e.target.value)}
                   >
                     {months.map((month, index) => (
-                      <option value={index + 1}>{month}</option>
+                      <option key={index} value={index + 1}>{month}</option>
                     ))}
                   </select>
                 </div>

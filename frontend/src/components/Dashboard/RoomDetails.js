@@ -24,7 +24,7 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
       
       // fetch billInfos (rooms)
       axios.get(`${api.invoice_room_summary}?guest=${id}`, Config)
-      .then((res) => { setBill(res.data); console.log(res.data) })
+      .then((res) => { setBill(res.data); })
       .catch((err) => { console.log(err.message); });
       
       // get guest info

@@ -79,7 +79,6 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
   };
 
   useEffect(() => {
-    console.log(selectedFood)
     setId(selectedFood.id);
     setName(selectedFood.name);
     setType(selectedFood.type);
