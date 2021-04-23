@@ -26,7 +26,7 @@ class ConformationEmailDelivery(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self.email.send()
+        self.email.send(fail_silently=True)
 
 
 class CancelationEmailDelivery(threading.Thread):
@@ -50,7 +50,7 @@ class CancelationEmailDelivery(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self.email.send()
+        self.email.send(fail_silently=True)
 
 
 class ReservationEmailDelivery(threading.Thread):
@@ -74,4 +74,4 @@ class ReservationEmailDelivery(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        self.email.send()
+        self.email.send(fail_silently=True)
