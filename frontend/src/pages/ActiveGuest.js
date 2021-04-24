@@ -83,6 +83,7 @@ function ActiveGuest() {
               guestId={orderFor.id}
               name={orderFor.name}
               closeModal={closeModal}
+              fromRestaurent={false}
             />
           ) : (
             <div className="guest-table-container">

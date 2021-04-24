@@ -19,6 +19,7 @@ import {
   activity,
   arrowDown,
   barchart,
+  dbSVG,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -61,7 +62,8 @@ function SideNav({clearUser, is_staff }) {
         <NavLink to="/staff/book" exact activeClassName="active-link">{calender} Book</NavLink>
         <NavLink to="/staff/booking" exact activeClassName="active-link">{activity} Bookings</NavLink>
         <NavLink to="/staff/booking-request" exact activeClassName="active-link">{arrowDown} Booking Request</NavLink>
-        <NavLink to="/staff/foodorders" exact activeClassName="active-link">{cofeeSVG} Food Orders</NavLink>
+        <NavLink to="/staff/restaurent" exact activeClassName="active-link">{cofeeSVG} Restaurent</NavLink>
+        <NavLink to="/staff/foodorders" exact activeClassName="active-link">{dbSVG} Food Orders</NavLink>
         <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         {is_staff ? (
           <>

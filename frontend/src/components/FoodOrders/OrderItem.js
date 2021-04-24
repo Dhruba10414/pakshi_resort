@@ -19,7 +19,7 @@ function OrderItem({
       setSelect(false);
       removeFoodItem(id);
     } else {
-      if (!isComplete && !isCancel) {
+      if (!isComplete && !isCancel && guest) {
         setSelect(true);
         selectFoodItem(id);
       } else {
@@ -40,18 +40,18 @@ function OrderItem({
         {select ? checkSquare : null}
         <div>{id}</div>
       </div>
-      <div className="guest">{guest}</div>
+      <div className="guest">{guest ? guest: "/"}</div>
       <div className="food">{food}</div>
       <div
         className={
-          isComplete
+          isComplete || !guest
             ? "status complete"
             : isCancel
             ? "status cancel"
             : "status pending"
         }
       >
-        <p>{isComplete ? "completed" : isCancel ? "canceled" : "pending"}</p>
+        <p>{isComplete || !guest ? "completed" : isCancel ? "canceled" : "pending"}</p>
       </div>
       <div className="quantity">{quantity}</div>
     </div>
