@@ -4,7 +4,7 @@ import axios from "axios";
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
 import SelectTime from "../../components/BookByGuest.js/SelecTime";
-import SelectRoom from "../../components/BookByGuest.js/SelectRoom";
+import SelectAroom from "../../components/BookByGuest.js/SelectAroom";
 
 function BookByGuest() {
   const [state, setState] = useState(0);
@@ -42,7 +42,7 @@ function BookByGuest() {
 
         {
           state === 0
-          ? <SelectRoom rooms={rooms} setSelectedRoom={setSelectedRoom} />
+          ? <SelectAroom rooms={rooms} setSelectedRoom={setSelectedRoom} />
           : state === 1
             ? <SelectTime />
             : "Confirm"
