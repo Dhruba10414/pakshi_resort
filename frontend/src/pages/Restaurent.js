@@ -1,5 +1,5 @@
 import React from 'react';
-import FoodOrder from "../components/Guests/FoodOrder";
+import FoodOrder from "../components/Restaurent/FoodOrder";
 import ContentBox from '../components/StaffSection/ContentBox';
 
 function Restaurent() {

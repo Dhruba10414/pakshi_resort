@@ -14,6 +14,10 @@ import emptysvg from "../../assets/images/View/svg/empty.svg";
 import checksvg from "../../assets/images/View/svg/check.svg";
 //urls
 import { api } from "../../assets/URLS";
+// invoice
+import RestaurentInvoice from "../Restaurent/RestaurentInvoice";
+import { pdf} from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 
 function Ordered({
   basket,
@@ -22,6 +26,7 @@ function Ordered({
   closeModal,
   name,
   guestId,
+  fromRestaurent,
 }) {
   const [total, setTotal] = useState(0);
   const [changed, setChanged] = useState(false);
@@ -70,13 +75,20 @@ function Ordered({
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////
+  
+  const downloadPDF = async (foodList, total) => {
+    const doc = <RestaurentInvoice foodList={foodList} total={total}  />;
+    const asPdf = pdf([]);
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, 'foodOrder.pdf');
+  }
+
   // ORDER FOODS
   const orderFoods = () => {
     if (basket && basket.length > 0) {
       setLoading(true);
-      const orderedfoodList = basket.map((food) => {
-        return { id: food.id, quantity: food.quantity, price: food.price };
-      });
+      const orderedfoodList = basket.map((food) => { return { id: food.id, quantity: food.quantity, price: food.price }; });
       const Order = { foods: orderedfoodList, guest_id: guestId };
 
       // setup neccessary urls
@@ -88,20 +100,20 @@ function Ordered({
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+            headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
-            .post(FOOD_ORDER_URL, Order, Config)
-            .then((res) => {
-              removeAllFoods();
-              notify();
-              setLoading(false);
-            })
-            .catch((err) => {
-              console.log(err.message);
-              setLoading(false);
-            });
+          .post(FOOD_ORDER_URL, Order, Config)
+          .then(() => {
+            downloadPDF(basket, total);
+            removeAllFoods();
+            notify();
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setLoading(false);
+          });
         })
         .catch(() => {
           setLoading(false);
@@ -163,11 +175,15 @@ function Ordered({
 
       <div className="price-block">
         <div className="customer">
+          {!fromRestaurent ? (
+            <>
               <h3>Customer</h3>
               <div className="data">
                 <div className="label">Name :</div>
                 <div className="value">{name}</div>
               </div>
+            </>
+          ) : null}
         </div>
         <div className="price">
           <h1>
@@ -183,14 +199,14 @@ function Ordered({
       </div>
 
       <div className="btn-box">
-        <button className="back-btn" onClick={closeModal}>
-          {arrowLeftCherovon} Back
-        </button>
-        {!loading ? (
-          <button className="submit-btn" onClick={orderFoods}>
-            Order
+        {!fromRestaurent ? (
+          <button className="back-btn" onClick={closeModal}>
+            {arrowLeftCherovon} Back
           </button>
-        ) : (
+        ) : null}
+        {!loading ?
+          <button className="submit-btn" onClick={orderFoods}>Order</button>
+        : (
           <button className="disabled-btn">Processing...</button>
         )}
       </div>
