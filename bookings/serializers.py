@@ -12,7 +12,7 @@ class RoomTypeSerializer(serializers.ModelSerializer):
 class GuestIdNameSerailizer(serializers.ModelSerializer):
     class Meta:
         model = Guests
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'contact']
 
 class BookingEmbededSerializer(serializers.ModelSerializer):
     guest = GuestIdNameSerailizer(read_only=True, allow_null=True)
@@ -25,7 +25,7 @@ class BookingEmbededSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    guest = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    guest = GuestIdNameSerailizer(read_only=True)
     room = serializers.SlugRelatedField(slug_field='room_num', read_only=True)
     booked_on = serializers.DateField(format="%d-%m-%Y")
     check_in = serializers.DateField(format="%d-%m-%Y")
