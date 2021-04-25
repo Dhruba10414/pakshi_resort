@@ -42,6 +42,10 @@
                 cursor: pointer;
                 background: #fff;
                 color: #000;
+                box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                transition: 0.5s;
+                img{ width: 20px; }
+                &:hover{ box-shadow: 0 0 8px rgba(0,0,0,0.7); }
             }
         }
     }

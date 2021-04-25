@@ -1,12 +1,13 @@
 import React from 'react'
 
-function Aroom({room}) {
+function Aroom({room, selectRoomType}) {
+    const {id, name, bed, price} = room;
     return (
-        <div className="aroom">
+        <div className="aroom" onClick={() => selectRoomType(id, name, bed, price)}>
             <div className="content">
-                <h2>{room.name}</h2>
-                <h3>{room.bed}</h3>
-                <h1>{room.price}</h1>
+                <h2>{name}</h2>
+                <h3>{bed}</h3>
+                <h1>{price}</h1>
             </div>
         </div>
     )

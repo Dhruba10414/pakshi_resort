@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import Aroom from "./Aroom";
+import leftArrow from '../../assets/images/View/svg/left-arrow.svg';
+import rightArrow from '../../assets/images/View/svg/right-arrow.svg';
 
-function SelectAroom({rooms}) {
+function SelectAroom({ rooms, setSelectedRoom, setState }) {
+  const customSlider = useRef();
+
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 700,
     slidesToShow: 3,
@@ -13,15 +17,22 @@ function SelectAroom({rooms}) {
     pauseOnHover: true,
     autoplaySpeed: 4000,
   };
-  
+
+  // SELECT ROOM
+  const selectRoomType = (id, name, bed, price) => {
+    setSelectedRoom({id, name, bed, price});
+    setState(1);
+    console.log(id, name, bed, price)
+  }
+
   const availableRooms = [
-      {name: "Delux Room", bed: "Single Bed", price: 4000},
-      {name: "Delux Room", bed: "Couple Bed", price: 5000},
-      {name: "Delux Room", bed: "Twin Bed", price: 6000},
-      {name: "Delux Room", bed: "Family Bed", price: 7000},
-      {name: "Luxury Room", bed: "", price: 10000},
-      {name: "Karni Kunjo", bed: "Honeymoon Suit", price: 25000},
-    ];
+    { id: 1, name: "Delux Room", bed: "Single Bed", price: 4000 },
+    { id: 2, name: "Delux Room", bed: "Couple Bed", price: 5000 },
+    { id: 3, name: "Delux Room", bed: "Twin Bed", price: 6000 },
+    { id: 4, name: "Delux Room", bed: "Family Bed", price: 7000 },
+    { id: 5, name: "Luxury Room", bed: "", price: 10000 },
+    { id: 6, name: "Karni Kunjo", bed: "Honeymoon Suit", price: 25000 },
+  ];
 
   return (
     <div className="roomSelection">
@@ -31,16 +42,20 @@ function SelectAroom({rooms}) {
           <h1>Room Type</h1>
           <p>Please select your desired room type by clicking on a card.</p>
           <div className="btn-box">
-          <button>  {"<--"} </button>
-              <button> {"-->"} </button>
+            <button onClick={() => customSlider.current.slickPrev()}>
+              <img src={leftArrow} alt="" />
+            </button>
+            <button onClick={() => customSlider.current.slickNext()}>
+              <img src={rightArrow} alt="" />
+            </button>
           </div>
         </div>
       </div>
       <div className="roomSelection__rooms">
-        <Slider {...settings}>
-            {
-                availableRooms.map(room => (<Aroom key={room.id} room={room} />))
-            }
+        <Slider ref={(slider) => (customSlider.current = slider)} {...settings}>
+          {availableRooms.map((room) => (
+            <Aroom key={room.id} room={room} selectRoomType={selectRoomType} />
+          ))}
         </Slider>
       </div>
     </div>

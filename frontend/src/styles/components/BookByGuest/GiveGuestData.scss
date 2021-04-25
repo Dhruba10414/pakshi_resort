@@ -1,0 +1,165 @@
+.giveGuestData {
+  display: flex;
+  justify-content: space-between;
+  &__text {
+    width: 34%;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3{
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      color: gray;
+      font-size: 17px;
+      font-family: var(--quicksand-font);
+      text-transform: uppercase;
+    }
+    h2 {
+      font-family: var(--quicksand-font);
+      font-weight: normal;
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+    h1 {
+      font-family: var(--primary-font);
+      color: var(--primary-color);
+      font-size: 3rem;
+      line-height: 3rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      font-family: var(--quicksand-font);
+      text-align: justify;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__content {
+    width: 55%;
+    min-height: 70vh;
+    // padding: 0 40px;
+    .details{
+        width: 100%;
+        margin-top: 50px;
+        display: flex;
+        min-height: 25vh;
+        overflow: hidden;
+        .details-image{
+            width: 30%;
+            height: 20vh;
+            background: url("../../../assets//images/View/pattern.png") no-repeat center center / cover;
+        }
+        .details-content{
+            width: 70%;
+            padding: 25px;
+            h2{ font-family: var(--quicksand-font); font-size: 2rem; color: #444; }
+            p{ 
+                font-family: var(--quicksand-font);
+            }
+            p.bed{
+                font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px;
+                margin-bottom: 10px; color: var(--primary-color-light);
+            }
+            margin-bottom: 10px;
+        }
+    }
+
+    // REQUEST GUEST INFO FORM
+    form {
+      display: flex;
+      flex-direction: column;
+      h3{
+        display: block;
+        margin-bottom: 10px;
+        color: gray;
+        font-size: 16px;
+        font-family: var(--quicksand-font);
+        text-transform: uppercase;
+      }
+
+      .input-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        @include media("<=desktop") { margin-bottom: 13px; }
+
+        .input {
+          width: 49%;
+          display: flex;
+          flex-direction: column;
+          label {
+            font-family: var(--quicksand-font);
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 5px;
+            @include media("<=desktop") { font-size: 12px; }
+          }
+          input {
+            padding: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            transition: 0.4s;
+            @include media("<=desktop") { font-size: 14.5px; padding: 10px; border: 1.5px solid #ccc; }
+            &:focus {
+              border: 2px solid var(--primary-color-light);
+              @include media("<=desktop") {border: 1.5px solid var(--primary-color-light);}
+            }
+          }
+        }
+        .w-100 {width: 100%;}
+        .w-55 {width: 54%;}
+        .w-45 {width: 44%;}
+      }
+      small{ color: red; font-size: var(--quicksand-font); margin-bottom: 10px; font-size: 14px;}
+      .btn-box{display: flex;}
+      button {
+        width: 35%;
+        padding: 20px 50px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: var(--quicksand-font);
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #fff;
+        background-color: var(--primary-color-2);
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: 0.4s;
+        margin-right: 30px;
+        @include media("<=desktop") { font-size: 14.5px; padding: 8px; }
+        &:hover {
+          color: var(--primary-color-light);
+        }
+      }
+      button.back-btn{
+        width: 25%;
+        margin-right: 20px;
+        // padding: 10px 30px 10px 20px; 
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        &:hover{
+          border: 2px solid var(--primary-color-light);
+          color: var(--primary-color-light);
+        }
+        @include media("<=desktop") { padding: 8px 24px 8px 16px; }
+      }
+      button.disabled-btn{
+        background-color: #ccc;
+        color: #444;
+      }
+    }
+  }
+}

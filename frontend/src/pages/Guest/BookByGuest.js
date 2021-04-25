@@ -3,22 +3,30 @@ import axios from "axios";
 // Components
 import Footer from "../../components/Footer";
 import Navigation from "../../components/Navigation/Navigation";
-import SelectTime from "../../components/BookByGuest.js/SelecTime";
 import SelectAroom from "../../components/BookByGuest.js/SelectAroom";
+import SelectAtime from "../../components/BookByGuest.js/SelectAtime";
+import GiveGuestData from "../../components/BookByGuest.js/GiveGuestData";
+import Confirmed from "../../components/BookByGuest.js/Confirmed";
 
 function BookByGuest() {
   const [state, setState] = useState(0);
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState({});
+  const [roomAmount, setRoomAmount] = useState(1);
+  const [selectTime, setSelectTime] = useState({});
   const [loading, setLoading] = useState(false);
 
+  const makeBookingRequest = () => {
+    console.log(selectedRoom);
+  };
+
   useEffect(() => {
-    setLoading(true);
+    window.scrollTo(0, 0);
     axios
       .get("https://api.pakshiresort.com/bookings/room-type/")
       .then((res) => {
-        const avarooms = res.data.map(room => {
-          const aroom = {...room, selected: false};
+        const avarooms = res.data.map((room) => {
+          const aroom = { ...room, selected: false };
           return aroom;
         });
         setRooms(avarooms);
@@ -40,13 +48,28 @@ function BookByGuest() {
           </h1>
         </div>
 
-        {
-          state === 0
-          ? <SelectAroom rooms={rooms} setSelectedRoom={setSelectedRoom} />
-          : state === 1
-            ? <SelectTime />
-            : "Confirm"
-        }
+        {state === 0 ? (
+          <SelectAroom
+            rooms={rooms}
+            setSelectedRoom={setSelectedRoom}
+            setState={setState}
+          />
+        ) : state === 1 ? (
+          <SelectAtime
+            setSelectTime={setSelectTime}
+            setState={setState}
+            setRoomAmount={setRoomAmount}
+          />
+        ) : state === 2 ? (
+          <GiveGuestData
+            roomAmount={roomAmount}
+            selectedRoom={selectedRoom}
+            selectTime={selectTime}
+            setState={setState}
+          />
+        ) : (
+          <Confirmed setState={setState} />
+        )}
       </div>
       <Footer />
       <Navigation />
