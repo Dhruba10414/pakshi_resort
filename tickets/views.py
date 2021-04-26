@@ -100,7 +100,7 @@ class TicketsLog(GenericAPIView):
 
         writer.writerow(['Guest', 'Guest Email', 'Ticket For Service', 'Price', 'Number Of Tickets', 'Ticket Bought On', 'Registed By'])
         for tick in tickets:
-            row = [tick.bought_by.name if tick.bought_by else "Annoymous",
+            row = [tick.bought_by.name if tick.bought_by else "Anonymous",
                     tick.bought_by.email if tick.bought_by else "-",
                     tick.ticket_for.name,
                     tick.ticket_tariff,
