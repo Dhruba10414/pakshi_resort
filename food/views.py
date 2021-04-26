@@ -160,8 +160,8 @@ class FoodLogView(generics.GenericAPIView):
         
         writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
         for q in filtered:
-            row = [q.guest.name,
-                    q.guest.email,
+            row = [q.guest.name if q.guest else "Anonymous",
+                    q.guest.email if q.guest else "-",
                     datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
                     q.food.name,
                     q.food.food_type,
