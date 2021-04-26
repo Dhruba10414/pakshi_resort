@@ -11,6 +11,7 @@
       font-weight: normal;
       font-size: 1.5rem;
       line-height: 1.5rem;
+      margin-bottom: 10px;
     }
     h1 {
       font-family: var(--primary-font);
@@ -54,7 +55,7 @@
         border-radius: 5px;
       }
       .btn-box{display: flex; margin-top: 30px;}
-      button {
+      button.next {
         width: 35%;
         padding: 20px 50px;
         outline: none;
@@ -78,13 +79,16 @@
       button.back-btn{
         width: 25%;
         margin-right: 20px;
-        // padding: 10px 30px 10px 20px; 
+        border-radius: 5px;
         background: transparent;
         border: 2px solid var(--primary-color);
         color: var(--primary-color);
-        text-align: center;
         display: flex;
+        justify-content: center;
         align-items: center;
+        cursor: pointer;
+        transition: 0.4s;
+        font-size: 16px;
         &:hover{
           border: 2px solid var(--primary-color-light);
           color: var(--primary-color-light);

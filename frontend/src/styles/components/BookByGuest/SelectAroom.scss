@@ -13,6 +13,7 @@
             font-weight: normal;
             font-size: 1.5rem;
             line-height: 1.5rem;
+            margin-bottom: 10px;
         }
         h1{
             font-family: var(--primary-font);
@@ -66,10 +67,66 @@
                 box-shadow: 0 0 5px rgba(0,0,0,0.3);
                 cursor: pointer;
                 transition: 0.5s;
+                position: relative;
                 &:hover{ transform: scale(1.05); box-shadow: 0 0 8px rgba(0,0,0,0.6);}
                 h3{
-                    font-family: var(--primary-font);
-                    font-size: 20px;
+                    font-family: var(--quicksand-font);
+                    font-size: 15px;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: var(--primary-color-2);
+                }
+                h2{
+                    font-family: var(--quicksand-font);
+                    color: #444;
+                    font-size: 2rem;
+                }
+                h1{
+                    margin-top: 20px;
+                    font-family: var(--quicksand-font);
+                    font-size: 2.5rem;
+                    line-height: 3rem;
+                    display: flex;
+                    align-items: flex-start;
+                    color: var(--primary-color-2);
+                    span{ font-size: 1.5rem; color: gray; }
+                    position: absolute;
+                    left: 20px;
+                    bottom: 20px;
+                }
+                .feature-box{
+                    margin-top: 20px;
+                    display: flex;
+                    div{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        margin-right: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: var(--primary-color-2);
+                        img{
+                            width: 16px;
+                        }
+                    }
+                }
+                p{
+                    margin-top: 30px;
+                    font-size: 15px;
+                    font-family: var(--quicksand-font);
+                    text-align: justify;
+                }
+                .vat{
+                    position: absolute;
+                    bottom: 25px;
+                    right: 30px;
+                    background: var(--green);
+                    color: var(--green-dark);
+                    padding: 4px 10px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    font-family: var(--quicksand-font);
                 }
             }
         }

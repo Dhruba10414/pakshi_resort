@@ -8,6 +8,7 @@ function SelectAroom({ rooms, setSelectedRoom, setState }) {
   const customSlider = useRef();
 
   const settings = {
+    arrows: false,
     dots: false,
     infinite: true,
     speed: 700,
@@ -26,12 +27,12 @@ function SelectAroom({ rooms, setSelectedRoom, setState }) {
   }
 
   const availableRooms = [
-    { id: 1, name: "Delux Room", bed: "Single Bed", price: 4000 },
-    { id: 2, name: "Delux Room", bed: "Couple Bed", price: 5000 },
-    { id: 3, name: "Delux Room", bed: "Twin Bed", price: 6000 },
-    { id: 4, name: "Delux Room", bed: "Family Bed", price: 7000 },
-    { id: 5, name: "Luxury Room", bed: "", price: 10000 },
-    { id: 6, name: "Karni Kunjo", bed: "Honeymoon Suit", price: 25000 },
+    { id: 1, name: "Delux Room", bed: "Single Bed", price: "4,000", desc: "Comfortable room with a Single Size bed, luxury bed linens & towels, bathroom amenities and slippers."},
+    { id: 2, name: "Delux Room", bed: "Couple Bed", price: "5,000", desc: "Comfortable room with Queen Size bed, luxury bed linens & towels, bathroom amenities and slippers." },
+    { id: 3, name: "Delux Room", bed: "Twin Bed", price: "6,000", desc: "Comfortable room with two Single Size bed, luxury bed linens & towels, bathroom amenities and slippers." },
+    { id: 4, name: "Delux Room", bed: "Family Bed", price: "7,000", desc: "Comfortable room with Three Single Size bed, luxury bed linens & towels, bathroom amenities and slippers."},
+    { id: 5, name: "Luxury Room", bed: "", price: "10,000", desc: "Luxury Comfortable room with King Size bed,with Sofa, luxury bed linens & towels, special bathroom amenities and slippers." },
+    { id: 6, name: "Karni Kunjo", bed: "Honeymoon Suit", price: "25,000", desc: "Luxury Comfortable room with Drawing, Dining trace   Kitchen, King Size bed,with Sofa, luxury bed linens & towels, special bathroom amenities and slippers." },
   ];
 
   return (
@@ -52,11 +53,15 @@ function SelectAroom({ rooms, setSelectedRoom, setState }) {
         </div>
       </div>
       <div className="roomSelection__rooms">
-        <Slider ref={(slider) => (customSlider.current = slider)} {...settings}>
+        <Slider ref={(slider) => (customSlider.current = slider)} {...settings} className="roomslider">
           {availableRooms.map((room) => (
             <Aroom key={room.id} room={room} selectRoomType={selectRoomType} />
           ))}
         </Slider>
+
+        {/* <div className="room-flex">
+          ok
+        </div> */}
       </div>
     </div>
   );
