@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { arrowLeftCherovon } from "../../assets/images/SVG";
+import { activity, arrowLeftCherovon, homeSvg } from "../../assets/images/SVG";
+import { api } from "../../assets/URLS";
 
 function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
   const [name, setName] = useState("");
@@ -29,13 +31,22 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
 
     if(validationCheck()){
       setError("");
-      setState(3);
-      const Guest = {
-        "name": name,
-        "contact": contact,
-        "email": email,
-        "address": address
-      };
+      setLoading(true);
+      const Guest = { "name": name, "contact": contact, "email": email, "address": address };
+      axios.post(api.create_guest, Guest)
+      .then((res) => {
+        const Body = {
+          "guest": res.data.id,
+          "room_type": parseInt(selectedRoom.id),
+          "num_of_rooms": parseInt(roomAmount),
+          "check_in": selectTime.checkin,
+          "check_out": selectTime.checkout
+        }
+       axios.post(api.request_for_booking, Body)
+      .then(() => { setLoading(false); setState(3); })
+      .catch(() => { setError("Something Went wrong try again."); setLoading(false); });
+      })
+      .catch(() => {setError("Something Went wrong try again."); setLoading(false); })
     }
   }
 
@@ -64,11 +75,13 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
           <div className="details-content">
             <h2>{selectedRoom.name}</h2>
             <p className="bed">{selectedRoom.bed}</p>
-            <p>2 days</p>
+            <p>{activity} {selectTime.staying} {selectTime.staying > 1 ? "days" : "day"}</p>
             <p>
-              {roomAmount} {roomAmount > 1 ? "rooms" : "room"}
+              {homeSvg}{roomAmount} {roomAmount > 1 ? "rooms" : "room"}
             </p>
-            <p>{selectedRoom.price}</p>
+            <p className="price">
+              <span>৳</span> {parseInt(selectedRoom.price) * parseInt(selectTime.staying) * parseInt(roomAmount) } <span className="vat">+ vat</span>
+              </p>
           </div>
         </div>
 

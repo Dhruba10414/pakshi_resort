@@ -36,7 +36,6 @@ function SelectAtime({ setSelectTime, setRoomAmount, setState }) {
   const dateValidation = (startDay) => {
     const date = new Date();
     const today = date.getDate();
-    console.log(startDay, today);
     if (startDay === today) {
       setError("Select check-in date tomorrow or later date.");
       return false;
@@ -65,8 +64,8 @@ function SelectAtime({ setSelectTime, setRoomAmount, setState }) {
       const checkoutDate = `${ed}-${em}-${ey}`;
 
       if (dateValidation(sd)) {
-        console.log("OK");
-        setSelectTime({ checkin: checkinDate, checkout: checkoutDate });
+        const stayingdays = (endDate - startDate) / (1000 * 3600 * 24)
+        setSelectTime({ checkin: checkinDate, checkout: checkoutDate, staying: stayingdays });
         setRoomAmount(numberOfRooms);
         setState(2);
       }
