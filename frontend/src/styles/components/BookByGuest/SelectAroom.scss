@@ -2,18 +2,21 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     &__text{
         width: 29%;
         min-height: 50vh;
         display: flex;
         align-items: center;
         justify-content: center;
+        @include media("<=phone") { width: 100%; min-height: fit-content; justify-content: flex-start; }
         h2{
             font-family: var(--quicksand-font);
             font-weight: normal;
             font-size: 1.5rem;
             line-height: 1.5rem;
             margin-bottom: 10px;
+            @include media("<=phone") { font-size: 17px; line-height: 17px; margin-bottom: 6px; }
         }
         h1{
             font-family: var(--primary-font);
@@ -21,15 +24,18 @@
             font-size: 3rem;
             line-height: 3rem;
             margin-bottom: 10px;
+            @include media("<=phone") { font-size: 2rem; line-height: 2rem;}
         }
         p{
             font-size: 17px;
             font-family: var(--quicksand-font);
+            @include media("<=phone") {font-size: 14px; }
 
         }
         .btn-box{
             margin-top: 20px;
             display: flex;
+            @include media("<=phone") { display: none; }
             button{
                 height: 60px;
                 width: 60px;
@@ -53,6 +59,7 @@
     &__rooms{
         width:69%;
         min-height: 60vh;
+        @include media("<=phone") { display: none; }
         .aroom{
             min-height: 60vh;
             padding: 10px;
@@ -119,15 +126,58 @@
                 }
                 .vat{
                     position: absolute;
-                    bottom: 25px;
+                    bottom: 35px;
                     right: 30px;
-                    background: var(--green);
-                    color: var(--green-dark);
-                    padding: 4px 10px;
-                    border-radius: 10px;
-                    font-weight: bold;
+                    font-size: 10px;
                     font-family: var(--quicksand-font);
                 }
+            }
+        }
+    }
+
+    &__rooms-mobile{
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        @include media(">phone") { display: none; }
+        .m-room{
+            width: 46%;
+            min-height: 20vh;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            border-radius: 5px;
+            padding: 15px 10px;
+            position: relative;
+            h3{
+                font-family: var(--quicksand-font);
+                font-size: 18px;
+                color: #444;
+            }
+            p{
+                font-family: var(--quicksand-font);
+                font-size: 10px; color: var(--primary-color-light);
+                text-transform: uppercase; font-weight: bold;
+            }
+            h2{
+                font-family: var(--quicksand-font);
+                font-size: 23px;
+                position: absolute;
+                bottom: 15px;
+                left: 10px;
+                display: flex;
+                align-items: flex-start;
+                color: #444;
+                span{font-size: 15px; color: gray;}
+            }
+            p.per{
+                position: absolute;
+                bottom: 15px;
+                right: 10px;
+                font-size: 10px;
+                color: #000;
             }
         }
     }

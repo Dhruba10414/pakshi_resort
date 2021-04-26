@@ -1,17 +1,16 @@
 .book-in-by-guest {
   min-height: 100vh;
   padding: 150px 200px;
+  @include media("<=desktop") { padding: 20vh 120px 10px 120px; }
+  @include media("<=phone") { padding: 10vh 30px 10px 30px; }
   .heading {
+    @include media("<=phone") { margin-top: 20px; }
     h1 {
       font-family: var(--primary-font);
       font-size: 3rem;
       color: var(--primary-color);
-      @include media("<=desktop") {
-        font-size: 2.4rem;
-      }
-      @include media("<=phone") {
-        font-size: 22px;
-      }
+      @include media("<=desktop") { font-size: 2.4rem; }
+      @include media("<=phone") { font-size: 22px; }
     }
   }
   .congrats{
@@ -26,6 +25,7 @@
       width: 30vh;
       animation-name: example;
       animation-duration: 0.5s;
+      @include media("<=phone") { width: 22vh; }
     }
     p{
       margin-top: -20px;
@@ -34,12 +34,14 @@
       text-align: center;
       font-family: var(--quicksand-font);
       font-size: 17px;
+      @include media("<=phone") { font-size: 14.5px; width: 100%; }
     }
     a{
       color: var(--primary-color-2);
       font-family: var(--quicksand-font);
       font-size: 18px;
       transition: 0.4s;
+      @include media("<=phone") { font-size: 15px; }
       &:hover{
         color: var(--primary-color-light);
       }

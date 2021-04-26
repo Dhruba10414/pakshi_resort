@@ -19,7 +19,7 @@ function Aroom({room, selectRoomType}) {
                 </div>
                 <p>{room.desc}</p>
                 <h1>{price}<span>৳</span></h1>
-                <div className="vat">+ vat</div>
+                <div className="vat">PER / NIGHT</div>
             </div>
         </div>
     )

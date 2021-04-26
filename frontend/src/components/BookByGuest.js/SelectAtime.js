@@ -7,7 +7,7 @@ import { arrowLeftCherovon } from "../../assets/images/SVG";
 function SelectAtime({ setSelectTime, setRoomAmount, setState }) {
   const [error, setError] = useState("");
   const [numberOfRooms, setNumberOfRooms] = useState(1);
-  const [focus, setFocus] = useState("startDate");
+  const [focus, setFocus] = useState("");
   const [isMobileDevice, setMobileDevice] = useState(false);
   const [dateRange, setdateRange] = useState({
     startDate: null,

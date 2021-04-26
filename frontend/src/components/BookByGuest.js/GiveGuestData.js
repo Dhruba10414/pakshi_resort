@@ -27,7 +27,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
   const makeBookingRequest = (event) => {
     event.preventDefault();
 
-    if(!validationCheck()){
+    if(validationCheck()){
       setError("");
       setState(3);
       const Guest = {

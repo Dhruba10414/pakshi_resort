@@ -1,12 +1,15 @@
 .giveGuestData {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  @include media("<=phone") { margin-top: 50px;}
   &__text {
     width: 34%;
     min-height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include media("<=phone") { width: 100%; min-height: fit-content; justify-content: flex-start; }
     h3{
       display: block;
       margin-top: 20px;
@@ -15,6 +18,7 @@
       font-size: 17px;
       font-family: var(--quicksand-font);
       text-transform: uppercase;
+      @include media("<=phone") { font-size: 14px; line-height: 14px; margin-bottom: 6px; }
     }
     h2 {
       font-family: var(--quicksand-font);
@@ -22,6 +26,7 @@
       font-size: 1.5rem;
       line-height: 1.5rem;
       margin-bottom: 10px;
+      @include media("<=phone") { font-size: 17px; line-height: 17px; margin-bottom: 6px; }
     }
     h1 {
       font-family: var(--primary-font);
@@ -29,18 +34,21 @@
       font-size: 3rem;
       line-height: 3rem;
       margin-bottom: 10px;
+      @include media("<=phone") { font-size: 2rem; line-height: 2rem;}
     }
     p {
       font-size: 16px;
       font-family: var(--quicksand-font);
       text-align: justify;
       margin-bottom: 8px;
+      @include media("<=phone") { width: 100%; font-size: 14px; }
     }
   }
 
   &__content {
     width: 55%;
     min-height: 70vh;
+    @include media("<=phone") { width: 100%; min-height: fit-content;}
     // padding: 0 40px;
     .details{
         width: 100%;
@@ -52,17 +60,23 @@
             width: 30%;
             height: 20vh;
             background: url("../../../assets//images/View/pattern.png") no-repeat center center / cover;
+            @include media("<=phone") { width: 40%; }
         }
         .details-content{
             width: 70%;
             padding: 25px;
-            h2{ font-family: var(--quicksand-font); font-size: 2rem; color: #444; }
+            @include media("<=phone") { padding: 0 20px; width: 60%; }
+            h2{ 
+              font-family: var(--quicksand-font); font-size: 2rem; color: #444; 
+              @include media("<=phone") { font-size: 1.4rem; }
+            }
             p{ 
                 font-family: var(--quicksand-font);
             }
             p.bed{
                 font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px;
                 margin-bottom: 10px; color: var(--primary-color-light);
+                @include media("<=phone") { font-size: 13px; }
             }
             margin-bottom: 10px;
         }
@@ -79,26 +93,27 @@
         font-size: 16px;
         font-family: var(--quicksand-font);
         text-transform: uppercase;
+        @include media("<=phone") { font-size: 13px; }
       }
 
       .input-container {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 20px;
-        @include media("<=desktop") { margin-bottom: 13px; }
 
         .input {
-          width: 49%;
           display: flex;
+          flex-wrap: wrap;
           flex-direction: column;
+          margin-bottom: 7px;
           label {
             font-family: var(--quicksand-font);
             font-size: 14px;
             color: gray;
             margin-bottom: 5px;
-            @include media("<=desktop") { font-size: 12px; }
+            @include media("<=phone") { font-size: 12px; }
           }
           input {
             padding: 18px;
@@ -108,6 +123,7 @@
             font-family: var(--quicksand-font);
             transition: 0.4s;
             @include media("<=desktop") { font-size: 14.5px; padding: 10px; border: 1.5px solid #ccc; }
+            @include media("<=phone") { padding: 15px; }
             &:focus {
               border: 2px solid var(--primary-color-light);
               @include media("<=desktop") {border: 1.5px solid var(--primary-color-light);}
@@ -115,11 +131,11 @@
           }
         }
         .w-100 {width: 100%;}
-        .w-55 {width: 54%;}
-        .w-45 {width: 44%;}
+        .w-55 {width: 54%; @include media("<=phone") { width: 100%; }}
+        .w-45 {width: 44%; @include media("<=phone") { width: 100%; }}
       }
       small{ color: red; font-size: var(--quicksand-font); margin-bottom: 10px; font-size: 14px;}
-      .btn-box{display: flex;}
+      .btn-box{display: flex; margin-bottom: 30px;}
       button {
         width: 35%;
         padding: 20px 50px;
@@ -137,6 +153,7 @@
         transition: 0.4s;
         margin-right: 30px;
         @include media("<=desktop") { font-size: 14.5px; padding: 8px; }
+        @include media("<=phone") { width: 55%; margin-right: 0; font-size: 14px; }
         &:hover {
           color: var(--primary-color-light);
         }
@@ -156,6 +173,7 @@
           color: var(--primary-color-light);
         }
         @include media("<=desktop") { padding: 8px 24px 8px 16px; }
+        @include media("<=phone") { width: 45%; font-size: 14px; }
       }
       button.disabled-btn{
         background-color: #ccc;
