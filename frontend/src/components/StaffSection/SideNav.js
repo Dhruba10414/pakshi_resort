@@ -8,7 +8,6 @@ import {api} from "../../assets/URLS";
 import {
   boxes,
   calender,
-  cloud,
   help,
   logout,
   pie,
@@ -20,6 +19,7 @@ import {
   arrowDown,
   barchart,
   dbSVG,
+  markSVG,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -65,6 +65,7 @@ function SideNav({clearUser, is_staff }) {
         <NavLink to="/staff/restaurent" exact activeClassName="active-link">{cofeeSVG} Restaurent</NavLink>
         <NavLink to="/staff/foodorders" exact activeClassName="active-link">{dbSVG} Food Orders</NavLink>
         <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
+        <NavLink to="/staff/park-ticket" exact activeClassName="active-link">{markSVG} Park Ticket</NavLink>
         {is_staff ? (
           <>
             <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
