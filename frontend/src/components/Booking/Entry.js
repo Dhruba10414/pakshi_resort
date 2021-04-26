@@ -13,7 +13,6 @@ function Entry({
   guest,
   check_in,
   check_out,
-  book_on,
   is_active,
   clearUser,
   notifyforCheckout,
@@ -160,7 +159,7 @@ function Entry({
   return (
     <div className="entry">
       <div className="no"># {room}</div>
-      <div className="guest-name">{guest}</div>
+      <div className="guest-name">{guest.name}</div>
       <div
         className={
           checkFoConfirm
@@ -185,7 +184,7 @@ function Entry({
             }
         </p>
       </div>
-      <div className="bookon">{book_on}</div>
+      <div className="bookon">{guest.contact}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">

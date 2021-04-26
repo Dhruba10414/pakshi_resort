@@ -129,7 +129,7 @@ function Booking({
           <div className="no">Room {rsvg}</div>
           <div className="guest-name">Guest Name{rsvg}</div>
           <div className="status">Status {rsvg}</div>
-          <div className="bookon">Book on{rsvg}</div>
+          <div className="bookon">Contact{rsvg}</div>
           <div className="checkin">Check-in{rsvg}</div>
           <div className="checkout">Check-out{rsvg}</div>
           <div className="func">Confirm{rsvg}</div>
@@ -147,7 +147,6 @@ function Booking({
                   guest={entry.guest}
                   check_in={entry.check_in}
                   check_out={entry.check_out}
-                  book_on={entry.booked_on}
                   is_active={entry.is_active}
                   is_cancel={entry.is_canceled}
                   notifyforCheckout={notifyforCheckout}
