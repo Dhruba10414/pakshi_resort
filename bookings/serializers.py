@@ -9,13 +9,13 @@ class RoomTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class GuestIdNameSerailizer(serializers.ModelSerializer):
+class GuestIdNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guests
         fields = ['id', 'name', 'contact']
 
 class BookingEmbededSerializer(serializers.ModelSerializer):
-    guest = GuestIdNameSerailizer(read_only=True, allow_null=True)
+    guest = GuestIdNameSerializer(read_only=True, allow_null=True)
     check_in = serializers.DateField(format="%d-%m-%Y", read_only=True)
     check_out = serializers.DateField(format="%d-%m-%Y", read_only=True)
 
