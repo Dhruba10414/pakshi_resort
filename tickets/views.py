@@ -100,8 +100,8 @@ class TicketsLog(GenericAPIView):
 
         writer.writerow(['Guest', 'Guest Email', 'Ticket For Service', 'Price', 'Number Of Tickets', 'Ticket Bought On', 'Registed By'])
         for tick in tickets:
-            row = [tick.bought_by.name,
-                    tick.bought_by.email,
+            row = [tick.bought_by.name if tick.bought_by else "Annoymous",
+                    tick.bought_by.email if tick.bought_by else "-",
                     tick.ticket_for.name,
                     tick.ticket_tariff,
                     tick.num_tickets,
@@ -123,3 +123,4 @@ class TicketsAnalytics(GenericAPIView):
         analytics_serialized = self.get_serializer(analytics, many=True)
 
         return Response(analytics_serialized.data, status=status.HTTP_200_OK)
+        

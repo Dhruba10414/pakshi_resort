@@ -11,7 +11,7 @@ class ServicesSerializer(serializers.ModelSerializer):
 
 
 class TicketWriteSerializer(serializers.ModelSerializer):
-    bought_by = serializers.PrimaryKeyRelatedField(queryset=Guests.objects.all())
+    bought_by = serializers.PrimaryKeyRelatedField(queryset=Guests.objects.all(), allow_null=True)
     ticket_for = serializers.PrimaryKeyRelatedField(queryset=Services.objects.all())
 
     class Meta:
@@ -27,12 +27,6 @@ class TicketWriteSerializer(serializers.ModelSerializer):
         ticket.save()
 
         return ticket
-
-    def validate(self, data):
-        if not data['bought_by'].is_staying:
-            raise serializers.ValidationError("Guest not staying right now can not buy tickets")
-
-        return value
 
 
 class TicketReadOnlySerializer(serializers.ModelSerializer):

@@ -7,7 +7,7 @@ class Services(models.Model):
     ticket_price = models.FloatField()
 
 class Tickets(models.Model):
-    bought_by = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name='tickets')
+    bought_by = models.ForeignKey(Guests, on_delete=models.SET_NULL, default=None, related_name='tickets', null=True)
     registered_by = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
     issued_date = models.DateField(auto_now_add=True)
     num_tickets = models.IntegerField()
