@@ -19,7 +19,7 @@ function Staffs({ stafflist, loading }) {
     <div className="stafflist">
       <div className="heading-container">
         <div className="text-part">
-          <h3>Availabe</h3>
+          <h3>Available</h3>
           <p>foods</p>
         </div>
         <div className="style-part">

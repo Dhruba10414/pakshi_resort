@@ -41,7 +41,9 @@
         h1 {
           font-family: var(--quicksand-font);
           color: #444;
-          @include media("<=desktop") { font-size: 1.35rem; }
+          @include media("<=desktop") {
+            font-size: 1.35rem;
+          }
         }
         p {
           display: inline-block;
@@ -53,7 +55,10 @@
           border-radius: 10px;
           font-weight: bold;
           font-size: 14px;
-          @include media("<=desktop") { font-size: 12px; padding: 2px 8px; }
+          @include media("<=desktop") {
+            font-size: 12px;
+            padding: 2px 8px;
+          }
         }
         p.staff {
           background: var(--yellow);
@@ -67,7 +72,9 @@
           padding: 0;
           font-weight: normal;
           font-size: 14px;
-          @include media("<=desktop") { font-size: 12.5px }
+          @include media("<=desktop") {
+            font-size: 12.5px;
+          }
           span {
             font-weight: bold;
           }
@@ -81,12 +88,16 @@
       color: #444;
       font-size: 14px;
       letter-spacing: 2px;
-      @include media("<=desktop") { font-size: 13px }
+      @include media("<=desktop") {
+        font-size: 13px;
+      }
     }
     p.tearms {
       font-family: var(--quicksand-font);
       font-size: 15px;
-      @include media("<=desktop") { font-size: 12.5px }
+      @include media("<=desktop") {
+        font-size: 12.5px;
+      }
     }
 
     .details {
@@ -157,7 +168,8 @@
       flex-direction: column;
       .input {
         margin-bottom: 20px;
-        label{
+        position: relative;
+        label {
           display: block;
           font-size: 14px;
           color: gray;
@@ -173,19 +185,32 @@
           border: 2px solid #ccc;
           transition: 0.4s;
           font-family: var(--quicksand-font);
-          @include media("<=desktop") { padding: 10px 15px; font-size: 14px; border: 1.5px solid #ccc;}
-          &:focus{
+          @include media("<=desktop") {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 1.5px solid #ccc;
+          }
+          &:focus {
             border: 2px solid var(--primary-color-light);
-            @include media("<=desktop") { border: 1.5px solid var(--primary-color-light); }
+            @include media("<=desktop") {
+              border: 1.5px solid var(--primary-color-light);
+            }
           }
         }
+        .eye{
+          position: absolute;
+          bottom: 16px;
+          right: 20px;
+          cursor: pointer;
+          svg{ height: 14px; }
+        }
       }
-      small.error{
+      small.error {
         margin-bottom: 20px;
         color: red;
         font-family: var(--quicksand-font);
       }
-      button{
+      button {
         width: 50%;
         padding: 15px 20px;
         background-color: var(--primary-color);
@@ -197,11 +222,50 @@
         outline: none;
         border: none;
         cursor: pointer;
-        @include media("<=desktop") { padding: 10px 15px; font-weight: bold; font-size: 14px; }
-        &:hover{
+        @include media("<=desktop") {
+          padding: 10px 15px;
+          font-weight: bold;
+          font-size: 14px;
+        }
+        &:hover {
           color: var(--primary-color-light);
         }
       }
+      button.loading{
+        background: #ccc;
+        color: gray;
+      }
     }
+  }
+  .success-message {
+    position: absolute;
+    top: 14vh;
+    right: 4vw;
+    background-color: var(--green);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-family: var(--quicksand-font);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    div {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--green-dark);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    opacity: 1;
+    margin-left: 0;
+    transition: 0.5s;
+  }
+  .success-message.disabled {
+    margin-right: -30px;
+    opacity: 0;
   }
 }

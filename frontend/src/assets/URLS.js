@@ -9,6 +9,7 @@ export const api = {
     register_user: `${baseurl}/api/signup/`, // post
     send_reset_mail: `${baseurl}/auth/users/reset_password/`, // post
     reset_password: `${baseurl}/auth/users/reset_password_confirm/`, // post
+    change_password: `${baseurl}/api/change_password/`, // post
     disable_user: `${baseurl}/api/remove/`, // put
     
     // room-related

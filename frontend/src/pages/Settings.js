@@ -4,7 +4,9 @@ import { clearUser } from "../redux/user/userAction";
 import ContentBox from "../components/StaffSection/ContentBox";
 import lady from "../assets/images/View/svg/lady.svg";
 import men from "../assets/images/View/svg/men.svg";
-import { hash, mail, phone } from "../assets/images/SVG";
+import { check, eye, eyeClose, hash, mail, phone } from "../assets/images/SVG";
+import axios from "axios";
+import { api } from "../assets/URLS";
 
 function Settings({ currentUser }) {
   const [user, setUser] = useState(JSON.parse(currentUser));
@@ -12,20 +14,60 @@ function Settings({ currentUser }) {
   const [newpassword, setNewPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [oldType, setOldType] = useState(false);
+  const [newtype, setNewType] = useState(false)
+
+  const notify = () => {
+    setTimeout(() => {
+      setSuccess(false);
+    }, 3000);
+    setSuccess(true);
+  };
 
   // CHANGE PASSWORD
   const changePassword = (event) => {
     event.preventDefault();
-    if(newpassword === confirmpassword){
-      // func
-      setError("");
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-    } else{
-      setError("Password Should be matched.");
+    if (oldpassword && newpassword && confirmpassword) {
+      if (newpassword === confirmpassword) {
+        // func
+        setLoading(true);
+        const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+        const GET_ACCESS_TOKEN_URL = api.refresh;
+        const RESET_PASSWORD = `${api.change_password}/${user.id}/`;
+
+        axios
+          .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+          .then((token) => {
+            const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+            const Body = { "old_password": oldpassword, "password": newpassword, "password2": confirmpassword, };
+
+            axios
+              .put(RESET_PASSWORD, Body, Config)
+              .then(() => {
+                notify();
+                setError("");
+                setOldPassword("");
+                setNewPassword("");
+                setConfirmPassword("");
+                setLoading(false);
+              })
+              .catch(() => {
+                setError("Something went wrong! Try again.");
+                setLoading(false);
+              });
+          })
+          .catch(() => {
+            setLoading(false);
+          });
+      } else {
+        setError("Password Should be matched.");
+      }
+    } else {
+      setError("Required all fields.");
     }
-  }
+  };
 
   return (
     <ContentBox heading="Settings">
@@ -111,19 +153,41 @@ function Settings({ currentUser }) {
           <form onSubmit={changePassword}>
             <div className="input">
               <label>Old Password</label>
-              <input type="password" value={oldpassword} onChange={(e) => setOldPassword(e.target.value)} />
+              <input
+                type={!oldType ? "password" : "text"}
+                value={oldpassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+              <div className="eye" onClick={() => setOldType(!oldType)}>{oldType ? eyeClose : eye}</div>
             </div>
             <div className="input">
               <label>New Password</label>
-              <input type="password" value={newpassword} onChange={(e) => setNewPassword(e.target.value)} />
+              <input
+                type={!newtype ? "password" : "text"}
+                value={newpassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <div className="eye" onClick={() => setNewType(!newtype)}>{newtype ? eyeClose : eye}</div>
             </div>
             <div className="input">
               <label>Confirm Password</label>
-              <input type="password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input
+                type={!newtype ? "password" : "text"}
+                value={confirmpassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <div className="eye" onClick={() => setNewType(!newtype)}>{newtype ? eyeClose : eye}</div>
             </div>
             <small className="error">{error}</small>
-            <button onClick={changePassword}>Change Password</button>
+            {
+              !loading
+              ? <button onClick={changePassword}>Change Password</button>
+              : <button className="loading">Processing..</button>
+            }
           </form>
+        </div>
+        <div className={success ? "success-message" : "success-message disabled"}>
+          <div>{check}</div> Successfully Submitted!
         </div>
       </div>
     </ContentBox>
