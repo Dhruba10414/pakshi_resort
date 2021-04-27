@@ -28,6 +28,7 @@ export const api = {
     cancel_booking: `${baseurl}/bookings/cancel/`, // post
     request_for_booking: `${baseurl}/bookings/guest_requests/add/`, // post
     accept_booking_request: `${baseurl}/bookings/guest_requests/`, //post
+    delete_booking_request: `${baseurl}/bookings/guest_requests/`, // delete
     delete_fraud_guest: `${baseurl}/bookings/guests/frauds/`, //delete
 
 

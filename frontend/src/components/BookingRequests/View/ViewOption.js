@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { checked, pencil, x } from "../../../assets/images/SVG";
+import { checked, pencil, trash, x } from "../../../assets/images/SVG";
 import check from "../../../assets/images/View/svg/cheklist-complete.svg";
 import alarm from "../../../assets/images/View/svg/alarm.svg";
 import signal from "../../../assets/images/View/svg/signal.svg";
@@ -25,6 +25,7 @@ function ViewOption({
   const [processloading, setprocessLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [canceling, setCanceling] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // SELECT ROOM
   const selectRoom = (id) => {
@@ -51,10 +52,12 @@ function ViewOption({
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
           const BodyForBooking = {
-            "id": viewFor.id,
-            "rooms": selectedroom,
+            id: viewFor.id,
+            rooms: selectedroom,
           };
 
           axios
@@ -74,8 +77,8 @@ function ViewOption({
     }
   };
 
-  // CANCEL BOOKING
-  const cancelbooking = () => {
+  // DELETE FRAUD GUEST ENTRIES
+  const deleteFraudGuestEntries = () => {
     setprocessLoading(true);
     setCanceling(true);
 
@@ -110,6 +113,41 @@ function ViewOption({
       });
   };
 
+  // DELETE REQUEST
+  const deleteBooking = () => {
+    setprocessLoading(true);
+    setDeleting(true);
+
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+    const DELETE_BOOKING = api.delete_booking_request;
+
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        axios.delete(DELETE_BOOKING, {
+            headers: { Authorization: "Bearer " + token.data.access },
+            data: { id: viewFor.id },
+          })
+          .then(() => {
+            setprocessLoading(false);
+            setDeleting(false);
+            setOk(2);
+            cancelNotify();
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setprocessLoading(false);
+            setDeleting(false);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setprocessLoading(false);
+        setDeleting(false);
+      });
+  };
+
   return (
     <div className="activities">
       {/* ---------------- options ------------- */}
@@ -126,8 +164,8 @@ function ViewOption({
             <div>{confirming ? "Processing.." : "Confirm"}</div>
           </div>
         )}
-        {!processloading ? (
-          <div className="option cancel" onClick={cancelbooking}>
+        {/* {!processloading ? (
+          <div className="option cancel" onClick={deleteFraudGuestEntries}>
             <div className="logo">{x}</div>
             <div>Cancel</div>
           </div>
@@ -136,7 +174,7 @@ function ViewOption({
             <div className="logo">{x}</div>
             <div>{canceling ? "Processing.." : "Cancel"}</div>
           </div>
-        )}
+        )} */}
         {!processloading ? (
           <div className="option edit" onClick={() => setState(true)}>
             <div className="logo">{pencil}</div>
@@ -146,6 +184,17 @@ function ViewOption({
           <div className="option edit">
             <div className="logo">{pencil}</div>
             <div>Edit</div>
+          </div>
+        )}
+        {!processloading ? (
+          <div className="option delete" onClick={deleteBooking}>
+            <div className="logo">{trash}</div>
+            <div>Delete</div>
+          </div>
+        ) : (
+          <div className="option delete">
+            <div className="logo">{trash}</div>
+            <div>{deleting ? "Processing.." : "Delete"}</div>
           </div>
         )}
       </div>
@@ -173,18 +222,20 @@ function ViewOption({
               ) : (
                 <div className="notava">
                   <img src={signal} alt="" />
-                  <h4 style={{color: "var(--yellow-dark)"}}>Not available!</h4>
+                  <h4 style={{ color: "var(--yellow-dark)" }}>
+                    Not available!
+                  </h4>
                 </div>
               )
             ) : ok === 1 ? (
               <div className="notava">
                 <img src={check} alt="" />
-                <h4> Booking Complete </h4>
+                <h4> Booking Completed </h4>
               </div>
             ) : (
               <div className="notava alarm">
                 <img src={alarm} alt="" />
-                <h4> Booking Canceled! </h4>
+                <h4> Booking request deleted! </h4>
               </div>
             )
           ) : (
