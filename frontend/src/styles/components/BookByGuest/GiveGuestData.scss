@@ -18,6 +18,7 @@
       font-size: 17px;
       font-family: var(--quicksand-font);
       text-transform: uppercase;
+      @include media("<=desktop") { font-size: 14px; }
       @include media("<=phone") { font-size: 14px; line-height: 14px; margin-bottom: 6px; }
     }
     h2 {
@@ -26,6 +27,7 @@
       font-size: 1.5rem;
       line-height: 1.5rem;
       margin-bottom: 10px;
+      @include media("<=desktop") { font-size: 1rem; line-height: 1.4rem; }
       @include media("<=phone") { font-size: 17px; line-height: 17px; margin-bottom: 6px; }
     }
     h1 {
@@ -34,6 +36,7 @@
       font-size: 3rem;
       line-height: 3rem;
       margin-bottom: 10px;
+      @include media("<=desktop") { font-size: 2.4rem; line-height: 2.4rem; }
       @include media("<=phone") { font-size: 2rem; line-height: 2rem;}
     }
     p {
@@ -41,6 +44,7 @@
       font-family: var(--quicksand-font);
       text-align: justify;
       margin-bottom: 8px;
+      @include media("<=desktop") { font-size: 14px; }
       @include media("<=phone") { width: 100%; font-size: 14px; }
     }
   }
@@ -65,9 +69,11 @@
         .details-content{
             width: 70%;
             padding: 25px;
+            @include media("<=desktop") { padding: 10px 25px; }
             @include media("<=phone") { padding: 0 20px; width: 60%; }
             h2{ 
               font-family: var(--quicksand-font); font-size: 2rem; color: #444; 
+              @include media("<=desktop") { font-size: 1.6rem; }
               @include media("<=phone") { font-size: 1.4rem; }
             }
             p{ 
@@ -75,10 +81,12 @@
                 display: flex; align-items: center;
                 font-size: 18px;
                 svg{ height: 15px; margin-right: 10px;}
+                @include media("<=desktop") { font-size: 15px; }
             }
             p.bed{
                 font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px;
                 margin-bottom: 10px; color: var(--primary-color-light); font-size: 16px;
+                @include media("<=desktop") { font-size: 14px; }
                 @include media("<=phone") { font-size: 13px; }
             }
             p.price{
@@ -86,6 +94,7 @@
               font-weight: bold;
               color: var(--primary-color);
               font-size: 25px;
+              @include media("<=desktop") { font-size: 18px; }
               span{ margin-right: 10px; padding: 0 5px; }
               span.vat{
                 padding: 3px 10px;
@@ -94,6 +103,7 @@
                 margin-left: 30px;
                 font-size: 15px;
                 border-radius: 10px;
+                @include media("<=desktop") { font-size: 13.5px; margin-left: 18px; }
               }
             }
             margin-bottom: 10px;
@@ -111,6 +121,7 @@
         font-size: 16px;
         font-family: var(--quicksand-font);
         text-transform: uppercase;
+        @include media("<=desktop") { font-size: 14px; }
         @include media("<=phone") { font-size: 13px; }
       }
 
@@ -170,7 +181,7 @@
         cursor: pointer;
         transition: 0.4s;
         margin-right: 30px;
-        @include media("<=desktop") { font-size: 14.5px; padding: 8px; }
+        @include media("<=desktop") { font-size: 14.5px; padding: 10px; }
         @include media("<=phone") { width: 55%; margin-right: 0; font-size: 14px; }
         &:hover {
           color: var(--primary-color-light);
@@ -190,7 +201,7 @@
           border: 2px solid var(--primary-color-light);
           color: var(--primary-color-light);
         }
-        @include media("<=desktop") { padding: 8px 24px 8px 16px; }
+        @include media("<=desktop") { padding: 10px 24px 10px 16px; font-size: 15px; }
         @include media("<=phone") { width: 45%; font-size: 14px; }
       }
       button.disabled-btn{

@@ -16,6 +16,7 @@
             font-size: 1.5rem;
             line-height: 1.5rem;
             margin-bottom: 10px;
+            @include media("<=desktop") { font-size: 1rem; line-height: 1.4rem; }
             @include media("<=phone") { font-size: 17px; line-height: 17px; margin-bottom: 6px; }
         }
         h1{
@@ -24,11 +25,13 @@
             font-size: 3rem;
             line-height: 3rem;
             margin-bottom: 10px;
+            @include media("<=desktop") { font-size: 2.4rem; line-height: 2.4rem; }
             @include media("<=phone") { font-size: 2rem; line-height: 2rem;}
         }
         p{
             font-size: 17px;
             font-family: var(--quicksand-font);
+            @include media("<=desktop") { font-size: 14px; }
             @include media("<=phone") {font-size: 14px; }
 
         }
@@ -51,8 +54,9 @@
                 color: #000;
                 box-shadow: 0 0 5px rgba(0,0,0,0.3);
                 transition: 0.5s;
-                img{ width: 20px; }
+                img{ width: 20px; @include media("<=desktop") { width: 14px; }}
                 &:hover{ box-shadow: 0 0 8px rgba(0,0,0,0.7); }
+                @include media("<=desktop") { width: 40px; height: 40px; }
             }
         }
     }
@@ -87,6 +91,7 @@
                     font-family: var(--quicksand-font);
                     color: #444;
                     font-size: 2rem;
+                    @include media("<=desktop") { font-size: 1.4rem; }
                 }
                 h1{
                     margin-top: 20px;
@@ -96,10 +101,11 @@
                     display: flex;
                     align-items: flex-start;
                     color: var(--primary-color-2);
-                    span{ font-size: 1.5rem; color: gray; }
+                    span{ font-size: 1.5rem; color: gray; @include media("<=desktop") { font-size: 1rem; } }
                     position: absolute;
                     left: 20px;
                     bottom: 20px;
+                    @include media("<=desktop") { font-size: 2rem; line-height: 2.4rem; }
                 }
                 .feature-box{
                     margin-top: 20px;
@@ -115,7 +121,9 @@
                         background-color: var(--primary-color-2);
                         img{
                             width: 16px;
+                            @include media("<=desktop") { width: 13px; }
                         }
+                        @include media("<=desktop") { width: 30px; height: 30px; }
                     }
                 }
                 p{
@@ -123,6 +131,7 @@
                     font-size: 15px;
                     font-family: var(--quicksand-font);
                     text-align: justify;
+                    @include media("<=desktop") { font-size: 13.5px; }
                 }
                 .vat{
                     position: absolute;
@@ -130,6 +139,7 @@
                     right: 30px;
                     font-size: 10px;
                     font-family: var(--quicksand-font);
+                    @include media("<=desktop") { right: 22px; }
                 }
             }
         }

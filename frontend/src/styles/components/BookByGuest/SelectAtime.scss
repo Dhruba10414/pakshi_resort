@@ -15,6 +15,7 @@
       font-size: 1.5rem;
       line-height: 1.5rem;
       margin-bottom: 10px;
+      @include media("<=desktop") { font-size: 1.4rem; line-height: 1.4rem; }
       @include media("<=phone") { font-size: 17px; line-height: 17px; margin-bottom: 6px; }
     }
     h1 {
@@ -23,12 +24,14 @@
       font-size: 3rem;
       line-height: 3rem;
       margin-bottom: 10px;
+      @include media("<=desktop") { font-size: 2.4rem; line-height: 2.4rem; }
       @include media("<=phone") { font-size: 2rem; line-height: 2rem;}
     }
     p {
       width: 80%;
       font-size: 17px;
       font-family: var(--quicksand-font);
+      @include media("<=desktop") { font-size: 14px; }
       @include media("<=phone") { width: 100%; font-size: 14px; }
       span {
         font-weight: bold;
@@ -50,6 +53,7 @@
         color: gray;
         font-size: 14px;
         text-transform: uppercase;
+        @include media("<=desktop") { font-size: 12px; }
         @include media("<=phone") { font-size: 12px; }
       }
       input {
@@ -62,6 +66,7 @@
         outline: none;
         border: 2px solid #ccc;
         border-radius: 5px;
+        @include media("<=desktop") { padding: 10px; font-size: 15px; }
         @include media("<=phone") { padding: 15px; width: 100%; font-size: 15px;}
       }
       .btn-box{
@@ -84,7 +89,7 @@
         cursor: pointer;
         transition: 0.4s;
         margin-right: 30px;
-        @include media("<=desktop") { font-size: 14.5px; padding: 8px; }
+        @include media("<=desktop") { font-size: 14.5px; padding: 13px; font-size: 15px; }
         @include media("<=phone") { width: 55%; margin-right: 0; font-size: 14px; padding: 15px 20px;}
         &:hover {
           color: var(--primary-color-light);
@@ -107,7 +112,7 @@
           border: 2px solid var(--primary-color-light);
           color: var(--primary-color-light);
         }
-        @include media("<=desktop") { padding: 8px 24px 8px 16px; }
+        @include media("<=desktop") { padding: 10px 24px 10px 16px; font-size: 15px;}
         @include media("<=phone") { width: 45%; font-size: 15px;}
       }
       button.disabled-btn{
@@ -139,7 +144,8 @@
         margin-right: 15px;
       }
       @include media("<=desktop") {
-        padding: 6px 13px;
+        padding: 3px 13px;
+        font-size: 15px;
       }
       @include media("<=phone") {
         width: 47%;
@@ -147,6 +153,10 @@
       }
     }
     .DateInput_input {
+      @include media("<=desktop") {
+        font-size: 14px !important;
+        line-height: 14px !important;
+      }
       @include media("<=phone") {
         padding: 0;
         font-size: 15px;

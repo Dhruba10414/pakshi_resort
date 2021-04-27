@@ -25,6 +25,7 @@
       width: 30vh;
       animation-name: example;
       animation-duration: 0.5s;
+      @include media("<=desktop") { width: 24vh; }
       @include media("<=phone") { width: 22vh; }
     }
     p{
@@ -34,6 +35,7 @@
       text-align: center;
       font-family: var(--quicksand-font);
       font-size: 17px;
+      @include media("<=desktop") { font-size: 15px; }
       @include media("<=phone") { font-size: 14.5px; width: 100%; }
     }
     a{
@@ -41,6 +43,7 @@
       font-family: var(--quicksand-font);
       font-size: 18px;
       transition: 0.4s;
+      @include media("<=desktop") { font-size: 15.5px; }
       @include media("<=phone") { font-size: 15px; }
       &:hover{
         color: var(--primary-color-light);
