@@ -41,6 +41,7 @@
         h1 {
           font-family: var(--quicksand-font);
           color: #444;
+          @include media("<=desktop") { font-size: 1.35rem; }
         }
         p {
           display: inline-block;
@@ -52,6 +53,7 @@
           border-radius: 10px;
           font-weight: bold;
           font-size: 14px;
+          @include media("<=desktop") { font-size: 12px; padding: 2px 8px; }
         }
         p.staff {
           background: var(--yellow);
@@ -64,6 +66,8 @@
         p.date {
           padding: 0;
           font-weight: normal;
+          font-size: 14px;
+          @include media("<=desktop") { font-size: 12.5px }
           span {
             font-weight: bold;
           }
@@ -77,10 +81,12 @@
       color: #444;
       font-size: 14px;
       letter-spacing: 2px;
+      @include media("<=desktop") { font-size: 13px }
     }
     p.tearms {
       font-family: var(--quicksand-font);
       font-size: 15px;
+      @include media("<=desktop") { font-size: 12.5px }
     }
 
     .details {
@@ -167,8 +173,10 @@
           border: 2px solid #ccc;
           transition: 0.4s;
           font-family: var(--quicksand-font);
+          @include media("<=desktop") { padding: 10px 15px; font-size: 14px; border: 1.5px solid #ccc;}
           &:focus{
             border: 2px solid var(--primary-color-light);
+            @include media("<=desktop") { border: 1.5px solid var(--primary-color-light); }
           }
         }
       }
@@ -189,6 +197,7 @@
         outline: none;
         border: none;
         cursor: pointer;
+        @include media("<=desktop") { padding: 10px 15px; font-weight: bold; font-size: 14px; }
         &:hover{
           color: var(--primary-color-light);
         }
