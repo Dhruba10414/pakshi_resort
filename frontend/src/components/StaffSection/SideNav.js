@@ -75,8 +75,8 @@ function SideNav({clearUser, is_staff }) {
       </div>
       <div className="additional">
         <Link to="/staff/login" onClick={LogoutFunctionality}> {logout} Logout</Link>
-        <NavLink to="/" exact activeClassName="active-link"> {settings} Settings</NavLink>
-        <NavLink to="/" exact activeClassName="active-link"> {help} Help</NavLink>
+        <NavLink to="/staff/settings" exact activeClassName="active-link"> {settings} Settings</NavLink>
+        {/* <NavLink to="/" exact activeClassName="active-link"> {help} Help</NavLink> */}
       </div>
     </div>
   );

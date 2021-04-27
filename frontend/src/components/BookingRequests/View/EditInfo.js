@@ -20,11 +20,7 @@ function EditInfo({ viewFor, roomData, setAvailableRoom, setState, setSelectedRo
 
   useEffect(() => {
     let list = [];
-    room_types.map((type, index) => {
-      if (type !== viewFor.info.roomType) {
-        list = [...list, { id: index + 1, type: type }];
-      }
-    });
+    room_types.map((type, index) => {list = [...list, { id: index + 1, type: type }];});
     setTypes(list);
   }, []);
 

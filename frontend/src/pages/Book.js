@@ -120,12 +120,12 @@ function Book({clearUser}) {
   const notify = () => {
     setTimeout(() => {
       setSuccess(false);
-      setBookCardOn(false);
+      history.push("/staff/booking");
     }, 4000)
     setSuccess(true);
   }
 
-  // BOOK A ROOM FOR A GUEST
+  // BOOK ROOMS FOR A GUEST
   const bookRoomForGuest = (name, email, contact, address) => {
     setLoading(true);
 
