@@ -60,12 +60,12 @@ function ActiveGuest() {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err.messae);
+            console.clear();
             setLoading(false);
           });
       })
-      .catch((err) => {
-        console.log(err.messae);
+      .catch(() => {
+        console.clear();
         setLoading(false);
       });
   }, []);

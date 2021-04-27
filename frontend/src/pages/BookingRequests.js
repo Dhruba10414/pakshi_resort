@@ -37,13 +37,13 @@ function BookingRequests() {
             setRequests(res.data);
             setLoading(false);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
       });
   }, [openModal]);
 

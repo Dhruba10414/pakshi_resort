@@ -34,13 +34,9 @@ function SideNav({clearUser, is_staff }) {
     const refresh_token = localStorage.getItem("refresh_token");
     // get users access token
     axios
-      .post(api.refresh, {
-        refresh: refresh_token,
-      })
+      .post(api.refresh, {refresh: refresh_token})
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { refresh: JSON.stringify(refresh_token) };
         // logout and clear refresh token and user fro local storage
         axios

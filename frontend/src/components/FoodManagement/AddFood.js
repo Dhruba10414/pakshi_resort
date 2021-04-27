@@ -76,18 +76,19 @@ function AddFood({ cancelUpdate, clearUser, setChanged }) {
 
           axios
             .post(ADD_FOOD_LINK, Body, Config)
-            .then((res) => {
+            .then(() => {
               setLoading(false);
               notify();
               clearAllFields();
               setChanged(true);
             })
-            .catch((err) => {
-              console.log(err.message);
+            .catch(() => {
+              console.clear();
               setLoading(false);
             });
         })
         .catch(() => {
+          console.clear();
           setLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");

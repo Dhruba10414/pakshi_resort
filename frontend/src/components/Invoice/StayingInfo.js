@@ -1,7 +1,7 @@
 import React from "react";
 import { calender, checked, column, logout, user } from "../../assets/images/SVG";
 
-function StayingInfo({ bookBy, bookedOn, checkIn, checkOut, NumberOfRooms, stayed }) {
+function StayingInfo({ checkIn, checkOut, NumberOfRooms, stayed }) {
   return (
     <div className="stayingInfo">
       <div className="data">

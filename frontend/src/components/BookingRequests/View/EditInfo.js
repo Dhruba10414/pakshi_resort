@@ -8,7 +8,7 @@ const room_types = [
   "Luxury Room",
   "Karni Kunjo Honeymoon Suit ",
 ];
-function EditInfo({ viewFor, roomData, setAvailableRoom, setState, setSelectedRoom }) {
+function EditInfo({ roomData, setAvailableRoom, setState, setSelectedRoom }) {
   const [types, setTypes] = useState([]);
 
   const filterRoomsWithNewType = (data) => {

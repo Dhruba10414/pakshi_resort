@@ -67,9 +67,7 @@ function FoodOrders({
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
             .post(COMPLETE_ORDER_LINK, { order_id: selectedFoods }, Config)
@@ -82,8 +80,8 @@ function FoodOrders({
               setConfirm(true);
               setCompleteProcessLoading(false);
             })
-            .catch((err) => {
-              console.log(err.messafe);
+            .catch(() => {
+              console.clear();
               setCompleteProcessLoading(false);
             });
         })
@@ -107,9 +105,7 @@ function FoodOrders({
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
             .post(CANCEL_ORDER_LINK, { order_id: selectedFoods }, Config)
@@ -122,12 +118,13 @@ function FoodOrders({
               setCancel(true);
               setCancelProcessLoading(false);
             })
-            .catch((err) => {
-              console.log(err.messafe);
+            .catch(() => {
+              console.clear();
               setCancelProcessLoading(false);
             });
         })
         .catch(() => {
+          console.clear();
           setCancelProcessLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");
@@ -165,21 +162,20 @@ function FoodOrders({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
         axios
           .get(FOOD_ORDERS, Config)
           .then((res) => {
             saveOrderes(res.data);
             setDataLoading(false);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setDataLoading(false);
           });
       })
       .catch(() => {
+        console.clear();
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
         clearUser();

@@ -21,18 +21,17 @@ function RoomDetails({ id, name, room_no, room_type, checkIn, checkOut, closeMod
     axios.post(api.refresh, {refresh: refresh_token,})
     .then((token) => {
       const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-      
       // fetch billInfos (rooms)
       axios.get(`${api.invoice_room_summary}?guest=${id}`, Config)
       .then((res) => { setBill(res.data); })
-      .catch((err) => { console.log(err.message); });
+      .catch(() => { console.clear(); });
       
       // get guest info
       axios.get(`${api.guest_detail}?guest=${id}`, Config)
       .then((res) => { setGuest(res.data); setLoading(false);})
-      .catch((err) => { setLoading(false);});    
+      .catch(() => { console.clear(); setLoading(false);});    
     })
-    .catch((err) => { console.log(err.messae); setLoading(false);})
+    .catch(() => { console.clear(); setLoading(false);})
   }, []);
 
   return (

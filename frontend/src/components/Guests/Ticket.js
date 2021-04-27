@@ -35,21 +35,15 @@ function Ticket({ ticketFor, setOpenTicket }) {
         const month = (date.getMonth() + 1).toString().padStart(2, "0")
         const year = date.getFullYear();
         const today = `${day}-${month}-${year}`;
-
-        const Body = { 
-          "bought_by": ticketFor.id,
-          "issued_date": today,
-          "num_tickets": numberOfTicket,
-          "ticket_for": 1
-        };
+        const Body = {  "bought_by": ticketFor.id, "issued_date": today, "num_tickets": numberOfTicket, "ticket_for": 1};
 
         axios.post(BUY_TICKET, Body, Config)
-        .then((res) => {
+        .then(() => {
           setSucces(true);
           setLoading(false);
           setNumberOfTicket(1);
         })
-        .catch(err => {console.log(err.message); setLoading(false);})
+        .catch(() => {console.clear(); setLoading(false);})
       });
   };
 

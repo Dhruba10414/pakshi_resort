@@ -56,11 +56,11 @@ function Dashboard({ clearUser }) {
         axios
           .get(api.rooms, Config)
           .then((res) => { setRoomList(res.data); setLoading(false); })
-          .catch((err) => { setError(err.message); });
+          .catch((err) => { console.clear(); setError(err.message); });
       })
-      .catch((err) => {
+      .catch(() => {
         //auth error
-        setError(err.message);
+        console.clear();
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
         clearUser();

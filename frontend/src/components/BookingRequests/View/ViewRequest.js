@@ -75,9 +75,7 @@ function ViewRequest({ viewFor, setOpenModal }) {
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
         // search by list
         axios
           .get(AVAILABLITY_CHECK, Config)
@@ -86,9 +84,9 @@ function ViewRequest({ viewFor, setOpenModal }) {
             setRoomData(res.data);
             setLoading(false);
           })
-          .catch((err) => {
+          .catch(() => {
+            console.clear();
             setLoading(false);
-            console.log(err.message);
           });
       });
   }, []);

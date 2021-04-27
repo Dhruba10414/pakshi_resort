@@ -74,9 +74,7 @@ function Ordered({
   const orderFoods = () => {
     if (basket && basket.length > 0) {
       setLoading(true);
-      const orderedfoodList = basket.map((food) => {
-        return { id: food.id, quantity: food.quantity, price: food.price };
-      });
+      const orderedfoodList = basket.map((food) => {return { id: food.id, quantity: food.quantity, price: food.price };});
       const Order = { foods: orderedfoodList, guest_id: guestId };
 
       // setup neccessary urls
@@ -87,23 +85,22 @@ function Ordered({
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
             .post(FOOD_ORDER_URL, Order, Config)
-            .then((res) => {
+            .then(() => {
               removeAllFoods();
               notify();
               setLoading(false);
             })
-            .catch((err) => {
-              console.log(err.message);
+            .catch(() => {
+              console.clear();
               setLoading(false);
             });
         })
         .catch(() => {
+          console.clear();
           setLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");

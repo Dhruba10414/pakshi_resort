@@ -54,11 +54,13 @@ function Settings({ currentUser }) {
                 setLoading(false);
               })
               .catch(() => {
+                console.clear();
                 setError("Something went wrong! Try again.");
                 setLoading(false);
               });
           })
           .catch(() => {
+            console.clear();
             setLoading(false);
           });
       } else {

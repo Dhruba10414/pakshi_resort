@@ -51,9 +51,7 @@ function Menu({ clearUser, selectAfood, changed }) {
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
         axios
           .get(AVAILABLE_FOOD, Config)
@@ -64,12 +62,13 @@ function Menu({ clearUser, selectAfood, changed }) {
             filterFoodTypes(res.data);
             setLoading(false);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       })
       .catch(() => {
+        console.clear();
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");

@@ -20,15 +20,7 @@ function Registration() {
 
   // ALL FIELDS REQUIRED
   const requiredFildCheck = () => {
-    if (
-      name &&
-      email &&
-      phone &&
-      gender &&
-      role &&
-      password &&
-      confirmPassword
-    ) {
+    if (name && email && phone && gender && role && password && confirmPassword) {
       return true;
     } else {
       setError("All fields required.");
@@ -95,8 +87,8 @@ function Registration() {
           setLoading(false);
           notify();
         })
-        .catch(err => {
-          console.log(err.message);
+        .catch(() => {
+          console.clear();
           setLoading(false);
         })
       });

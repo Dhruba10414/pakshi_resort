@@ -38,9 +38,9 @@ function Staff({
           axios
           .put(api.disable_user, Body, Config)
           .then(() => { setLoadingForDisable(false); setDisablesuccess(true);})
-          .catch((err) => { setLoadingForDisable(false)})
+          .catch(() => { console.clear(); setLoadingForDisable(false)})
         })
-        .catch((err) => { console.log(err.message); setLoadingForDisable(false);
+        .catch(() => { console.clear(); setLoadingForDisable(false);
         });
     } else {
       notify();
@@ -61,9 +61,9 @@ function Staff({
           axios
           .delete(`${api.delete_user}/${id}/`, Config)
           .then(() => { setLoadingForDelete(false); setDeletesuccess(true);})
-          .catch(() => { setLoadingForDelete(false)})
+          .catch(() => { console.clear(); setLoadingForDelete(false)})
         })
-        .catch(() => { setLoadingForDelete(false);
+        .catch(() => { console.clear(); setLoadingForDelete(false);
         });
     } else {
       notify();

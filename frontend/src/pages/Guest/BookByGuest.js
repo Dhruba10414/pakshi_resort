@@ -32,8 +32,8 @@ function BookByGuest() {
         setRooms(avarooms);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setLoading(false);
       });
   }, []);

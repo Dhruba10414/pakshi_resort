@@ -30,7 +30,7 @@ function SetPasswordPage() {
 
         axios.post(api.reset_password, Body)
         .then(() => { setSuccess(true); setLoading(false); })
-        .catch((err) => { console.log(err.message); setSuccess(false); setLoading(false); });
+        .catch(() => { console.clear(); setSuccess(false); setLoading(false); });
 
       } else {
         setError("Passwords should be matched");

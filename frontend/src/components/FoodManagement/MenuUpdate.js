@@ -63,12 +63,13 @@ function MenuUpdate({ selectedFood, cancelUpdate, clearUser, setChanged }) {
               notify();
               setChanged(true);
             })
-            .catch((err) => {
-              console.log(err.message);
+            .catch(() => {
+              console.clear();
               setLoading(false);
             });
         })
         .catch(() => {
+          console.clear();
           setLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");

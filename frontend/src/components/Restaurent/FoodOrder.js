@@ -62,12 +62,13 @@ function FoodOrder({ guestId, name, closeModal, clearUser, fromRestaurent }) {
             filterFoodTypes(res.data);
             setLoading(false);
           })
-          .catch((err) => {
+          .catch(() => {
+            console.clear();
             setLoading(false);
-            console.log(err.message);
           });
       })
       .catch(() => {
+        console.clear();
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");

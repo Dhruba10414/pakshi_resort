@@ -32,7 +32,7 @@ function ForgotPassword() {
       setLoading(true);
       axios.post(api.send_reset_mail, {"email": email})
       .then(res => {setSuccess(true); setLoading(false);})
-      .catch(err => {console.log(err.message); setLoading(false);} );
+      .catch(() => {console.clear(); setLoading(false);} );
     } else {
       setError("All fields required!");
     }

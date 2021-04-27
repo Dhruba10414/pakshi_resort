@@ -17,17 +17,14 @@ function Admin() {
     setLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
     axios
-      .post(api.refresh, {
-        refresh: refresh_token,
-      })
-      .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access },};
-        // fetch users
-        axios.get(api.get_all_users, Config).then((res) => {
-          setStaffs(res.data);
-          setLoading(false);
-        });
-      });
+    .post(api.refresh, {refresh: refresh_token})
+    .then((token) => {
+      const Config = {headers: { Authorization: "Bearer " + token.data.access },};
+      // fetch users
+      axios.get(api.get_all_users, Config)
+      .then((res) => { setStaffs(res.data); setLoading(false);})
+      .catch(() => {console.clear();});
+    });
   };
 
   useEffect(() => {

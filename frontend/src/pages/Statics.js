@@ -77,9 +77,9 @@ function Statics() {
           setProcessLoading(false);
           FileDownload(res.data, filename);
         })
-        .catch((err) => { console.log(err.message); setProcessLoading(false); });    
+        .catch(() => { console.clear(); setProcessLoading(false); });    
       })
-      .catch((err) => {setProcessLoading(false); console.log(err.message); })
+      .catch(() => {setProcessLoading(false); console.clear(); })
     }
   };
 
@@ -101,23 +101,23 @@ function Statics() {
         axios
         .get(ROOM_STATESTICS, Config)
         .then((res) => { setRoomStastics(res.data);})
-        .catch((err) => { console.log(err.message); });
+        .catch(() => { console.clear(); });
 
         // food - data
         axios.get(FOOD_STATESTICS, Config)
         .then((res) => {setFoodStastics(res.data);})
-        .catch((err) => {console.log(err.message)});
+        .catch(() => {console.clear(); });
 
         // ticket - data
         axios
         .get(TICKET_STATESTICS, Config)
         .then((res) => { setTicketStastics(res.data); setLoading(false); })
-        .catch((err) => { console.log(err.message); setLoading(false); });
+        .catch(() => { console.clear(); setLoading(false); });
       })
       
       .catch((err) => {
         setLoading(false);
-        console.log(err.message);
+        console.clear();
       });
   }, []);
 

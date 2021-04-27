@@ -55,9 +55,9 @@ function Book({clearUser}) {
         const filteredList = res.data.map(data => {return {...data, selected: false}});
         setAvailableRooms(filteredList);
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
-        console.log(err.message);
+        console.clear();
       });
       // search by group
       axios.get(`${ROOM_SEARCH_URL}&as_group=true`, Config)
@@ -65,8 +65,8 @@ function Book({clearUser}) {
         setAvailableRoomsByGroup(res.data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setLoading(false);
       });
     })
@@ -152,12 +152,13 @@ function Book({clearUser}) {
           // Create booking for this guest
           axios.post(CREATE_BOOKING, BodyForBooking, Config)
           .then(() => {notify(); setLoading(false);})
-          .catch(err => {console.log(err.message); setLoading(false);});
+          .catch(() => {console.clear(); setLoading(false);});
         })
-        .catch(err => {console.log(err.message); setLoading(false);})
+        .catch(() => {console.clear(); setLoading(false);})
       })
-      .catch((err) => {
+      .catch(() => {
         //auth error
+        console.clear();
         setLoading(false);
         localStorage.removeItem('user');
         localStorage.removeItem('refresh_token');

@@ -56,11 +56,14 @@ function Login() {
             history.go("/staff/dashboard")
           })
           .catch(() => {
+            console.clear();
             setLoading(false);
             setError("Login failed. Try again!");
           })
         })
-        .catch(() => {
+        .catch((err) => {
+          console.clear();
+          // console.log(err.message)
           setLoading(false);
           setError("Email and password doesn't match.");
         });

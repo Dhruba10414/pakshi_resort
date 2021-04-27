@@ -110,12 +110,13 @@ function Ordered({
             notify();
             setLoading(false);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
         })
         .catch(() => {
+          console.clear();
           setLoading(false);
           localStorage.removeItem("user");
           localStorage.removeItem("refresh_token");

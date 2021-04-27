@@ -68,8 +68,8 @@ function ViewOption({
               successNotify();
               setOk(1);
             })
-            .catch((err) => {
-              console.log(err.message);
+            .catch(() => {
+              console.clear();
               setprocessLoading(false);
               setConfirming(false);
             });
@@ -100,14 +100,14 @@ function ViewOption({
             setOk(2);
             cancelNotify();
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setprocessLoading(false);
             setCanceling(false);
           });
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setprocessLoading(false);
         setCanceling(false);
       });
@@ -135,14 +135,14 @@ function ViewOption({
             setOk(2);
             cancelNotify();
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setprocessLoading(false);
             setDeleting(false);
           });
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setprocessLoading(false);
         setDeleting(false);
       });

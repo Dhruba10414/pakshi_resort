@@ -40,33 +40,25 @@ function Ticket() {
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
         const date = new Date();
         const day = date.getDate();
         const month = (date.getMonth() + 1).toString().padStart(2, "0");
         const year = date.getFullYear();
         const today = `${day}-${month}-${year}`;
-
-        const Body = {
-          bought_by: null,
-          issued_date: today,
-          num_tickets: numberOfTicket,
-          ticket_for: 1,
-        };
+        const Body = { "bought_by": null, "issued_date": today, "num_tickets": numberOfTicket, "ticket_for": 1 };
 
         axios
           .post(BUY_TICKET, Body, Config)
-          .then((res) => {
+          .then(() => {
             downloadPDF();
             setSucces(true);
             setLoading(false);
             setNumberOfTicket(1);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       });

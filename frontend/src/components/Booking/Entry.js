@@ -59,16 +59,18 @@ function Entry({
         axios
           .post(CHECK_IN_URL, Body, Config)
           .then(() => {
+            console.clear();
             notifyForConfirm();
             setLoading(false);
             setCheckForConfirm(true);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       })
-      .catch((err) => {
+      .catch(() => {
+        console.clear();
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
@@ -89,9 +91,7 @@ function Entry({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access },};
         const Body = { booking: bookingId };
 
         axios
@@ -102,13 +102,13 @@ function Entry({
             setCheckForConfirm(false);
             setCheckForCheckout(true);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
@@ -139,13 +139,13 @@ function Entry({
             setLoading(false);
             setCheckForCancel(true);
           })
-          .catch((err) => {
-            console.log(err.message);
+          .catch(() => {
+            console.clear();
             setLoading(false);
           });
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
+        console.clear();
         setLoading(false);
         localStorage.removeItem("user");
         localStorage.removeItem("refresh_token");
