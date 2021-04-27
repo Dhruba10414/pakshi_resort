@@ -11,6 +11,7 @@ export const api = {
     reset_password: `${baseurl}/auth/users/reset_password_confirm/`, // post
     change_password: `${baseurl}/api/change_password/`, // post
     disable_user: `${baseurl}/api/remove/`, // put
+    delete_user: `${baseurl}/api/delete/`,
     
     // room-related
     rooms: `${baseurl}/bookings/rooms/`, // get

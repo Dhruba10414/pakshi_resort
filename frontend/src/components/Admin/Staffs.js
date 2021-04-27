@@ -57,7 +57,7 @@ function Staffs({ stafflist, loading }) {
       }
       </div>
       <div className={warning ? "message warning" : "message warning disabled"}>
-        <div>{x}</div> User Can't disable Himself!
+        <div>{x}</div> User Can't disable/delete Himself!
       </div>
     </div>
   );

@@ -286,20 +286,21 @@
           .role { width: 20%; }
           .role.a p{
             display: inline-block;
-            color: var(--blue-dark);
-            background: var(--blue);
-            padding: 5px 10px;
+            color: var(--green-dark);
+            background: var(--green);
+            padding: 4px 15px;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-size: 14px;
           }
           .role.s p{
             display: inline-block;
             color: var(--yellow-dark);
             background: var(--yellow);
-            padding: 5px 10px;
+            padding: 4px 15px;
             font-weight: bold;
-            border-radius: 5px;
-            @include media("<=desktop") { font-size: 14px; }
+            font-size: 14px;
+            border-radius: 10px;
           }
           .status {
             width: 20%;
@@ -313,7 +314,7 @@
               margin-right: 5px;
             }
           }
-          .status.active { color: var(--green-dark); svg { color: var(--green-dark); } }
+          .status.active { color: var(--blue-dark); svg { color: var(--blue-dark); } }
           .status.disable { color: #ccc; svg { color: #ccc; } }
           
           .button {
@@ -350,22 +351,42 @@
                 font-size: 15px;
               }
             }
-            button {
-              margin-top: 10px;
-              padding: 7px 20px;
-              background: var(--primary-color-light);
-              color: var(--primary-color);
-              font-family: var(--quicksand-font);
-              font-size: 16px;
-              font-weight: bold;
-              outline: none;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              transition: 0.4s;
-              @include media("<=desktop") { font-size: 14.5px; }
-              &:hover{
-                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+            .btn-box{
+              display: flex;
+              button {
+                margin-top: 10px;
+                margin-right: 14px;
+                padding: 9px 15px;
+                background: var(--primary-color);
+                color: #fff;
+                font-family: var(--quicksand-font);
+                font-size: 13px;
+                font-weight: bold;
+                outline: none;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: 0.4s;
+                @include media("<=desktop") { font-size: 14.5px; }
+                &:hover{
+                  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+                }
+              }
+              button.processing{
+                background: #ccc;
+                color: gray;
+              }
+              button.delete{
+                background: var(--red-dark);
+                color: #fff;
+              }
+              button.disabled{
+                background: #ccc;
+                color: #000;
+              }
+              button.deleted{
+                background: var(--red);
+                color: var(--red-dark);
               }
             }
           }

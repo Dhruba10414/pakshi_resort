@@ -18,33 +18,57 @@ function Staff({
   currentUser,
   notify
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loadingForDisable, setLoadingForDisable] = useState(false);
+  const [loadingForDelete, setLoadingForDelete] = useState(false);
+  const [disablesuccess, setDisablesuccess] = useState(false);
+  const [deletesuccess, setDeletesuccess] = useState(false);
 
+  // DISABLE A USER
   const disableUser = () => {
     if (JSON.parse(currentUser).id !== id) {
       // get users access token
-      setLoading(true);
+      setLoadingForDisable(true);
       const refresh_token = localStorage.getItem("refresh_token");
       axios
         .post(api.refresh, { refresh: refresh_token })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
           const Body = { id: id };
-
           // remove user
           axios
           .put(api.disable_user, Body, Config)
-          .then(() => { setLoading(false);})
-          .catch((err) => { setLoading(false)})
+          .then(() => { setLoadingForDisable(false); setDisablesuccess(true);})
+          .catch((err) => { setLoadingForDisable(false)})
         })
-        .catch((err) => { console.log(err.message); setLoading(false);
+        .catch((err) => { console.log(err.message); setLoadingForDisable(false);
         });
     } else {
       notify();
     }
   };
+
+  // DELETE A USER
+  const deleteUser = () => {
+    if (JSON.parse(currentUser).id !== id) {
+      // get users access token
+      setLoadingForDelete(true);
+      const refresh_token = localStorage.getItem("refresh_token");
+      axios
+        .post(api.refresh, { refresh: refresh_token })
+        .then((token) => {
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }}
+          // remove user
+          axios
+          .delete(`${api.delete_user}/${id}/`, Config)
+          .then(() => { setLoadingForDelete(false); setDeletesuccess(true);})
+          .catch(() => { setLoadingForDelete(false)})
+        })
+        .catch(() => { setLoadingForDelete(false);
+        });
+    } else {
+      notify();
+    }
+  }
 
   return (
     <div className="accordion">
@@ -81,13 +105,23 @@ function Staff({
             <div className="label">{user} Gender</div>
             <div className="value">{gender === "M" ? "Male" : "Female"}</div>
           </div>
-          {status ? (
-            !loading ? (
-              <button onClick={disableUser}>Disable</button>
-            ) : (
-              <button>Processing</button>
-            )
-          ) : null}
+          <div className="btn-box">
+            {status ?
+             !loadingForDisable
+                ? disablesuccess
+                  ? <button className="disabled">Blocked</button>
+                  : <button onClick={disableUser}>Block User</button>
+                : <button className="processing">Processing</button>
+              : null
+            }
+            {
+              !loadingForDelete
+              ? deletesuccess
+                ? <button className="deleted">Deleted</button>
+                : <button className="delete" onClick={deleteUser}>Delete User</button>
+              : <button className="processing">Processing</button>
+            }
+          </div>
         </div>
       </div>
     </div>
