@@ -46,32 +46,3 @@ function InvoiceHeading() {
 }
 
 export default InvoiceHeading;
-
-// imageBox: {
-//   width: "50%",
-//   border: "1px solid green",
-// },
-// image:{
-//   width: "100px",
-// },
-// textBox: {
-//   display: "flex",
-//   flexDirection: "row",
-//   border: "1px solid blue",
-// },
-// logoImage: {
-//   width: "50px",
-//   marginRight: "10px"
-// },
-// branding: {
-//   color: "#444",
-//   fontSize: "14px",
-//   textAlign: "right",
-//   textTransform: "uppercase",
-// },
-// text: {
-//   fontSize: "11px",
-//   textAlign: "right",
-//   fontWeight: "normal",
-//   color: "#444",
-// },

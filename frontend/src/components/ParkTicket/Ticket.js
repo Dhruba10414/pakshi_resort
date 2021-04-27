@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ticketImage from "../../assets/images/View/ticket.png";
-import { mail, phone, location, plus, minus } from "../../assets/images/SVG";
+import {plus, minus } from "../../assets/images/SVG";
 import { api } from "../../assets/URLS";
 import checksvg from "../../assets/images/View/svg/check.svg";
+import { pdf} from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
+import TicketInvoice from "./TicketInvoice";
 
 function Ticket() {
   const [numberOfTicket, setNumberOfTicket] = useState(1);
@@ -17,6 +20,15 @@ function Ticket() {
       setNumberOfTicket(numberOfTicket - 1);
     }
   };
+
+  // DOWNLOAD INVOICE
+  const downloadPDF = async () => {
+    const doc = <TicketInvoice amount={numberOfTicket}  />;
+    const asPdf = pdf([]);
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, 'ticketInvoice.pdf');
+  }
 
   const buyTicket = () => {
     setLoading(true);
@@ -48,6 +60,7 @@ function Ticket() {
         axios
           .post(BUY_TICKET, Body, Config)
           .then((res) => {
+            downloadPDF();
             setSucces(true);
             setLoading(false);
             setNumberOfTicket(1);

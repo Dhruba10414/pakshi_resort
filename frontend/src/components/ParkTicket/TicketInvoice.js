@@ -1,5 +1,11 @@
 import React from "react";
-import { Page, Document, StyleSheet, View, Text, Image } from "@react-pdf/renderer";
+import {
+  Page,
+  Document,
+  StyleSheet,
+  View,
+  Text,
+} from "@react-pdf/renderer";
 import InvoiceHeading from "../Invoice/pdf/InvoiceHeading";
 
 const styles = StyleSheet.create({
@@ -25,11 +31,6 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: "#f7f7f7",
   },
-  imageContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center"
-  },
   h3: {
     color: "#455D58",
     fontSize: "12px",
@@ -42,18 +43,18 @@ const styles = StyleSheet.create({
   quantity: { width: "15%" },
   price: { width: "15%" },
   total: { width: "25%" },
-  totalHeading: { width: "75%", padding:"0 10px"},
-  totalBill: { color: "#000"},
+  totalHeading: { width: "75%", padding: "0 10px" },
+  totalBill: {color: "#000",},
 });
 
-function RestaurentInvoice({ foodList, total }) {
+function TicketInvoice({ amount }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* heading */}
         <InvoiceHeading />
         <View>
-          <Text style={styles.h3}>Food Bills</Text>
+          <Text style={styles.h3}>Ticket Bills</Text>
         </View>
         {/* table - heading */}
         <View style={styles.container}>
@@ -63,22 +64,15 @@ function RestaurentInvoice({ foodList, total }) {
           <Text style={styles.total}>Total</Text>
         </View>
         {/* table - entry */}
-        { foodList.map((data) => (
-            <View style={styles.container} key={data.id}>
-              <Text style={styles.name}>{data.name}</Text>
-              <Text style={styles.quantity}>{data.quantity}</Text>
-              <Text style={styles.price}>{data.price}</Text>
-              <Text style={styles.total}>{data.quantity * data.price}</Text>
-            </View>
-          ))}
-          {/* total price */}
-        <View style={styles.lastContainer}>
-          <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.totalBill}>{total}</Text>
+        <View style={styles.container}>
+          <Text style={styles.name}>Park Entry Fee</Text>
+          <Text style={styles.quantity}>{amount}</Text>
+          <Text style={styles.price}>50</Text>
+          <Text style={styles.total}>{parseInt(amount) * 50}</Text>
         </View>
       </Page>
     </Document>
   );
 }
 
-export default RestaurentInvoice;
+export default TicketInvoice;
