@@ -22,7 +22,7 @@ function ChartForBooking({ datas }) {
         // data: income,
     datasets: [
       {
-        data: [7500, 6000, 11000, 9000, 7878, 9000, 9500, 10000, 2500],
+        data: [7500, 6000, 11000, 9000, 7878, 9000, 9500, 10000, 2500, 6000, 4500],
         // data: income,
         fill: false,
         backgroundColor: "#bfdceb",
@@ -37,7 +37,7 @@ function ChartForBooking({ datas }) {
     labels: [ "JAN", "FEB", "MARCH", "APR", "MAY", "JUN", "JULY", "AUG", "SEP", "OCT", "NOV", "DEC"],
     datasets: [
       {
-        data: [7500, 10000, 11500, 9000, 9878, 8000, 9500, 10000, 9500],
+        data: [12, 7, 25, 2, 14, 11, 15, 5, 12, 10, 8],
         // data: bookings,
         fill: false,
         backgroundColor: "#bfdceb",
