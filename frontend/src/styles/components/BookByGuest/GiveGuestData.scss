@@ -85,7 +85,7 @@
             }
             p.bed{
                 font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px;
-                margin-bottom: 10px; color: var(--primary-color-light); font-size: 16px;
+                margin-bottom: 10px; color: var(--green-dark); font-size: 16px;
                 @include media("<=desktop") { font-size: 14px; }
                 @include media("<=phone") { font-size: 13px; }
             }
@@ -98,9 +98,9 @@
               span{ margin-right: 10px; padding: 0 5px; }
               span.vat{
                 padding: 3px 10px;
-                background-color: var(--green);
+                // background-color: var(--green);
                 color: var(--green-dark);
-                margin-left: 30px;
+                margin-left: -5px;
                 font-size: 15px;
                 border-radius: 10px;
                 @include media("<=desktop") { font-size: 13.5px; margin-left: 18px; }

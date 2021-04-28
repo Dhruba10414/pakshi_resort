@@ -83,7 +83,7 @@ function FoodOrder({ guestId, name, closeModal, clearUser, fromRestaurent }) {
       <div className="available-foods">
         <div className="heading-container">
           <div className="text-part">
-            <h3>Availabe</h3> <p>foods</p>
+            <h3>Available</h3> <p>foods</p>
           </div>
           <div className="style-part">
             <div className="style">

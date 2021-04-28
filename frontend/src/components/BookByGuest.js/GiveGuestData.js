@@ -80,7 +80,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
               {homeSvg}{roomAmount} {roomAmount > 1 ? "rooms" : "room"}
             </p>
             <p className="price">
-              <span>৳</span> {parseInt(selectedRoom.price) * parseInt(selectTime.staying) * parseInt(roomAmount) } <span className="vat">+ vat</span>
+              <span>৳</span> {parseInt(selectedRoom.price) * parseInt(selectTime.staying) * parseInt(roomAmount) } <span className="vat">++</span>
               </p>
           </div>
         </div>
