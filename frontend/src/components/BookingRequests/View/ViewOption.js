@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { checked, pencil, trash, x } from "../../../assets/images/SVG";
+import { checked, pencil, trash} from "../../../assets/images/SVG";
 import check from "../../../assets/images/View/svg/cheklist-complete.svg";
 import alarm from "../../../assets/images/View/svg/alarm.svg";
 import signal from "../../../assets/images/View/svg/signal.svg";

@@ -15,7 +15,6 @@ import Admin from "./pages/Admin";
 import FoodManagement from "./pages/FoodManagement";
 
 import Home from "./pages/Guest/Home";
-import Rooms from "./pages/Guest/Rooms";
 import Facilities from "./pages/Guest/Facilities";
 import Eat from "./pages/Guest/Eat";
 import About from './pages/Guest/About';
@@ -36,10 +35,9 @@ import ParkTicket from "./pages/ParkTicket";
 import Settings from "./pages/Settings";
 
 function App({ setUser, isLogedIn }) {
-  // const location = useLocation();
+  
   useEffect(() => {
     gsap.to('body', 0, {css: {visibility: "visible"}});
-    
     if (localStorage.getItem("user")) {
       const retrievedObject = localStorage.getItem("user");
       setUser(JSON.parse(retrievedObject));

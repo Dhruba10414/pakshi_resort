@@ -64,7 +64,7 @@ function Room({ room_no, room_type, cottage_num, status, active_booking, openDet
     } else{
       setClasses("cottage five");
     }
-  })
+  }, []);
 
   return (
     <div className={status ? "aroom dim" : "aroom"} onClick={ status ? () => open() : null }>

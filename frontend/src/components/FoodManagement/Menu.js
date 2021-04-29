@@ -8,7 +8,7 @@ import { clearUser } from "../../redux/user/userAction";
 import FoodItem from "./FoodItem";
 import Loading from "../Loading";
 // Svg
-import { rsvg, type } from "../../assets/images/SVG";
+import { rsvg } from "../../assets/images/SVG";
 //urls
 import {api} from "../../assets/URLS";
 
