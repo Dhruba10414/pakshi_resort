@@ -1,67 +1,98 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ticketImage from "../../assets/images/View/ticket.png";
-import {plus, minus } from "../../assets/images/SVG";
+import { plus, minus } from "../../assets/images/SVG";
 import { api } from "../../assets/URLS";
 import checksvg from "../../assets/images/View/svg/check.svg";
-import { pdf} from '@react-pdf/renderer';
-import { saveAs } from 'file-saver';
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 import TicketInvoice from "./TicketInvoice";
 
 function Ticket() {
-  const [numberOfTicket, setNumberOfTicket] = useState(1);
+  const [price, setPrice] = useState(0);
+  const [parkTicket, setParkTicket] = useState(0);
+  const [poolTicket, setPoolTicket] = useState(0);
   const [success, setSucces] = useState(false);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState("");
 
-  //   DECREASE ITEM
-  const decrease = () => {
-    if (numberOfTicket > 1) {
-      setNumberOfTicket(numberOfTicket - 1);
+  //  INCREASE ITEMS
+  const increaseTicket = (type) => {
+    if (type === "pool") {
+      setPoolTicket(poolTicket + 1);
+      setPrice(price + 300);
+    } else {
+      setParkTicket(parkTicket + 1);
+      setPrice(price + 50);
+    }
+  };
+
+  // DECREASE ITEMS
+  const decreaseTicket = (type) => {
+    if (type === "pool") {
+      if (poolTicket > 0) {
+        setPoolTicket(poolTicket - 1);
+        setPrice(price - 300);
+      }
+    } else {
+      if (parkTicket > 0) {
+        setParkTicket(parkTicket - 1);
+        setPrice(price - 50);
+      }
     }
   };
 
   // DOWNLOAD INVOICE
   const downloadPDF = async () => {
-    const doc = <TicketInvoice amount={numberOfTicket}  />;
+    const doc = <TicketInvoice amount={parkTicket} />;
     const asPdf = pdf([]);
     asPdf.updateContainer(doc);
     const blob = await asPdf.toBlob();
-    saveAs(blob, 'ticketInvoice.pdf');
-  }
+    saveAs(blob, "ticketInvoice.pdf");
+  };
 
   const buyTicket = () => {
-    setLoading(true);
+    if (price > 0) {
+      setLoading(true);
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const BUY_TICKET = api.buy_ticket;
 
-    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-    const GET_ACCESS_TOKEN_URL = api.refresh;
-    const BUY_TICKET = api.buy_ticket;
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
 
-    axios
-      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
-      .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+          const date = new Date();
+          const day = date.getDate();
+          const month = (date.getMonth() + 1).toString().padStart(2, "0");
+          const year = date.getFullYear();
+          const today = `${day}-${month}-${year}`;
+          const Body = {
+            bought_by: null,
+            issued_date: today,
+            num_tickets: parkTicket + poolTicket,
+            ticket_for: 1,
+          };
 
-        const date = new Date();
-        const day = date.getDate();
-        const month = (date.getMonth() + 1).toString().padStart(2, "0");
-        const year = date.getFullYear();
-        const today = `${day}-${month}-${year}`;
-        const Body = { "bought_by": null, "issued_date": today, "num_tickets": numberOfTicket, "ticket_for": 1 };
-
-        axios
-          .post(BUY_TICKET, Body, Config)
-          .then(() => {
-            downloadPDF();
-            setSucces(true);
-            setLoading(false);
-            setNumberOfTicket(1);
-          })
-          .catch(() => {
-            console.clear();
-            setLoading(false);
-          });
-      });
+          axios
+            .post(BUY_TICKET, Body, Config)
+            .then(() => {
+              downloadPDF();
+              setSucces(true);
+              setLoading(false);
+              setPoolTicket(0);
+              setParkTicket(0);
+              setPrice(0);
+            })
+            .catch(() => {
+              console.clear();
+              setLoading(false);
+            });
+        });
+    }
   };
 
   return (
@@ -77,20 +108,29 @@ function Ticket() {
                 <div className="name">Entry Fee</div>
                 <div className="price">50 ৳</div>
                 <div className="option">
-                  <div
-                    className="inc"
-                    onClick={() => setNumberOfTicket(numberOfTicket + 1)}
-                  >
-                    {" "}
-                    {plus}{" "}
+                  <div className="inc" onClick={() => increaseTicket("park")}>
+                    {plus}
                   </div>
-                  <div className="val"> {numberOfTicket} </div>
-                  <div className="dec" onClick={decrease}>
-                    {" "}
-                    {minus}{" "}
+                  <div className="val"> {parkTicket} </div>
+                  <div className="dec" onClick={() => decreaseTicket("park")}>
+                    {minus}
                   </div>
                 </div>
               </div>
+              <div className="service selected2">
+                <div className="name">Pool Entry Fee</div>
+                <div className="price">300 ৳</div>
+                <div className="option">
+                  <div className="inc" onClick={() => increaseTicket("pool")}>
+                    {plus}
+                  </div>
+                  <div className="val"> {poolTicket} </div>
+                  <div className="dec" onClick={() => decreaseTicket("pool")}>
+                    {minus}
+                  </div>
+                </div>
+              </div>
+
               <div className="service">
                 <div className="name"> ---------- </div>
                 <div className="price"> ---------- </div>
@@ -123,7 +163,7 @@ function Ticket() {
               style={{ width: "90%", margin: "auto" }}
               onClick={buyTicket}
             >
-              Buy ( {numberOfTicket} ) Ticket
+              Buy ( {parkTicket + poolTicket} ) Ticket
             </button>
           ) : (
             <button
@@ -146,7 +186,7 @@ function Ticket() {
           <div className="price">
             <h2>TOTAL FEE</h2>
             <h1>
-              {50 * numberOfTicket}
+              {price}
               <span>৳</span>
             </h1>
           </div>

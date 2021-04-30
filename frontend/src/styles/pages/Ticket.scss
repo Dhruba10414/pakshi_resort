@@ -253,6 +253,14 @@
             svg{ color: #fff; }
           }
       }
+      .service.selected2{
+        background-color: var(--blue);
+        border-left: 20px solid var(--blue-dark);
+        @include media("<=desktop") {border-left: 13px solid var(--blue-dark);}
+        div {color: var(--blue-dark); font-weight: bold;}
+        div.option .inc, div.option .dec{ border: none; background: var(--blue-dark); svg{ color: #fff; } }
+      }
+
       .service .option{
           div{
               width: 30px; height: 30px; margin-right: 6px; border-radius: 50%;
