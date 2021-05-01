@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 // Components
@@ -47,8 +47,20 @@ function Eat() {
                 meal for your family and friends. We have Bengali, Chinese and
                 Indian food menu according to your taste and desire.
               </p>
-              <LazyLoadImage alt={""} effect="blur" src={eat2} className="img-tw" />
-              <Link className="menu-btn" to="/files/pakshi-food.pdf" target="_blank" download>View our foods</Link>
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={eat2}
+                className="img-tw"
+              />
+              <Link
+                className="menu-btn"
+                to="/files/pakshi-food.pdf"
+                target="_blank"
+                download
+              >
+                View our foods
+              </Link>
               {/* <button className="menu-btn">View our foods</button> */}
               {/* <img className="img-tw" src={eat2} alt="" /> */}
             </div>
@@ -57,7 +69,7 @@ function Eat() {
           {/* <img className="img-th" src={eat6} alt="" /> */}
         </div>
 
-        <div className="eatsDrinks__cresturent">
+        {/* <div className="eatsDrinks__cresturent">
           <div className="cresturent-container">
             <div className="cresturent-desc">
               <h3>Aesthetic</h3>
@@ -69,32 +81,11 @@ function Eat() {
               </p>
             </div>
             <div className="cresturent-image">
-              {/* <img src={eat3} alt="" /> */}
+              <img src={eat3} alt="" />
               <LazyLoadImage alt={""} effect="blur" src={eat3} />
             </div>
           </div>
-        </div>
-
-        <div className="eatsDrinks__resturent eatsDrinks__gresturent">
-          <div className="resturent-container">
-            <div className="resturent-image">
-              {/* <img className="img-on" src={eat4} alt="" /> */}
-              <LazyLoadImage alt={""} effect="blur" src={eat4} className="img-on" />
-            </div>
-            <div className="resturent-desc">
-              <h3>Outdoor</h3>
-              <h2>Garden Party</h2>
-              <p>
-                You can dine with your family, colleagues or friends in a
-                charming environment under the open sky where you will be
-                surrounded by greenery and birdsong. This is the perfect place
-                for your small family ceremony and office gate together.
-              </p>
-              {/* <img className="img-tw" src={eat5} alt="" /> */}
-              <LazyLoadImage alt={""} effect="blur" src={eat5} className="img-tw" />
-            </div>
-          </div>
-        </div>
+        </div> */}
 
         <div className="eatsDrinks__shef">
           <div className="cresturent-container">
@@ -111,6 +102,37 @@ function Eat() {
             <div className="cresturent-image">
               {/* <img src={eat7} alt="" /> */}
               <LazyLoadImage alt={""} effect="blur" src={eat7} />
+            </div>
+          </div>
+        </div>
+
+        <div className="eatsDrinks__resturent eatsDrinks__gresturent">
+          <div className="resturent-container">
+            <div className="resturent-image">
+              {/* <img className="img-on" src={eat4} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={eat4}
+                className="img-on"
+              />
+            </div>
+            <div className="resturent-desc">
+              <h3>Outdoor</h3>
+              <h2>Garden Party</h2>
+              <p>
+                You can dine with your family, colleagues or friends in a
+                charming environment under the open sky where you will be
+                surrounded by greenery and birdsong. This is the perfect place
+                for your small family ceremony and office gate together.
+              </p>
+              {/* <img className="img-tw" src={eat5} alt="" /> */}
+              <LazyLoadImage
+                alt={""}
+                effect="blur"
+                src={eat5}
+                className="img-tw"
+              />
             </div>
           </div>
         </div>
