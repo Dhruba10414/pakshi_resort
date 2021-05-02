@@ -56,11 +56,15 @@
           @include media("<=phone") {font-size: 22px;}
         }
         p{
+          width: 85%;
           font-family: var(--quicksand-font);
           font-size: 18px;
           margin-bottom: 5px;
           color: #444;
           @include media("<=phone") {font-size: 15px;}
+        }
+        a{
+          color: var(--primary-color-light);
         }
       }
     }
