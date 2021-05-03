@@ -17,13 +17,18 @@ import { HomeAnim } from "../../animations/HomeAnim";
 import resort1 from "../../assets/images/Banner/resort1.jpg";
 import resort2 from "../../assets/images/Banner/resort2.jpg";
 import resort3 from "../../assets/images/Banner/resort3.jpg";
+import s1 from "../../assets/images/Banner/s1.jpg";
+import s2 from "../../assets/images/Banner/s2.jpg";
+import s3 from "../../assets/images/Banner/s3.jpg";
+import s4 from "../../assets/images/Banner/s4.jpg";
+import s5 from "../../assets/images/Banner/s5.jpg";
 
 function HomeContent() {
-  const [imageArray, setImageArray] = useState([resort3, resort1, resort2]);
+  const [imageArray, setImageArray] = useState([s4, s5, s3, s1, s2]);
 
   useEffect(() => {
     HomeAnim();
-    setImageArray([resort3, resort1, resort2]);
+    setImageArray([s4, s5, s3, s1, s2]);
   }, []);
 
   const settings = {
@@ -33,7 +38,7 @@ function HomeContent() {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    initialSlide: 1,
+    initialSlide: 2,
     speed: 1000,
     arrows: false,
     dotsClass: "slick-dots slick-thumb",
