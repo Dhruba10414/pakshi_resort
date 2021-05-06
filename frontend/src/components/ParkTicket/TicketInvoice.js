@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Page,
-  Document,
-  StyleSheet,
-  View,
-  Text,
-} from "@react-pdf/renderer";
+import { Page, Document, StyleSheet, View, Text } from "@react-pdf/renderer";
 import InvoiceHeading from "../Invoice/pdf/InvoiceHeading";
 
 const styles = StyleSheet.create({
@@ -30,13 +24,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 30,
     backgroundColor: "#f7f7f7",
+    padding: "0 7px"
   },
   h3: {
     color: "#455D58",
     fontSize: "12px",
     textTransform: "uppercase",
     fontWeight: "bold",
-    marginTop: 16
+    marginTop: 16,
   },
   logoImage: { width: "60px", marginRight: "10px" },
   name: { width: "45%" },
@@ -44,10 +39,10 @@ const styles = StyleSheet.create({
   price: { width: "15%" },
   total: { width: "25%" },
   totalHeading: { width: "75%", padding: "0 10px" },
-  totalBill: {color: "#000",},
+  totalBill: { color: "#000" },
 });
 
-function TicketInvoice({ amount }) {
+function TicketInvoice({ pool, park }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -64,11 +59,27 @@ function TicketInvoice({ amount }) {
           <Text style={styles.total}>Total</Text>
         </View>
         {/* table - entry */}
-        <View style={styles.container}>
-          <Text style={styles.name}>Park Entry Fee</Text>
-          <Text style={styles.quantity}>{amount}</Text>
-          <Text style={styles.price}>50</Text>
-          <Text style={styles.total}>{parseInt(amount) * 50}</Text>
+        {park > 0 ? (
+          <View style={styles.container}>
+            <Text style={styles.name}>Park Entry Fee</Text>
+            <Text style={styles.quantity}>{park}</Text>
+            <Text style={styles.price}>50</Text>
+            <Text style={styles.total}>{parseInt(park) * 50}</Text>
+          </View>
+        ) : null}
+        {pool > 0 ? (
+          <View style={styles.container}>
+            <Text style={styles.name}>Swiming Pool Entry Fee</Text>
+            <Text style={styles.quantity}>{pool}</Text>
+            <Text style={styles.price}>300</Text>
+            <Text style={styles.total}>{parseInt(pool) * 300}</Text>
+          </View>
+        ) : null}
+        <View style={styles.lastContainer}>
+          <Text style={styles.name}>TOTAL</Text>
+          <Text style={styles.quantity}>{pool + park}</Text>
+          <Text style={styles.price}></Text>
+          <Text style={styles.total}>{parseInt(pool) * 300 + parseInt(park) * 50}</Text>
         </View>
       </Page>
     </Document>

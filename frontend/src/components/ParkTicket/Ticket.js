@@ -44,7 +44,7 @@ function Ticket() {
 
   // DOWNLOAD INVOICE
   const downloadPDF = async () => {
-    const doc = <TicketInvoice amount={parkTicket} />;
+    const doc = <TicketInvoice pool={poolTicket} park={parkTicket} />;
     const asPdf = pdf([]);
     asPdf.updateContainer(doc);
     const blob = await asPdf.toBlob();
@@ -61,36 +61,59 @@ function Ticket() {
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
           const date = new Date();
           const day = date.getDate();
           const month = (date.getMonth() + 1).toString().padStart(2, "0");
           const year = date.getFullYear();
           const today = `${day}-${month}-${year}`;
-          const Body = {
-            bought_by: null,
-            issued_date: today,
-            num_tickets: parkTicket + poolTicket,
-            ticket_for: 1,
-          };
 
-          axios
-            .post(BUY_TICKET, Body, Config)
-            .then(() => {
-              downloadPDF();
-              setSucces(true);
-              setLoading(false);
-              setPoolTicket(0);
-              setParkTicket(0);
-              setPrice(0);
-            })
-            .catch(() => {
-              console.clear();
-              setLoading(false);
-            });
+          // Ticket for park
+          if (parkTicket > 0) {
+            const Body = {
+              bought_by: null,
+              issued_date: today,
+              num_tickets: parkTicket,
+              ticket_for: 1,
+            };
+            axios
+              .post(BUY_TICKET, Body, Config)
+              .then(() => {})
+              .catch(() => {
+                console.clear();
+                setLoading(false);
+              });
+          }
+          // Ticket for pool
+          if (poolTicket > 0) {
+            console.log(poolTicket)
+            const Body = {
+              bought_by: null,
+              issued_date: today,
+              num_tickets: poolTicket,
+              ticket_for: 2,
+            };
+            axios
+              .post(BUY_TICKET, Body, Config)
+              .then((res) => {
+                downloadPDF();
+                setLoading(false);
+                setPoolTicket(0);
+                setParkTicket(0);
+                setPrice(0);
+              })
+              .catch((err) => {
+                console.clear();
+                setLoading(false);
+              });
+          } else {
+            downloadPDF();
+            setLoading(false);
+            setPoolTicket(0);
+            setParkTicket(0);
+            setPrice(0);
+          }
         });
     }
   };
