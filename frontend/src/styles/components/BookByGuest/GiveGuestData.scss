@@ -44,8 +44,19 @@
       font-family: var(--quicksand-font);
       text-align: justify;
       margin-bottom: 8px;
+      span{ font-weight: bold; }
       @include media("<=desktop") { font-size: 14px; }
       @include media("<=phone") { width: 100%; font-size: 14px; }
+    }
+    .bkashBlock{
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      img{ width: 25%; }
+      h2{ width: 65%; font-weight: bold; color: #444; }
+      @include media("<=phone") { width: fit-content; justify-content: center; padding: 5px 0; }
     }
   }
 
