@@ -79,11 +79,9 @@ class Room_BookingsListView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         room_id = request.query_params.get('room_id', None)
         if room_id is None:
-            bookings = Bookings.objects.filter(check_out__gte=date.today(), 
-                                                is_complete=False, is_canceled=False).order_by('check_in')
+            bookings = Bookings.objects.exclude(Q(is_complete=True) | Q(is_canceled=True)).order_by('check_in')
         else:
-            bookings = Bookings.objects.filter(room__id=room_id, check_out__gte=date.today(), 
-                                                is_complete=False, is_canceled=False).order_by('check_in')
+            bookings = Bookings.objects.filter(room__id=room_id).order_by('check_in')
         serialized = self.get_serializer(bookings, many=True)
 
         return Response(serialized.data, status=status.HTTP_200_OK)

@@ -25,7 +25,7 @@ class BookingEmbededSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    guest = GuestIdNameSerailizer(read_only=True)
+    guest = GuestIdNameSerializer(read_only=True)
     room = serializers.SlugRelatedField(slug_field='room_num', read_only=True)
     booked_on = serializers.DateField(format="%d-%m-%Y")
     check_in = serializers.DateField(format="%d-%m-%Y")
