@@ -2,19 +2,57 @@ import React, { useState } from "react";
 import cheklist from "../../assets/images/View/svg/checklist.svg";
 import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
-import { arrowLeftCherovon, clock, homeSvg, check } from "../../assets/images/SVG";
+import {
+  arrowLeftCherovon,
+  clock,
+  homeSvg,
+  check,
+} from "../../assets/images/SVG";
 
-function BookingForm({ roomData, stayingTime, setBookCardOn, bookRoomForGuest, success, loading }) {
+function BookingForm({
+  roomData,
+  stayingTime,
+  setBookCardOn,
+  bookRoomForGuest,
+  success,
+  loading,
+}) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
 
-  // VALIDATION CHECK
+  // EMAIL VALIDATION CHECK
+  const emailValidation = (email) => {
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
+      return true;
+    } else {
+      setError("Invalid email format.");
+    }
+  };
+  // CONTACT VALIDATION CHECK
+  const contactValidation = (contact) => {
+    if (
+      /^\d+$/.test(contact) &&
+      contact.length === 11 &&
+      contact[0] === "0" &&
+      contact[1] === "1"
+    ) {
+      return true;
+    } else {
+      setError("Invalid Phone number");
+      return false;
+    }
+  };
+
+  // REQUIRED FIELD CHECK CHECK
   const requiredFieldCheck = () => {
     if (name && contact && email && address) {
-      return true;
     } else {
       setError("All fields required.");
       return false;
@@ -33,7 +71,7 @@ function BookingForm({ roomData, stayingTime, setBookCardOn, bookRoomForGuest, s
   // CALL BOOKING FUNTION WHICH IS DELARED IN PARENT COMPONENT
   const makeABooking = (event) => {
     event.preventDefault();
-    if (requiredFieldCheck()) {
+    if (requiredFieldCheck() && emailValidation() && contactValidation()) {
       clearFields();
       bookRoomForGuest(name, email, contact, address);
     }

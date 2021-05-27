@@ -16,10 +16,36 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
     window.scrollTo(0, 0);
   }, []);
 
-  // VALIDATION CHECK
-  const validationCheck = () => {
-    if (name && email && contact && address) {
+  // EMAIL VALIDATION CHECK
+  const emailValidation = (email) => {
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
       return true;
+    } else {
+      setError("Invalid email format.");
+    }
+  };
+  // CONTACT VALIDATION CHECK
+  const contactValidation = (contact) => {
+    if (
+      /^\d+$/.test(contact) &&
+      contact.length === 11 &&
+      contact[0] === "0" &&
+      contact[1] === "1"
+    ) {
+      return true;
+    } else {
+      setError("Invalid Phone number");
+      return false;
+    }
+  };
+
+  // REQUIRED FIELD CHECK VALIDATION
+  const requiredFieldCheck = () => {
+    if (name && email && contact && address) {
     } else {
       setError("Required all fields");
       return false;
@@ -30,7 +56,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
   const makeBookingRequest = (event) => {
     event.preventDefault();
 
-    if (validationCheck()) {
+    if (requiredFieldCheck() && emailValidation() && contactValidation()) {
       setError("");
       setLoading(true);
       const Guest = {
