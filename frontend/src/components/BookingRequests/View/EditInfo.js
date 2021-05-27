@@ -1,42 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const room_types = [
-  "Deluxe Room (Single Bed)",
-  "Deluxe Room (Couple Bed)",
-  "Deluxe Room(Twin Bed)",
-  "Deluxe Room (Family Bed)",
-  "Luxury Room",
-  "Karni Kunjo Honeymoon Suit ",
-];
-function EditInfo({ roomData, setAvailableRoom, setState, setSelectedRoom }) {
-  const [types, setTypes] = useState([]);
-
+function EditInfo({
+  roomData,
+  roomTypeWithPrice,
+  setAvailableRoom,
+  setState,
+  setSelectedRoom,
+  setRoomtype,
+  setTariff,
+}) {
   const filterRoomsWithNewType = (data) => {
     const filteredRooms = roomData.filter((room) => room.room_type === data.id);
     setAvailableRoom(filteredRooms);
     setState(false);
     setSelectedRoom([]);
+    setRoomtype(data.room_type);
+    setTariff(data.tariff);
   };
-
-  useEffect(() => {
-    let list = [];
-    room_types.map((type, index) => {list = [...list, { id: index + 1, type: type }];});
-    setTypes(list);
-  }, []);
 
   return (
     <div className="edit">
       <h3>Available rooms</h3>
 
       <div className="room-ttypes">
-        {types.map((data, index) => (
+        {roomTypeWithPrice.map((data) => (
           <div
             className="ttype"
             key={data.id}
             onClick={() => filterRoomsWithNewType(data)}
           >
-            <div className="number">{index + 1}.</div>
-            <div className="name">{data.type}</div>
+            <div className="number">{data.id}.</div>
+            <div className="name">
+              <div>{data.room_type}</div>
+              <div><h4>{data.tariff}<span> / room</span></h4></div>
+            </div>
           </div>
         ))}
       </div>

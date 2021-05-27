@@ -21,6 +21,7 @@ export const api = {
     requested_booking_table: `${baseurl}/bookings/guest_requests/`, // get
     guest_detail: `${baseurl}/bookings/guests/`, // get
     available_rooms: `${baseurl}/bookings/rooms/available/`, //get
+    room_type_with_price: `${baseurl}/bookings/room-type/`,
     make_booking: `${baseurl}/bookings/add/`, // post
     create_guest: `${baseurl}/bookings/guests/`, //post
     check_in: `${baseurl}/bookings/checkin/`, // post

@@ -150,12 +150,14 @@
     border-radius: 8px;
   }
   h3 {
-    font-size: 17px;
+    font-size: 14px;
     font-family: var(--quicksand-font);
     text-transform: uppercase;
     color: gray;
+    span{ color: #ccc; font-size: 12px;}
     @include media("<=desktop") {
       font-size: 13px;
+      span{ font-size: 10px;}
      }
   }
 
@@ -173,7 +175,7 @@
     }
     p {
       font-family: var(--quicksand-font);
-      font-size: 16px;
+      font-size: 14px;
       color: #444;
       @include media("<=desktop") {
         font-size: 13.5px;
@@ -193,17 +195,17 @@
     .infos {
       height: calc(57% - 10px);
       background: #fff;
-      padding: 2rem;
+      padding: 1.2rem 2rem;
       margin-top: 10px;
       border-radius: 8px;
       .data-box-2 {
-        margin-top: 2.5rem;
+        margin-top: 1.8rem;
         @include media("<=desktop") { height: 63%; margin-top: 1.2rem; }
       }
       @include media("<=desktop") { padding: 1.2rem; }
     }
     .data {
-      margin-top: 15px;
+      margin-top: 13px;
       display: flex;
       align-items: center;
       @include media("<=desktop") { margin-top: 12.5px; }
@@ -266,6 +268,11 @@
       background: #a0bf5e;
       color: #fff;
     }
+    .data.roomcost .data__logo {
+      background: #ff1493;
+      color: #fff;
+      font-family: var(--quicksand-font);
+    }
     .data.bookon .data__value h4 {
       color: #f2ac29;
     }
@@ -289,6 +296,9 @@
     }
     .data.roomtype .data__value h4 {
       color: #a0bf5e;
+    }
+    .data.roomcost .data__value h4{
+      color: #ff1493;
     }
   }
 
@@ -362,6 +372,13 @@
     }
 
     // ================================================= WORK ==========================================
+    .work_head{ 
+      display: flex; justify-content: space-between;
+      h3 span{
+        color: var(--green-dark); font-size: 14px;
+        @include media("<=desktop") { font-size: 13px; }
+      }
+    }
     .work {
       width: 100%;
       min-height: 46vh;

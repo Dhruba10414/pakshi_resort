@@ -6,19 +6,11 @@ import ViewInfo from "./ViewInfo";
 import ViewOption from "./ViewOption";
 import { check } from "../../../assets/images/SVG";
 
-const room_types = [
-  "Deluxe Room (Single Bed)",
-  "Deluxe Room (Couple Bed)",
-  "Deluxe Room(Twin Bed)",
-  "Deluxe Room (Family Bed)",
-  "Luxury Room",
-  "Karni Kunjo Honeymoon Suit ",
-];
-
-function ViewRequest({ viewFor, setOpenModal }) {
+function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
   const [loading, setLoading] = useState(false);
   const [availableroom, setAvailableRoom] = useState(false);
   const [roomData, setRoomData] = useState(false);
+  const [tariff, setTariff] = useState();
   const [cancel, setCancel] = useState(false);
   const [success, setSuccess] = useState(false);
   const [warning, setWarning] = useState(false);
@@ -53,15 +45,18 @@ function ViewRequest({ viewFor, setOpenModal }) {
   const findAvailableRooms = (rooms) => {
     // determine requested room type
     let roomtype;
-    room_types.map((type, index) => {
-      if (type === viewFor.info.roomType) {
-        roomtype = index + 1;
+    let costPerRoom;
+    roomTypeWithPrice.map((data) => {
+      if (data.room_type === viewFor.info.roomType) {
+        roomtype = data.id;
+        costPerRoom = data.tariff;
       }
     });
     // find rooms using determined type
     const filteredRooms = rooms.filter((room) => room.room_type === roomtype);
     // Save rooms
     setAvailableRoom(filteredRooms);
+    setTariff(costPerRoom);
   };
 
   // FETCH DATA
@@ -80,7 +75,7 @@ function ViewRequest({ viewFor, setOpenModal }) {
         axios
           .get(AVAILABLITY_CHECK, Config)
           .then((res) => {
-            findAvailableRooms(res.data);
+            if(roomTypeWithPrice.length > 0) {findAvailableRooms(res.data);}
             setRoomData(res.data);
             setLoading(false);
           })
@@ -103,8 +98,10 @@ function ViewRequest({ viewFor, setOpenModal }) {
           warningNotify={warningNotify}
           cancelNotify={cancelNotify}
           setAvailableRoom={setAvailableRoom}
+          roomTypeWithPrice={roomTypeWithPrice}
+          roomTariff={tariff}
         />
-        <ViewInfo viewFor={viewFor} />
+        <ViewInfo viewFor={viewFor} tariff={tariff} />
       </div>
 
       <div className={success ? "message success" : "success message disabled"}>

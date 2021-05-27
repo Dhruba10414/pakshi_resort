@@ -10,7 +10,7 @@ import {
     type,
   } from "../../../assets/images/SVG";
 
-function ViewInfo({viewFor}) {
+function ViewInfo({viewFor, tariff}) {
     return (
         <div className="guest-information">
         <div className="guest">
@@ -84,6 +84,13 @@ function ViewInfo({viewFor}) {
               <div className="data__value">
                 <h4>Number of rooms</h4>
                 <p>{viewFor.info.numberOfRooms}</p>
+              </div>
+            </div>
+            <div className="data roomcost">
+              <div className="data__logo">৳</div>
+              <div className="data__value">
+                <h4>Cost Per room</h4>
+                <p>{tariff}</p>
               </div>
             </div>
           </div>

@@ -84,7 +84,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
             confirmation or rejection of your request. When the resort confirmed
             your booking request, you will have a confirmation mail.
           </p>
-          <p style={{ marginTop: "20px" }}>
+          {/* <p style={{ marginTop: "20px" }}>
             To make your booking request acceptable and credible, you need to
             make an advance payment of <span>1,000tk.</span>
           </p>
@@ -97,7 +97,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
           <div className="bkashBlock">
             <img src={bkashLogo} />
             <h2>+8801 727926560</h2>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="giveGuestData__content">

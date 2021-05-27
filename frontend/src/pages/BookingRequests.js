@@ -8,6 +8,7 @@ import ViewRequest from "../components/BookingRequests/View/ViewRequest";
 
 function BookingRequests() {
   const [requests, setRequests] = useState([]);
+  const [roomTypeWithPrice, setRoomTypeWithPrice] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [viewFor, setViewFor] = useState({});
@@ -24,6 +25,12 @@ function BookingRequests() {
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const REQUESTED_BOOKING_TABLE_URL = api.requested_booking_table;
+    const ROOM_TYPES = api.room_type_with_price;
+
+    axios
+      .get(ROOM_TYPES)
+      .then((res) => { setRoomTypeWithPrice(res.data); })
+      .catch(() => { console.clear(); });
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
@@ -56,7 +63,7 @@ function BookingRequests() {
           viewRequest={viewRequest}
         />
       ) : (
-        <ViewRequest viewFor={viewFor} setOpenModal={setOpenModal} />
+        <ViewRequest viewFor={viewFor} setOpenModal={setOpenModal} roomTypeWithPrice={roomTypeWithPrice} />
       )}
     </ContentBox>
   );

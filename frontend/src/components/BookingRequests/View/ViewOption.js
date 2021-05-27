@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { checked, pencil, trash} from "../../../assets/images/SVG";
+import React, { useEffect, useState } from "react";
+import { checked, pencil, trash } from "../../../assets/images/SVG";
 import check from "../../../assets/images/View/svg/cheklist-complete.svg";
 import alarm from "../../../assets/images/View/svg/alarm.svg";
 import signal from "../../../assets/images/View/svg/signal.svg";
@@ -12,20 +12,28 @@ import { api } from "../../../assets/URLS";
 function ViewOption({
   loading,
   availableroom,
+  roomTypeWithPrice,
   viewFor,
   roomData,
+  roomTariff,
   successNotify,
   warningNotify,
   cancelNotify,
   setAvailableRoom,
 }) {
   const [selectedroom, setSelectedRoom] = useState([]);
+  const [roomType, setRoomtype] = useState(viewFor.info.roomType);
+  const [tariff, setTariff] = useState(0);
   const [ok, setOk] = useState(0);
   const [state, setState] = useState(false);
   const [processloading, setprocessLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [canceling, setCanceling] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    setTariff(roomTariff)
+  }, [roomTariff]);
 
   // SELECT ROOM
   const selectRoom = (id) => {
@@ -40,7 +48,10 @@ function ViewOption({
 
   // MAKE BOOKING
   const makeAbooking = () => {
-    if (selectedroom.length !== viewFor.info.numberOfRooms) {
+    if (
+      roomType === viewFor.info.roomType &&
+      selectedroom.length !== viewFor.info.numberOfRooms
+    ) {
       warningNotify();
     } else {
       setprocessLoading(true);
@@ -125,7 +136,8 @@ function ViewOption({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        axios.delete(DELETE_BOOKING, {
+        axios
+          .delete(DELETE_BOOKING, {
             headers: { Authorization: "Bearer " + token.data.access },
             data: { id: viewFor.id },
           })
@@ -200,7 +212,14 @@ function ViewOption({
       </div>
 
       {/* ---------------- activities ------------- */}
-      <h3>Activities</h3>
+      <div className="work_head">
+        <h3>
+          Available rooms <span>({roomType})</span>
+        </h3>
+        <h3>
+          Cost: <span>{tariff * selectedroom.length}</span>
+        </h3>
+      </div>
       <div className="work">
         {!loading ? (
           // if it is not edit mode
@@ -241,11 +260,13 @@ function ViewOption({
           ) : (
             // edit mode
             <EditInfo
-              viewFor={viewFor}
               roomData={roomData}
+              roomTypeWithPrice={roomTypeWithPrice}
               setAvailableRoom={setAvailableRoom}
               setState={setState}
               setSelectedRoom={setSelectedRoom}
+              setRoomtype={setRoomtype}
+              setTariff={setTariff}
             />
           )
         ) : (
