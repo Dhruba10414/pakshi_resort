@@ -15,8 +15,7 @@ import { rsvg, searchSvg } from "../assets/images/SVG";
 function Dashboard({ clearUser }) {
   /* ----------------- V A R I A B L E S ----------------------- */
   const [roomList, setRoomList] = useState([]);
-  const [room, setRoom] = useState("");
-  const [desiredRoom, setDesiredRoom] = useState(null);
+  // const [desiredRoom, setDesiredRoom] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [openRoomDetails, setOpenRoomDetails] = useState(false);
@@ -32,16 +31,6 @@ function Dashboard({ clearUser }) {
   // CLOSE MODAL
   const closeModal = () => {
     setOpenRoomDetails(false);
-  };
-  // SEARCH A SPECIFIC ROOM
-  const searchRoom = (event) => {
-    event.preventDefault();
-    const sroom = roomList.find((el) => el.room_num === parseInt(room));
-    if (sroom) {
-      setDesiredRoom(sroom);
-    } else {
-      setError("Room not found");
-    }
   };
 
   useEffect(() => {
@@ -76,18 +65,6 @@ function Dashboard({ clearUser }) {
           {!openRoomDetails ? (
             <div className="room-table-container">
               <div className="room-table">
-                {/* search field */}
-                <div className="search-field">
-                  <form onSubmit={searchRoom}>
-                    <div className="icon">{searchSvg}</div>
-                    <input
-                      type="text"
-                      placeholder="Search by #room number"
-                      value={room}
-                      onChange={(e) => setRoom(e.target.value)}
-                    />
-                  </form>
-                </div>
                 {/* table heading */}
                 <div className="table-heading">
                   <div className="no">Room {rsvg}</div>

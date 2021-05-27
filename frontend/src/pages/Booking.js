@@ -31,10 +31,28 @@ function Booking({
   const [canceled, setCanceled] = useState(false);
   const [error, setError] = useState(false);
 
+  const [matchedData, setMatchedData] = useState([]);
+
   // SEARCH FUNCTIONALITY
-  const searching = () => {
-    console.log(name);
+  const searching = (event) => {
+    event.preventDefault();
+    let text = event.target.value.toLowerCase();
+
+    let matches = bookings.filter((data) => {
+      const regex = new RegExp(`^${text}.*$`);
+      return (
+        data.guest.name.toLowerCase().match(regex) ||
+        data.guest.contact.match(regex)
+      );
+    });
+
+    if (text === "") {
+      setMatchedData([]);
+    } else {
+      setMatchedData(matches);
+    }
   };
+
   // NOTIFY IF CHECK-IN SUCCESSFULLY DONE
   const notifyforCheckout = () => {
     setTimeout(() => {
@@ -59,10 +77,10 @@ function Booking({
   // NOTIFY IF ERROR
   const notifyForError = () => {
     setTimeout(() => {
-      setError(false)
+      setError(false);
     }, 2000);
     setError(true);
-  }
+  };
 
   // FILTER BY COMPLETE
   const filterOrderListByComplete = () => {
@@ -112,17 +130,52 @@ function Booking({
             <div className="icon">{searchSvg}</div>
             <input
               type="text"
-              placeholder="Search by #name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="Search by #name or #contact number"
+              // value={name}
+              onChange={(e) => searching(e)}
             />
           </form>
+          <div className="result">
+            {matchedData.map((entry) => (
+              <Entry
+                key={entry.id}
+                bookingId={entry.id}
+                room={entry.room}
+                guest={entry.guest}
+                check_in={entry.check_in}
+                check_out={entry.check_out}
+                is_active={entry.is_active}
+                is_cancel={entry.is_canceled}
+                notifyforCheckout={notifyforCheckout}
+                notifyForCancel={notifyForCancel}
+                notifyForConfirm={notifyForConfirm}
+                notifyForError={notifyForError}
+              />
+            ))}
+          </div>
         </div>
         {/* filter options */}
         <div className="filter-by-type">
-          <div className={filterby === "all" ? "active" : ""} onClick={() => {setFilterby("all");}}>All</div>
-          <div className={filterby === "pe" ? "active" : ""}onClick={filterOrderListByPending}>Pending</div>
-          <div className={filterby === "co" ? "active" : ""} onClick={filterOrderListByComplete}>Staying</div>
+          <div
+            className={filterby === "all" ? "active" : ""}
+            onClick={() => {
+              setFilterby("all");
+            }}
+          >
+            All
+          </div>
+          <div
+            className={filterby === "pe" ? "active" : ""}
+            onClick={filterOrderListByPending}
+          >
+            Pending
+          </div>
+          <div
+            className={filterby === "co" ? "active" : ""}
+            onClick={filterOrderListByComplete}
+          >
+            Staying
+          </div>
         </div>
         {/* table heading */}
         <div className="table-heading">
@@ -189,16 +242,22 @@ function Booking({
           <Loading height="60vh" width="100%" textSize="15px" space="6px" />
         )}
         {/* success message */}
-        <div className={confirmed ? "message confirm" : "message confirm disabled"}>
+        <div
+          className={confirmed ? "message confirm" : "message confirm disabled"}
+        >
           <div>{check}</div> Successfully Confirmed!
         </div>
-        <div className={canceled ? "message cancel" : "message cancel disabled"}> 
+        <div
+          className={canceled ? "message cancel" : "message cancel disabled"}
+        >
           <div>{check}</div> Successfully Canceled!
         </div>
-        <div className={checkout ? "message confirm" : "message confirm disabled"}> 
+        <div
+          className={checkout ? "message confirm" : "message confirm disabled"}
+        >
           <div>{check}</div> Checkout Successfull!
         </div>
-        <div className={error ? "message error" : "message error disabled"}> 
+        <div className={error ? "message error" : "message error disabled"}>
           <div>{x}</div> Can't Check-in Today!
         </div>
       </div>

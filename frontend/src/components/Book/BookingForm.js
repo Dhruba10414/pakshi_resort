@@ -24,19 +24,16 @@ function BookingForm({
   const [error, setError] = useState("");
 
   // EMAIL VALIDATION CHECK
-  const emailValidation = (email) => {
-    if (
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-        email
-      )
-    ) {
+  const emailValidation = () => {
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
       return true;
     } else {
       setError("Invalid email format.");
+      return false;
     }
   };
   // CONTACT VALIDATION CHECK
-  const contactValidation = (contact) => {
+  const contactValidation = () => {
     if (
       /^\d+$/.test(contact) &&
       contact.length === 11 &&
@@ -53,6 +50,7 @@ function BookingForm({
   // REQUIRED FIELD CHECK CHECK
   const requiredFieldCheck = () => {
     if (name && contact && email && address) {
+      return true;
     } else {
       setError("All fields required.");
       return false;

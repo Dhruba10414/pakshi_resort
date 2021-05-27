@@ -21,42 +21,11 @@
 
       // orginal tables
       .room-table {
-        width: 100%;
+        width: calc(100% - 10px);
         background: #fff;
         border-radius: 8px;
         padding: 0;
 
-        // search field
-        .search-field {
-          width: 100%;
-          position: sticky;
-          top: 0;
-          background: var(--body-background-color);
-          form {
-            width: 100%;
-            margin: 0 10px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            input {
-              width: 80%;
-              padding: 5px;
-              font-size: 14px;
-              outline: none;
-              border: none;
-              background: transparent;
-            }
-            .icon {
-              height: 40px;
-              padding: 5px 10px;
-              background: transparent;
-              svg {
-                width: 18px;
-                color: gray;
-              }
-            }
-          }
-        }
         // table heading and contents common style
         .table-heading,
         .aroom {
@@ -109,7 +78,7 @@
         // Table Heading
         .table-heading {
           position: sticky;
-          top: 50px;
+          top: 0;
           svg {
             width: 12px;
             transform: rotate(-45deg);

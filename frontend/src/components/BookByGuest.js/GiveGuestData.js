@@ -17,7 +17,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
   }, []);
 
   // EMAIL VALIDATION CHECK
-  const emailValidation = (email) => {
+  const emailValidation = () => {
     if (
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         email
@@ -29,7 +29,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
     }
   };
   // CONTACT VALIDATION CHECK
-  const contactValidation = (contact) => {
+  const contactValidation = () => {
     if (
       /^\d+$/.test(contact) &&
       contact.length === 11 &&
