@@ -12,10 +12,12 @@
   }
 
   .guest-table-container {
-    width: 100%;
+    width: calc(100% - 10px);
     overflow-y: scroll;
     overflow-x: hidden;
-    &::-webkit-scrollbar {display: none;}
+    &::-webkit-scrollbar {
+      display: none;
+    }
     -ms-overflow-style: none;
     scrollbar-width: none;
     background: #fff;
@@ -59,6 +61,14 @@
           }
         }
       }
+      // search result
+      .results {
+        width: 98%;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 60px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
       // table heading and contents common style
       .table-heading,
       .aguest {
@@ -73,57 +83,78 @@
           font-family: var(--quicksand-font);
           font-size: 16px;
         }
-        .guest-name{width: 25%;}
-        .phone{width: 25%;}
-        .options{width: 60%;}
+        .guest-name {
+          width: 25%;
+        }
+        .phone {
+          width: 25%;
+        }
+        .options {
+          width: 60%;
+        }
       }
 
       // Table Heading
       .table-heading {
         position: sticky;
         top: 50px;
-        svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
-        div { font-weight: bold; font-size: 14px; color: gray; }
+        svg {
+          width: 12px;
+          transform: rotate(-45deg);
+          margin-left: 5px;
+        }
+        div {
+          font-weight: bold;
+          font-size: 14px;
+          color: gray;
+        }
       }
 
       // Table Entrys
-      .aguest{
-          .options{
-              display: flex;
+      .aguest {
+        .options {
+          display: flex;
 
-              button{
-                  padding: 10px 20px;
-                  margin-right: 15px;
-                  border-radius: 5px;
-                  border: none;
-                  outline: none;
-                  cursor: pointer;
-                  font-family: var(--quicksand-font);
-                  font-weight: bold;
-              }
-              button.order-food{
-                  background-color: var(--yellow);
-                  color: var(--yellow-dark);
-              }
-              button.buy-tickets{
-                  background-color: var(--blue);
-                  color: var(--blue-dark);
-              }
-              button.bill{
-                background-color: var(--green);
-                color: var(--green-dark);
-              }
+          button {
+            padding: 10px 20px;
+            margin-right: 15px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-family: var(--quicksand-font);
+            font-weight: bold;
           }
+          button.order-food {
+            background-color: var(--yellow);
+            color: var(--yellow-dark);
+          }
+          button.buy-tickets {
+            background-color: var(--blue);
+            color: var(--blue-dark);
+          }
+          button.bill {
+            background-color: var(--green);
+            color: var(--green-dark);
+          }
+        }
       }
-      .empty{
+      .empty {
         width: 100%;
         height: 70vh;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        img{ height: 15vh; margin-bottom: 30px; }
-        h2{ font-family: var(--quicksand-font); font-weight: normal; text-transform: uppercase; }
+        img {
+          height: 15vh;
+          margin-bottom: 30px;
+        }
+        h2 {
+          font-family: var(--quicksand-font);
+          font-weight: normal;
+          text-transform: uppercase;
+        }
       }
     }
   }

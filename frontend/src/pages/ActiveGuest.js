@@ -21,10 +21,26 @@ function ActiveGuest() {
   const [openTicket, setOpenTicket] = useState(false);
   const [ticketFor, setTicketFor] = useState({});
 
-  // SEARCH GUEST
-  const searchGuest = () => {
-    //
+  const [matchedData, setMatchedData] = useState([]);
+
+  // SEARCH FUNCTIONALITY
+  const searching = (event) => {
+    event.preventDefault();
+    let text = event.target.value.toLowerCase();
+
+    let matches = activeGuests.filter((data) => {
+      const regex = new RegExp(`^${text}.*$`);
+      return data.name.toLowerCase().match(regex) || data.contact.match(regex);
+    });
+
+    if (text === "") {
+      setMatchedData([]);
+    } else {
+      console.log(matches);
+      setMatchedData(matches);
+    }
   };
+
   // OPEN FOOD ORDER MODAL
   const openFoodOrderModal = (id, name) => {
     setOpenOrder(true);
@@ -36,8 +52,8 @@ function ActiveGuest() {
   };
   const openTicketModal = (id, name, phone, address, email) => {
     setOpenTicket(true);
-    setTicketFor({id, name, phone, address, email});
-  }
+    setTicketFor({ id, name, phone, address, email });
+  };
   // CLOSE MODAL
   const closeModal = () => {
     setOpenOrder(false);
@@ -76,9 +92,9 @@ function ActiveGuest() {
         <div className="activeGuest-container">
           {openInvoice ? (
             <Invoice invoiceFor={invoiceFor} setOpenInvoice={setOpenInvoice} />
-          ) : openTicket
-            ? <Ticket ticketFor={ticketFor} setOpenTicket={setOpenTicket} />
-            : openOrder ? (
+          ) : openTicket ? (
+            <Ticket ticketFor={ticketFor} setOpenTicket={setOpenTicket} />
+          ) : openOrder ? (
             <FoodOrder
               guestId={orderFor.id}
               name={orderFor.name}
@@ -90,13 +106,12 @@ function ActiveGuest() {
               <div className="guest-table">
                 {/* search field */}
                 <div className="search-field">
-                  <form onSubmit={searchGuest}>
+                  <form onSubmit={searching}>
                     <div className="icon">{searchSvg}</div>
                     <input
                       type="text"
-                      placeholder="Search by #guests phone number"
-                      value={guest}
-                      onChange={(e) => setGuest(e.target.value)}
+                      placeholder="Search by #name or #contact number"
+                      onChange={(e) => searching(e)}
                     />
                   </form>
                 </div>
@@ -104,9 +119,27 @@ function ActiveGuest() {
                 {/* table heading */}
                 <div className="table-heading">
                   <div className="guest-name">Guest Name{rsvg}</div>
+                  <div className="phone">Email{rsvg}</div>
                   <div className="phone">Phone{rsvg}</div>
                   <div className="options"></div>
                 </div>
+                {matchedData.length > 0 ? (
+                  <div className="results">
+                    {matchedData.map((guest) => (
+                      <Guest
+                        key={guest.id}
+                        id={guest.id}
+                        name={guest.name}
+                        phone={guest.contact}
+                        address={guest.address}
+                        email={guest.email}
+                        openInvoiceModal={openInvoiceModal}
+                        openFoodOrderModal={openFoodOrderModal}
+                        openTicketModal={openTicketModal}
+                      />
+                    ))}
+                  </div>
+                ) : null}
 
                 {/* table content */}
                 {!loading ? (

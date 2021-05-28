@@ -49,7 +49,9 @@
         padding: 10px;
         display: flex;
         position: sticky;
-        top: 50px;
+        // top: 50px;
+        top: 0;
+        padding: 20px 0;
         // position: relative;
         div{
           margin-right: 30px; font-family: var(--quicksand-font);
@@ -144,7 +146,8 @@
       // Table Heading
     .table-heading {
         position: sticky;
-        top: 90px;
+        // top: 90px;
+        top: 60px;
         border-radius: 8px 8px 0 0;
         svg { width: 12px; transform: rotate(-45deg); margin-left: 5px; }
         div { height: 8vh; font-weight: bold; font-size: 14px; color: gray; }

@@ -188,7 +188,7 @@ function FoodOrders({
     <ContentBox heading="Food Orders">
       <div className="foodOrders">
         <div className="order-table">
-          <div className="search-field">
+          {/* <div className="search-field">
             <form onSubmit={searchOperation}>
               <div className="icon"> {searchSvg}</div>
               <input
@@ -198,7 +198,7 @@ function FoodOrders({
                 onChange={(e) => setSearchedEntry(e.target.value)}
               />
             </form>
-          </div>
+          </div> */}
 
           <div className="filter-by-type">
             <div

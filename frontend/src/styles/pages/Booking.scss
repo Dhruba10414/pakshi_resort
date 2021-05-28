@@ -1,5 +1,5 @@
 .bookingPage {
-  width: 100%;
+  width: calc(100% - 10px);
   height: calc(88vh + 5px);
   margin-top: 10px;
   background: #fff;
@@ -39,6 +39,15 @@
         }
       }
     }
+  }
+
+  // search result
+  .result{
+    width: 98%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
   }
   
   // filter by type

@@ -37,12 +37,14 @@ function Booking({
   const searching = (event) => {
     event.preventDefault();
     let text = event.target.value.toLowerCase();
+    const allBookings = filterby === "all" ? bookings : filteredBookings;
 
-    let matches = bookings.filter((data) => {
+    let matches = allBookings.filter((data) => {
       const regex = new RegExp(`^${text}.*$`);
       return (
         data.guest.name.toLowerCase().match(regex) ||
-        data.guest.contact.match(regex)
+        data.guest.contact.match(regex) ||
+        data.room.toString().match(regex)
       );
     });
 
@@ -130,29 +132,11 @@ function Booking({
             <div className="icon">{searchSvg}</div>
             <input
               type="text"
-              placeholder="Search by #name or #contact number"
+              placeholder="Search by #name or #contact number or #room number"
               // value={name}
               onChange={(e) => searching(e)}
             />
           </form>
-          <div className="result">
-            {matchedData.map((entry) => (
-              <Entry
-                key={entry.id}
-                bookingId={entry.id}
-                room={entry.room}
-                guest={entry.guest}
-                check_in={entry.check_in}
-                check_out={entry.check_out}
-                is_active={entry.is_active}
-                is_cancel={entry.is_canceled}
-                notifyforCheckout={notifyforCheckout}
-                notifyForCancel={notifyForCancel}
-                notifyForConfirm={notifyForConfirm}
-                notifyForError={notifyForError}
-              />
-            ))}
-          </div>
         </div>
         {/* filter options */}
         <div className="filter-by-type">
@@ -187,6 +171,27 @@ function Booking({
           <div className="checkout">Check-out{rsvg}</div>
           <div className="func">Confirm{rsvg}</div>
         </div>
+        {/* search result */}
+        {matchedData.length > 0 ? (
+          <div className="result">
+            {matchedData.map((entry) => (
+              <Entry
+                key={entry.id}
+                bookingId={entry.id}
+                room={entry.room}
+                guest={entry.guest}
+                check_in={entry.check_in}
+                check_out={entry.check_out}
+                is_active={entry.is_active}
+                is_cancel={entry.is_canceled}
+                notifyforCheckout={notifyforCheckout}
+                notifyForCancel={notifyForCancel}
+                notifyForConfirm={notifyForConfirm}
+                notifyForError={notifyForError}
+              />
+            ))}
+          </div>
+        ) : null}
         {/* table entries */}
         {!loading ? (
           filterby !== "all" ? (

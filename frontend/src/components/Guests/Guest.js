@@ -4,6 +4,7 @@ function Guest({id, name, phone, address, email, openTicketModal, openInvoiceMod
   return (
     <div className="aguest">
       <div className="guest-name">{name}</div>
+      <div className="phone">{email}</div>
       <div className="phone">{phone}</div>
       <div className="options">
           <button className="order-food" onClick={() => openFoodOrderModal(id, name)}>Order Foods</button>
