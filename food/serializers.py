@@ -35,7 +35,7 @@ class FoodOrderEmbededSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=FoodOrdering
-        fields=['id','food','quantity','time','taken_by', 'isComplete', 'isCancel', 'guest','order_price','total','notes']
+        fields=['id','food','quantity','time','taken_by', 'isComplete', 'isCancel', 'guest','order_price','total','notes','vat']
     
     def get_total(self,obj):
         return (obj.order_price*obj.quantity)
@@ -47,5 +47,5 @@ class FoodAnalyticsSerializer(serializers.BaseSerializer):
             'month': instance['month'].month,
             'year': instance['month'].year,
             'total_food_orders': instance['orders'],
-            'total_income': instance['income']
+            'total_income': instance['income']+instance['vat']
         }

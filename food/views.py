@@ -1,3 +1,4 @@
+from django.core.checks import messages
 from rest_framework import viewsets
 from rest_framework import generics, status
 from food.models import FoodItem,FoodOrdering
@@ -40,6 +41,22 @@ class FoodUpdateView(generics.UpdateAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerilizer
 
+class UpdateVatView(generics.GenericAPIView):
+    queryset = FoodItem.objects.all()
+    serializer_class = FoodItemSerilizer
+    
+    def post(self,request,*args,**kwargs):
+        vat = request.data.get('vat',0)
+        items =FoodItem.objects.all()
+        try:
+            for food in items:
+                food.vat = vat
+                food.save()
+            return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
+        except FoodItem.DoesNotExist:
+            return Response(data = {'message : vat update failed' },status=status.HTTP_404_NOT_FOUND)
+
+
 class OrderCancelView(generics.GenericAPIView):
     serializer_class = OrderItemEmbededSerializer
     queryset=FoodOrdering.objects.all() 
@@ -57,6 +74,7 @@ class OrderCancelView(generics.GenericAPIView):
 class OrderCompleteView(generics.GenericAPIView):
     serializer_class = OrderItemEmbededSerializer
     queryset=FoodOrdering.objects.all() 
+
     def post(self,request,*args,**kwargs):
         order_id_list = request.data.get('order_id',None)
         try:
@@ -72,6 +90,7 @@ class OrderCompleteView(generics.GenericAPIView):
 class FoodOrderingView(generics.GenericAPIView):
     serializer_class=FoodOrderEmbededSerializer
     queryset=FoodOrdering.objects.all() 
+
     
     def get(self,request,*args,**kwargs):
         IsCancel = request.query_params.get('isCancel',None)
@@ -112,7 +131,7 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 
                 
-                new_order = FoodOrdering(quantity=food["quantity"],notes = food["notes"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price)
+                new_order = FoodOrdering(quantity=food["quantity"],notes = food["notes"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price,vat=select_food.vat)
                 new_order.taken_by=request.user
                 new_order.save()
                 
@@ -123,6 +142,7 @@ class FoodOrderingView(generics.GenericAPIView):
 
 class OrderInvoiceView(generics.GenericAPIView):
     serializer_class=FoodOrderEmbededSerializer
+
 
     def get(self,request,*args,**kwargs):
         guest_no = request.query_params.get('guest_id',None)
@@ -156,9 +176,11 @@ class FoodLogView(generics.GenericAPIView):
 
         filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
                             time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField()))
+                                F('quantity'), output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*
+                                F('quantity')*F('vat'), output_field=FloatField()))
+                                
         
-        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill','Vat','Total Amount', 'Registed By'])
         for q in filtered:
             row = [q.guest.name if not q.guest.name else "Restaurant",
                     q.guest.email,
@@ -168,20 +190,23 @@ class FoodLogView(generics.GenericAPIView):
                     q.order_price,
                     q.quantity,
                     q.bill if not q.isCancel else "NaN" ,
+                    q.vat,
+                    q.bill + q.vat,
                     q.taken_by.user_name]
             writer.writerow(row)
 
         return response
 
-class OrderInvoiceSummuryView(generics.GenericAPIView):
- 
+class OrderInvoiceSummuryView(generics.GenericAPIView): 
     def get(self, request, *args, **kwargs):
         guest = request.query_params.get('guest', None)
 
         if guest is not None:
             bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField()))
+                                F('quantity'), output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*
+                                F('quantity')*F('vat'), output_field=FloatField()))
             total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
+            total_vat = bills.aggregate(total=Coalesce(Sum('vat'), 0.0))['total']
 
             payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
             total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
@@ -189,6 +214,7 @@ class OrderInvoiceSummuryView(generics.GenericAPIView):
             summury = {
                 'total_bills': total_bill,
                 'total_paid': total_paid,
+                'total_vat' : total_vat,
                 'due': total_bill - total_paid
             }
             
@@ -203,7 +229,8 @@ class FoodAnalyticsView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
-        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'), orders=Count('id')).order_by('month')[:12]
+        output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),vat = Sum('vat')  ,orders=Count('id')).order_by('month')[:12]
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 

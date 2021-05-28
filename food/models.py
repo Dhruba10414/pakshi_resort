@@ -7,6 +7,7 @@ class FoodItem(models.Model):
     description = models.CharField(max_length=300,null=True,default="")
     price = models.FloatField(null=False)
     available = models.BooleanField(default=True)
+    vat = models.FloatField(default=0.0)
 
     Food_CHOICES = (
         ('Breakfast', 'Breakfast'),
@@ -26,7 +27,8 @@ class FoodOrdering(models.Model):
     time = models.DateTimeField(auto_now=True)
     isComplete = models.BooleanField(default=False)
     isCancel = models.BooleanField(default=False)
-    notes = models.CharField(max_length=20,blank=True, null=True)
+    notes = models.CharField(max_length=100,blank=True, null=True)
+    vat = models.FloatField(default=0.0)
     
 
     order_price = models.FloatField(default=0.0)

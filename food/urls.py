@@ -1,5 +1,5 @@
 from django.urls import path, include
-from food.views import FoodAnalyticsView,OrderInvoiceSummuryView,FoodLogView,OrderInvoiceView,FoodItemView,CreateFoodItem,FoodDeleteView,FoodUpdateView,FoodOrderingView,OrderCancelView,OrderCompleteView
+from food.views import UpdateVatView,FoodAnalyticsView,OrderInvoiceSummuryView,FoodLogView,OrderInvoiceView,FoodItemView,CreateFoodItem,FoodDeleteView,FoodUpdateView,FoodOrderingView,OrderCancelView,OrderCompleteView
 
 
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('food-log/',FoodLogView.as_view(),name='food-log-csv'),
     path('invoice-summary/',OrderInvoiceSummuryView.as_view(),name='food-invoice-summary'),
     path('analytics/',FoodAnalyticsView.as_view(),name = 'food-Analytics'),
+    path('vat/',UpdateVatView.as_view(),name='food-vat')
 ]
