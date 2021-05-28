@@ -20,6 +20,7 @@ import {
   barchart,
   dbSVG,
   markSVG,
+  column,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -60,11 +61,13 @@ function SideNav({clearUser, is_staff }) {
         <NavLink to="/staff/booking-request" exact activeClassName="active-link">{arrowDown} Booking Request</NavLink>
         <NavLink to="/staff/restaurent" exact activeClassName="active-link">{cofeeSVG} Restaurent</NavLink>
         <NavLink to="/staff/foodorders" exact activeClassName="active-link">{dbSVG} Food Orders</NavLink>
-        <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
         <NavLink to="/staff/park-ticket" exact activeClassName="active-link">{markSVG} Ticket</NavLink>
         {is_staff ? (
           <>
+            <h3>Management</h3>
             <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
+            <NavLink to="/staff/admin/room" exact activeClassName="active-link" > {column} Room Management </NavLink>
+            <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
             <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statistics </NavLink>
           </>
         ) : null}

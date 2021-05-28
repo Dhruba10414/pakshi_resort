@@ -33,6 +33,7 @@ import SetPasswordPage from "./pages/SetPasswordPage";
 import Restaurent from "./pages/Restaurent";
 import ParkTicket from "./pages/ParkTicket";
 import Settings from "./pages/Settings";
+import RoomManagement from "./pages/RoomManagement";
 
 function App({ setUser, isLogedIn }) {
   
@@ -78,6 +79,7 @@ function App({ setUser, isLogedIn }) {
           <Route exact path="/staff/settings" render={() => isLogedIn ? <Settings /> : <Login /> } />
           <Route exact path="/staff/admin/staff" render={() => isLogedIn ? <Admin /> : <Login /> } />
           <Route exact path="/staff/admin/food" render={() => isLogedIn ? <FoodManagement /> : <Login /> } />
+          <Route exact path="/staff/admin/room" render={() => isLogedIn ? <RoomManagement /> : <Login /> } />
           <Route exact path="/staff/admin/statics" render={() => isLogedIn ? <Statics /> : <Login /> } />
 
           {/* NOT FOUND */}

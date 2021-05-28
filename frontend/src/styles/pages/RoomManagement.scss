@@ -1,0 +1,263 @@
+.roomManagement {
+  height: calc(90vh - 10px);
+  width: calc(100% - 10px);
+  margin-top: 10px;
+  border-radius: 8px;
+  position: relative;
+
+  .roomCardContainer {
+    padding: 50px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .roomcard {
+    width: 20%;
+    height: 30vh;
+    margin-right: 5%;
+    margin-bottom: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+    &:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    }
+
+    h3.name {
+      font-family: var(--quicksand-font);
+      text-transform: uppercase;
+      font-size: 20px;
+    }
+    h4 {
+      font-family: var(--quicksand-font);
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--primary-color-light);
+    }
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: #f7f3f7;
+      position: absolute;
+      bottom: -60px;
+      left: -90px;
+    }
+    .option {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      svg {
+        color: #ccc;
+      }
+    }
+    .tariff {
+      position: absolute;
+      bottom: 40px;
+      left: 20px;
+      p {
+        font-weight: bold;
+        font-size: 2.5rem;
+        line-height: 2.6rem;
+        font-family: var(--quicksand-font);
+        display: flex;
+        color: var(--primary-color2);
+        span {
+          font-size: 1.3rem;
+          color: gray;
+        }
+      }
+      .vat,
+      .discount {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 5px;
+        font-family: var(--quicksand-font);
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-top: 10px;
+      }
+      .vat {
+        background: var(--green);
+        color: var(--green-dark);
+        border: 1px solid var(--green-dark);
+        margin-right: 5px;
+      }
+      .discount {
+        background: var(--yellow);
+        color: var(--yellow-dark);
+        border: 1px solid var(--yellow-dark);
+      }
+    }
+  }
+
+  //   EDIT PAGE
+  .roomtype {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    h3 {
+      font-family: var(--quicksand-font);
+      font-size: 18px;
+      color: gray;
+    }
+
+    &__editRoomType {
+      width: calc(50% - 10px);
+      height: 100%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px;
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+        .input-block {
+          margin-bottom: 30px;
+          display: flex;
+          flex-direction: column;
+          label {
+            font-family: var(--quicksand-font);
+            font-size: 13px;
+            margin-bottom: 5px;
+          }
+          input {
+            padding: 15px 20px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            &:focus {
+              border: 2px solid var(--primary-color-light);
+            }
+          }
+        }
+        small{
+          font-family: var(--quicksand-font);
+          margin-bottom: 20px;
+          color: red;          
+        }
+        .btn-box {
+          display: flex;
+          button {
+            padding: 15px 20px;
+            font-family: var(--quicksand-font);
+            font-size: 15px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          button.update {
+            width: 30%;
+            background: var(--primary-color);
+            color: #fff;
+          }
+          button.back {
+            width: 20%;
+            background: transparent;
+            color: #444;
+            border: 2px solid #444;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+    &__allRooms {
+      width: 50%;
+      margin-left: 10px;
+      height: 100%;
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px;
+
+      .table{
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        margin-top: 20px;
+        // entries
+        .table-heading, .entry {
+          display: flex;
+          height: 7vh;
+          padding: 0 10px;
+          &:not(:last-child){
+            border-bottom: 2px solid #ccc;
+          }
+          
+          div {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: gray;
+          }
+          .cottage,
+          .numb { width: 25%; }
+          .type { width: 50%; }
+        }
+        .entry{
+          .cottage p{
+            height: 3vh;
+            width: 3vh;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: var(--quicksand-font);
+            font-weight: bold;
+            @include media("<=desktop") { font-size: 14px; height: 25px; width: 25px; }
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+          }
+          .cottage.one p { background: var(--blue-dark); }
+          .cottage.two p { background: #f26430 ; }
+          .cottage.three p { background: #a0bf5e; }
+          .cottage.four p { background: #683fbf; }
+          .cottage.five p { background: var(--green-dark) }
+        }
+        // table heading
+        .table-heading{
+          svg {
+            width: 12px;
+            transform: rotate(-45deg);
+            margin-left: 5px;
+          }
+          div{
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  .success-message{
+    position: absolute;
+    top: 20px;
+    left: 21vw;
+    background-color: var(--green);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-family: var(--quicksand-font);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    div{
+      width: 30px; height: 30px;
+      border-radius: 50%; border: 2px solid var(--green-dark);
+      margin-right: 10px; display: flex; align-items: center;
+      justify-content: center;
+    }
+    opacity: 1;
+    margin-left: 0;
+    transition: 0.5s;
+  }
+  .success-message.disabled{
+    margin-left: 30px;
+    opacity: 0;
+  }
+}

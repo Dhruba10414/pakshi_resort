@@ -14,15 +14,26 @@
     flex-direction: column;
     justify-content: space-between;
     z-index: 5;
+    h3{
+      display: block;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      margin-left: 5px;
+      padding: 0 40px;
+      font-family: var(--quicksand-font);
+      font-size: 16px;
+      color: var(--primary-color-light);
+      text-transform: uppercase;
+    }
     a {
       text-decoration: none;
       display: flex;
       align-items: center;
       color: var(--primary-color-light);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       padding: 0 40px;
       font-family: var(--quicksand-font);
-      font-size: 18px;
+      font-size: 17px;
       @include media("<=desktop") { font-size: 15px; margin-bottom: 12px; }
       svg {
         margin-right: 5px;
