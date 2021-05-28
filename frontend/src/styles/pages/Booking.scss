@@ -104,6 +104,7 @@
       font-family: var(--secondary-font);
       font-weight: bold;
       text-align: center;
+      @include media("<=desktop") {font-size: 10.5px; padding: 5px;}
       svg {
         height: 14px;
       }
@@ -126,7 +127,7 @@
       .btn-boxx{ width: 90%; padding: 0; display: flex; align-items: center; justify-content: space-between; }
       button {
         height: 5.5vh;
-        border-radius: 10px;
+        border-radius: 8px;
         outline: none;
         border: none;
         font-size: 16px;
@@ -136,6 +137,7 @@
         justify-content: center;
         cursor: pointer;
         transition: 0.3s;
+        @include media("<=desktop") {font-size: 14px; border-radius: 5px;}
         &:hover{
           box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
@@ -144,6 +146,7 @@
           border-radius: 50%;
           padding: 3px;
           margin-right: 7px;
+          @include media("<=desktop") {width: 15px; height: 15px;}
         }
       }
 

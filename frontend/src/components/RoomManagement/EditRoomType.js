@@ -46,9 +46,9 @@ function EditRoomType({ room, rooms, setTypeModal, changed, setChanged }) {
   //   update room type
   const updateRoom = (event) => {
     event.preventDefault();
-    setLoading(true);
 
     if (validationCheck()) {
+      setLoading(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const UPDATE_ROOM_TYPE = api.update_room_type_with_price;

@@ -32,12 +32,18 @@
       font-family: var(--quicksand-font);
       text-transform: uppercase;
       font-size: 20px;
+      @include media("<=desktop") {
+        font-size: 16.5px;
+      }
     }
     h4 {
       font-family: var(--quicksand-font);
       text-transform: uppercase;
       font-size: 14px;
       color: var(--primary-color-light);
+      @include media("<=desktop") {
+        font-size: 13px;
+      }
     }
     .circle {
       width: 200px;
@@ -47,6 +53,12 @@
       position: absolute;
       bottom: -60px;
       left: -90px;
+      @include media("<=desktop") {
+        width: 150px;
+        height: 150px;
+        bottom: -30px;
+        left: -70px;
+      }
     }
     .option {
       position: absolute;
@@ -54,12 +66,15 @@
       right: 20px;
       svg {
         color: #ccc;
+        @include media("<=desktop") {width: 12.5px;}
       }
+
     }
     .tariff {
       position: absolute;
       bottom: 40px;
       left: 20px;
+      @include media("<=desktop") { bottom: 25px; }
       p {
         font-weight: bold;
         font-size: 2.5rem;
@@ -67,6 +82,9 @@
         font-family: var(--quicksand-font);
         display: flex;
         color: var(--primary-color2);
+        @include media("<=desktop") {
+            font-size: 2rem;
+        }        
         span {
           font-size: 1.3rem;
           color: gray;
@@ -82,6 +100,10 @@
         font-weight: bold;
         text-transform: uppercase;
         margin-top: 10px;
+        @include media("<=desktop") {
+          padding: 2px 8px;
+          font-size: 9.8px;
+        }
       }
       .vat {
         background: var(--green);
@@ -122,10 +144,12 @@
           margin-bottom: 30px;
           display: flex;
           flex-direction: column;
+          @include media("<=desktop") { margin-bottom: 20px; }
           label {
             font-family: var(--quicksand-font);
             font-size: 13px;
             margin-bottom: 5px;
+            @include media("<=desktop") {font-size: 12px;}
           }
           input {
             padding: 15px 20px;
@@ -134,15 +158,18 @@
             border: 2px solid #ccc;
             border-radius: 5px;
             outline: none;
+            @include media("<=desktop") {font-size: 15px; padding: 10px 20px; border: 2px solid #ccc;}
             &:focus {
               border: 2px solid var(--primary-color-light);
+              @include media("<=desktop") {border: 2px solid var(--primary-color-light);}
             }
           }
         }
-        small{
+        small {
           font-family: var(--quicksand-font);
           margin-bottom: 20px;
-          color: red;          
+          color: red;
+          @include media("<=desktop") {margin-bottom: 10px;}
         }
         .btn-box {
           display: flex;
@@ -153,19 +180,27 @@
             outline: none;
             border: none;
             border-radius: 5px;
+            font-weight: bold;
+            transition: 0.4s;
+            text-transform: uppercase;
             cursor: pointer;
+            @include media("<=desktop") {padding: 10px 20px; font-size: 13.5px;}
           }
           button.update {
             width: 30%;
             background: var(--primary-color);
-            color: #fff;
+            color: var(--primary-color-light);
+            &:hover{
+              color: #fff;
+            }
           }
           button.back {
             width: 20%;
-            background: transparent;
-            color: #444;
-            border: 2px solid #444;
+            color: gray;
             margin-right: 20px;
+            &:hover{
+              color: #000;
+            }
           }
         }
       }
@@ -178,19 +213,20 @@
       border-radius: 10px;
       padding: 40px;
 
-      .table{
+      .table {
         border: 2px solid #ccc;
         border-radius: 8px;
         margin-top: 20px;
         // entries
-        .table-heading, .entry {
+        .table-heading,
+        .entry {
           display: flex;
           height: 7vh;
           padding: 0 10px;
-          &:not(:last-child){
+          &:not(:last-child) {
             border-bottom: 2px solid #ccc;
           }
-          
+
           div {
             display: flex;
             align-items: center;
@@ -198,42 +234,62 @@
             color: gray;
           }
           .cottage,
-          .numb { width: 25%; }
-          .type { width: 50%; }
+          .numb {
+            width: 25%;
+          }
+          .type {
+            width: 50%;
+          }
         }
-        .entry{
-          .cottage p{
+        .entry {
+          .cottage p {
             height: 3vh;
             width: 3vh;
             border-radius: 5px;
             font-size: 16px;
             font-family: var(--quicksand-font);
             font-weight: bold;
-            @include media("<=desktop") { font-size: 14px; height: 25px; width: 25px; }
-            display: flex; align-items: center; justify-content: center;
+            @include media("<=desktop") {
+              font-size: 14px;
+              height: 25px;
+              width: 25px;
+            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #fff;
           }
-          .cottage.one p { background: var(--blue-dark); }
-          .cottage.two p { background: #f26430 ; }
-          .cottage.three p { background: #a0bf5e; }
-          .cottage.four p { background: #683fbf; }
-          .cottage.five p { background: var(--green-dark) }
+          .cottage.one p {
+            background: var(--blue-dark);
+          }
+          .cottage.two p {
+            background: #f26430;
+          }
+          .cottage.three p {
+            background: #a0bf5e;
+          }
+          .cottage.four p {
+            background: #683fbf;
+          }
+          .cottage.five p {
+            background: var(--green-dark);
+          }
         }
         // table heading
-        .table-heading{
+        .table-heading {
           svg {
             width: 12px;
             transform: rotate(-45deg);
             margin-left: 5px;
           }
-          div{
+          div {
             font-weight: bold;
           }
         }
       }
     }
   }
-  .success-message{
+  .success-message {
     position: absolute;
     top: 20px;
     left: 21vw;
@@ -246,17 +302,21 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    div{
-      width: 30px; height: 30px;
-      border-radius: 50%; border: 2px solid var(--green-dark);
-      margin-right: 10px; display: flex; align-items: center;
+    div {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--green-dark);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
     opacity: 1;
     margin-left: 0;
     transition: 0.5s;
   }
-  .success-message.disabled{
+  .success-message.disabled {
     margin-left: 30px;
     opacity: 0;
   }
