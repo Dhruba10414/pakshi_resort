@@ -11,10 +11,10 @@
     position: relative;
     h3 {
       font-family: var(--quicksand-font);
-      font-size: 3rem;
+      font-size: 2.5rem;
       line-height: 30px;
       color: var(--primary-color);
-      @include media("<=desktop") { font-size: 2.5rem; }
+      @include media("<=desktop") { font-size: 2.2rem; }
     }
     p {
       font-family: WRITTEN;
@@ -157,7 +157,7 @@
 
     .design {
       width: 100%;
-      height: 40vh;
+      height: 35vh;
       border-radius: 10px;
       @include media("<=desktop") { height: 34vh; }
       &__colored {
@@ -198,8 +198,15 @@
         @include media("<=desktop") { margin-top: 9px; }
         .label{width: 40%; font-weight: bold; font-size: var(--quicksand-font); color: gray; font-size: 14px;}
         .values{display: flex;}
-        .value{font-family: var(--quicksand-font); margin-right: 7px;}
+        .value{
+          font-family: var(--quicksand-font); margin-right: 7px;
+          display: flex;
+          div{ margin-right: 20px; border-radius: 2px; }
+          div.vat{ background: var(--red-dark); color: #fff; padding: 4px 8px;}
+          div.discount{ background: var(--green-dark); color: #fff; padding: 4px 8px;}
+        }
         .value.room_num{ background: var(--blue); color: var(--blue-dark); padding: 5px 15px; border-radius: 10px; font-weight: bold;  }
+        .value.subtotal{ font-weight: bold; font-size: 18px; color: var(--green-dark); }
       }
     }
   }

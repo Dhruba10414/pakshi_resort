@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { clearUser } from "../redux/user/userAction";
@@ -16,6 +16,7 @@ function Book({clearUser}) {
   const [availableRooms, setAvailableRooms] = useState([]);
   const [availableRoomsByGroup, setAvailableRoomsByGroup] = useState([]);
   const [roomToBooked, setRoomToBooked] = useState([]);
+  const [roomTypes, setRoomTypes] = useState([]);
   const [stayingTime, setStayingTime] = useState(null);
 
   const [searched, setSearched] = useState(false);
@@ -25,11 +26,18 @@ function Book({clearUser}) {
 
   const history = useHistory();
 
+  useEffect(() => {
+    axios.get(api.room_type_with_price)
+    .then((res) => { setRoomTypes(res.data); })
+    .catch((err) => { console.log(err.message); })
+  }, [])
+
   // SEARCH AVAILABLE ROOMS
   const searchRoomUsingDate = (startDate, endDate) => {
     setLoading(true);
     setSearched(true);
     setBookCardOn(false);
+    setRoomToBooked([]);
 
     // setup check-in check-out dates
     const sd = startDate.getDate();
@@ -38,7 +46,8 @@ function Book({clearUser}) {
     const ed = endDate.getDate();
     const em = (endDate.getMonth() + 1).toString().padStart(2, "0");
     const ey = endDate.getFullYear();
-    setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`});
+    const days = (endDate - startDate) / (1000 * 60 * 60 * 24)
+    setStayingTime({checkIn: `${sd}-${sm}-${sy}`, checkOut: `${ed}-${em}-${ey}`, days: days});
 
     // specify api urls
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -193,6 +202,7 @@ function Book({clearUser}) {
       ) : (
         <BookingForm
           roomData={roomToBooked}
+          roomTypes={roomTypes}
           stayingTime={stayingTime}
           setBookCardOn={setBookCardOn}
           bookRoomForGuest={bookRoomForGuest}

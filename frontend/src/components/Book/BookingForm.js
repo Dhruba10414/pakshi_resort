@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cheklist from "../../assets/images/View/svg/checklist.svg";
 import question from "../../assets/images/View/svg/question.svg";
 import leaf from "../../assets/images/StaffSection/leafs.png";
@@ -11,6 +11,7 @@ import {
 
 function BookingForm({
   roomData,
+  roomTypes,
   stayingTime,
   setBookCardOn,
   bookRoomForGuest,
@@ -22,6 +23,17 @@ function BookingForm({
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+  const [cost, setCost] = useState(0);
+
+  // CALCULATE PRICE
+  useEffect(() => {
+    let totalcost = 0;
+    roomData.forEach(data => {
+      totalcost += roomTypes[data.room_type - 1].tariff * stayingTime.days;
+    });
+
+    setCost(totalcost);
+  }, []);
 
   // EMAIL VALIDATION CHECK
   const emailValidation = () => {
@@ -178,6 +190,24 @@ function BookingForm({
           <div className="data">
             <div className="label">Check-out :</div>
             <div className="value">{stayingTime.checkOut}</div>
+          </div>
+          <div className="data">
+            <div className="label">Total {stayingTime.days > 1 ? "days" : "day"}:</div>
+            <div className="value">
+              {stayingTime.days} {stayingTime.days > 1 ? "days" : "day"}
+            </div>
+          </div>
+          <div className="data">
+            <div className="label">Cost :</div>
+            <div className="value">
+              <div>{cost} ৳</div>
+              <div className="vat">+ 15%</div>
+              {/* <div className="discount">- 0%</div> */}
+            </div>
+          </div>
+          <div className="data">
+            <div className="label">Subtotal :</div>
+            <div className="value subtotal">{cost + cost * .15} ৳</div>
           </div>
         </div>
       </div>
