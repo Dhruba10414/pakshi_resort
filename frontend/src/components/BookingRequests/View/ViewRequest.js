@@ -11,6 +11,7 @@ function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
   const [availableroom, setAvailableRoom] = useState(false);
   const [roomData, setRoomData] = useState(false);
   const [tariff, setTariff] = useState();
+  const [stayingdays, setStayingdays] = useState(0);
   const [cancel, setCancel] = useState(false);
   const [success, setSuccess] = useState(false);
   const [warning, setWarning] = useState(false);
@@ -59,9 +60,26 @@ function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
     setTariff(costPerRoom);
   };
 
+  // CALCULATE NUMBER OF STAYING DAYS
+  const calculateDays = () => {
+    const cin = viewFor.info.checkin.split("-");
+    const cout = viewFor.info.checkout.split("-");
+    
+    const checkIn = new Date();
+    checkIn.setDate(cin[0]);
+    checkIn.setMonth(cin[1] - 1);
+    checkIn.setFullYear(cin[2]);
+    const checkOut = new Date();
+    checkOut.setDate(cout[0]);
+    checkOut.setMonth(cout[1] - 1);
+    checkOut.setFullYear(cout[2]);
+    setStayingdays((checkOut - checkIn) / (1000 * 24 * 3600));
+  }
+
   // FETCH DATA
   useEffect(() => {
     setLoading(true);
+    calculateDays();
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const AVAILABLITY_CHECK = `${api.available_rooms}?check_in=${viewFor.info.checkin}&check_out=${viewFor.info.checkout}`;
@@ -80,7 +98,7 @@ function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
             setLoading(false);
           })
           .catch(() => {
-            console.clear();
+            // console.clear();
             setLoading(false);
           });
       });
@@ -100,6 +118,7 @@ function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
           setAvailableRoom={setAvailableRoom}
           roomTypeWithPrice={roomTypeWithPrice}
           roomTariff={tariff}
+          stayingdays={stayingdays}
         />
         <ViewInfo viewFor={viewFor} tariff={tariff} />
       </div>

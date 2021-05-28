@@ -18,11 +18,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
 
   // EMAIL VALIDATION CHECK
   const emailValidation = () => {
-    if (
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-        email
-      )
-    ) {
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
       return true;
     } else {
       setError("Invalid email format.");
@@ -46,6 +42,7 @@ function GiveGuestData({ roomAmount, selectedRoom, selectTime, setState }) {
   // REQUIRED FIELD CHECK VALIDATION
   const requiredFieldCheck = () => {
     if (name && email && contact && address) {
+      return true;
     } else {
       setError("Required all fields");
       return false;

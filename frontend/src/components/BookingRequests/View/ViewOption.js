@@ -20,6 +20,7 @@ function ViewOption({
   warningNotify,
   cancelNotify,
   setAvailableRoom,
+  stayingdays,
 }) {
   const [selectedroom, setSelectedRoom] = useState([]);
   const [roomType, setRoomtype] = useState(viewFor.info.roomType);
@@ -32,7 +33,7 @@ function ViewOption({
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    setTariff(roomTariff)
+    setTariff(roomTariff);
   }, [roomTariff]);
 
   // SELECT ROOM
@@ -216,9 +217,22 @@ function ViewOption({
         <h3>
           Available rooms <span>({roomType})</span>
         </h3>
-        <h3>
-          Cost: <span>{tariff * selectedroom.length}</span>
-        </h3>
+        <div className="work_head__sub">
+          <h3>
+            Staying time:{" "}
+            <span>
+              {stayingdays}
+              {stayingdays > 1 ? "days" : "day"}
+            </span>
+          </h3>
+          <h3>
+            Cost:{" "}
+            <span>
+              {tariff * selectedroom.length * stayingdays +
+                tariff * selectedroom.length * stayingdays * (15 / 100)}
+            </span>
+          </h3>
+        </div>
       </div>
       <div className="work">
         {!loading ? (

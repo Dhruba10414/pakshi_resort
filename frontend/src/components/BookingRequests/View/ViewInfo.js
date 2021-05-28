@@ -90,7 +90,7 @@ function ViewInfo({viewFor, tariff}) {
               <div className="data__logo">৳</div>
               <div className="data__value">
                 <h4>Cost Per room</h4>
-                <p>{tariff}</p>
+                <p>{tariff} <span>+15%</span></p>
               </div>
             </div>
           </div>

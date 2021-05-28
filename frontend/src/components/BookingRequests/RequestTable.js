@@ -5,7 +5,6 @@ import { searchSvg, rsvg } from "../../assets/images/SVG";
 import search from "../../assets/images/View/svg/search-3.svg";
 
 function RequestTable({ loading, requests, viewRequest }) {
-  const [number, setNumber] = useState("");
   const [matchedData, setMatchedData] = useState([]);
 
   // SEARCHING FUNCTIONALITY

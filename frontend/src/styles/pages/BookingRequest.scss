@@ -238,9 +238,10 @@
           font-family: var(--quicksand-font);
           @include media("<=desktop") { font-size: 13.5px; }
         }
-        p {
+        p, div {
           font-size: 15px;
           @include media("<=desktop") { font-size: 12.5px; }
+          span{ padding: 2px 4px; color: #ff1493; margin-left: 10px;}
         }
       }
     }
@@ -386,6 +387,7 @@
         color: var(--green-dark); font-size: 14px;
         @include media("<=desktop") { font-size: 13px; }
       }
+      &__sub{ display: flex; h3{ margin-left: 20px; }}
     }
     .work {
       width: 100%;
