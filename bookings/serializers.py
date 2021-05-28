@@ -73,9 +73,16 @@ class RoomGuestEmbededSerializer(RoomOccupiedSerializer):
 
 class GuestSerializer(serializers.ModelSerializer):
     is_staying = serializers.BooleanField(read_only=True)
+    booked_rooms = serializers.SerializerMethodField()
+    
     class Meta:
         model = Guests
-        fields = '__all__'
+        fields = ['booked_rooms', 'name', 'email', 'address', 'contact', 'is_staying']
+
+    def get_booked_rooms(self, obj):
+        rooms = obj.booked.filter(is_active=True).values_list('room__room_num', flat=True)
+
+        return rooms
 
 class BookingGuestDetailSerializer(BookingSerializer):
     guest = GuestSerializer()
