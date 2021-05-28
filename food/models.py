@@ -26,6 +26,7 @@ class FoodOrdering(models.Model):
     time = models.DateTimeField(auto_now=True)
     isComplete = models.BooleanField(default=False)
     isCancel = models.BooleanField(default=False)
+    notes = models.CharField(max_length=20,blank=True, null=True)
     
 
     order_price = models.FloatField(default=0.0)

@@ -35,7 +35,7 @@ class FoodOrderEmbededSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=FoodOrdering
-        fields=['id','food','quantity','time','taken_by', 'isComplete', 'isCancel', 'guest','order_price','total']
+        fields=['id','food','quantity','time','taken_by', 'isComplete', 'isCancel', 'guest','order_price','total','notes']
     
     def get_total(self,obj):
         return (obj.order_price*obj.quantity)

@@ -112,7 +112,7 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 
                 
-                new_order = FoodOrdering(quantity=food["quantity"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price)
+                new_order = FoodOrdering(quantity=food["quantity"],notes = food["notes"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price)
                 new_order.taken_by=request.user
                 new_order.save()
                 
