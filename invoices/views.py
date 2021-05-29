@@ -25,7 +25,9 @@ class GuestInvoiceView(generics.GenericAPIView):
             guest_bookings = Bookings.objects.filter(guest__id=guest_id, is_canceled=False
                             ).annotate(stayed=Datediff(F('check_out'), F('check_in'))
                             ).annotate(bill=ExpressionWrapper(F('rate')*
-                            F('stayed'), output_field=FloatField())).order_by('check_in')
+                            F('stayed'), output_field=FloatField())
+                            ).annotate(vat=ExpressionWrapper(F('bill')*
+                            F('applied_vat'), output_field=FloatField())).order_by('check_in')
 
             bills = self.get_serializer(guest_bookings, many=True)
 
@@ -84,17 +86,22 @@ class GuestInvoiceSummuryView(generics.GenericAPIView):
         if guest is not None:
             bills = Bookings.objects.filter(guest__id=guest, is_canceled=False).annotate(
                                 stayed=Datediff('check_out', 'check_in')
-                                ).annotate(bill=ExpressionWrapper(F('rate')*
-                                F('stayed'), output_field=FloatField()))
-            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
+                                ).annotate(bill=ExpressionWrapper(F('rate') * F('stayed'), 
+                                output_field=FloatField())
+                                ).annotate(vat=ExpressionWrapper(F('bill') * F('applied_vat'),
+                                output_field=FloatField()))
+            total_bill = bills.aggregate(total_bill=Coalesce(Sum('bill'), 0.0))['total_bill']
+            total_vat = bills.aggregate(total_vat=Coalesce(Sum('vat'), 0.0))['total_vat']
 
             payments = Payments.objects.filter(guest__id=guest, paid_for='RB')
-            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
+            total_paid = payments.aggregate(total_paid=Coalesce(Sum('amount'), 0.0))['total_paid']
             
             summury = {
                 'total_bills': total_bill,
+                'total_vat': total_vat,
+                'net_payable': total_bill + total_vat,
                 'total_paid': total_paid,
-                'due': total_bill - total_paid
+                'due': total_bill + total_vat - total_paid
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)
@@ -121,10 +128,9 @@ class ResortLog(generics.GenericAPIView):
         filtered = Bookings.objects.filter(check_in__month__gte=month_from, check_in__year__gte=year_from, 
                             check_in__month__lte=month_to, check_in__year__lte=year_to).annotate(
                             stayed=Datediff('check_out', 'check_in')
-                            ).annotate(bill=ExpressionWrapper(F('rate')*
-                            F('stayed'), output_field=FloatField()))
+                            )
         
-        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Guest leaved', 'Canceled', 'Completed', 'Nights Stayed', 'Cost per Night', 'Bill', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Room No', 'Booked On', 'Check In Date', 'Check Out Date', 'Guest leaved', 'Canceled', 'Completed', 'Nights Stayed', 'Cost per Night', 'Applied Vat', 'Registed By'])
         for q in filtered:
             row = [q.guest.name,
                     q.guest.email,
@@ -137,7 +143,7 @@ class ResortLog(generics.GenericAPIView):
                     q.is_complete,
                     q.stayed,
                     q.rate,
-                    q.bill if not q.is_canceled else "NaN", 
+                    f'{.2:(q.applied_vat * 100)}%', 
                     q.by_staff.user_name]
             writer.writerow(row)
 

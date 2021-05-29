@@ -9,6 +9,7 @@ class BookingWithBill(BookingSerializer):
     room_num = serializers.SerializerMethodField()
     room_type = serializers.SerializerMethodField()
     bill = serializers.FloatField()
+    vat = serializers.FloatField()
     stayed = serializers.IntegerField()
 
     def get_room_num(self, obj):
