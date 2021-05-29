@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { checkSquare } from "../../assets/images/SVG";
+import gsap from "gsap";
 
 function OrderItem({
   id,
   guest,
+  roomsfrom,
   food,
   isComplete,
   isCancel,
@@ -13,6 +15,27 @@ function OrderItem({
   setWarnings,
 }) {
   const [select, setSelect] = useState(false);
+  const [openRoom, setOpenRoom] = useState(false);
+  const rref = useRef(null);
+
+  const controlRoomBlock = () => {
+    let tl = gsap.timeline();
+
+    if (!openRoom) {
+      tl.to(rref.current, 0.5, {
+        css: { zIndex: 2, height: "26vh" },
+        height: "12vh",
+        ease: "expo.in",
+      });
+      setOpenRoom(!openRoom);
+    } else {
+      tl.to(rref.current, 0.5, {
+        css: { zIndex: 1, height: "6vh" },
+        ease: "expo.in",
+      });
+      setOpenRoom(!openRoom);
+    }
+  };
 
   const selectFoodItemFunc = () => {
     if (select) {
@@ -23,9 +46,9 @@ function OrderItem({
         setSelect(true);
         selectFoodItem(id);
       } else {
-          setTimeout(() => {
-            setWarnings(false);
-          }, [1500])
+        setTimeout(() => {
+          setWarnings(false);
+        }, [1500]);
         setWarnings(true);
       }
     }
@@ -40,7 +63,21 @@ function OrderItem({
         {select ? checkSquare : null}
         <div>{id}</div>
       </div>
-      <div className="guest">{guest ? guest: "/"}</div>
+      <div
+        className={!openRoom ? "rooms" : "rooms rooms-colored"}
+        onClick={controlRoomBlock}
+      >
+        {roomsfrom.length > 0 ? (
+          <div ref={rref} className="roomNumb">
+            {roomsfrom.map((room) => (
+              <div>{room}</div>
+            ))}
+          </div>
+        ) : (
+          "None / Leaved"
+        )}
+      </div>
+      <div className="guest">{guest ? guest : "/"}</div>
       <div className="food">{food}</div>
       <div
         className={
@@ -51,7 +88,13 @@ function OrderItem({
             : "status pending"
         }
       >
-        <p>{isComplete || !guest ? "completed" : isCancel ? "canceled" : "pending"}</p>
+        <p>
+          {isComplete || !guest
+            ? "completed"
+            : isCancel
+            ? "canceled"
+            : "pending"}
+        </p>
       </div>
       <div className="quantity">{quantity}</div>
     </div>

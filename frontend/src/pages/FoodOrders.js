@@ -167,6 +167,7 @@ function FoodOrders({
           .get(FOOD_ORDERS, Config)
           .then((res) => {
             saveOrderes(res.data);
+            console.log(res.data);
             setDataLoading(false);
           })
           .catch(() => {
@@ -242,6 +243,7 @@ function FoodOrders({
           {/* table heading */}
           <div className="table-heading">
             <div className="no">Id {rsvg}</div>
+            <div className="rooms">Rooms {rsvg}</div>
             <div className="guest">Guest {rsvg}</div>
             <div className="food">Food {rsvg}</div>
             <div className="status">Status{rsvg}</div>
@@ -263,6 +265,7 @@ function FoodOrders({
                   key={order.id}
                   id={order.id}
                   guest={order.guest && order.guest.name}
+                  roomsfrom={order.guest && order.guest.booked_rooms}
                   food={order.food.name}
                   isComplete={order.isComplete}
                   isCancel={order.isCancel}
@@ -279,6 +282,7 @@ function FoodOrders({
                   key={order.id}
                   id={order.id}
                   guest={order.guest && order.guest.name}
+                  roomsfrom={order.guest && order.guest.booked_rooms}
                   food={order.food.name}
                   isComplete={order.isComplete}
                   isCancel={order.isCancel}

@@ -77,20 +77,33 @@
         border-bottom: 3px solid #f4f4f4;
         div {
           height: 8vh;
-          display: flex;
-          align-items: center;
           padding: 0 20px;
           font-family: var(--quicksand-font);
           font-size: 16px;
+          transition: all 0.5s;
         }
         .guest-name {
-          width: 25%;
+          width: 20%;
+          display: flex;
+          align-items: center;
         }
         .phone {
-          width: 25%;
+          width: 20%;
+          display: flex;
+          align-items: center;
+        }
+        .rooms {
+          width: 15%;
+        }
+        .rooms.rooms-colored{
+          div.roomNumb{
+            div{ background-color: #dcd0ff; color: #9932cc; }
+          }
         }
         .options {
-          width: 60%;
+          width: 35%;
+          display: flex;
+          align-items: center;
         }
       }
 
@@ -107,11 +120,47 @@
           font-weight: bold;
           font-size: 14px;
           color: gray;
+          display: flex;
+          align-items: center;
         }
       }
 
       // Table Entrys
       .aguest {
+        .rooms {
+          width: 15%;
+          cursor: pointer;
+          position: relative;
+          div.roomNumb {
+            width: 100%;
+            height: 8vh;
+            padding: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            div {
+              height: 5vh;
+              width: 48%;
+              margin-bottom: 6px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-family: var(--quicksand-font);
+              background-color: #f7f7f7;
+              color: gray;
+              border-radius: 4px;
+              font-weight: bold;
+            }
+          }
+        }
         .options {
           display: flex;
 

@@ -121,7 +121,8 @@ function ActiveGuest() {
                   <div className="guest-name">Guest Name{rsvg}</div>
                   <div className="phone">Email{rsvg}</div>
                   <div className="phone">Phone{rsvg}</div>
-                  <div className="options"></div>
+                  <div className="rooms">Rooms{rsvg}</div>
+                  <div className="options">Actions{rsvg}</div>
                 </div>
                 {matchedData.length > 0 ? (
                   <div className="results">
@@ -133,6 +134,7 @@ function ActiveGuest() {
                         phone={guest.contact}
                         address={guest.address}
                         email={guest.email}
+                        booked_rooms={guest.booked_rooms}
                         openInvoiceModal={openInvoiceModal}
                         openFoodOrderModal={openFoodOrderModal}
                         openTicketModal={openTicketModal}
@@ -152,6 +154,7 @@ function ActiveGuest() {
                         phone={guest.contact}
                         address={guest.address}
                         email={guest.email}
+                        booked_rooms={guest.booked_rooms}
                         openInvoiceModal={openInvoiceModal}
                         openFoodOrderModal={openFoodOrderModal}
                         openTicketModal={openTicketModal}
