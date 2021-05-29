@@ -18,6 +18,7 @@ import csv
 from django.http import HttpResponse
 from datetime import datetime
 from django.utils import timezone
+from bookings.models import Guests
 
 
 class FoodItemView(generics.GenericAPIView):
@@ -117,9 +118,19 @@ class FoodOrderingView(generics.GenericAPIView):
     def post(self,request,*args,**kwargs):
         food_id_and_quantity_list = request.data.get('foods',[])
         guest_id = request.data.get('guest_id', None)
+        guest_name = request.data.get('guest_name','Mr.')
+        guest_contact = request.data.get('guest_contact','01730706252')
+        discount = request.data.get('guest_discount',0)
         
        
         try:
+            if guest_id is None:
+                    new_guest = Guests(name = guest_name,discount_food = discount ,contact = guest_contact,email = 'xyz@gmail.com',address = 'restaurant anonymous guest')
+                    new_guest.save()
+                    guest_id = new_guest.id
+            sum=0
+            vat_obj=0
+            
             for food in food_id_and_quantity_list:
                 select_food = FoodItem.objects.get(id=food["id"])
 
@@ -128,16 +139,23 @@ class FoodOrderingView(generics.GenericAPIView):
                 
                 if food["quantity"] is None :
                     return Response(data={'message :''You have to select a specific Quantity'},status=status.HTTP_404_NOT_FOUND)
-                
-                
+                    
                 
                 new_order = FoodOrdering(quantity=food["quantity"],notes = food["notes"],guest_id=guest_id,food_id=food["id"],order_price=select_food.price,vat=select_food.vat)
                 new_order.taken_by=request.user
                 new_order.save()
-                
-            return Response(data={'message :''Your order recieved Successfully'},status=status.HTTP_200_OK)
+                sum = sum + (food["quantity"]*select_food.price)
+                vat_obj = select_food.vat
+
+            obj = {
+                'guest_id':guest_id,
+                'vat':vat_obj,
+                'discount':discount,
+                'bill':sum
+            }
+            return Response(data={obj},status=status.HTTP_200_OK)
         except FoodItem.DoesNotExist:
-            return Response(data={'message : ''Please Select a valid food Item '},status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'message' : 'Please Select a valid food Item'},status=status.HTTP_404_NOT_FOUND)
 
 
 class OrderInvoiceView(generics.GenericAPIView):
@@ -180,7 +198,7 @@ class FoodLogView(generics.GenericAPIView):
                                 F('quantity')*F('vat'), output_field=FloatField()))
                                 
         
-        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill','Vat','Total Amount', 'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity',  'Registed By'])
         for q in filtered:
             row = [q.guest.name if q.guest else "Anonymous",
                     q.guest.email if q.guest else "-",
@@ -189,9 +207,9 @@ class FoodLogView(generics.GenericAPIView):
                     q.food.food_type,
                     q.order_price,
                     q.quantity,
-                    q.bill if not q.isCancel else "NaN" ,
-                    q.vat,
-                    q.bill + q.vat,
+                    # q.bill if not q.isCancel else "NaN" ,
+                    # q.vat,
+                    # q.bill + q.vat,
                     q.taken_by.user_name]
             writer.writerow(row)
 
@@ -210,12 +228,14 @@ class OrderInvoiceSummuryView(generics.GenericAPIView):
 
             payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
             total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
-            
+            discount = Guests.objects.get(id=guest).values('discount_food')['discount_food']
             summury = {
                 'total_bills': total_bill,
-                'total_paid': total_paid,
                 'total_vat' : total_vat,
-                'due': total_bill - total_paid
+                'discount' : discount,
+                'net_payable': total_bill + total_vat  - discount,
+                'total_paid': total_paid,
+                'due': total_bill + total_vat - total_paid-discount
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)
@@ -230,7 +250,7 @@ class FoodAnalyticsView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
         output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
-        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),vat = Sum('vat')  ,orders=Count('id')).order_by('month')[:12]
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),total_vat = Sum('vat')  ,orders=Count('id')).order_by('month')[:12]
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 

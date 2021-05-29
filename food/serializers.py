@@ -47,5 +47,6 @@ class FoodAnalyticsSerializer(serializers.BaseSerializer):
             'month': instance['month'].month,
             'year': instance['month'].year,
             'total_food_orders': instance['orders'],
-            'total_income': instance['income']+instance['vat']
+            'total_income': instance['income'],
+            'total_vat' :instance['total_vat']
         }
