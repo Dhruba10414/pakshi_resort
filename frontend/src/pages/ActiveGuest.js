@@ -121,7 +121,7 @@ function ActiveGuest() {
                   <div className="guest-name">Guest Name{rsvg}</div>
                   <div className="phone">Email{rsvg}</div>
                   <div className="phone">Phone{rsvg}</div>
-                  <div className="rooms">Rooms{rsvg}</div>
+                  <div className="brooms">Rooms{rsvg}</div>
                   <div className="options">Actions{rsvg}</div>
                 </div>
                 {matchedData.length > 0 ? (

@@ -18,19 +18,21 @@ function Guest({
   const controlRoomBlock = () => {
     let tl = gsap.timeline();
 
-    if (!openRoom) {
-      tl.to(rref.current, 0.3, {
-        css: {zIndex: 10, height: "26vh"},
-        height: "12vh",
-        ease: "expo.in",
-      });
-      setOpenRoom(!openRoom);
-    } else{
-      tl.to(rref.current, 0.3, {
-        css: {zIndex: 1, height: "8vh"},
-        ease: "expo.in",
-      });
-      setOpenRoom(!openRoom);
+    if(booked_rooms.length > 2){
+      if (!openRoom) {
+        tl.to(rref.current, 0.3, {
+          css: {zIndex: 10, height: "16vh"},
+          height: "12vh",
+          ease: "expo.in",
+        });
+        setOpenRoom(!openRoom);
+      } else{
+        tl.to(rref.current, 0.3, {
+          css: {zIndex: 1, height: "8vh"},
+          ease: "expo.in",
+        });
+        setOpenRoom(!openRoom);
+      }
     }
   };
   
@@ -39,7 +41,7 @@ function Guest({
       <div className="guest-name">{name}</div>
       <div className="phone">{email}</div>
       <div className="phone">{phone}</div>
-      <div className={!openRoom ? "rooms" : "rooms rooms-colored"} onClick={controlRoomBlock}>
+      <div className={!openRoom ? "brooms" : "brooms rooms-colored"} onClick={controlRoomBlock}>
         <div ref={rref} className="roomNumb">
           {booked_rooms.map((room) => <div key={room}>{room}</div>)}
         </div>

@@ -21,19 +21,21 @@ function OrderItem({
   const controlRoomBlock = () => {
     let tl = gsap.timeline();
 
-    if (!openRoom) {
-      tl.to(rref.current, 0.5, {
-        css: { zIndex: 2, height: "26vh" },
-        height: "12vh",
-        ease: "expo.in",
-      });
-      setOpenRoom(!openRoom);
-    } else {
-      tl.to(rref.current, 0.5, {
-        css: { zIndex: 1, height: "6vh" },
-        ease: "expo.in",
-      });
-      setOpenRoom(!openRoom);
+    if(roomsfrom.length > 2) {
+      if (!openRoom) {
+        tl.to(rref.current, 0.5, {
+          css: { zIndex: 2, height: "26vh" },
+          height: "12vh",
+          ease: "expo.in",
+        });
+        setOpenRoom(!openRoom);
+      } else {
+        tl.to(rref.current, 0.5, {
+          css: { zIndex: 1, height: "6vh" },
+          ease: "expo.in",
+        });
+        setOpenRoom(!openRoom);
+      }
     }
   };
 
@@ -70,7 +72,7 @@ function OrderItem({
         {roomsfrom && roomsfrom.length > 0 ? (
           <div ref={rref} className="roomNumb">
             {roomsfrom.map((room) => (
-              <div>{room}</div>
+              <div key={room}>{room}</div>
             ))}
           </div>
         ) : (
