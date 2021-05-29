@@ -28,16 +28,25 @@ function Entry({
   const history = useHistory();
 
   const checkDateAndCheckIn = () => {
-    const date = new Date();
-    const day = date.getDate();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear();
-    const today = `${day}-${month}-${year}`;
+    const cin = check_in.split("-");
+    const cout = check_out.split("-");
     
-    if(today !== check_in){
-      notifyForError();
-    } else{
+    const checkIn = new Date();
+    checkIn.setDate(cin[0]);
+    checkIn.setMonth(cin[1] - 1);
+    checkIn.setFullYear(cin[2]);
+
+    const checkOut = new Date();
+    checkOut.setDate(cout[0]);
+    checkOut.setMonth(cout[1] - 1);
+    checkOut.setFullYear(cout[2]);
+
+    const today = new Date();
+    
+    if(today >= checkIn && today < checkOut){
       checkedInFunc();
+    } else{
+      notifyForError();
     }
   }
 
