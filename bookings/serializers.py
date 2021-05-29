@@ -77,7 +77,7 @@ class GuestSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Guests
-        fields = ['booked_rooms', 'name', 'email', 'address', 'contact', 'is_staying']
+        fields = ['id', 'name', 'email', 'address', 'contact', 'is_staying', 'booked_rooms']
 
     def get_booked_rooms(self, obj):
         rooms = obj.booked.filter(is_active=True).values_list('room__room_num', flat=True)
