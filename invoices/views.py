@@ -143,7 +143,7 @@ class ResortLog(generics.GenericAPIView):
                     q.is_complete,
                     q.stayed,
                     q.rate,
-                    f'{.2:(q.applied_vat * 100)}%', 
+                    f'{(q.applied_vat * 100):.2f}%', 
                     q.by_staff.user_name]
             writer.writerow(row)
 
