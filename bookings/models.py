@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 class RoomType(models.Model):
     room_type = models.CharField(max_length=32)
     tariff = models.FloatField()
+    vat = models.FloatField(default=0.15)
 
 
 class Rooms(models.Model):
@@ -32,6 +33,7 @@ class Bookings(models.Model):
     is_complete = models.BooleanField(default=False)
     is_canceled = models.BooleanField(default=False)
     rate = models.FloatField(default=4000)
+    applied_vat = models.FloatField(default=0.15)
     leaved_on = models.DateField(null=True)
     by_staff = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='staff_booked', null=True)
 

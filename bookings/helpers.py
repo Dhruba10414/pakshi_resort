@@ -34,6 +34,7 @@ def add_new_booking(room_id, guest_id, staff_id, check_in, check_out):
         new_booking = Bookings(room=room, guest_id=guest_id, check_in=check_in, 
                                 check_out=check_out, by_staff_id=staff_id)
         new_booking.rate = room.room_type.tariff
+        new_booking.applied_vat = room.room_type.vat
         new_booking.save()
     
         return new_booking
