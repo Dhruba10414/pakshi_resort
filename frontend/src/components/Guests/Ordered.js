@@ -8,6 +8,7 @@ import {
   removeFoodFromBasket,
   removeAllFoods,
 } from "../../redux/foods/foodAction";
+import OrderedItem from "./OrderedItem";
 // imaeg & svg
 import { arrowLeftCherovon, rsvg } from "../../assets/images/SVG";
 import emptysvg from "../../assets/images/View/svg/empty.svg";
@@ -61,6 +62,15 @@ function Ordered({
     setChanged(true);
   };
 
+  // ADD FOOD NOTE
+  const updateFoodNote = (id, note) => {
+    basket.forEach((food) => {
+      if(food.id === id){
+        food.note = note;
+      }
+    })
+  };
+
   // NOTIFY
   const notify = () => {
     setTimeout(() => {
@@ -74,8 +84,11 @@ function Ordered({
   const orderFoods = () => {
     if (basket && basket.length > 0) {
       setLoading(true);
-      const orderedfoodList = basket.map((food) => {return { id: food.id, quantity: food.quantity, price: food.price };});
-      const Order = { foods: orderedfoodList, guest_id: guestId };
+      const orderedfoodList = basket.map((food) => {
+        return { "id": food.id, "quantity": food.quantity, "price": food.price, "notes": food.note };
+      });
+      const Order = { "foods": orderedfoodList, "guest_id": guestId };
+      console.log(Order);
 
       // setup neccessary urls
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -124,25 +137,18 @@ function Ordered({
           <div className="name">Name {rsvg}</div>
           <div className="quantity">Quantity{rsvg}</div>
           <div className="price">Price {rsvg}</div>
+          <div className="note">Note {rsvg}</div>
         </div>
         {/* if basket has some item */}
         {basket &&
           basket.map((food) => (
-            <div className="ofood" key={food.id}>
-              <div className="name">{food.name}</div>
-              <div className="quantity">
-                <div className="btn" onClick={() => increaseItem(food.id)}>
-                  {" "}
-                  +{" "}
-                </div>
-                <div>{food.quantity}</div>
-                <div className="btn" onClick={() => decreaseItem(food.id)}>
-                  {" "}
-                  -{" "}
-                </div>
-              </div>
-              <div className="price">৳ {food.price}</div>
-            </div>
+            <OrderedItem
+              key={food.id}
+              food={food}
+              increaseItem={increaseItem}
+              decreaseItem={decreaseItem}
+              updateFoodNote={updateFoodNote}
+            />
           ))}
         {/* if basket is empty */}
         {success ? (

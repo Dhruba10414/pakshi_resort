@@ -41,7 +41,7 @@ function Guest({
       <div className="phone">{phone}</div>
       <div className={!openRoom ? "rooms" : "rooms rooms-colored"} onClick={controlRoomBlock}>
         <div ref={rref} className="roomNumb">
-          {booked_rooms.map((room) => <div>{room}</div>)}
+          {booked_rooms.map((room) => <div key={room}>{room}</div>)}
         </div>
       </div>
       <div className="options">

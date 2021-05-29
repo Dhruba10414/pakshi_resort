@@ -67,7 +67,7 @@ function OrderItem({
         className={!openRoom ? "rooms" : "rooms rooms-colored"}
         onClick={controlRoomBlock}
       >
-        {roomsfrom.length > 0 ? (
+        {roomsfrom && roomsfrom.length > 0 ? (
           <div ref={rref} className="roomNumb">
             {roomsfrom.map((room) => (
               <div>{room}</div>

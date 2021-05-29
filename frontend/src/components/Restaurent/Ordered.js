@@ -16,8 +16,9 @@ import checksvg from "../../assets/images/View/svg/check.svg";
 import { api } from "../../assets/URLS";
 // invoice
 import RestaurentInvoice from "../Restaurent/RestaurentInvoice";
-import { pdf} from '@react-pdf/renderer';
-import { saveAs } from 'file-saver';
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import OrderedItem from "./OrderedItem";
 
 function Ordered({
   basket,
@@ -66,6 +67,15 @@ function Ordered({
     setChanged(true);
   };
 
+  // ADD FOOD NOTE
+  const updateFoodNote = (id, note) => {
+    basket.forEach((food) => {
+      if(food.id === id){
+        food.note = note;
+      }
+    })
+  };
+
   // NOTIFY
   const notify = () => {
     setTimeout(() => {
@@ -75,20 +85,22 @@ function Ordered({
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////
-  
+
   const downloadPDF = async (foodList, total) => {
-    const doc = <RestaurentInvoice foodList={foodList} total={total}  />;
+    const doc = <RestaurentInvoice foodList={foodList} total={total} />;
     const asPdf = pdf([]);
     asPdf.updateContainer(doc);
     const blob = await asPdf.toBlob();
-    saveAs(blob, 'foodOrder.pdf');
-  }
+    saveAs(blob, "foodOrder.pdf");
+  };
 
   // ORDER FOODS
   const orderFoods = () => {
     if (basket && basket.length > 0) {
       setLoading(true);
-      const orderedfoodList = basket.map((food) => { return { id: food.id, quantity: food.quantity, price: food.price }; });
+      const orderedfoodList = basket.map((food) => {
+        return { id: food.id, quantity: food.quantity, price: food.price, note: food.note };
+      });
       const Order = { foods: orderedfoodList, guest_id: guestId };
 
       // setup neccessary urls
@@ -100,20 +112,22 @@ function Ordered({
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {
-            headers: { Authorization: "Bearer " + token.data.access }};
+            headers: { Authorization: "Bearer " + token.data.access },
+          };
 
           axios
-          .post(FOOD_ORDER_URL, Order, Config)
-          .then(() => {
-            downloadPDF(basket, total);
-            removeAllFoods();
-            notify();
-            setLoading(false);
-          })
-          .catch(() => {
-            console.clear();
-            setLoading(false);
-          });
+            .post(FOOD_ORDER_URL, Order, Config)
+            .then(() => {
+              downloadPDF(basket, total);
+              removeAllFoods();
+              notify();
+              setLoading(false);
+            })
+            .catch(() => {
+              console.clear();
+              setLoading(false);
+            });
+          
         })
         .catch(() => {
           console.clear();
@@ -140,25 +154,18 @@ function Ordered({
           <div className="name">Name {rsvg}</div>
           <div className="quantity">Quantity{rsvg}</div>
           <div className="price">Price {rsvg}</div>
+          <div className="note">Note {rsvg}</div>
         </div>
         {/* if basket has some item */}
         {basket &&
           basket.map((food) => (
-            <div className="ofood" key={food.id}>
-              <div className="name">{food.name}</div>
-              <div className="quantity">
-                <div className="btn" onClick={() => increaseItem(food.id)}>
-                  {" "}
-                  +{" "}
-                </div>
-                <div>{food.quantity}</div>
-                <div className="btn" onClick={() => decreaseItem(food.id)}>
-                  {" "}
-                  -{" "}
-                </div>
-              </div>
-              <div className="price">৳ {food.price}</div>
-            </div>
+            <OrderedItem
+              key={food.id}
+              food={food}
+              increaseItem={increaseItem}
+              decreaseItem={decreaseItem}
+              updateFoodNote={updateFoodNote}
+            />
           ))}
         {/* if basket is empty */}
         {success ? (
@@ -205,9 +212,11 @@ function Ordered({
             {arrowLeftCherovon} Back
           </button>
         ) : null}
-        {!loading ?
-          <button className="submit-btn" onClick={orderFoods}>Order</button>
-        : (
+        {!loading ? (
+          <button className="submit-btn" onClick={orderFoods}>
+            Order
+          </button>
+        ) : (
           <button className="disabled-btn">Processing...</button>
         )}
       </div>
