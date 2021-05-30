@@ -242,12 +242,13 @@ function FoodOrders({
 
           {/* table heading */}
           <div className="table-heading">
-            <div className="no">Id {rsvg}</div>
+            <div className="no"></div>
             <div className="rooms">Rooms {rsvg}</div>
             <div className="guest">Guest {rsvg}</div>
             <div className="food">Food {rsvg}</div>
             <div className="status">Status{rsvg}</div>
             <div className="quantity">Quantity{rsvg}</div>
+            <div className="notes">Notes{rsvg}</div>
           </div>
           {!dataLoading ? (
             (orders && orders.length === 0) ||
@@ -270,6 +271,7 @@ function FoodOrders({
                   isComplete={order.isComplete}
                   isCancel={order.isCancel}
                   quantity={order.quantity}
+                  notes={order.notes}
                   selectFoodItem={selectFoodItem}
                   removeFoodItem={removeFoodItem}
                   setWarnings={setWarnings}
@@ -287,6 +289,7 @@ function FoodOrders({
                   isComplete={order.isComplete}
                   isCancel={order.isCancel}
                   quantity={order.quantity}
+                  notes={order.notes}
                   selectFoodItem={selectFoodItem}
                   removeFoodItem={removeFoodItem}
                   setWarnings={setWarnings}
