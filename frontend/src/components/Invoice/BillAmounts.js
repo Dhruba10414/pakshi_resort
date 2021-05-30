@@ -18,12 +18,12 @@ function BillAmounts({ bills, title }) {
         </h2>
         { bills.due === 0
           ? <p className="com">{checked} Completed</p>
-          : <p className="due">{warning} Due</p>
+          : <p className="due">{warning} Due {numberWithCommas(bills.due)}</p>
         }
       </div>
 
       <div className="details">
-        {/* room */}
+        {/* bill */}
         <div className="detail room">
           <div className="label">
             <div className="circle"></div>
@@ -34,14 +34,25 @@ function BillAmounts({ bills, title }) {
             {numberWithCommas(bills.total_bills)}
           </h3>
         </div>
-        {/* food */}
+        {/* vat */}
         <div className="detail food">
           <div className="label">
             <div className="circle"></div>
-            <h3>Due Bill</h3>
+            <h3>Vat</h3>
           </div>
           <h3 className="tk">
-            <span>৳</span>{numberWithCommas(bills.due)}
+            <span>৳</span>
+            {numberWithCommas(bills.total_vat)}
+          </h3>
+        </div>
+        {/* due */}
+        <div className="detail total">
+          <div className="label">
+            <div className="circle"></div>
+            <h3>Total Bill</h3>
+          </div>
+          <h3 className="tk">
+            <span>৳</span>{numberWithCommas(bills.net_payable)}
           </h3>
         </div>
       </div>
