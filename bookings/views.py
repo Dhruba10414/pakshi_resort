@@ -42,6 +42,26 @@ class RoomCategoryView(generics.GenericAPIView):
             return Response({"error": "No such room category"}, status=status.HTTP_404_NOT_FOUND)
 
 
+class BookingsVatUpdateView(generics.GenericAPIView):
+    serializer_class = RoomTypeSerializer
+    permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
+
+    def post(self, request, *args, **kwargs):
+        new_vat = request.data.get('vat', None)
+        roomTypes = RoomType.objects.all()
+
+        if new_vat:
+            for aType in roomTypes:
+                updated = self.get_serializer(aType, data=request.data, partial=True)
+                updated.is_valid(raise_exception=True)
+                updated.save()
+            
+            all_vats = self.get_serializer(roomTypes, many=True) 
+            return Response(all_vats.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({'error': 'No vat specified'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
 class RoomView(generics.GenericAPIView):
     serializer_class = RoomSerializer
     permission_classes = [AdminWriteOrAuthenticatedReadOnly, ]
