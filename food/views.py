@@ -45,6 +45,12 @@ class FoodUpdateView(generics.UpdateAPIView):
 class UpdateVatView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerilizer
+
+    def get(self , request , *agrs,**kwargs):
+        food = FoodItem.objects.all()[0]
+        serialzer_data =self.get_serializer(food)
+        return Response(serialzer_data.data,status=status.HTTP_200_OK) 
+
     
     def post(self,request,*args,**kwargs):
         vat = request.data.get('vat',0)
@@ -221,21 +227,21 @@ class OrderInvoiceSummuryView(generics.GenericAPIView):
 
         if guest is not None:
             bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField())).annotate(total_vat=ExpressionWrapper(F('order_price')*
                                 F('quantity')*F('vat'), output_field=FloatField()))
             total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
-            total_vat = bills.aggregate(total=Coalesce(Sum('vat'), 0.0))['total']
+            total_vat = bills.aggregate(total=Coalesce(Sum('total_vat'), 0.0))['total']
 
             payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
             total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
-            discount = Guests.objects.get(id=guest).values('discount_food')['discount_food']
+            discount = Guests.objects.get(id=guest)
             summury = {
                 'total_bills': total_bill,
                 'total_vat' : total_vat,
-                'discount' : discount,
-                'net_payable': total_bill + total_vat  - discount,
+                'discount' : discount.discount_food,
+                'net_payable': total_bill + total_vat  - discount.discount_food,
                 'total_paid': total_paid,
-                'due': total_bill + total_vat - total_paid-discount
+                'due': total_bill + total_vat - total_paid-discount.discount_food
             }
             
             return Response(data=summury, status=status.HTTP_200_OK)
