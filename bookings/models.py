@@ -21,6 +21,10 @@ class Guests(models.Model):
     address = models.CharField(max_length=256)
     contact = models.CharField(max_length=16)
     is_staying = models.BooleanField(default=False)
+    is_tenant = models.BooleanField(default=True)
+    arrived = models.DateTimeField(null=True)
+    discount_bookings = models.FloatField(default=0.0)
+    discount_food = models.FloatField(default=0.0)
 
 
 class Bookings(models.Model):

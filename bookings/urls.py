@@ -16,4 +16,5 @@ urlpatterns = [
     path('guests/frauds/', RemoveFraudBookingRequests.as_view(), name='fraud_removal'),
     path('cancel/', CancelBooking.as_view(), name='cancel_booking'),
     path('guest_requests/notifications/', BookingRequestNotifications.as_view(), name='notifications'),
+    path('guest-discounts/', GuestDiscountOffers.as_view(), name='discounts'),
 ]

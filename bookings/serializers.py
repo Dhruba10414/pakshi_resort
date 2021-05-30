@@ -125,3 +125,9 @@ class BookingRequestWriteSerializer(BookingRequestSerializer):
 
         ReservationEmailDelivery(requested_booking).start()
         return requested_booking
+
+
+class GuestDiscountOfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Guests
+        fields = ['id', 'discount_food', 'discount_bookings', 'is_tenant']

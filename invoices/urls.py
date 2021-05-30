@@ -8,4 +8,5 @@ urlpatterns = [
     path('resort-short-invoice/', GuestInvoiceSummuryView.as_view(), name='invoice_summury'),
     path('resort-logs/', ResortLog.as_view(), name='resort_log'),
     path('analytics/', ResortAnalytics.as_view(), name='resort_analytics'),
+    path('income-logs/', GuestInvoiceLog.as_view(), name='guest_invoice_log'),
 ]

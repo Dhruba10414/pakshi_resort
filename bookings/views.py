@@ -372,3 +372,33 @@ class BookingRequestNotifications(generics.GenericAPIView):
         notifications = BookingRequest.objects.filter(has_confirmed=False, has_canceled=False).count()
 
         return Response({"notifications": notifications}, status=status.HTTP_200_OK)
+
+
+class GuestDiscountOffers(generics.GenericAPIView):
+    permission_classes = [AllowAny, ]
+    serializer_class = GuestDiscountOfferSerializer
+
+    def get(self, request, *args, **kwargs):
+        guest_id = request.query_params.get('guest', None)
+
+        try:
+            guest = Guests.objects.get(id=guest_id)
+            discounts = self.get_serializer(guest)
+            return Response(discounts.data, status=status.HTTP_200_OK)
+        
+        except Guests.DoesNotExist:
+            return Response({"error": "Invalid guest id."}, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, *args, **kwargs):
+        guest_id = request.data.pop('id', None)
+
+        try:
+            guest = Guests.objects.get(id=guest_id)
+            discounts = self.get_serializer(guest, data=request.data, partial=True)
+            discounts.is_valid(raise_exception=True)
+            discounts.save()
+
+            return Response(discounts.data, status=status.HTTP_202_ACCEPTED)
+        
+        except Guests.DoesNotExist:
+            return Response({"error": "Invalid guest id."}, status=status.HTTP_400_BAD_REQUEST)
