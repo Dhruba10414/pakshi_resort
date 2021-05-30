@@ -51,15 +51,28 @@ class UpdateVatView(generics.GenericAPIView):
         serialzer_data =self.get_serializer(food)
         return Response(serialzer_data.data,status=status.HTTP_200_OK) 
 
+    def post(self, request, *args, **kwargs):
+        new_vat = request.data.get('vat', None)
+        food_item = FoodItem.objects.all()
+
+        if new_vat:
+            for aType in food_item:
+                updated = self.get_serializer(aType, data=request.data, partial=True)
+                updated.is_valid(raise_exception=True)
+                updated.save()
+            
+            all_vats = self.get_serializer(food_item, many=True) 
+            return Response(all_vats.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({'error': 'No vat specified'}, status=status.HTTP_400_BAD_REQUEST)
+    # def post(self,request,*args,**kwargs):
+    #     vat = request.data.get('vat',0)
+    #     items =FoodItem.objects.all()
     
-    def post(self,request,*args,**kwargs):
-        vat = request.data.get('vat',0)
-        items =FoodItem.objects.all()
-    
-        for food in items:
-            food.vat = vat
-            food.save()
-        return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
+    #     for food in items:
+    #         food.vat = vat
+    #         food.save()
+    #     return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
 
 
 
