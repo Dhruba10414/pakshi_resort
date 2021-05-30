@@ -55,13 +55,12 @@ class UpdateVatView(generics.GenericAPIView):
     def post(self,request,*args,**kwargs):
         vat = request.data.get('vat',0)
         items =FoodItem.objects.all()
-        try:
-            for food in items:
-                food.vat = vat
-                food.save()
-            return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
-        except FoodItem.DoesNotExist:
-            return Response(data = {'message : vat update failed' },status=status.HTTP_404_NOT_FOUND)
+    
+        for food in items:
+            food.vat = vat
+            food.save()
+        return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
+
 
 
 class OrderCancelView(generics.GenericAPIView):
