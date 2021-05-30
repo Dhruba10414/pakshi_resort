@@ -200,7 +200,7 @@ class FoodLogView(generics.GenericAPIView):
 
         filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
                             time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*
                                 F('quantity')*F('vat'), output_field=FloatField()))
                                 
         
@@ -213,9 +213,9 @@ class FoodLogView(generics.GenericAPIView):
                     q.food.food_type,
                     q.order_price,
                     q.quantity,
-                    # q.bill if not q.isCancel else "NaN" ,
-                    # q.vat,
-                    # q.bill + q.vat,
+                    q.bill if not q.isCancel else "NaN" ,
+                    q.vat_total,
+                    q.bill + q.vat_total,
                     q.taken_by.user_name]
             writer.writerow(row)
 
