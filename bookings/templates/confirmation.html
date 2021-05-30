@@ -32,6 +32,7 @@
                             <th>Check In Date</th>
                             <th>Check Out Date</th>
                             <th>Cost Per Night</th>
+                            <th>Vat(%)</th>
                         </tr>
                         
                         {% for booking in bookings %}
@@ -41,6 +42,7 @@
                                 <th>{{ booking.check_in }}</th>
                                 <th>{{ booking.check_out }}</th>
                                 <th>{{ booking.rate }}</th>
+                                <th><b>{{ booking.applied_vat * 100 }}%</b></th>
                             </tr>
                         {% endfor %}
                         

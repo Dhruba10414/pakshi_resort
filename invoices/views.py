@@ -148,7 +148,7 @@ class ResortLog(generics.GenericAPIView):
                     q.stayed,
                     q.rate,
                     f'{(q.applied_vat * 100):.2f}%', 
-                    q.by_staff.user_name]
+                    q.by_staff.user_name if q.by_staff else 'Terminated Staff']
             writer.writerow(row)
 
         return response
