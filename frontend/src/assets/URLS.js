@@ -43,6 +43,7 @@ export const api = {
     food_order_cancel: `${baseurl}/food/order/cancel/`, // post
     food_update: `${baseurl}/food/update/`, // post
     food_vat: `${baseurl}/food/vat`, // post
+    room_vat: `${baseurl}/bookings/update-vats/`,
 
     // ticket-related
     buy_ticket: `${baseurl}/tickets/sells/`, //post

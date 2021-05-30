@@ -265,7 +265,7 @@ function FoodOrders({
                 <OrderItem
                   key={order.id}
                   id={order.id}
-                  guest={order.guest && order.guest.name}
+                  guest={order.guest && order.guest}
                   roomsfrom={order.guest && order.guest.booked_rooms}
                   food={order.food.name}
                   isComplete={order.isComplete}
@@ -283,7 +283,7 @@ function FoodOrders({
                 <OrderItem
                   key={order.id}
                   id={order.id}
-                  guest={order.guest && order.guest.name}
+                  guest={order.guest && order.guest}
                   roomsfrom={order.guest && order.guest.booked_rooms}
                   food={order.food.name}
                   isComplete={order.isComplete}

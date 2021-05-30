@@ -102,11 +102,11 @@ function OrderItem({
           </div>
         )}
       </div>
-      <div className="guest">{guest ? guest : "/"}</div>
+      <div className="guest">{guest.name.length > 0 ? guest.name : "/"}</div>
       <div className="food">{food}</div>
       <div
         className={
-          isComplete || !guest
+          isComplete || guest.email === 'xyz@gmail.com'
             ? "status complete"
             : isCancel
             ? "status cancel"
@@ -114,7 +114,7 @@ function OrderItem({
         }
       >
         <p>
-          {isComplete || !guest
+          {isComplete || guest.email === 'xyz@gmail.com'
             ? "completed"
             : isCancel
             ? "canceled"

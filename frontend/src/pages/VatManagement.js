@@ -8,7 +8,8 @@ function VatManagement() {
   const [foodVat, setFoodVat] = useState(0);
   const [roomVat, setRoomVat] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [operationProcessing, setOperationProcessing] = useState(false);
+  const [foodvatUpdating, setFoodvatUpdating] = useState(false);
+  const [roomvatUpdating, setRoomvatUpdating] = useState(false);
   const [success, setSuccess] = useState(false);
   const [failed, setFailed] = useState(false);
   const [error, setError] = useState("");
@@ -27,9 +28,10 @@ function VatManagement() {
     setFailed(true);
   };
 
+  // UPDATE FOOD VAT
   const updateFoodVat = () => {
     if (foodVat >= 0 && /[+-]?([0-9]*[.])?[0-9]+/.test(foodVat.toString())) {
-      setOperationProcessing(true);
+      setFoodvatUpdating(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const FOOD_VAT = api.food_vat;
@@ -38,16 +40,16 @@ function VatManagement() {
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-          const Body = { "vat": foodVat / 100 };
-          
+          const Body = { vat: foodVat / 100 };
+
           axios
             .post(FOOD_VAT, Body, Config)
             .then(() => {
-              setOperationProcessing(false);
+              setFoodvatUpdating(false);
               notifyForSuccess();
             })
             .catch(() => {
-              setOperationProcessing(false);
+              setFoodvatUpdating(false);
             });
         })
         .catch(() => {
@@ -59,9 +61,11 @@ function VatManagement() {
     }
   };
 
+  // UPDATE ROOM VAT
   const updateRoomVat = () => {
     if (roomVat >= 0 && /[+-]?([0-9]*[.])?[0-9]+/.test(roomVat.toString())) {
-      setOperationProcessing(true);
+      setRoomvatUpdating(true);
+
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const ROOM_VAT = api.room_vat;
@@ -70,17 +74,16 @@ function VatManagement() {
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-          const Body = { "vat": roomVat / 100 };
-          console.log(Body);
-          
+          const Body = { vat: roomVat / 100 };
+
           axios
             .post(ROOM_VAT, Body, Config)
             .then(() => {
-              setOperationProcessing(false);
+              setRoomvatUpdating(false);
               notifyForSuccess();
             })
             .catch(() => {
-              setOperationProcessing(false);
+              setRoomvatUpdating(false);
             });
         })
         .catch(() => {
@@ -105,11 +108,22 @@ function VatManagement() {
         const Config = {
           headers: { Authorization: "Bearer " + token.data.access },
         };
+
         axios
           .get(FOOD_VAT, Config)
           .then((res) => {
             setFoodVat(res.data.vat * 100);
-            setLoading(false);
+
+            axios
+              .get(api.room_type_with_price)
+              .then((res) => {
+                setRoomVat(res.data[0].vat * 100);
+                setLoading(false);
+              })
+              .catch(() => {
+                setLoading(false);
+                console.clear();
+              });
           })
           .catch(() => {
             console.clear();
@@ -130,24 +144,32 @@ function VatManagement() {
         <div className="data">
           <div className="name">Vat For Room</div>
           <div className="existing">
-            <div className="input-container">
-              <input
-                type="text"
-                value={roomVat}
-                onChange={(e) => setRoomVat(e.target.value)}
-              />
-              <div>%</div>
-            </div>
+            {loading ? (
+              <div className="input-container">Loading...</div>
+            ) : (
+              <div className="input-container">
+                <input
+                  type="text"
+                  value={roomVat}
+                  onChange={(e) => setRoomVat(e.target.value)}
+                />
+                <div>%</div>
+              </div>
+            )}
           </div>
           <div className="button">
-            <button onClick={updateRoomVat}>Update</button>
+          {!roomvatUpdating ? (
+              <button onClick={updateRoomVat}>Update</button>
+            ) : (
+              <button>Processing...</button>
+            )}
           </div>
         </div>
 
         <div className="data">
           <div className="name">Vat For Food</div>
           {loading ? (
-            "Loading..."
+            <div className="input-container">Loading...</div>
           ) : (
             <div className="existing">
               <div className="input-container">
@@ -161,7 +183,7 @@ function VatManagement() {
             </div>
           )}
           <div className="button">
-            {!operationProcessing ? (
+            {!foodvatUpdating ? (
               <button onClick={updateFoodVat}>Update</button>
             ) : (
               <button>Processing...</button>

@@ -46,8 +46,11 @@
       color: #fff;
       border-left: 2px solid #fff;
     }
-    .basics, .additional {
-      padding: 40px 0;
+    .basics {
+      padding-top: 40px;
+    }
+    .additional{
+      padding-bottom: 40px;
     }
   }
 
