@@ -292,7 +292,7 @@ class FoodLogView(generics.GenericAPIView):
         response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
         writer = csv.writer(response)
 
-        filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
+        filtered = FoodOrdering.objects.filter(isCancel=False,time__month__gte=month_from, time__year__gte=year_from, 
                             time__month__lte=month_to, time__year__lte=year_to
                             ).annotate(bill=ExpressionWrapper(F('order_price') * F('quantity'), output_field=FloatField())
                             ).annotate(vat_total=ExpressionWrapper(F('bill') * F('vat'), output_field=FloatField())
@@ -300,13 +300,12 @@ class FoodLogView(generics.GenericAPIView):
 
         writer.writerow(['Time','Guest', 'Guest Email', 'Guest Address', 'Guest Contact','Vat Percentage','Food Name','Food Price','Quantity' , 'Food Bill', 'Total Vat', 'Total Bill', 'Discount Amount', 'Discounted Bill'])
         for entry in filtered:
-            guest = Guests.objects.get(id=entry['guest'])
             row = [
                     datetime.strftime(timezone.localtime(entry.time), "%d-%m-%Y %I:%M %p"),
-                    guest.name,
-                    guest.email,
-                    guest.address,
-                    guest.contact,
+                    entry.guest.name,
+                    entry.guest.email,
+                    entry.guest.address,
+                    entry.guest.contact,
                     entry.vat*100,
                     entry.food.food_type,
                     entry.food.name,
@@ -315,8 +314,8 @@ class FoodLogView(generics.GenericAPIView):
                     entry['total_bill'],
                     entry['total_vat'],
                     entry['total_bill'] + entry['total_vat'],
-                    guest.discount_bookings,
-                    entry['total_bill'] + entry['total_vat'] - guest.discount_bookings]
+                    entry.guest.discount_food,
+                    entry['total_bill'] + entry['total_vat'] - entry.guest.discount_food]
             
             writer.writerow(row)
 
