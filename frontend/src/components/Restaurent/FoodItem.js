@@ -6,7 +6,7 @@ import { lock, unlock } from "../../assets/images/SVG";
 function FoodItem({ id, name, desc, available, price, addFoodToBasket }) {
   const addForOrder = () => {
     if(available){
-      addFoodToBasket({id, name, price, quantity: 1, note: "/"});
+      addFoodToBasket({id, name, price, quantity: 1, note: ""});
     }
   }
   return (

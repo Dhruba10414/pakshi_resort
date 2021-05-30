@@ -131,7 +131,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
           <div className="invoice">
             <div className="bill-amounts">
               <BillAmounts bills={roombillSummary} title="Room" />
-              {/* <BillAmounts bills={foodbillSummary} title="Food" /> */}
+              <BillAmounts bills={foodbillSummary} title="Food" />
               {/* <CustomerDescription
                 name={invoiceFor.name}
                 address={invoiceFor.address}

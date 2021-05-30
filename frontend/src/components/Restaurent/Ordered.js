@@ -25,7 +25,6 @@ function Ordered({
   removeFood,
   removeAllFoods,
   closeModal,
-  name,
   guestId,
   fromRestaurent,
 }) {
@@ -34,6 +33,10 @@ function Ordered({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const history = useHistory();
+
+  const [guest, setGuest] = useState("");
+  const [contact, setContact] = useState("");
+  const [discount, setDiscount] = useState(0);
 
   // CALCULATE TOTAL PRICE
   const calcTotal = () => {
@@ -70,10 +73,10 @@ function Ordered({
   // ADD FOOD NOTE
   const updateFoodNote = (id, note) => {
     basket.forEach((food) => {
-      if(food.id === id){
+      if (food.id === id) {
         food.note = note;
       }
-    })
+    });
   };
 
   // NOTIFY
@@ -86,12 +89,23 @@ function Ordered({
 
   //////////////////////////////////////////////////////////////////////////////////////////
 
-  const downloadPDF = async (foodList, total) => {
-    const doc = <RestaurentInvoice foodList={foodList} total={total} />;
+  const downloadPDF = async (foodList, bill, total) => {
+    const doc = (
+      <RestaurentInvoice
+        foodList={foodList}
+        bill={bill}
+        total={total}
+        name={guest}
+        contact={contact}
+      />
+    );
     const asPdf = pdf([]);
     asPdf.updateContainer(doc);
     const blob = await asPdf.toBlob();
     saveAs(blob, "foodOrder.pdf");
+    setGuest("");
+    setContact("");
+    setDiscount(0);
   };
 
   // ORDER FOODS
@@ -99,9 +113,19 @@ function Ordered({
     if (basket && basket.length > 0) {
       setLoading(true);
       const orderedfoodList = basket.map((food) => {
-        return { id: food.id, quantity: food.quantity, price: food.price, note: food.note };
+        return {
+          id: food.id,
+          quantity: food.quantity,
+          price: food.price,
+          notes: food.note,
+        };
       });
-      const Order = { foods: orderedfoodList, guest_id: guestId };
+      const Order = {
+        foods: orderedfoodList,
+        guest_name: guest,
+        guest_contact: contact,
+        guest_discount: discount,
+      };
 
       // setup neccessary urls
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
@@ -117,17 +141,18 @@ function Ordered({
 
           axios
             .post(FOOD_ORDER_URL, Order, Config)
-            .then(() => {
-              downloadPDF(basket, total);
+            .then((res) => {
+              console.log(res.data);
+              downloadPDF(basket, res.data, total);
               removeAllFoods();
               notify();
               setLoading(false);
             })
-            .catch(() => {
-              console.clear();
+            .catch((err) => {
+              // console.clear();
+              console.log(err.message);
               setLoading(false);
             });
-          
         })
         .catch(() => {
           console.clear();
@@ -183,15 +208,39 @@ function Ordered({
 
       <div className="price-block">
         <div className="customer">
-          {!fromRestaurent ? (
-            <>
-              <h3>Customer</h3>
-              <div className="data">
-                <div className="label">Name :</div>
-                <div className="value">{name}</div>
+          <>
+            {/* <h3>Customer</h3> */}
+            <div className="data">
+              <div className="label">Name :</div>
+              <div className="value">
+                <input
+                  type="text"
+                  value={guest}
+                  onChange={(e) => setGuest(e.target.value)}
+                />
               </div>
-            </>
-          ) : null}
+            </div>
+            <div className="data">
+              <div className="label">Contact :</div>
+              <div className="value">
+                <input
+                  type="text"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="data">
+              <div className="label">Discount :</div>
+              <div className="value">
+                <input
+                  type="text"
+                  value={discount}
+                  onChange={(e) => setDiscount(e.target.value)}
+                />
+              </div>
+            </div>
+          </>
         </div>
         <div className="price">
           <h1>
