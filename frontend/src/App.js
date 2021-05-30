@@ -34,6 +34,7 @@ import Restaurent from "./pages/Restaurent";
 import ParkTicket from "./pages/ParkTicket";
 import Settings from "./pages/Settings";
 import RoomManagement from "./pages/RoomManagement";
+import VatManagement from "./pages/VatManagement";
 
 function App({ setUser, isLogedIn }) {
   
@@ -80,6 +81,7 @@ function App({ setUser, isLogedIn }) {
           <Route exact path="/staff/admin/staff" render={() => isLogedIn ? <Admin /> : <Login /> } />
           <Route exact path="/staff/admin/food" render={() => isLogedIn ? <FoodManagement /> : <Login /> } />
           <Route exact path="/staff/admin/room" render={() => isLogedIn ? <RoomManagement /> : <Login /> } />
+          <Route exact path="/staff/admin/vat" render={() => isLogedIn ? <VatManagement /> : <Login /> } />
           <Route exact path="/staff/admin/statics" render={() => isLogedIn ? <Statics /> : <Login /> } />
 
           {/* NOT FOUND */}

@@ -1,0 +1,110 @@
+.vatmanagement {
+  width: 100%;
+  height: calc(90vh - 10px);
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+
+  .banner {
+    height: 50vh;
+    width: 100%;
+    background: url("../../assets/images/View/vat-pic.jpg") no-repeat center
+      center / cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .data {
+    display: flex;
+    padding: 10px 20px;
+    background: #f7f7f7;
+    justify-content: space-between;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    div {
+      font-family: var(--quicksand-font);
+      width: 30%;
+      display: flex;
+      align-items: center;
+    }
+    .name {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .existing {
+      width: 30%;
+      .input-container {
+        width: 100%;
+        margin: auto;
+        input {
+            width: 100%;
+          padding: 15px 20px;
+          font-size: 16px;
+          font-family: var(--quicksand-font);
+          outline: none;
+          border-radius: 4px;
+          border: 2px solid #ccc;
+          margin-right: 10px;
+          &:focus {
+            border: 2px solid var(--primary-color-light);
+          }
+        }
+        div{ font-weight: bold; color: var(--green-dark); font-size: 2rem; }
+      }
+    }
+    .button {
+      justify-content: flex-end;
+      button {
+        padding: 15px 30px;
+        background: var(--primary-color);
+        color: var(--primary-color-light);
+        border: none;
+        outline: none;
+        transition: 0.4s;
+        cursor: pointer;
+        font-family: var(--quicksand-font);
+        font-weight: bold;
+        font-size: 15px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .success-message{
+    position: absolute;
+    top: 15vh;
+    right: 5vw;
+    background-color: var(--green);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-family: var(--quicksand-font);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    div{
+      width: 30px; height: 30px;
+      border-radius: 50%; border: 2px solid var(--green-dark);
+      margin-right: 10px; display: flex; align-items: center;
+      justify-content: center;
+    }
+    opacity: 1;
+    margin-right: 0;
+    transition: 0.5s;
+  }
+  .success-message.disabled{
+    margin-right: -30px;
+    opacity: 0;
+  }
+  .success-message.error{
+    background-color: var(--red);
+    color: var(--red-dark);
+    div{ border: 2px solid var(--red-dark); }
+  }
+}

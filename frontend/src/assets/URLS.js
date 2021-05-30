@@ -42,6 +42,7 @@ export const api = {
     food_order_complete: `${baseurl}/food/order/complete/`, // post
     food_order_cancel: `${baseurl}/food/order/cancel/`, // post
     food_update: `${baseurl}/food/update/`, // post
+    food_vat: `${baseurl}/food/vat`, // post
 
     // ticket-related
     buy_ticket: `${baseurl}/tickets/sells/`, //post

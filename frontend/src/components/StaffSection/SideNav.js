@@ -21,6 +21,7 @@ import {
   dbSVG,
   markSVG,
   column,
+  dollar,
 } from "../../assets/images/SVG";
 
 function SideNav({clearUser, is_staff }) {
@@ -68,6 +69,7 @@ function SideNav({clearUser, is_staff }) {
             <NavLink to="/staff/admin/staff" exact activeClassName="active-link" > {user} Staff Management </NavLink>
             <NavLink to="/staff/admin/room" exact activeClassName="active-link" > {column} Room Management </NavLink>
             <NavLink to="/staff/admin/food" exact activeClassName="active-link">{pie} Food Management</NavLink>
+            <NavLink to="/staff/admin/vat" exact activeClassName="active-link" > {dollar} Vat Management </NavLink>
             <NavLink to="/staff/admin/statics" exact activeClassName="active-link" > {barchart} Statistics </NavLink>
           </>
         ) : null}
