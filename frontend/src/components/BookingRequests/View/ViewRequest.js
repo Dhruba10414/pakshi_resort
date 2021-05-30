@@ -120,7 +120,7 @@ function ViewRequest({ viewFor, setOpenModal, roomTypeWithPrice }) {
           roomTariff={tariff}
           stayingdays={stayingdays}
         />
-        <ViewInfo viewFor={viewFor} tariff={tariff} />
+        <ViewInfo viewFor={viewFor} tariff={tariff} vat={roomTypeWithPrice[0].vat}/>
       </div>
 
       <div className={success ? "message success" : "success message disabled"}>

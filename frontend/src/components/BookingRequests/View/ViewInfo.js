@@ -10,7 +10,7 @@ import {
     type,
   } from "../../../assets/images/SVG";
 
-function ViewInfo({viewFor, tariff}) {
+function ViewInfo({viewFor, tariff, vat}) {
     return (
         <div className="guest-information">
         <div className="guest">
@@ -90,7 +90,7 @@ function ViewInfo({viewFor, tariff}) {
               <div className="data__logo">৳</div>
               <div className="data__value">
                 <h4>Cost Per room</h4>
-                <p>{tariff} <span>+15%</span></p>
+                <p>{tariff} <span>+{vat * 100}%</span></p>
               </div>
             </div>
           </div>

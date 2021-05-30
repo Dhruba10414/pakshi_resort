@@ -24,6 +24,7 @@ function BookingForm({
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [cost, setCost] = useState(0);
+  const [vat, setVat] = useState(0);
 
   // CALCULATE PRICE
   useEffect(() => {
@@ -33,6 +34,7 @@ function BookingForm({
     });
 
     setCost(totalcost);
+    setVat(roomTypes[0].vat);
   }, []);
 
   // EMAIL VALIDATION CHECK
@@ -201,13 +203,13 @@ function BookingForm({
             <div className="label">Cost :</div>
             <div className="value">
               <div>{cost} ৳</div>
-              <div className="vat">+ 15%</div>
+              <div className="vat">+ {vat * 100}%</div>
               {/* <div className="discount">- 0%</div> */}
             </div>
           </div>
           <div className="data">
             <div className="label">Subtotal :</div>
-            <div className="value subtotal">{cost + cost * .15} ৳</div>
+            <div className="value subtotal">{cost + cost * vat} ৳</div>
           </div>
         </div>
       </div>

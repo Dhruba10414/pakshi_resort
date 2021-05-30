@@ -229,7 +229,7 @@ function ViewOption({
             Cost:{" "}
             <span>
               {tariff * selectedroom.length * stayingdays +
-                tariff * selectedroom.length * stayingdays * (15 / 100)}
+                tariff * selectedroom.length * stayingdays * roomTypeWithPrice[0].vat }
             </span>
           </h3>
         </div>
