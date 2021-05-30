@@ -395,7 +395,6 @@ class BookingRequestNotifications(generics.GenericAPIView):
 
 
 class GuestDiscountOffers(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
     serializer_class = GuestDiscountOfferSerializer
 
     def get(self, request, *args, **kwargs):

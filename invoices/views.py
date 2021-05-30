@@ -155,7 +155,7 @@ class ResortLog(generics.GenericAPIView):
 
 
 class GuestInvoiceLog(generics.GenericAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAdminUser, ]
 
     def get(self, request, *args, **kwargs):
         default_month = date.today().month
