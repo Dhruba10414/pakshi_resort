@@ -27,10 +27,8 @@ function VatManagement() {
     setFailed(true);
   };
 
-  const updateFoodVat = (event) => {
-    event.preventDefault();
-
-    if (foodVat >= 0 && /^\d+$/.test(foodVat.toString())) {
+  const updateFoodVat = () => {
+    if (foodVat >= 0 && /[+-]?([0-9]*[.])?[0-9]+/.test(foodVat.toString())) {
       setOperationProcessing(true);
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
@@ -44,6 +42,39 @@ function VatManagement() {
           
           axios
             .post(FOOD_VAT, Body, Config)
+            .then(() => {
+              setOperationProcessing(false);
+              notifyForSuccess();
+            })
+            .catch(() => {
+              setOperationProcessing(false);
+            });
+        })
+        .catch(() => {
+          console.clear();
+        });
+    } else {
+      setError("Invalid Input Format.");
+      notifyForFailed();
+    }
+  };
+
+  const updateRoomVat = () => {
+    if (roomVat >= 0 && /[+-]?([0-9]*[.])?[0-9]+/.test(roomVat.toString())) {
+      setOperationProcessing(true);
+      const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+      const GET_ACCESS_TOKEN_URL = api.refresh;
+      const ROOM_VAT = api.room_vat;
+
+      axios
+        .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+        .then((token) => {
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+          const Body = { "vat": roomVat / 100 };
+          console.log(Body);
+          
+          axios
+            .post(ROOM_VAT, Body, Config)
             .then(() => {
               setOperationProcessing(false);
               notifyForSuccess();
@@ -109,7 +140,7 @@ function VatManagement() {
             </div>
           </div>
           <div className="button">
-            <button>Update</button>
+            <button onClick={updateRoomVat}>Update</button>
           </div>
         </div>
 
@@ -131,7 +162,7 @@ function VatManagement() {
           )}
           <div className="button">
             {!operationProcessing ? (
-              <button onClick={(e) => updateFoodVat(e)}>Update</button>
+              <button onClick={updateFoodVat}>Update</button>
             ) : (
               <button>Processing...</button>
             )}

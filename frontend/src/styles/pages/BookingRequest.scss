@@ -164,7 +164,7 @@
     color: gray;
     span{ color: #ccc; font-size: 12px;}
     @include media("<=desktop") {
-      font-size: 13px;
+      font-size: 12px;
       span{ font-size: 10px;}
      }
   }
@@ -178,7 +178,8 @@
       line-height: 1.8rem;
       color: #444;
       @include media("<=desktop") {
-        line-height: 1.4rem;
+        line-height: 18px;
+        font-size: 18px;
        }
     }
     p {
@@ -196,7 +197,7 @@
       border-radius: 8px;
       @include media("<=desktop") {
         padding: 1.2rem;
-        height: 40%;
+        height: 36%;
        }
     }
 
@@ -210,13 +211,13 @@
         margin-top: 1.8rem;
         @include media("<=desktop") { height: 63%; margin-top: 1.2rem; }
       }
-      @include media("<=desktop") { padding: 1.2rem; }
+      @include media("<=desktop") { padding: 1.2rem; height: calc(64% - 10px);}
     }
     .data {
       margin-top: 13px;
       display: flex;
       align-items: center;
-      @include media("<=desktop") { margin-top: 12.5px; }
+      @include media("<=desktop") { margin-top: 12px; }
       &__logo {
         width: 30px;
         height: 30px;
@@ -236,7 +237,7 @@
           color: gray;
           font-size: 14px;
           font-family: var(--quicksand-font);
-          @include media("<=desktop") { font-size: 13.5px; }
+          @include media("<=desktop") { font-size: 13px; }
         }
         p, div {
           font-size: 15px;

@@ -16,9 +16,12 @@
           text-align: center;
           h3 { 
             font-family: var(--quicksand-font); font-size: 3rem; line-height: 20px; color: var(--primary-color); 
-            @include media("<=desktop") { font-size: 2.5rem; }
+            @include media("<=desktop") { font-size: 2rem; }
           }
-          p { font-family: WRITTEN; font-size: 5rem; color: var(--primary-color-light); line-height: 30px; }
+          p { 
+            font-family: WRITTEN; font-size: 5rem; color: var(--primary-color-light); line-height: 30px;
+            @include media("<=desktop") {font-size: 4rem; line-height: 15px; }
+          }
         }
       }
 
@@ -39,7 +42,7 @@
           display: flex;
           div { 
             height: 7vh; display: flex; align-items: center; font-family: var(--secondary-font); font-size: 14.5px; 
-            @include media("<=desktop") { font-size: 12.5px; font-weight: normal; }
+            @include media("<=desktop") { font-size: 11px; font-weight: normal; }
           }
           .price { width: 17%; padding: 0 10px; }
           .name { width: 45%;  padding: 0 0 0 10px;}
@@ -101,6 +104,7 @@
               font-family: var(--quicksand-font);
               font-size: 16px;
               color: #444;
+              @include media("<=desktop") {font-size: 14px;}
             }
             input{
               padding: 10px 20px;
@@ -109,7 +113,11 @@
               outline: none;
               border: 2px solid #ccc;
               border-radius: 4px;
-              &:focus{ border: 2px solid var(--primary-color-light); }
+              @include media("<=desktop") { border: 1px solid #ccc; }
+              &:focus{ 
+                border: 2px solid var(--primary-color-light); 
+                @include media("<=desktop") { border: 1px solid var(--primary-color-light); }
+              }
             }
             .btn-boxx{
               display: flex;
@@ -119,6 +127,7 @@
                 padding: 10px 20px;
                 font-size: 14px;
                 transition: 0.4s;
+                @include media("<=desktop") {font-size: 12px;}
               }
               button.cancel{
                 background-color: #f7f7f7;

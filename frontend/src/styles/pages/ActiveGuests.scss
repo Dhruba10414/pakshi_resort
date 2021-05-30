@@ -81,6 +81,7 @@
           font-family: var(--quicksand-font);
           font-size: 16px;
           transition: all 0.5s;
+          @include media("<=desktop") {font-size: 14px;}
         }
         .guest-name {
           width: 20%;
@@ -91,9 +92,11 @@
           width: 20%;
           display: flex;
           align-items: center;
+          @include media("<=desktop") {width: 18%;}
         }
         .brooms {
           width: 15%;
+          @include media("<=desktop") {width: 14%;}
         }
         .brooms.rooms-colored{
           div.roomNumb{
@@ -105,6 +108,7 @@
           width: 35%;
           display: flex;
           align-items: center;
+          @include media("<=desktop") {width: 38%;}
         }
       }
 
@@ -160,6 +164,7 @@
               font-weight: bold;
               border-radius: 20px;
               font-size: 12px;
+              @include media("<=desktop") {font-size: 10px;}
             }
           }
         }
@@ -175,6 +180,7 @@
             cursor: pointer;
             font-family: var(--quicksand-font);
             font-weight: bold;
+            @include media("<=desktop") {font-size: 10px; padding: 7px 10px;}
           }
           button.order-food {
             background-color: var(--yellow);

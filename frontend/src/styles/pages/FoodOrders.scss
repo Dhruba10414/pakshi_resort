@@ -139,6 +139,7 @@
           font-weight: bold;
           text-align: center;
           svg { height: 14px; }
+          @include media("<=desktop") {font-size: 11.5px;}
         }
         .status.complete p { background: var(--green); color: var(--green-dark); }
         .status.cancel p { background: var(--red); color: var(--red-dark); }
@@ -219,7 +220,7 @@
             .green { 
               display: flex; align-items: center;
               color: var(--green-dark); font-weight: bold;
-              svg{ color: var(--green-dark); margin-right: 10px; } 
+              svg{ color: var(--green-dark); height: 14px; margin-right: 10px; } 
             }
             .text{
               border: 1px solid #f7f7f7;

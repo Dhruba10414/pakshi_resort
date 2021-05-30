@@ -31,6 +31,9 @@
     .name {
       font-weight: bold;
       text-transform: uppercase;
+      @include media("<=desktop") {
+        font-size: 13px;
+      }
     }
     .existing {
       width: 30%;
@@ -38,7 +41,7 @@
         width: 100%;
         margin: auto;
         input {
-            width: 100%;
+          width: 100%;
           padding: 15px 20px;
           font-size: 16px;
           font-family: var(--quicksand-font);
@@ -46,11 +49,18 @@
           border-radius: 4px;
           border: 2px solid #ccc;
           margin-right: 10px;
+          @include media("<=desktop") { padding: 10px 20px; border: 1px solid #ccc; font-synthesis: 15px; }
           &:focus {
             border: 2px solid var(--primary-color-light);
+            @include media("<=desktop") { border: 1px solid var(--primary-color-light); }
           }
         }
-        div{ font-weight: bold; color: var(--green-dark); font-size: 2rem; }
+        div {
+          font-weight: bold;
+          color: var(--green-dark);
+          font-size: 2rem;
+          @include media("<=desktop") {font-size: 1.6rem;}
+        }
       }
     }
     .button {
@@ -68,6 +78,9 @@
         font-size: 15px;
         text-transform: uppercase;
         border-radius: 5px;
+        @include media("<=desktop") {
+          font-synthesis: 14px; padding: 10px 20px;
+        }
         &:hover {
           color: #fff;
         }
@@ -75,7 +88,7 @@
     }
   }
 
-  .success-message{
+  .success-message {
     position: absolute;
     top: 15vh;
     right: 5vw;
@@ -88,23 +101,29 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    div{
-      width: 30px; height: 30px;
-      border-radius: 50%; border: 2px solid var(--green-dark);
-      margin-right: 10px; display: flex; align-items: center;
+    div {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--green-dark);
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
     opacity: 1;
     margin-right: 0;
     transition: 0.5s;
   }
-  .success-message.disabled{
+  .success-message.disabled {
     margin-right: -30px;
     opacity: 0;
   }
-  .success-message.error{
+  .success-message.error {
     background-color: var(--red);
     color: var(--red-dark);
-    div{ border: 2px solid var(--red-dark); }
+    div {
+      border: 2px solid var(--red-dark);
+    }
   }
 }

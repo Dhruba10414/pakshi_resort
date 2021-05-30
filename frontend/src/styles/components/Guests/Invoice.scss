@@ -59,12 +59,12 @@
             .label {
               display: flex;
               align-items: center;
-              h3 { font-family: var(--quicksand-font); font-size: 10px; @include media("<=desktop") { font-size: 10px; } }
+              h3 { font-family: var(--quicksand-font); font-size: 10px; @include media("<=desktop") { font-size: 8px; } }
               .circle { width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
             }
             h3.tk { 
               font-size: 16px; font-weight: bold; color: #444; font-family: var(--quicksand-font); 
-              @include media("<=desktop") { font-size: 15px; line-height: 15px; &:not(:last-child){margin-bottom: 5px;} }
+              @include media("<=desktop") { font-size: 13px; line-height: 14px; &:not(:last-child){margin-bottom: 5px;} }
             }
           }
           .detail.room .label { color: var(--blue-dark); }
