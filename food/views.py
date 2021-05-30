@@ -204,7 +204,7 @@ class FoodLogView(generics.GenericAPIView):
                                 F('quantity')*F('vat'), output_field=FloatField()))
                                 
         
-        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity',  'Registed By'])
+        writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill' ,'Vat', 'Total Bill','Registed By'])
         for q in filtered:
             row = [q.guest.name if q.guest else "Anonymous",
                     q.guest.email if q.guest else "-",
