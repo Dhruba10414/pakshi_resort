@@ -167,7 +167,6 @@ function FoodOrders({
           .get(FOOD_ORDERS, Config)
           .then((res) => {
             saveOrderes(res.data);
-            console.log(res.data);
             setDataLoading(false);
           })
           .catch(() => {

@@ -40,7 +40,7 @@ function VatManagement() {
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-          const Body = { vat: foodVat / 100 };
+          const Body = {"vat": foodVat / 100};
 
           axios
             .post(FOOD_VAT, Body, Config)
@@ -53,6 +53,7 @@ function VatManagement() {
             });
         })
         .catch(() => {
+          setFoodvatUpdating(false);
           console.clear();
         });
     } else {
@@ -74,7 +75,7 @@ function VatManagement() {
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
           const Config = {headers: { Authorization: "Bearer " + token.data.access }};
-          const Body = { vat: roomVat / 100 };
+          const Body = {"vat": roomVat / 100};
 
           axios
             .post(ROOM_VAT, Body, Config)
@@ -88,6 +89,7 @@ function VatManagement() {
         })
         .catch(() => {
           console.clear();
+          setFoodvatUpdating(false);
         });
     } else {
       setError("Invalid Input Format.");
@@ -100,17 +102,14 @@ function VatManagement() {
     setLoading(true);
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
-    const FOOD_VAT = api.food_vat;
 
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
 
         axios
-          .get(FOOD_VAT, Config)
+          .get(api.food_vat, Config)
           .then((res) => {
             setFoodVat(res.data.vat * 100);
 

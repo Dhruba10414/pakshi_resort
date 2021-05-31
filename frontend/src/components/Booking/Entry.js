@@ -27,6 +27,9 @@ function Entry({
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+  
+  /////////////////////////////////////////////////////////////////
+  // ================= (CONTROL FUNC FOR CHECK IN) =================
   const checkDateAndCheckIn = () => {
     const cin = check_in.split("-");
     const cout = check_out.split("-");

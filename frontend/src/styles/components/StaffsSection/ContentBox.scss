@@ -24,6 +24,7 @@
       font-size: 16px;
       color: var(--primary-color-light);
       text-transform: uppercase;
+      @include media("<=desktop") { font-size: 13px;}
     }
     a {
       text-decoration: none;
@@ -34,7 +35,7 @@
       padding: 0 40px;
       font-family: var(--quicksand-font);
       font-size: 17px;
-      @include media("<=desktop") { font-size: 15px; margin-bottom: 12px; }
+      @include media("<=desktop") { font-size: 14px; margin-bottom: 12px; }
       svg {
         margin-right: 5px;
         height: 16px;
