@@ -193,45 +193,46 @@ class OrderInvoiceView(generics.GenericAPIView):
 
 
 
-# class FoodLogView(generics.GenericAPIView):
-#     permission_classes = [IsAdminUser, ]
-#     serializer_class=FoodOrderEmbededSerializer
+class FoodOrderLogView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class=FoodOrderEmbededSerializer
 
-#     def get(self, request, *args, **kwargs):
-#         default_month = date.today().month
-#         default_year = date.today().year
-#         month_from = request.query_params.get('month_start', default_month)
-#         year_from = request.query_params.get('year_start', default_year)
-#         month_to = request.query_params.get('month_end', default_month)
-#         year_to = request.query_params.get('year_end', default_year)
+    def get(self, request, *args, **kwargs):
+        default_month = date.today().month
+        default_year = date.today().year
+        month_from = request.query_params.get('month_start', default_month)
+        year_from = request.query_params.get('year_start', default_year)
+        month_to = request.query_params.get('month_end', default_month)
+        year_to = request.query_params.get('year_end', default_year)
 
-#         response = HttpResponse(content_type='text/csv')
-#         filename = f'Resort-Food-Orders-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
-#         response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
-#         writer = csv.writer(response)
+        response = HttpResponse(content_type='text/csv')
+        filename = f'Resort-Food-Orders-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+        writer = csv.writer(response)
 
-#         filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
-#                             time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
-#                                 F('quantity'), output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*
-#                                 F('quantity')*F('vat'), output_field=FloatField()))
+        filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
+                            time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*
+                                F('quantity')*F('vat'), output_field=FloatField()))
                                 
         
-#         writer.writerow(['Guest', 'Guest Email', 'Order Time', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill' ,'Vat', 'Total Bill','Registed By'])
-#         for q in filtered:
-#             row = [q.guest.name if q.guest else "Anonymous",
-#                     q.guest.email if q.guest else "-",
-#                     datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
-#                     q.food.name,
-#                     q.food.food_type,
-#                     q.order_price,
-#                     q.quantity,
-#                     q.bill if not q.isCancel else "NaN" ,
-#                     q.vat_total,
-#                     q.bill + q.vat_total,
-#                     q.taken_by.user_name]
-#             writer.writerow(row)
+        writer.writerow(['Guest', 'Guest Email', 'Order Time','Vat Percentage', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill' ,'Vat', 'Total Bill','Registed By'])
+        for q in filtered:
+            row = [q.guest.name,
+                    q.guest.email ,
+                    datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
+                    q.food.vat,
+                    q.food.name,
+                    q.food.food_type,
+                    q.order_price,
+                    q.quantity,
+                    q.bill ,
+                    q.vat_total,
+                    q.bill + q.vat_total,
+                    q.taken_by.user_name]
+            writer.writerow(row)
 
-#         return response
+        return response
 
 class OrderInvoiceSummuryView(generics.GenericAPIView): 
     def get(self, request, *args, **kwargs):
@@ -267,8 +268,8 @@ class FoodAnalyticsView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
-        output_field=FloatField())).annotate(vat=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
-        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),total_vat = Sum('vat')  ,orders=Count('id')).order_by('month')[:12]
+        output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),total_vat = Sum('vat_total')  ,orders=Count('id')).order_by('month')[:12]
 
         analytics_serialized = self.get_serializer(analytics, many=True)
 
@@ -298,25 +299,38 @@ class FoodLogView(generics.GenericAPIView):
                             ).annotate(vat_total=ExpressionWrapper(F('bill') * F('vat'), output_field=FloatField())
                             ).values('guest').annotate(total_bill=Sum('bill'), total_vat=Sum('vat_total'), orders=Count('id'))
 
-        writer.writerow(['Time','Guest', 'Guest Email', 'Guest Address', 'Guest Contact','Vat Percentage','Food Name','Food Price','Quantity' , 'Food Bill', 'Total Vat', 'Total Bill', 'Discount Amount', 'Discounted Bill'])
+        writer.writerow(['Guest', 'Email', 'Address', 'Contact' , 'Food_Bill', 'Vat', 'Total_Bill', 'Discount_Amount', 'Discounted Bill'])
         for entry in filtered:
             row = [
-                    datetime.strftime(timezone.localtime(entry.time), "%d-%m-%Y %I:%M %p"),
                     entry.guest.name,
                     entry.guest.email,
                     entry.guest.address,
                     entry.guest.contact,
-                    entry.vat*100,
-                    entry.food.food_type,
-                    entry.food.name,
-                    entry.order_price,
-                    entry.quantity,
-                    entry['total_bill'],
-                    entry['total_vat'],
-                    entry['total_bill'] + entry['total_vat'],
+                    entry.total_bill,
+                    entry.total_vat,
+                    entry.total_bill + entry.total_vat,
                     entry.guest.discount_food,
-                    entry['total_bill'] + entry['total_vat'] - entry.guest.discount_food]
+                    entry.total_bill + entry.total_vat - entry.guest.discount_food]
             
             writer.writerow(row)
 
         return response
+
+
+
+# row = [
+#                     datetime.strftime(timezone.localtime(entry.timestamp), "%d-%m-%Y %I:%M %p"),
+#                     entry.guest.name,
+#                     entry.guest.email,
+#                     entry.guest.address,
+#                     entry.guest.contact,
+#                     entry.vat*100,
+#                     entry.food.food_type,
+#                     entry.food.name,
+#                     entry.order_price,
+#                     entry.quantity,
+#                     entry.total_bill,
+#                     entry.total_vat,
+#                     entry.total_bill + entry.total_vat,
+#                     entry.guest.discount_food,
+#                     entry.total_bill + entry.total_vat - entry.guest.discount_food]
