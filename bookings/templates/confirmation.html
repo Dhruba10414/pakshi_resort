@@ -1,3 +1,5 @@
+{% load bookingtags %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
     <head>
@@ -41,8 +43,8 @@
                                 <th>{{ booking.room.room_type.room_type }}</th>
                                 <th>{{ booking.check_in }}</th>
                                 <th>{{ booking.check_out }}</th>
-                                <th>{{ booking.rate }}</th>
-                                <th><b>{{ booking.applied_vat * 100 }}%</b></th>
+                                <th><b>{{ booking.rate }}</b></th>
+                                <th><b>{% vatFormatter booking.applied_vat %}</b></th>
                             </tr>
                         {% endfor %}
                         
