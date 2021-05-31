@@ -41,6 +41,12 @@ class Bookings(models.Model):
     leaved_on = models.DateField(null=True)
     by_staff = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='staff_booked', null=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['-check_in', '-check_out']),
+            models.Index(fields=['guest'])
+        ]
+
 
 class BookingRequest(models.Model):
     guest = models.ForeignKey(Guests, on_delete=models.CASCADE, related_name='pending_bookings')
