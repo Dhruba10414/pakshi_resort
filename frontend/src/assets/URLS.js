@@ -59,8 +59,10 @@ export const api = {
     resort_stastics: `${baseurl}/invoices/analytics/`, // get
     ticket_stastics: `${baseurl}/tickets/analytics/`, // get
     food_stastics: `${baseurl}/food/analytics/`, // get
-    resort_csv: `${baseurl}/invoices/resort-logs/`, // get
+    resort_csv_booking_wise: `${baseurl}/invoices/resort-logs/`, // get
+    resort_csv_guest_wise: `${baseurl}/invoices/income-logs/`, //get
+    food_csv_guest_wise: `${baseurl}/food/food-log/`, // get
+    food_csv_order_wise: `${baseurl}/food/food-order-log/`, //get
     ticket_csv: `${baseurl}/tickets/logs/`, //get
-    food_csv: `${baseurl}/food/food-log/`, // get
 
 }

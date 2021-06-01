@@ -48,21 +48,36 @@ function Statics() {
   }
   
   // DOWNLOAD ROOM BOOKING LOG AS CSV
-  const DownloadLogAsCsv = () => {    
+  const DownloadLogAsCsv = (type) => {    
     if(validationCheck()){
       setError("");
       setProcessLoading(true);
+
+      // CHOOSE URL AND FILE NAME
       let url, filename;
       if(state === 0){
-        url = api.resort_csv;
-        filename = `resortLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        if(type === 'guest'){
+          url = api.resort_csv_guest_wise;
+          filename = `resortLog-guestWise${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        } else{
+          url = api.resort_csv_booking_wise;
+          filename = `resortLog-bookingWise${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        }
       } else if(state === 1){
-        url = api.food_csv;
-        filename = `foodLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        if(type === 'guest'){
+          url = api.food_csv_guest_wise;
+          filename = `foodLog-guestWise${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        } else{
+          url = api.food_csv_order_wise;
+          filename = `foodLog-orderWise${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
+        }
+        
       } else {
         url = api.ticket_csv;
         filename = `ticketLog-${months[startMonth - 1]}${startYear}-${months[endMonth - 1]}${endYear}.csv`;
       }
+
+      // SETUP VARIABLES
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
       const GET_ACCESS_TOKEN_URL = api.refresh;
       const GET_CSV = `${url}?month_start=${startMonth}&year_start=${startYear}&month_end=${endMonth}&year_end=${endYear}`
@@ -215,13 +230,29 @@ function Statics() {
             </div>
           </form>
           {
-            !processLoading
-            ?  state === 0
-              ? <button className="blue-btn" onClick={DownloadLogAsCsv}> Download CSV </button>
+            state === 0
+              ? !processLoading
+                ? <div className="btnBox">
+                  <button className="blue-btn" onClick={() => DownloadLogAsCsv("order")}> Download CSV - Booking Wise </button>
+                  <button className="blue-btn" onClick={() => DownloadLogAsCsv("guest")}> Download CSV - Guest Wise </button>
+                </div>
+                : <div className="btnBox">
+                    <button>Downoading...</button>
+                    <button>Downoading...</button>
+                  </div>
               : state === 1
-                ? <button className="green-btn" onClick={DownloadLogAsCsv}> Download CSV </button>
-                : <button className="yellow-btn" onClick={DownloadLogAsCsv}> Download CSV </button>
-            : <button>Downloading...</button>
+                ? !processLoading
+                  ? <div className="btnBox">
+                    <button className="green-btn" onClick={() => DownloadLogAsCsv("booking")}> Download CSV - Order Wise</button>
+                    <button className="green-btn" onClick={() => DownloadLogAsCsv("guest")}> Download CSV -  Guest Wise</button>
+                  </div>
+                  : <div className="btnBox">
+                    <button>Downoading...</button>
+                    <button>Downoading...</button>
+                  </div>
+                : !processLoading
+                  ? <button className="yellow-btn" onClick={() => DownloadLogAsCsv("")}> Download CSV </button>
+                  : <button>Downoading...</button>
           }
           <small>{error}</small>
         </div>
