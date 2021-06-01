@@ -18,22 +18,21 @@ function Entry({
   notifyforCheckout,
   notifyForCancel,
   notifyForConfirm,
-  notifyForError
+  notifyForError,
+  notifyForCheoutFailure
 }) {
-
   const [checkFoConfirm, setCheckForConfirm] = useState(false);
   const [checkFoCancel, setCheckForCancel] = useState(false);
   const [checkForCheckout, setCheckForCheckout] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  
   /////////////////////////////////////////////////////////////////
   // ================= (CONTROL FUNC FOR CHECK IN) =================
   const checkDateAndCheckIn = () => {
     const cin = check_in.split("-");
     const cout = check_out.split("-");
-    
+
     const checkIn = new Date();
     checkIn.setDate(cin[0]);
     checkIn.setMonth(cin[1] - 1);
@@ -45,13 +44,47 @@ function Entry({
     checkOut.setFullYear(cout[2]);
 
     const today = new Date();
-    
-    if(today >= checkIn && today < checkOut){
+
+    if (today >= checkIn && today < checkOut) {
       checkedInFunc();
-    } else{
+    } else {
       notifyForError();
     }
-  }
+  };
+
+  /////////////////////////////////////////////////////////////////
+  // ================= (CONTROL FUNC FOR CHECK OUT) =================
+  const checkBillAndCheckOut = () => {
+    let foodDue, roomDue;
+    const REFRESH_TOKEN = localStorage.getItem("refresh_token");
+    const GET_ACCESS_TOKEN_URL = api.refresh;
+
+    setLoading(true);
+    axios
+      .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
+      .then((token) => {
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+
+        // fetch billInfos (rooms)
+        axios.get(`${api.invoice_room_summary}?guest=${guest.id}`, Config)
+        .then((roomData) => { 
+          // fetch billInfos (foods)
+          axios
+          .get(`${api.invoice_food_summry}?guest=${guest.id}`, Config)
+          .then((foodData) => {
+            if(roomData.data.due === 0 && foodData.data.due === 0){
+              checkedOutFunc();
+              setLoading(false);
+            } else{
+              notifyForCheoutFailure();
+            }
+          })
+          .catch(() => { console.clear(); setLoading(false); });
+        })
+        .catch(() => { console.clear(); setLoading(false); });
+      })
+      .catch(() => { console.clear(); setLoading(false); });
+  };
 
   //////////////////////////////////////////////////
   // ================= (CHECK IN) =================
@@ -66,7 +99,7 @@ function Entry({
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
         const Config = { headers: { Authorization: "Bearer " + token.data.access }};
-        const Body = { "booking": bookingId };
+        const Body = { booking: bookingId };
 
         axios
           .post(CHECK_IN_URL, Body, Config)
@@ -94,8 +127,6 @@ function Entry({
   //////////////////////////////////////////////////
   // ================= (CHECK OUT) =================
   const checkedOutFunc = () => {
-    setLoading(true);
-
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
     const CHECK_OUT_URL = api.check_out;
@@ -103,7 +134,7 @@ function Entry({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access },};
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { booking: bookingId };
 
         axios
@@ -141,9 +172,9 @@ function Entry({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+        const Config = { headers: { Authorization: "Bearer " + token.data.access }};
         const Body = { booking: bookingId };
-        
+
         axios
           .post(CANCEL_URL, Body, Config)
           .then(() => {
@@ -177,48 +208,58 @@ function Entry({
           checkFoConfirm
             ? "status active"
             : checkFoCancel
-              ? "status canceled"
-              : is_active
-              ? "status active"
-              : "status pending"
+            ? "status canceled"
+            : is_active
+            ? "status active"
+            : "status pending"
         }
       >
         <p>
           {checkFoConfirm
             ? "staying"
-            :  checkFoCancel
-                ? "canceled"
-                : checkForCheckout
-                ? "leaved"
-                : is_active
-                  ? "staying"
-                  : "pending"
-            }
+            : checkFoCancel
+            ? "canceled"
+            : checkForCheckout
+            ? "leaved"
+            : is_active
+            ? "staying"
+            : "pending"}
         </p>
       </div>
       <div className="bookon">{guest.contact}</div>
       <div className="checkin">{check_in}</div>
       <div className="checkout">{check_out}</div>
       <div className="func">
-        {
-          checkFoConfirm
-          ? !loading
-            ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
-            : <button className="disabled">{checkedIn} prcessing.. </button>
-          : checkFoCancel || checkForCheckout
-            ? "/"
-            : is_active
-              ? !loading 
-                ? <button className="checkout" onClick={checkedOutFunc}>{checkedIn} Check-Out</button>
-                : <button className="disabled">{checkedIn} prcessing.. </button>
-              : !loading 
-                ? ( <div className="btn-boxx">
-                    <button className="checkin" onClick={checkDateAndCheckIn}>Check-in</button>
-                    <button className="cancel" onClick={cancelBooking}>Cancel</button>
-                  </div>
-                )
-                : <button className="disabled">{checkedIn} prcessing.. </button>
-        }
+        {checkFoConfirm ? (
+          !loading ? (
+            <button className="checkout" onClick={checkedOutFunc}>
+              {checkedIn} Check-Out
+            </button>
+          ) : (
+            <button className="disabled">{checkedIn} prcessing.. </button>
+          )
+        ) : checkFoCancel || checkForCheckout ? (
+          "/"
+        ) : is_active ? (
+          !loading ? (
+            <button className="checkout" onClick={checkBillAndCheckOut}>
+              {checkedIn} Check-Out
+            </button>
+          ) : (
+            <button className="disabled">{checkedIn} prcessing.. </button>
+          )
+        ) : !loading ? (
+          <div className="btn-boxx">
+            <button className="checkin" onClick={checkDateAndCheckIn}>
+              Check-in
+            </button>
+            <button className="cancel" onClick={cancelBooking}>
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <button className="disabled">{checkedIn} prcessing.. </button>
+        )}
       </div>
     </div>
   );

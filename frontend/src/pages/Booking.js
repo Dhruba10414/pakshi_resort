@@ -29,6 +29,7 @@ function Booking({
   const [checkout, setCheckout] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [canceled, setCanceled] = useState(false);
+  const [warn, setWarn] = useState(false);
   const [error, setError] = useState(false);
 
   const [matchedData, setMatchedData] = useState([]);
@@ -59,29 +60,36 @@ function Booking({
   const notifyforCheckout = () => {
     setTimeout(() => {
       setCheckout(false);
-    }, 2000);
+    }, 3000);
     setCheckout(true);
   };
   // NOTIFY IF CHECK-IN SUCCESSFULLY DONE
   const notifyForConfirm = () => {
     setTimeout(() => {
       setConfirmed(false);
-    }, 2000);
+    }, 3000);
     setConfirmed(true);
   };
   // NOTIFY IF CANCELATION SUCCESSFULLY DONE
   const notifyForCancel = () => {
     setTimeout(() => {
       setCanceled(false);
-    }, 2000);
+    }, 3000);
     setCanceled(true);
   };
   // NOTIFY IF ERROR
   const notifyForError = () => {
     setTimeout(() => {
       setError(false);
-    }, 2000);
+    }, 3000);
     setError(true);
+  };
+  // NOTIFY FOR CHECKOUT FAIL
+  const notifyForCheoutFailure = () => {
+    setTimeout(() => {
+      setWarn(false);
+    }, 3000);
+    setWarn(true);
   };
 
   // FILTER BY COMPLETE
@@ -104,9 +112,8 @@ function Booking({
     axios
       .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
       .then((token) => {
-        const Config = {
-          headers: { Authorization: "Bearer " + token.data.access },
-        };
+        const Config = {headers: { Authorization: "Bearer " + token.data.access }};
+
         axios
           .get(BOOKING_TABLE_URL, Config)
           .then((res) => {
@@ -188,6 +195,7 @@ function Booking({
                 notifyForCancel={notifyForCancel}
                 notifyForConfirm={notifyForConfirm}
                 notifyForError={notifyForError}
+                notifyForCheoutFailure={notifyForCheoutFailure}
               />
             ))}
           </div>
@@ -211,6 +219,7 @@ function Booking({
                   notifyForCancel={notifyForCancel}
                   notifyForConfirm={notifyForConfirm}
                   notifyForError={notifyForError}
+                  notifyForCheoutFailure={notifyForCheoutFailure}
                 />
               ))
             ) : (
@@ -235,6 +244,7 @@ function Booking({
                 notifyForCancel={notifyForCancel}
                 notifyForConfirm={notifyForConfirm}
                 notifyForError={notifyForError}
+                notifyForCheoutFailure={notifyForCheoutFailure}
               />
             ))
           ) : (
@@ -247,23 +257,20 @@ function Booking({
           <Loading height="60vh" width="100%" textSize="15px" space="6px" />
         )}
         {/* success message */}
-        <div
-          className={confirmed ? "message confirm" : "message confirm disabled"}
-        >
+        <div className={confirmed ? "message confirm" : "message confirm disabled"}>
           <div>{check}</div> Successfully Confirmed!
         </div>
-        <div
-          className={canceled ? "message cancel" : "message cancel disabled"}
-        >
+        <div className={canceled ? "message cancel" : "message cancel disabled"}>
           <div>{check}</div> Successfully Canceled!
         </div>
-        <div
-          className={checkout ? "message confirm" : "message confirm disabled"}
-        >
+        <div className={checkout ? "message confirm" : "message confirm disabled"}>
           <div>{check}</div> Checkout Successfull!
         </div>
         <div className={error ? "message error" : "message error disabled"}>
           <div>{x}</div> Can't Check-in Today!
+        </div>
+        <div className={warn ? "message error" : "message error disabled"}>
+          <div>{x}</div> Payment not completed yet!
         </div>
       </div>
     </ContentBox>

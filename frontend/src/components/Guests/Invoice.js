@@ -113,12 +113,12 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
       // fetch billInfos (rooms)
       axios
         .get(`${api.invoice_room_summary}?guest=${invoiceFor.id}`, Config)
-        .then((res) => { setRoomBillSummary(res.data); console.log("ROOM BILLL: ", res.data); })
+        .then((res) => { setRoomBillSummary(res.data); })
         .catch(() => { console.clear(); });
       // fetch billInfos (foods)
       axios
         .get(`${api.invoice_food_summry}?guest=${invoiceFor.id}`, Config)
-        .then((res) => { setFoodBillSummary(res.data); console.log("FOOD BILLL: ", res.data); controlLoading(); })
+        .then((res) => { setFoodBillSummary(res.data); controlLoading(); })
         .catch(() => { console.clear(); controlLoading();});
     });
   }, []);
