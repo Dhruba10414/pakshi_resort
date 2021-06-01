@@ -65,7 +65,13 @@
           width: 100%;
           margin-top: 7px;
           border-radius: 5px;
-          .note{ cursor: pointer; }
+          .note{ 
+            button{
+              background-color: transparent;
+              cursor: pointer;
+              color: var(--primary-color-light);
+            }
+          }
           .quantity{
             justify-content: space-between;
             div{ 

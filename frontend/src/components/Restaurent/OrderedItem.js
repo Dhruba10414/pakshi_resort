@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addCircle } from "../../assets/images/SVG";
 
 function OrderedItem({ food, increaseItem, decreaseItem, updateFoodNote }) {
   const [note, setNote] = useState(food.note);
@@ -32,7 +33,7 @@ function OrderedItem({ food, increaseItem, decreaseItem, updateFoodNote }) {
             setPopUp(true);
           }}
         >
-          {note}
+          {note === "" ? <button className="noteadd">{addCircle}</button> : note}
         </div>
       </div>
 
