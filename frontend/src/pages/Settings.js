@@ -160,7 +160,7 @@ function Settings({ currentUser }) {
                 value={oldpassword}
                 onChange={(e) => setOldPassword(e.target.value)}
               />
-              <div className="eye" onClick={() => setOldType(!oldType)}>{oldType ? eyeClose : eye}</div>
+              <div className="eye" onClick={() => setOldType(!oldType)}>{!oldType ? eyeClose : eye}</div>
             </div>
             <div className="input">
               <label>New Password</label>
@@ -169,7 +169,7 @@ function Settings({ currentUser }) {
                 value={newpassword}
                 onChange={(e) => setNewPassword(e.target.value)}
               />
-              <div className="eye" onClick={() => setNewType(!newtype)}>{newtype ? eyeClose : eye}</div>
+              <div className="eye" onClick={() => setNewType(!newtype)}>{!newtype ? eyeClose : eye}</div>
             </div>
             <div className="input">
               <label>Confirm Password</label>
@@ -178,7 +178,7 @@ function Settings({ currentUser }) {
                 value={confirmpassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <div className="eye" onClick={() => setNewType(!newtype)}>{newtype ? eyeClose : eye}</div>
+              <div className="eye" onClick={() => setNewType(!newtype)}>{!newtype ? eyeClose : eye}</div>
             </div>
             <small className="error">{error}</small>
             {

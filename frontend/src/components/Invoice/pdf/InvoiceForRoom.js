@@ -16,25 +16,23 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     alignItems: "center",
-    height: 40,
+    height: 30,
     flexGrow: 1,
   },
   lastContainer: {
     flexDirection: "row",
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
     alignItems: "center",
-    height: 40,
+    height: 30,
     flexGrow: 1,
-    backgroundColor: "#f7f7f7"
+    backgroundColor: "#f7f7f7",
   },
   no: { width: "15%" },
   type: { width: "50%" },
   days: { width: "10%" },
   amount: { width: "25%" },
-  total: { width: "15%"},
+  total: { width: "15%" },
   totalHeading: { width: "75%", padding: "0 10px" },
-  totalBill: {height: 40, color: "#000", padding: "5px 0"}
+  totalBill: { height: 30, color: "#000", padding: "5px 0" },
 });
 
 function InvoiceForRoom({ roomBills, rbill }) {
@@ -61,10 +59,31 @@ function InvoiceForRoom({ roomBills, rbill }) {
           </View>
         ))}
 
-        <View style={styles.lastContainer}>
-          <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.totalBill}>{rbill.total_bills}</Text>
+      {/* bill */}
+      <View style={styles.container}>
+        <Text style={styles.totalHeading}>Total</Text>
+        <Text style={styles.totalBill}>{rbill.total_bills}</Text>
+      </View>
+
+      {/* vat */}
+      <View style={styles.container}>
+        <Text style={styles.totalHeading}>Vat</Text>
+        <Text style={styles.totalBill}>{rbill.total_vat}</Text>
+      </View>
+
+      {/* discount */}
+      {rbill.discount > 0 ? (
+        <View style={styles.container}>
+          <Text style={styles.totalHeading}>Discount</Text>
+          <Text style={styles.totalBill}>{rbill.discount}</Text>
         </View>
+      ) : null}
+
+      {/* sub total */}
+      <View style={styles.lastContainer}>
+        <Text style={styles.totalHeading}>Sub Total</Text>
+        <Text style={styles.totalBill}>{rbill.total_paid}</Text>
+      </View>
     </View>
   );
 }

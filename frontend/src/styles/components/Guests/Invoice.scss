@@ -1,8 +1,18 @@
 .invoices {
   width: 100%;
-  height: calc(90vh - 20px);
+  height: calc(90vh - 10px);
   display: flex;
   justify-content: space-between;
+
+  .loadBlock{
+    width: 60%;
+    height: calc(90vh - 10px);
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ==================================================== PAYMENT DETAILS ====================================================
@@ -203,6 +213,7 @@
   .payment {
     width: 40%;
     background-color: #fff;
+    border-radius: 8px;
     padding: 20px 30px;
     margin-left: 10px;
     h2 { 

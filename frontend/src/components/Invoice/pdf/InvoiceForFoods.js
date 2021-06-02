@@ -16,24 +16,22 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     alignItems: "center",
-    height: 40,
+    height: 30,
     flexGrow: 1,
   },
   lastContainer: {
     flexDirection: "row",
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
     alignItems: "center",
-    height: 40,
+    height: 30,
     flexGrow: 1,
-    backgroundColor: "#f7f7f7"
+    backgroundColor: "#f7f7f7",
   },
   name: { width: "45%" },
   quantity: { width: "15%" },
   price: { width: "15%" },
   total: { width: "25%" },
   totalHeading: { width: "75%" },
-  totalBill: {height: 40, color: "#000", padding: "5px 0"}
+  totalBill: { height: 30, color: "#000", padding: "10px 0" },
 });
 
 function InvoiceForFoods({ orderedFoods, fbill }) {
@@ -57,10 +55,31 @@ function InvoiceForFoods({ orderedFoods, fbill }) {
             <Text style={styles.total}>{data.total}</Text>
           </View>
         ))}
-       <View style={styles.lastContainer}>
-          <Text style={styles.totalHeading}>TOTAL</Text>
-          <Text style={styles.totalBill}>{fbill.total_bills}</Text>
+      {/* bill */}
+      <View style={styles.container}>
+        <Text style={styles.totalHeading}>Total</Text>
+        <Text style={styles.totalBill}>{fbill.total_bills}</Text>
+      </View>
+
+      {/* vat */}
+      <View style={styles.container}>
+        <Text style={styles.totalHeading}>Vat</Text>
+        <Text style={styles.totalBill}>{fbill.total_vat}</Text>
+      </View>
+
+      {/* discount */}
+      {fbill.discount > 0 ? (
+        <View style={styles.container}>
+          <Text style={styles.totalHeading}>Discount</Text>
+          <Text style={styles.totalBill}>{fbill.discount}</Text>
         </View>
+      ) : null}
+
+      {/* subtotal */}
+      <View style={styles.lastContainer}>
+        <Text style={styles.totalHeading}>Sub Total</Text>
+        <Text style={styles.totalBill}>{fbill.total_paid}</Text>
+      </View>
     </View>
   );
 }

@@ -151,7 +151,9 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
             </div>
           </div>
         ) : (
-          <Loading height="80vh" width="60%" textSize="16px" space="4px" text="Calculating Bills"/>
+          <div className="loadBlock">
+            <Loading height="80vh" width="60%" textSize="16px" space="4px" text="Calculating Bills"/>
+          </div>
         )}
 
         {/* ========== PAYMENT FUNC ========== */}

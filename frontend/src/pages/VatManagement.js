@@ -111,12 +111,14 @@ function VatManagement() {
         axios
           .get(api.food_vat, Config)
           .then((res) => {
-            setFoodVat(res.data.vat * 100);
+            let vat = (res.data.vat * 100).toFixed(1);
+            setFoodVat(vat);
 
             axios
               .get(api.room_type_with_price)
               .then((res) => {
-                setRoomVat(res.data[0].vat * 100);
+                let vat = (res.data[0].vat * 100).toFixed(1);
+                setRoomVat(vat);
                 setLoading(false);
               })
               .catch(() => {
