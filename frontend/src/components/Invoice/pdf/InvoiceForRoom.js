@@ -67,7 +67,7 @@ function InvoiceForRoom({ roomBills, rbill }) {
 
       {/* vat */}
       <View style={styles.container}>
-        <Text style={styles.totalHeading}>Vat</Text>
+        <Text style={styles.totalHeading}>Vat ({(rbill.total_vat / rbill.total_bills) * 100} %)</Text>
         <Text style={styles.totalBill}>{rbill.total_vat}</Text>
       </View>
 

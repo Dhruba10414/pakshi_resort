@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   price: { width: "15%" },
   total: { width: "25%" },
   totalHeading: { width: "75%" },
-  totalBill: { height: 30, color: "#000", padding: "10px 0" },
+  totalBill: { height: 30, color: "#000", padding: "5px 0" },
 });
 
 function InvoiceForFoods({ orderedFoods, fbill }) {
@@ -63,7 +63,7 @@ function InvoiceForFoods({ orderedFoods, fbill }) {
 
       {/* vat */}
       <View style={styles.container}>
-        <Text style={styles.totalHeading}>Vat</Text>
+        <Text style={styles.totalHeading}>Vat ({(fbill.total_vat / fbill.total_bills) * 100} %)</Text>
         <Text style={styles.totalBill}>{fbill.total_vat}</Text>
       </View>
 
