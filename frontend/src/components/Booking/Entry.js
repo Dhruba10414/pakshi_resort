@@ -74,8 +74,8 @@ function Entry({
           .then((foodData) => {
             if(roomData.data.due === 0 && foodData.data.due === 0){
               checkedOutFunc();
-              setLoading(false);
             } else{
+              setLoading(false);
               notifyForCheoutFailure();
             }
           })
