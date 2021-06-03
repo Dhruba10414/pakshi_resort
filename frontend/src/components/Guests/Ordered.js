@@ -88,7 +88,6 @@ function Ordered({
         return { "id": food.id, "quantity": food.quantity, "price": food.price, "notes": food.note };
       });
       const Order = { "foods": orderedfoodList, "guest_id": guestId };
-      console.log(Order);
 
       // setup neccessary urls
       const REFRESH_TOKEN = localStorage.getItem("refresh_token");
