@@ -55,7 +55,7 @@ const foodReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredOrders: state.orders.filter((order) => {
-          return order.isComplete === true || !order.guest;
+          return order.isComplete === true || order.guest.email === 'xyz@gmail.com';
         }),
       };
     case RETURN_CANCELED_ORDERS:
@@ -69,7 +69,7 @@ const foodReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredOrders: state.orders.filter((order) => {
-          return !order.isCancel && !order.isComplete && order.guest
+          return !order.isCancel && !order.isComplete && order.guest.email !== 'xyz@gmail.com'
         }),
       };
     default:
