@@ -7,35 +7,23 @@ const numberWithCommas = (x) => {
 };
 
 // BILL AMOUNT FUNC
-function BillAmounts({ bills, title, discountChange }) {
+function BillAmounts({ bills, title }) {
   return (
     <div className="bill">
       <div className="recieved">
         <h3>TOTAL BILL</h3>
         <h2>
-          <span>৳</span> {discountChange === null 
-          ? <div>{parseInt(bills.net_payable)}</div>
-          : title === 'Room'
-            ? <div>{parseInt(parseInt(bills.net_payable) - discountChange.discountRoom)}</div>
-            : <div>{parseInt(parseInt(bills.net_payable) - discountChange.discountFood)}</div>
-          }
+          <span>৳</span>
+          <div>{parseInt(bills.net_payable)}</div>
         </h2>
         <div className="totalBill">
           <div>Recieved</div>
           {parseInt(bills.total_paid)}
         </div>
         {
-          discountChange === null
-          ? parseInt(bills.due) === 0
-            ? <p className="com">{checked} Completed</p>
-            : <p className="due">{warning} Due {numberWithCommas(parseInt(bills.due))}</p>
-          : title === 'Room'
-            ? bills.due - ( discountChange.discountRoom - bills.discount) === 0
-              ? <p className="com">{checked} Completed</p>
-              : <p className="due">{warning} Due {numberWithCommas(bills.due - ( discountChange.discountRoom - bills.discount))}</p>
-            : bills.due - (discountChange.discountFood - bills.discount) === 0
-              ? <p className="com">{checked} Completed</p>
-              : <p className="due">{warning} Due {numberWithCommas(bills.due - (discountChange.discountFood - bills.discount))}</p>
+          parseInt(bills.due) === 0
+          ? <p className="com">{checked} Completed</p>
+          : <p className="due">{warning} Due {numberWithCommas(parseInt(bills.due))}</p>
         }
       </div>
 
@@ -70,14 +58,7 @@ function BillAmounts({ bills, title, discountChange }) {
           </div>
           <h3 className="tk">
             <span>৳</span>
-            {
-              discountChange === null
-              ? <>{numberWithCommas(parseInt(bills.discount))}</>
-              : title === 'Room'
-                ? <>{numberWithCommas(parseInt(discountChange.discountRoom))}</>
-                : <>{numberWithCommas(parseInt(discountChange.discountFood))}</>
-            }
-            
+            {numberWithCommas(parseInt(bills.discount))}
           </h3>
         </div>
       </div>

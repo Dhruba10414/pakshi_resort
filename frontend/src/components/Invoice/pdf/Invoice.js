@@ -14,17 +14,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function Invoice({roomBills, orderedFoods, invoiceFor, stayingInfo, fbill, rbill, discountChange}) {
+function Invoice({roomBills, orderedFoods, invoiceFor, stayingInfo, fbill, rbill}) {
   useEffect(() => {}, [roomBills]);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <InvoiceHeading />
         <InvoiceFor invoiceFor={invoiceFor} stayingInfo={stayingInfo} />
-        <InvoiceForRoom roomBills={roomBills} rbill={rbill} discountChange={discountChange} />
+        <InvoiceForRoom roomBills={roomBills} rbill={rbill} />
         {
           orderedFoods.length > 0
-          ? <InvoiceForFoods orderedFoods={orderedFoods} fbill={fbill} discountChange={discountChange} />
+          ? <InvoiceForFoods orderedFoods={orderedFoods} fbill={fbill} />
           : null
         }
       </Page>

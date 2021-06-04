@@ -10,7 +10,6 @@ function OrderedFoodList({
   setOpenInvoice,
   fbill,
   rbill,
-  discountChange
 }) {
   const [warning, setWarning] = useState(false);
   const showWarning = () => {
@@ -45,17 +44,18 @@ function OrderedFoodList({
       </div>
       <div className="button-box">
         <button onClick={() => setOpenInvoice(false)}>Back</button>
-        {parseInt(fbill.due) + parseInt(rbill.due) === 0 ? (
-          <InvoiceButton
-            orderedFoods={orderedFoods}
-            roomBills={roomBills}
-            invoiceFor={invoiceFor}
-            stayingInfo={stayingInfo}
-            fbill={fbill}
-            rbill={rbill}
-            discountChange={discountChange}
-          />
-        ) : <button className="saveInvoice" onClick={showWarning}>Save Invoice</button>}
+        {
+          parseInt(fbill.due) + parseInt(rbill.due) === 0
+            ? <InvoiceButton
+              orderedFoods={orderedFoods}
+              roomBills={roomBills}
+              invoiceFor={invoiceFor}
+              stayingInfo={stayingInfo}
+              fbill={fbill}
+              rbill={rbill}
+            />
+            : <button className="saveInvoice" onClick={showWarning}>Save Invoice</button>
+        }
       </div>
 
       <div className={warning ? "success-message" : "success-message disabled"}>

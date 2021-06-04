@@ -21,30 +21,32 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
   const [roombillSummary, setRoomBillSummary] = useState({});
   const [foodbillSummary, setFoodBillSummary] = useState({});
   const [loading, setLoading] = useState(true);
+  const [discountProcessLoading, setDiscountProcessLoading] = useState(false);
   const [submissionLoading, setSubmissionLoading] = useState(false);
+  const [gotoPayment, setGoToPayment] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [discountChange, setDiscountChange] = useState(null);
 
   // UPDATE UI DATA
   const updateUiData = (amount, type) => {
     if(type === "RB"){
       const bill = {
         ...roombillSummary,
-        total_paid: roombillSummary.total_paid + parseInt(amount),
-        due: roombillSummary.due - parseInt(amount)
+        total_paid: parseInt(roombillSummary.total_paid) + amount,
+        due: parseInt(roombillSummary.due) - amount
       }
       setRoomBillSummary(bill);
     } else if(type === "RT"){
       const bill = {
         ...foodbillSummary,
-        total_paid: foodbillSummary.total_paid + parseInt(amount),
-        due: foodbillSummary.due - parseInt(amount)
+        total_paid: parseInt(foodbillSummary.total_paid) + amount,
+        due: parseInt(foodbillSummary.due) - amount
       }
       setFoodBillSummary(bill);
     }
   }
 
-  // INVOICE FOR ROOMS
+  // INVOICE FOR ROOMS (PAYMENT)
+  ////////////////////////////////////////////////////////////////////////
   const makePaymentForGuest = (amount, type ) => {
     setSubmissionLoading(true);
     const refresh_token = localStorage.getItem("refresh_token");
@@ -59,7 +61,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
       .post(api.payment_recieve, Body, Config)
       .then(() => {
         setSubmissionLoading(false);
-        updateUiData(amount, type);
+        updateUiData(parseInt(amount), type);
         notify();
       })
       .catch(() => {
@@ -69,6 +71,54 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
     })
     .catch(() => { console.clear(); setSubmissionLoading(false) });
   }
+
+  // SET DISCOUNT
+  ////////////////////////////////////////////////////////////////////////
+  const applyDiscount = (droom, dfood) => {
+    setDiscountProcessLoading(true);
+    const refresh_token = localStorage.getItem("refresh_token");
+        const REFRESHAPI = api.refresh;
+        const DISCOUNTGIVINGAPI = api.give_discount;
+
+        axios
+          .post(REFRESHAPI, { refresh: refresh_token })
+          .then((token) => {
+            const Config = { headers: { Authorization: "Bearer " + token.data.access }};
+            const BODY = { "id": invoiceFor.id, "discount_bookings": droom, "discount_food": dfood, };
+
+            axios
+              .patch(DISCOUNTGIVINGAPI, BODY, Config)
+              .then(() => {
+                const totalRoomBill = parseInt(roombillSummary.total_bills);
+                const totalFoodBill = parseInt(foodbillSummary.total_bills);
+                const totalRoomVat = Math.ceil(parseFloat(roombillSummary.total_vat));
+                const totalFoodVat = Math.ceil(parseFloat(foodbillSummary.total_vat));
+
+                setRoomBillSummary({
+                  ...roombillSummary,
+                  discount: droom,
+                  net_payable: totalRoomBill + totalRoomVat - droom,
+                  due: (totalRoomBill + totalRoomVat) - (droom + parseInt(roombillSummary.total_paid))
+                });
+
+                setFoodBillSummary({
+                  ...foodbillSummary,
+                  discount: dfood,
+                  net_payable: totalFoodBill + totalFoodVat - dfood,
+                  due: (totalFoodBill + totalFoodVat) - (dfood + parseInt(foodbillSummary.total_paid))
+                });
+                setDiscountProcessLoading(false);
+                setGoToPayment(true);
+              })
+              .catch((err) => {
+                setDiscountProcessLoading(false);
+              });
+          })
+          .catch(() => {
+            setDiscountProcessLoading(false);
+          });
+  }
+
 
    // NOTIFY IF FOOD UPDATED SUCCESSFULLY
    const notify = () => {
@@ -131,8 +181,8 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         {!loading ? (
           <div className="invoice">
             <div className="bill-amounts">
-              <BillAmounts bills={roombillSummary} title="Room" discountChange={discountChange} />
-              <BillAmounts bills={foodbillSummary} title="Food" discountChange={discountChange} />
+              <BillAmounts bills={roombillSummary} title="Room" />
+              <BillAmounts bills={foodbillSummary} title="Food" />
               {/* <CustomerDescription
                 name={invoiceFor.name}
                 address={invoiceFor.address}
@@ -148,7 +198,6 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
                 setOpenInvoice={setOpenInvoice}
                 fbill={foodbillSummary}
                 rbill={roombillSummary}
-                discountChange={discountChange}
               />
             </div>
           </div>
@@ -193,12 +242,12 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         closePaymentModal={closePaymentModalAnim}
         makePaymentForGuest={makePaymentForGuest}
         loading={submissionLoading}
-        setLoading={setLoading}
+        discountProcessLoading={discountProcessLoading}
+        gotoPayment={gotoPayment}
+        setGoToPayment={setGoToPayment}
         fbill={foodbillSummary}
         rbill={roombillSummary}
-        discountChange={discountChange}
-        setDiscountChange={setDiscountChange}
-        invoiceFor={invoiceFor}
+        applyDiscount={applyDiscount}
       />
     </>
   );

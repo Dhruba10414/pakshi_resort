@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   totalBill: { height: 30, color: "#000", padding: "5px 0" },
 });
 
-function InvoiceForFoods({ orderedFoods, fbill, discountChange }) {
+function InvoiceForFoods({ orderedFoods, fbill }) {
   return (
     <View style={styles.table}>
       <View>
@@ -72,11 +72,7 @@ function InvoiceForFoods({ orderedFoods, fbill, discountChange }) {
         <View style={styles.container}>
           <Text style={styles.totalHeading}>Discount</Text>
           <Text style={styles.totalBill}>
-            {
-              discountChange === null
-              ? parseInt(fbill.discount)
-              : discountChange.discountFood
-            }
+            {parseInt(fbill.discount)}
           </Text>
         </View>
       ) : null}
@@ -85,11 +81,7 @@ function InvoiceForFoods({ orderedFoods, fbill, discountChange }) {
       <View style={styles.lastContainer}>
         <Text style={styles.totalHeading}>Sub Total</Text>
         <Text style={styles.totalBill}>
-          {
-            discountChange === null
-            ? parseInt(fbill.total_paid)
-            : parseInt(fbill.total_bills) + Math.ceil(parseFloat(fbill.total_vat)) - discountChange.discountFood
-          }
+          {parseInt(fbill.total_paid)}
         </Text>
       </View>
     </View>

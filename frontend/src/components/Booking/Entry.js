@@ -55,7 +55,6 @@ function Entry({
   /////////////////////////////////////////////////////////////////
   // ================= (CONTROL FUNC FOR CHECK OUT) =================
   const checkBillAndCheckOut = () => {
-    let foodDue, roomDue;
     const REFRESH_TOKEN = localStorage.getItem("refresh_token");
     const GET_ACCESS_TOKEN_URL = api.refresh;
 
@@ -72,7 +71,7 @@ function Entry({
           axios
           .get(`${api.invoice_food_summry}?guest=${guest.id}`, Config)
           .then((foodData) => {
-            if(roomData.data.due === 0 && foodData.data.due === 0){
+            if(parseInt(roomData.data.due) === 0 && parseInt(foodData.data.due) === 0){
               checkedOutFunc();
             } else{
               setLoading(false);
