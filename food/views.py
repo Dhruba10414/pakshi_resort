@@ -19,7 +19,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.utils import timezone
 from bookings.models import Guests
-
+import math
 
 class FoodItemView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
@@ -45,7 +45,7 @@ class FoodUpdateView(generics.UpdateAPIView):
 class UpdateVatView(generics.GenericAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerilizer
-
+    
     def get(self , request , *agrs,**kwargs):
         food = FoodItem.objects.all()[0]
         serialzer_data =self.get_serializer(food)
@@ -65,15 +65,6 @@ class UpdateVatView(generics.GenericAPIView):
             return Response(all_vats.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response({'error': 'No vat specified'}, status=status.HTTP_400_BAD_REQUEST)
-    # def post(self,request,*args,**kwargs):
-    #     vat = request.data.get('vat',0)
-    #     items =FoodItem.objects.all()
-    
-    #     for food in items:
-    #         food.vat = vat
-    #         food.save()
-    #     return Response(data={'message : vat updated successfully'},status = status.HTTP_201_CREATED)
-
 
 
 class OrderCancelView(generics.GenericAPIView):
@@ -164,14 +155,17 @@ class FoodOrderingView(generics.GenericAPIView):
                 new_order.save()
                 sum = sum + (food["quantity"]*select_food.price)
                 vat_obj = select_food.vat
-
+            
+            
+            discount = float(discount)
+            
             obj = {
                 'guest_id':guest_id,
-                'vat':vat_obj,
-                'discount':discount,
-                'bill':sum
+                'vat':math.ceil(sum*vat_obj),
+                'discount':math.ceil(discount),
+                'bill':math.ceil(sum)
             }
-            return Response(data={obj},status=status.HTTP_200_OK)
+            return Response(data=obj,status=status.HTTP_200_OK)
         except FoodItem.DoesNotExist:
             return Response(data={'message' : 'Please Select a valid food Item'},status=status.HTTP_404_NOT_FOUND)
 
@@ -191,89 +185,6 @@ class OrderInvoiceView(generics.GenericAPIView):
         except FoodOrdering.DoesNotExist:
             return Response(data={'message : Guest id does not exists in the Food order list..'},status=status.HTTP_404_NOT_FOUND)
 
-
-
-class FoodOrderLogView(generics.GenericAPIView):
-    permission_classes = [IsAdminUser, ]
-    serializer_class=FoodOrderEmbededSerializer
-
-    def get(self, request, *args, **kwargs):
-        default_month = date.today().month
-        default_year = date.today().year
-        month_from = request.query_params.get('month_start', default_month)
-        year_from = request.query_params.get('year_start', default_year)
-        month_to = request.query_params.get('month_end', default_month)
-        year_to = request.query_params.get('year_end', default_year)
-
-        response = HttpResponse(content_type='text/csv')
-        filename = f'Resort-Food-Orders-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
-        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
-        writer = csv.writer(response)
-
-        filtered = FoodOrdering.objects.filter(time__month__gte=month_from, time__year__gte=year_from, 
-                            time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*
-                                F('quantity')*F('vat'), output_field=FloatField()))
-                                
-        
-        writer.writerow(['Guest', 'Guest Email', 'Order Time','Vat Percentage', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill' ,'Vat', 'Total Bill','Registed By'])
-        for q in filtered:
-            row = [q.guest.name,
-                    q.guest.email ,
-                    datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
-                    q.food.vat,
-                    q.food.name,
-                    q.food.food_type,
-                    q.order_price,
-                    q.quantity,
-                    q.bill ,
-                    q.vat_total,
-                    q.bill + q.vat_total,
-                    q.taken_by.user_name]
-            writer.writerow(row)
-
-        return response
-
-class OrderInvoiceSummuryView(generics.GenericAPIView): 
-    def get(self, request, *args, **kwargs):
-        guest = request.query_params.get('guest', None)
-
-        if guest is not None:
-            bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
-                                F('quantity'), output_field=FloatField())).annotate(total_vat=ExpressionWrapper(F('order_price')*
-                                F('quantity')*F('vat'), output_field=FloatField()))
-            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
-            total_vat = bills.aggregate(total=Coalesce(Sum('total_vat'), 0.0))['total']
-
-            payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
-            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
-            discount = Guests.objects.get(id=guest)
-            summury = {
-                'total_bills': total_bill,
-                'total_vat' : total_vat,
-                'discount' : discount.discount_food,
-                'net_payable': total_bill + total_vat  - discount.discount_food,
-                'total_paid': total_paid,
-                'due': total_bill + total_vat - total_paid-discount.discount_food
-            }
-            
-            return Response(data=summury, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-class FoodAnalyticsView(generics.GenericAPIView):
-    permission_classes = [IsAdminUser, ]
-    serializer_class = FoodAnalyticsSerializer
-
-    def get(self, request, *args, **kwargs):
-        analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
-        output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
-        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),total_vat = Sum('vat_total')  ,orders=Count('id')).order_by('month')[:12]
-
-        analytics_serialized = self.get_serializer(analytics, many=True)
-
-        return Response(analytics_serialized.data, status=status.HTTP_200_OK)
 
 
 class FoodLogView(generics.GenericAPIView):
@@ -301,36 +212,101 @@ class FoodLogView(generics.GenericAPIView):
 
         writer.writerow(['Guest', 'Email', 'Address', 'Contact' , 'Food_Bill', 'Vat', 'Total_Bill', 'Discount_Amount', 'Discounted Bill'])
         for entry in filtered:
+            guest = Guests.objects.get(id=entry['guest'])
             row = [
-                    entry.guest.name,
-                    entry.guest.email,
-                    entry.guest.address,
-                    entry.guest.contact,
-                    entry.total_bill,
-                    entry.total_vat,
-                    entry.total_bill + entry.total_vat,
-                    entry.guest.discount_food,
-                    entry.total_bill + entry.total_vat - entry.guest.discount_food]
+                    guest.name,
+                    guest.email,
+                    guest.address,
+                    guest.contact,
+                    entry['total_bill'],
+                    entry['total_vat'],
+                    entry['total_bill'] + entry['total_vat'],
+                    guest.discount_food,
+                    entry['total_bill'] + entry['total_vat'] - guest.discount_food]
             
             writer.writerow(row)
 
         return response
 
+class OrderInvoiceSummuryView(generics.GenericAPIView): 
+    def get(self, request, *args, **kwargs):
+        guest = request.query_params.get('guest', None)
+
+        if guest is not None:
+            bills = FoodOrdering.objects.filter(guest__id=guest, isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField())).annotate(total_vat=ExpressionWrapper(F('order_price')*
+                                F('quantity')*F('vat'), output_field=FloatField()))
+            total_bill = bills.aggregate(total=Coalesce(Sum('bill'), 0.0))['total']
+            total_vat = bills.aggregate(total=Coalesce(Sum('total_vat'), 0.0))['total']
+            payments = Payments.objects.filter(guest__id=guest,paid_for='RT')
+            total_paid = payments.aggregate(total=Coalesce(Sum('amount'), 0.0))['total']
+            discount = Guests.objects.get(id=guest)
+            less = discount.discount_food
+            net_pay = math.ceil(total_bill + total_vat  - less)
+            due = math.ceil(total_bill + total_vat - total_paid - less)
+            summury = {
+                'total_bills': f'{total_bill:.2f}',
+                'total_vat' : f'{total_vat:.2f}',
+                'discount' : f'{less:.2f}',
+                'net_payable': f'{net_pay:.2f}',
+                'total_paid': f'{total_paid:.2f}',
+                'due': f'{due:.2f}'
+            }
+            
+            return Response(data=summury, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-# row = [
-#                     datetime.strftime(timezone.localtime(entry.timestamp), "%d-%m-%Y %I:%M %p"),
-#                     entry.guest.name,
-#                     entry.guest.email,
-#                     entry.guest.address,
-#                     entry.guest.contact,
-#                     entry.vat*100,
-#                     entry.food.food_type,
-#                     entry.food.name,
-#                     entry.order_price,
-#                     entry.quantity,
-#                     entry.total_bill,
-#                     entry.total_vat,
-#                     entry.total_bill + entry.total_vat,
-#                     entry.guest.discount_food,
-#                     entry.total_bill + entry.total_vat - entry.guest.discount_food]
+class FoodAnalyticsView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class = FoodAnalyticsSerializer
+
+    def get(self, request, *args, **kwargs):
+        analytics = FoodOrdering.objects.filter(isCancel=False).annotate(bill=ExpressionWrapper(F('order_price')*F('quantity'), 
+        output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*F('quantity')*F('vat'), 
+        output_field=FloatField())).annotate(month=TruncMonth('time')).values('month').annotate(income=Sum('bill'),total_vat = Sum('vat_total')  ,orders=Count('id')).order_by('month')[:12]
+
+        analytics_serialized = self.get_serializer(analytics, many=True)
+
+        return Response(analytics_serialized.data, status=status.HTTP_200_OK)
+
+class FoodOrderLogView(generics.GenericAPIView):
+    permission_classes = [IsAdminUser, ]
+    serializer_class=FoodOrderEmbededSerializer
+
+    def get(self, request, *args, **kwargs):
+        default_month = date.today().month
+        default_year = date.today().year
+        month_from = request.query_params.get('month_start', default_month)
+        year_from = request.query_params.get('year_start', default_year)
+        month_to = request.query_params.get('month_end', default_month)
+        year_to = request.query_params.get('year_end', default_year)
+
+        response = HttpResponse(content_type='text/csv')
+        filename = f'Resort-Food-Orders-From{month_from}-{year_from}To{month_to}-{year_to}.csv'
+        response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+        writer = csv.writer(response)
+
+        filtered = FoodOrdering.objects.filter(isCancel=False,time__month__gte=month_from, time__year__gte=year_from, 
+                            time__month__lte=month_to, time__year__lte=year_to).annotate(bill=ExpressionWrapper(F('order_price')*
+                                F('quantity'), output_field=FloatField())).annotate(vat_total=ExpressionWrapper(F('order_price')*
+                                F('quantity')*F('vat'), output_field=FloatField()))
+                                
+        writer.writerow(['Guest', 'Guest Email', 'Order Time','Vat Percentage', 'Food Name', 'Type', 'Price', 'Quantity', 'Bill' ,'Vat', 'Total Bill','Registed By'])
+        for q in filtered:
+            row = [q.guest.name,
+                    q.guest.email ,
+                    datetime.strftime(timezone.localtime(q.time), "%d-%m-%Y %I:%M %p"),
+                    f'{(q.food.vat * 100):.2f}%',
+                    q.food.name,
+                    q.food.food_type,
+                    q.order_price,
+                    q.quantity,
+                    q.bill ,
+                    q.vat_total,
+                    q.bill + q.vat_total,
+                    q.taken_by.user_name if q.taken_by else 'Terminated Staff']
+            writer.writerow(row)
+
+        return response
