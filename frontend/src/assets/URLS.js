@@ -54,6 +54,7 @@ export const api = {
     invoice_room_summary: `${baseurl}/invoices/resort-short-invoice/`, // get
     invoice_food_summry: `${baseurl}/food/invoice-summary/`, // get
     payment_recieve: `${baseurl}/invoices/payments/`, // post
+    give_discount: `${baseurl}/bookings/guest-discounts/`,
 
     // stastics
     resort_stastics: `${baseurl}/invoices/analytics/`, // get

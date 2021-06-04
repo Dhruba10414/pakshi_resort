@@ -23,6 +23,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
   const [loading, setLoading] = useState(true);
   const [submissionLoading, setSubmissionLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [discountChange, setDiscountChange] = useState(null);
 
   // UPDATE UI DATA
   const updateUiData = (amount, type) => {
@@ -130,8 +131,8 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         {!loading ? (
           <div className="invoice">
             <div className="bill-amounts">
-              <BillAmounts bills={roombillSummary} title="Room" />
-              <BillAmounts bills={foodbillSummary} title="Food" />
+              <BillAmounts bills={roombillSummary} title="Room" discountChange={discountChange} />
+              <BillAmounts bills={foodbillSummary} title="Food" discountChange={discountChange} />
               {/* <CustomerDescription
                 name={invoiceFor.name}
                 address={invoiceFor.address}
@@ -147,6 +148,7 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
                 setOpenInvoice={setOpenInvoice}
                 fbill={foodbillSummary}
                 rbill={roombillSummary}
+                discountChange={discountChange}
               />
             </div>
           </div>
@@ -191,8 +193,12 @@ function Invoice({ invoiceFor, setOpenInvoice }) {
         closePaymentModal={closePaymentModalAnim}
         makePaymentForGuest={makePaymentForGuest}
         loading={submissionLoading}
+        setLoading={setLoading}
         fbill={foodbillSummary}
         rbill={roombillSummary}
+        discountChange={discountChange}
+        setDiscountChange={setDiscountChange}
+        invoiceFor={invoiceFor}
       />
     </>
   );

@@ -153,6 +153,17 @@ form {
     }
   }
 
+  .editDiscount{
+    font-family: var(--quicksand-font);
+    color: var(--yellow-dark);
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    svg{ margin-right: 10px; }
+  }
+
   small {
     color: red;
     font-size: 16px;

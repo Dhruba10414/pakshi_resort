@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   totalBill: { height: 30, color: "#000", padding: "5px 0" },
 });
 
-function InvoiceForFoods({ orderedFoods, fbill }) {
+function InvoiceForFoods({ orderedFoods, fbill, discountChange }) {
   return (
     <View style={styles.table}>
       <View>
@@ -58,27 +58,39 @@ function InvoiceForFoods({ orderedFoods, fbill }) {
       {/* bill */}
       <View style={styles.container}>
         <Text style={styles.totalHeading}>Total</Text>
-        <Text style={styles.totalBill}>{fbill.total_bills}</Text>
+        <Text style={styles.totalBill}>{parseInt(fbill.total_bills)}</Text>
       </View>
 
       {/* vat */}
       <View style={styles.container}>
-        <Text style={styles.totalHeading}>Vat ({(fbill.total_vat / fbill.total_bills) * 100} %)</Text>
-        <Text style={styles.totalBill}>{fbill.total_vat}</Text>
+        <Text style={styles.totalHeading}>Vat ({(parseFloat(fbill.total_vat) / parseFloat(fbill.total_bills)) * 100} %)</Text>
+        <Text style={styles.totalBill}>{Math.ceil(parseFloat(fbill.total_vat))}</Text>
       </View>
 
       {/* discount */}
       {fbill.discount > 0 ? (
         <View style={styles.container}>
           <Text style={styles.totalHeading}>Discount</Text>
-          <Text style={styles.totalBill}>{fbill.discount}</Text>
+          <Text style={styles.totalBill}>
+            {
+              discountChange === null
+              ? parseInt(fbill.discount)
+              : discountChange.discountFood
+            }
+          </Text>
         </View>
       ) : null}
 
       {/* subtotal */}
       <View style={styles.lastContainer}>
         <Text style={styles.totalHeading}>Sub Total</Text>
-        <Text style={styles.totalBill}>{fbill.total_paid}</Text>
+        <Text style={styles.totalBill}>
+          {
+            discountChange === null
+            ? parseInt(fbill.total_paid)
+            : parseInt(fbill.total_bills) + Math.ceil(parseFloat(fbill.total_vat)) - discountChange.discountFood
+          }
+        </Text>
       </View>
     </View>
   );

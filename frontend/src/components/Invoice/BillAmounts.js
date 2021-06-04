@@ -4,21 +4,38 @@ import { checked, warning } from "../../assets/images/SVG";
 // NUMBER WITH COMMA
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 
 // BILL AMOUNT FUNC
-function BillAmounts({ bills, title }) {
-
+function BillAmounts({ bills, title, discountChange }) {
   return (
     <div className="bill">
       <div className="recieved">
-        <h3>TOTAL RECIEVED</h3>
+        <h3>TOTAL BILL</h3>
         <h2>
-          <span>৳</span> { bills.total_paid }
+          <span>৳</span> {discountChange === null 
+          ? <div>{parseInt(bills.net_payable)}</div>
+          : title === 'Room'
+            ? <div>{parseInt(parseInt(bills.net_payable) - discountChange.discountRoom)}</div>
+            : <div>{parseInt(parseInt(bills.net_payable) - discountChange.discountFood)}</div>
+          }
         </h2>
-        { bills.due === 0
-          ? <p className="com">{checked} Completed</p>
-          : <p className="due">{warning} Due {numberWithCommas(bills.due)}</p>
+        <div className="totalBill">
+          <div>Recieved</div>
+          {parseInt(bills.total_paid)}
+        </div>
+        {
+          discountChange === null
+          ? parseInt(bills.due) === 0
+            ? <p className="com">{checked} Completed</p>
+            : <p className="due">{warning} Due {numberWithCommas(parseInt(bills.due))}</p>
+          : title === 'Room'
+            ? bills.due - ( discountChange.discountRoom - bills.discount) === 0
+              ? <p className="com">{checked} Completed</p>
+              : <p className="due">{warning} Due {numberWithCommas(bills.due - ( discountChange.discountRoom - bills.discount))}</p>
+            : bills.due - (discountChange.discountFood - bills.discount) === 0
+              ? <p className="com">{checked} Completed</p>
+              : <p className="due">{warning} Due {numberWithCommas(bills.due - (discountChange.discountFood - bills.discount))}</p>
         }
       </div>
 
@@ -31,7 +48,7 @@ function BillAmounts({ bills, title }) {
           </div>
           <h3 className="tk">
             <span>৳</span>
-            {numberWithCommas(bills.total_bills)}
+            {numberWithCommas(parseInt(bills.total_bills))}
           </h3>
         </div>
         {/* vat */}
@@ -49,10 +66,18 @@ function BillAmounts({ bills, title }) {
         <div className="detail total">
           <div className="label">
             <div className="circle"></div>
-            <h3>Total Bill</h3>
+            <h3>Discount</h3>
           </div>
           <h3 className="tk">
-            <span>৳</span>{numberWithCommas(bills.net_payable)}
+            <span>৳</span>
+            {
+              discountChange === null
+              ? <>{numberWithCommas(parseInt(bills.discount))}</>
+              : title === 'Room'
+                ? <>{numberWithCommas(parseInt(discountChange.discountRoom))}</>
+                : <>{numberWithCommas(parseInt(discountChange.discountFood))}</>
+            }
+            
           </h3>
         </div>
       </div>

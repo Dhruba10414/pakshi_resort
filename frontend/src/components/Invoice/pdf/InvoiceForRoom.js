@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   totalBill: { height: 30, color: "#000", padding: "5px 0" },
 });
 
-function InvoiceForRoom({ roomBills, rbill }) {
+function InvoiceForRoom({ roomBills, rbill, discountChange }) {
   return (
     <View style={styles.table}>
       <View>
@@ -62,27 +62,39 @@ function InvoiceForRoom({ roomBills, rbill }) {
       {/* bill */}
       <View style={styles.container}>
         <Text style={styles.totalHeading}>Total</Text>
-        <Text style={styles.totalBill}>{rbill.total_bills}</Text>
+        <Text style={styles.totalBill}>{parseInt(rbill.total_bills)}</Text>
       </View>
 
       {/* vat */}
       <View style={styles.container}>
-        <Text style={styles.totalHeading}>Vat ({(rbill.total_vat / rbill.total_bills) * 100} %)</Text>
-        <Text style={styles.totalBill}>{rbill.total_vat}</Text>
+        <Text style={styles.totalHeading}>Vat ({(parseFloat(rbill.total_vat) / parseFloat(rbill.total_bills)) * 100} %)</Text>
+        <Text style={styles.totalBill}>{Math.ceil(parseFloat(rbill.total_vat))}</Text>
       </View>
 
       {/* discount */}
       {rbill.discount > 0 ? (
         <View style={styles.container}>
           <Text style={styles.totalHeading}>Discount</Text>
-          <Text style={styles.totalBill}>{rbill.discount}</Text>
+          <Text style={styles.totalBill}>
+            {
+              discountChange === null
+              ? parseInt(rbill.discount)
+              : discountChange.discountRoom
+            }
+          </Text>
         </View>
       ) : null}
 
       {/* sub total */}
       <View style={styles.lastContainer}>
         <Text style={styles.totalHeading}>Sub Total</Text>
-        <Text style={styles.totalBill}>{rbill.total_paid}</Text>
+        <Text style={styles.totalBill}>
+          {
+            discountChange === null
+            ? parseInt(rbill.total_paid)
+            : parseInt(rbill.total_bills) + Math.ceil(rbill.total_vat) - discountChange.discountRoom
+          }
+        </Text>
       </View>
     </View>
   );
