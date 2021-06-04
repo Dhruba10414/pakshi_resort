@@ -113,8 +113,8 @@ function RestaurentInvoice({ foodList, bill, total, name, contact }) {
         </View>
         {/* vat price */}
         <View style={styles.container}>
-          <Text style={styles.totalHeading}>VAT [ {bill.vat * 100}% ]</Text>
-          <Text style={styles.totalBill}>{bill.bill * bill.vat}</Text>
+          <Text style={styles.totalHeading}>VAT [ {(bill.vat / total) * 100}% ]</Text>
+          <Text style={styles.totalBill}>{bill.vat}</Text>
         </View>
         {/* discount price */}
         {bill.discount > 0 ? (
@@ -126,7 +126,7 @@ function RestaurentInvoice({ foodList, bill, total, name, contact }) {
         {/* sub total price */}
         <View style={styles.lastContainer}>
           <Text style={styles.totalHeading}>SUB TOTAL</Text>
-          <Text style={styles.totalBill}>{bill.bill + bill.bill * bill.vat - bill.discount}</Text>
+          <Text style={styles.totalBill}>{bill.bill + bill.vat - bill.discount}</Text>
         </View>
       </Page>
     </Document>

@@ -135,22 +135,18 @@ function Ordered({
       axios
         .post(GET_ACCESS_TOKEN_URL, { refresh: REFRESH_TOKEN })
         .then((token) => {
-          const Config = {
-            headers: { Authorization: "Bearer " + token.data.access },
-          };
+          const Config = {headers: { Authorization: "Bearer " + token.data.access }};
 
           axios
             .post(FOOD_ORDER_URL, Order, Config)
             .then((res) => {
-              console.log(res.data);
               downloadPDF(basket, res.data, total);
               removeAllFoods();
               notify();
               setLoading(false);
             })
             .catch((err) => {
-              // console.clear();
-              console.log(err.message);
+              console.clear();
               setLoading(false);
             });
         })
