@@ -137,7 +137,7 @@ function Statics() {
   }, []);
 
   return (
-    <ContentBox heading="Stastics">
+    <ContentBox heading="Statistics">
       <div className="statics">
         <div className="graph">
           {!loading ? (

@@ -59,7 +59,15 @@ function Footer() {
         </div>
         <div className="copyright">
           <div>© Copyright 2021 Pakshi Resort LTD</div>
-          {/* <div>Made by <span>Frezio</span></div> */}
+          <div>
+            Made by{" "}
+            <a
+              href="https://www.facebook.com/RegEx-103639025275791"
+              target="_blank"
+            >
+              regEx
+            </a>
+          </div>
         </div>
       </div>
     </div>
