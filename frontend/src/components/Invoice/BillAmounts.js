@@ -18,7 +18,7 @@ function BillAmounts({ bills, title }) {
         </h2>
         <div className="totalBill">
           <div>Recieved</div>
-          {parseInt(bills.total_paid)}
+          <div className="amount">৳ {parseInt(bills.total_paid)}</div>
         </div>
         {
           parseInt(bills.due) === 0

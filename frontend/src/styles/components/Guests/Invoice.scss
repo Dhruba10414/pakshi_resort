@@ -61,8 +61,17 @@
 
           .totalBill{
             display: flex;
+            align-items: center;
             margin-bottom: 6px;
-            div{ margin-right: 10px; }
+            div{ 
+              margin-right: 10px; font-size: 12px; 
+              text-transform: uppercase; font-weight: bold;
+              color: var(--green-dark);
+            }
+            .amount{
+              color: #444;
+              font-size: 14px;
+            }
           }
         }
         .details {
@@ -87,8 +96,8 @@
           .detail.room .label .circle { background-color: var(--blue-dark); }
           .detail.food .label { color: var(--yellow-dark); }
           .detail.food .label .circle { background-color: var(--yellow-dark); }
-          .detail.total .label { color: var(--green-dark); }
-          .detail.total .label .circle { background-color: var(--green-dark); }
+          .detail.total .label { color: var(--red-dark); }
+          .detail.total .label .circle { background-color: var(--red-dark); }
           
         }
       }
