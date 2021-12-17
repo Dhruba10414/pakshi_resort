@@ -154,6 +154,7 @@
       }
     }
   }
+
   &__right {
     width: calc(50% - 10px);
     margin-left: 10px;
@@ -161,11 +162,13 @@
     background-color: #fff;
     border-radius: 8px;
     form {
-      width: 90%;
+      width: 95%;
+      min-height: 70vh;
       margin: auto;
       margin-top: 40px;
       display: flex;
       flex-direction: column;
+      position: relative;
       .input {
         margin-bottom: 20px;
         position: relative;
@@ -197,12 +200,14 @@
             }
           }
         }
-        .eye{
+        .eye {
           position: absolute;
           bottom: 16px;
           right: 20px;
           cursor: pointer;
-          svg{ height: 14px; }
+          svg {
+            height: 14px;
+          }
         }
       }
       small.error {
@@ -231,9 +236,129 @@
           color: var(--primary-color-light);
         }
       }
-      button.loading{
+      button.loading {
         background: #ccc;
         color: gray;
+      }
+
+      // CHANGE OPTIONS BUTTON
+      .statOptions {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: var(--blue);
+        border-radius: 8px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        div {
+          color: var(--blue-dark);
+          &:nth-child(1) {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--blue-dark);
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    // //////////////////////////////////////////////////////////
+    // STAFF STATISTICS
+    .staffStat {
+      margin-top: 5vh;
+      width: 100%;
+      min-height: 70vh;
+      position: relative;
+      h4 {
+        color: gray;
+        font-size: 14px;
+        font-family: var(--quicksand-font);
+        margin-bottom: 10px;
+        @include media("<=desktop") {
+          font-size: 13.5px;
+        }
+      }
+      p {
+        font-family: var(--quicksand-font);
+        font-size: 15px;
+        @include media("<=desktop") {
+          font-size: 12.5px;
+        }
+      }
+      h1 {
+        font-family: var(--quicksand-font);
+        font-size: 4rem;
+        span {
+          font-size: 2rem;
+          color: #ccc;
+        }
+      }
+      .buttonBoxx {
+        display: flex;
+        margin-top: 25px;
+        button {
+          padding: 12px 30px;
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          margin-right: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: 0.4s;
+          &:nth-child(2) {
+            background-color: var(--primary-color);
+            color: #fff;
+          }
+        }
+      }
+      // CHANGE OPTIONS BUTTON
+      .statOptions {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: var(--green);
+        border-radius: 8px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        div {
+          color: var(--green-dark);
+          &:nth-child(1) {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--green-dark);
+            margin-right: 10px;
+            font-weight: bold;
+          }
+        }
+      }
+      // DATE CHANGING FORM
+      form{
+        width: 60%;
+        min-height: fit-content;
+        margin: 0;
+        margin-top: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        input{
+          width: 100%;
+          padding: 10px 20px;
+          font-size: 15px;
+          margin-bottom: 10px;
+          outline: none;
+          border: 1px solid #ccc;
+        }
+        button{
+          width: 100%;
+        }
       }
     }
   }
