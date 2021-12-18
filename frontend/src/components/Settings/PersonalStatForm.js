@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { api } from "../../assets/URLS";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import Report from "./pdf/Report";
 
 function PersonalStatForm({ user, setStateShow }) {
   const [data, setData] = useState(null);
@@ -85,8 +88,24 @@ function PersonalStatForm({ user, setStateShow }) {
       });
   };
 
+  // DOWNLOAD PDF
+  const downloadPdf = async () => {
+    const doc = (
+      <Report
+        user={user}
+        date={date}
+        data={data}
+      />
+    );
+    const asPdf = pdf([]);
+    asPdf.updateContainer(doc);
+    const blob = await asPdf.toBlob();
+    saveAs(blob, `staff-${user.id}.pdf`);
+  }
+
   // FETCH INITIAL DATA
   useEffect(() => {
+    console.log(user);
     const today = getTodaysDate();
     viewCollection(today);
   }, []);
@@ -116,7 +135,7 @@ function PersonalStatForm({ user, setStateShow }) {
           <button onClick={() => setDateChangeForm(!dateChangeForm)}>
             Change Date
           </button>
-          <button>Get Report</button>
+          <button onClick={downloadPdf}>Get Report</button>
         </div>
 
         {/* Date Changing form */}
