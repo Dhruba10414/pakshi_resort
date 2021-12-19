@@ -55,7 +55,7 @@ function Report({ user, date, data }) {
   return (
     <Document>
       <Page size="A6" style={styles.page}>
-        <Text style={styles.h4}>Day Report</Text>
+        <Text style={styles.h4}>Day Report For</Text>
         <Text style={styles.h3}>{user.user_name}</Text>
 
         {/* Information User */}
@@ -86,7 +86,7 @@ function Report({ user, date, data }) {
           </View>
 
           {/* Information for collection */}
-          <Text style={styles.h4}>Collection</Text>
+          <Text style={styles.h4}>Daily Report</Text>
           <View style={styles.information__data}>
             <View style={styles.info}>
               <View style={styles.info__name}>
