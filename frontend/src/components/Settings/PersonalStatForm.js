@@ -100,7 +100,7 @@ function PersonalStatForm({ user, setStateShow }) {
     const asPdf = pdf([]);
     asPdf.updateContainer(doc);
     const blob = await asPdf.toBlob();
-    saveAs(blob, `staff-${user.id}.pdf`);
+    saveAs(blob, `staff-${user.user_name}-${date}.pdf`);
   }
 
   // FETCH INITIAL DATA
